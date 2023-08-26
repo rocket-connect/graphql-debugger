@@ -1,5 +1,6 @@
 {
   "name": "@graphql-debugger/collector-proxy",
+  "version": "0.0.0-alpha.2",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
