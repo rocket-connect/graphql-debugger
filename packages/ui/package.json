@@ -8,8 +8,8 @@
     "public"
   ],
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
-    "dev": "cross-env NODE_ENV=development webpack serve"
+    "build": "NODE_ENV=production webpack --config webpack.config.js",
+    "dev": "NODE_ENV=development webpack serve"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -33,7 +33,6 @@
     "clean-webpack-plugin": "4.0.0",
     "compression-webpack-plugin": "9.2.0",
     "copy-webpack-plugin": "10.2.4",
-    "cross-env": "7.0.3",
     "css-loader": "6.6.0",
     "dotenv": "^16.0.0",
     "dotenv-webpack": "7.1.0",
