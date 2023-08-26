@@ -85,6 +85,6 @@ jobs:
       - run: node ./utils/bump-versions.js
         env:
           VERSION: ${{github.ref_name}}
-      - run: pnpm publish -r --access public
+      - run: pnpm publish -r --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
