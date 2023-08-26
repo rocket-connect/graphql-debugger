@@ -26,8 +26,9 @@ jobs:
       - run: pnpm build
       - run: cd ./packages/graphql-debugger && chmod +x ./build/index.js
       - run: node ./utils/bump-versions.js
-      - run: pnpm publish -r --no-git-checks
         env:
           VERSION: ${{github.ref_name}}
+      - run: pnpm publish -r --no-git-checks
+        env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
           NPM_TOKEN: ${{secrets.npm_token}}
