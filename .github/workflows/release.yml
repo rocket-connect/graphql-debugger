@@ -1,14 +1,14 @@
 name: Release
 
-# on:
-#   push:
-#     tags:
-#       - '*'
-
 on:
   push:
-    branches:
-      - main
+    tags:
+      - '*'
+
+# on:
+#   push:
+#     branches:
+#       - main
 
 jobs:
   build:
@@ -25,7 +25,52 @@ jobs:
       - run: pnpm install
       - run: pnpm build
 
-  publish-ui:
+  # publish-ui:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 18
+  #         registry-url: https://registry.npmjs.org/
+  #     - uses: pnpm/action-setup@v2
+  #       with:
+  #         version: 8.0.0
+  #     - run: cd ./packages/ui && pnpm install
+  #     - run: cd ./packages/ui && pnpm build
+
+  # publish-collector-proxy:
+  #   needs: publish-ui
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 18
+  #         registry-url: https://registry.npmjs.org/
+  #     - uses: pnpm/action-setup@v2
+  #       with:
+  #         version: 8.0.0
+  #     - run: cd ./packages/collector-proxy && pnpm install
+  #     - run: cd ./packages/collector-proxy && pnpm build
+
+  # publish-graphql-debugger:
+  #   needs: publish-collector-proxy
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 18
+  #         registry-url: https://registry.npmjs.org/
+  #     - uses: pnpm/action-setup@v2
+  #       with:
+  #         version: 8.0.0
+  #     - run: cd ./packages/graphql-debugger && pnpm install
+  #     - run: cd ./packages/graphql-debugger && pnpm build
+
+  publish:
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -37,35 +82,7 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 8.0.0
-      - run: cd ./packages/ui && pnpm install
-      - run: cd ./packages/ui && pnpm build
-
-  publish-collector-proxy:
-    needs: publish-ui
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 18
-          registry-url: https://registry.npmjs.org/
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8.0.0
-      - run: cd ./packages/collector-proxy && pnpm install
-      - run: cd ./packages/collector-proxy && pnpm build
-
-  publish-graphql-debugger:
-    needs: publish-collector-proxy
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 18
-          registry-url: https://registry.npmjs.org/
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8.0.0
-      - run: cd ./packages/graphql-debugger && pnpm install
-      - run: cd ./packages/graphql-debugger && pnpm build
+      - run: VERSION=${{  github.ref_name }} node ./utils/bump-version.js
+      - run: pnpm publish -r --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
