@@ -1,4 +1,4 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
 
 import { debug } from './debug';
 import yargs from 'yargs/yargs';
