@@ -5,6 +5,7 @@
     "dev": "turbo dev",
     "dev:ui": "turbo dev --filter \"@graphql-debugger/ui\"",
     "dev:proxy": "turbo dev --filter \"@graphql-debugger/collector-proxy\"",
+    "debugger": "turbo dev --filter \"graphql-debugger\"",
     "build": "turbo build"
   },
   "devDependencies": {

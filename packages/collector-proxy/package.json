@@ -1,8 +1,10 @@
 {
   "name": "@graphql-debugger/collector-proxy",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "dev": "DEBUG=\"collector-proxy\" NODE_ENV=development ts-node ./src/index.ts",
+    "dev": "DEBUG=\"collector-proxy\" NODE_ENV=development ts-node ./main/index.ts",
     "test": "NODE_ENV=test jest"
   },
   "dependencies": {

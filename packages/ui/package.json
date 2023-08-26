@@ -1,6 +1,7 @@
 {
   "name": "@graphql-debugger/ui",
   "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
     "dev": "cross-env NODE_ENV=development webpack serve"

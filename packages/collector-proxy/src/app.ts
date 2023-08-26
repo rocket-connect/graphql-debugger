@@ -1,11 +1,11 @@
-import express from 'express';
+import express, { Express } from 'express';
 import * as config from './config';
 // import * as graphql from './graphql';
 import expressStaticGzip from 'express-static-gzip';
 import path from 'path';
 import { debug } from './debug';
 
-export const app = express();
+export const app: Express = express();
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, config.STATIC_FOLDER)));
