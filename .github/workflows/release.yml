@@ -37,7 +37,7 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 8.0.0
-
+      - run: cd ./packages/ui && pnpm install
       - run: cd ./packages/ui && pnpm build
 
   publish-collector-proxy:
@@ -52,7 +52,7 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 8.0.0
-
+      - run: cd ./packages/collector-proxy && pnpm install
       - run: cd ./packages/collector-proxy && pnpm build
 
   publish-graphql-debugger:
@@ -67,5 +67,5 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 8.0.0
-
+      - run: cd ./packages/graphql-debugger && pnpm install
       - run: cd ./packages/graphql-debugger && pnpm build
