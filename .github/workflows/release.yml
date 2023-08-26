@@ -28,7 +28,15 @@ jobs:
       - run: node ./utils/bump-versions.js
         env:
           VERSION: ${{github.ref_name}}
-      - run: pnpm publish -r --access public --no-git-checks
+
+      - run: pnpm publish cd ./packages/ui --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-          NPM_TOKEN: ${{secrets.npm_token}}
+
+      - run: pnpm publish cd ./packages/collector-proxy --access public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+
+      - run: pnpm publish cd ./packages/graphql-debugger --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
