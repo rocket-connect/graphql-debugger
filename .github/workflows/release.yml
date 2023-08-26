@@ -21,7 +21,6 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 6.0.0
-      - run: pnpm i
       - run: pnpm build
 
   publish-ui:
