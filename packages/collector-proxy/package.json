@@ -37,6 +37,5 @@
     "@types/supertest": "^2.0.12",
     "gql-tag": "^1.0.1",
     "supertest": "^6.3.3"
-  },
-
+  }
 }
