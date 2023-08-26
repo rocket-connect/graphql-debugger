@@ -45,5 +45,9 @@
     "webpack": "5.69.1",
     "webpack-cli": "4.10.0",
     "webpack-dev-server": "4.7.4"
+  },
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=8"
   }
 }

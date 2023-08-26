@@ -23,5 +23,9 @@
     "tabWidth": 2,
     "singleQuote": true,
     "trailingComma": "es5"
+  },
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=8"
   }
 }
