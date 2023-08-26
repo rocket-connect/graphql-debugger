@@ -20,7 +20,7 @@ jobs:
           node-version: 18
       - uses: pnpm/action-setup@v2
         with:
-          version: 6.0.0
+          version: 8.0.0
       - run: pnpm build
 
   publish-ui:
@@ -34,7 +34,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - uses: pnpm/action-setup@v2
         with:
-          version: 6.0.0
+          version: 8.0.0
       - run: cd ./packages/ui && pnpm build
 
   publish-collector-proxy:
@@ -48,7 +48,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - uses: pnpm/action-setup@v2
         with:
-          version: 6.0.0
+          version: 8.0.0
       - run: cd ./packages/collector-proxy && pnpm build
 
   publish-graphql-debugger:
@@ -62,5 +62,5 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - uses: pnpm/action-setup@v2
         with:
-          version: 6.0.0
+          version: 8.0.0
       - run: cd ./packages/graphql-debugger && pnpm build
