@@ -13,7 +13,7 @@
     "noImplicitAny": false,
     "rootDir": "src",
     "baseUrl": ".",
-    "outDir": "dist",
+    "outDir": "build",
     "noEmit": false
   },
   "include": ["src/**/*"]

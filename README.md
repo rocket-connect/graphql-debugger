@@ -28,10 +28,20 @@ pnpm install
 
 ### Development
 
+### UI
+
 To run the webpack dev server for the UI:
 
 ```bash
 pnpm run dev:ui
+```
+
+### Collector Proxy
+
+To run the collector proxy:
+
+```bash
+pnpm run dev:collector-proxy
 ```
 
 ## License

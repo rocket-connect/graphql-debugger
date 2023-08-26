@@ -3,7 +3,8 @@
   "name": "@graphql-otel/monorepo",
   "scripts": {
     "dev": "turbo dev",
-    "dev:ui": "turbo dev --filter=\"{./packages/ui}...\"",
+    "dev:ui": "turbo dev --filter \"@graphql-debugger/ui\"",
+    "dev:proxy": "turbo dev --filter \"@graphql-debugger/collector-proxy\"",
     "build": "turbo build"
   },
   "devDependencies": {
