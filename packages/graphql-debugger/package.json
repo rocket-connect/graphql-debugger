@@ -1,6 +1,9 @@
 {
   "name": "graphql-debugger",
   "main": "build/index.js",
+  "files": [
+    "build"
+  ],
   "scripts": {
     "build": "tsc",
     "start": "node build/index.js",
