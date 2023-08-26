@@ -24,10 +24,8 @@ jobs:
       - run: npm i -g turbo@1.10.7
       - run: pnpm install
       - run: pnpm build
-      - run: node ./utils/bump-versions.js
+      - run: cd ./packages/graphql-debugger && chmod +x ./build/index.js
+      - run: node ./utils/bump-versions.js && pnpm publish -r --access public --no-git-checks
         env:
           VERSION: ${{github.ref_name}}
-      - run: cd ./packages/graphql-debugger && chmod +x ./build/index.js
-      - run: pnpm publish -r --access public --no-git-checks
-        env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
