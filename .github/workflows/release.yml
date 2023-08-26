@@ -18,6 +18,9 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 18
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 6.0.0
       - run: pnpm i
       - run: pnpm build
 
@@ -30,6 +33,9 @@ jobs:
         with:
           node-version: 18
           registry-url: https://registry.npmjs.org/
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 6.0.0
       - run: cd ./packages/ui && pnpm build
 
   publish-collector-proxy:
@@ -41,6 +47,9 @@ jobs:
         with:
           node-version: 18
           registry-url: https://registry.npmjs.org/
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 6.0.0
       - run: cd ./packages/collector-proxy && pnpm build
 
   publish-graphql-debugger:
@@ -52,4 +61,7 @@ jobs:
         with:
           node-version: 18
           registry-url: https://registry.npmjs.org/
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 6.0.0
       - run: cd ./packages/graphql-debugger && pnpm build
