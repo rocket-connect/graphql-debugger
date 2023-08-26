@@ -82,7 +82,7 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 8.0.0
-      - run: node ./utils/bump-version.js
+      - run: node ./utils/bump-versions.js
         env:
           VERSION: ${{github.ref_name}}
       - run: pnpm publish -r --access public
