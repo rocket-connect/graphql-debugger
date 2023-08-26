@@ -18,7 +18,7 @@ Hey 👋, welcome to the monorepo for GraphQL Debugger. This is where we develop
 ### Prerequisites
 
 1. [Node.js](https://nodejs.org/en/) (v18 or higher)
-2. [PNPM](https://pnpm.io/) (v6 or higher)
+2. [PNPM](https://pnpm.io/) (v8 or higher)
 
 ### Installation
 
@@ -26,10 +26,12 @@ Hey 👋, welcome to the monorepo for GraphQL Debugger. This is where we develop
 pnpm install
 ```
 
-### Testing
+### Development
 
-```
-pnpm test
+To run the webpack dev server for the UI:
+
+```bash
+pnpm run dev:ui
 ```
 
 ## License
