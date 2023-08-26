@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+process.env.DEBUG = process.env.DEBUG || 'graphql-debugger';
+
 import { debug } from './debug';
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
