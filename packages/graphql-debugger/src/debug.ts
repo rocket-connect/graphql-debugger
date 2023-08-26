@@ -1,3 +1,6 @@
 import Debug from 'debug';
 
-export const debug = Debug('graphql-debugger');
+const name = 'graphql-debugger';
+process.env.DEBUG = process.env.DEBUG || name;
+
+export const debug = Debug(name);
