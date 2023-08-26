@@ -22,6 +22,7 @@ jobs:
         with:
           version: 8.0.0
       - run: npm i -g turbo@1.10.7
+      - run: pnpm install
       - run: pnpm build
 
   publish-ui:
