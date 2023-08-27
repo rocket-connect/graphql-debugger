@@ -7,11 +7,11 @@
     "build"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && npm run generate-types",
     "dev": "DEBUG=\"graphql-debugger:*\" NODE_ENV=development ts-node ./src/main.ts",
     "test": "NODE_ENV=test jest",
     "generate-types": "ts-node ./src/graphql/generate && graphql-codegen --config codegen.ts",
-    "postinstall": "npx prisma generate && npx prisma db push && npm run generate-types"
+    "postinstall": "npx prisma generate && npx prisma db push"
   },
   "dependencies": {
     "@graphql-debugger/trace-schema": "workspace:^",
