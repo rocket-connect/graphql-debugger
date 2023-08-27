@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  publish:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -18,5 +18,5 @@ jobs:
           version: 8.0.0
       - run: npm i -g turbo@1.10.7
       - run: pnpm install
-      - run: pnpm build
+      - run: pnpm build --force
       - run: pnpm test
