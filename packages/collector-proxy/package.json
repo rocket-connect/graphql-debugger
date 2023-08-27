@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/collector-proxy",
-  "version": "0.0.0-alpha.12",
+  "version": "0.0.0-alpha.13",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -12,7 +12,7 @@
     "dev": "DEBUG=\"graphql-debugger:*\" NODE_ENV=development ts-node ./src/main.ts",
     "test": "NODE_ENV=test jest",
     "generate-types": "ts-node ./src/graphql/generate && graphql-codegen --config codegen.ts",
-    "postinstall": "./node_modules/.bin/prisma generate && ./node_modules/.bin/prisma db push"
+    "postinstall": "npx prisma generate && npx prisma db push"
   },
   "dependencies": {
     "@graphql-debugger/trace-schema": "workspace:^",
