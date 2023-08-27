@@ -139,9 +139,6 @@ importers:
 
   packages/trace-schema:
     dependencies:
-      '@graphql-debugger/collector-proxy':
-        specifier: workspace:^
-        version: link:../collector-proxy
       '@graphql-tools/schema':
         specifier: ^10.0.0
         version: 10.0.0(graphql@16.8.0)

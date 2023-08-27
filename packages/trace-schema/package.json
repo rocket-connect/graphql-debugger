@@ -11,7 +11,6 @@
     "test": "NODE_ENV=test jest"
   },
   "dependencies": {
-    "@graphql-debugger/collector-proxy": "workspace:^",
     "@graphql-tools/schema": "^10.0.0",
     "@graphql-tools/utils": "^10.0.5",
     "@opentelemetry/api": "^1.4.1",

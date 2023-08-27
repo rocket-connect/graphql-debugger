@@ -9,6 +9,9 @@
     "skipLibCheck": true,
     "outDir": "build",
     "declarationMap": true,
-    "declaration": true
-  }
+    "declaration": true,
+    "rootDir": "./src/"
+  },
+  "exclude": ["tests/"],
+  "include": ["src/**/*"]
 }
