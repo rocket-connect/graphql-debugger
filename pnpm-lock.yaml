@@ -191,8 +191,8 @@ importers:
         specifier: ^16.8.0
         version: 16.8.0
       graphql-otel:
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.1.1
+        version: 0.1.1
     devDependencies:
       '@babel/preset-env':
         specifier: ^7.22.10
@@ -5430,8 +5430,8 @@ packages:
       - utf-8-validate
     dev: true
 
-  /graphql-otel@0.1.0:
-    resolution: {integrity: sha512-Wi0xqIWLSB1QblN3Gbwhp5Z99fFt3TparOw25I0oC+AvlpFTsEs4HgekTxplRYo7d8nbZlafuslvdRQr9GvwYQ==}
+  /graphql-otel@0.1.1:
+    resolution: {integrity: sha512-hPzKoQAKQjjWcpcBAAAPmMm5x1FmJL9trEDK4ia+ckvs7P/CJyJJDyQLb7ggLBuBPOqOa95HjIOk91Yl8VK2Ew==}
     engines: {node: '>=18.0.0'}
     dependencies:
       '@graphql-tools/utils': 10.0.5(graphql@16.8.0)

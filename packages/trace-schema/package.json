@@ -22,7 +22,7 @@
     "@opentelemetry/semantic-conventions": "^1.15.2",
     "debug": "^4.3.4",
     "graphql": "^16.8.0",
-    "graphql-otel": "^0.1.0"
+    "graphql-otel": "^0.1.1"
   },
   "devDependencies": {
     "@jest/globals": "^29.6.4",

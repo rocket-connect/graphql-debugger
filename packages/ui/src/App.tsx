@@ -129,7 +129,7 @@ const Span = ({
       </div>
 
       <div className="pt-5">
-        <div className="flex">
+        <div className="flex flex-col">
           <div className="flex-none text-xs px-4 py-2">
             Duration: {data.duration.toFixed(12)} ms
           </div>
@@ -137,6 +137,9 @@ const Span = ({
           <div className="flex-none text-xs px-4 py-2">Trace ID: {data.traceId}</div>
           <div className="flex-none text-xs px-4 py-2">Span ID: {data.spanId}</div>
           <div className="flex-none text-xs px-4 py-2">Parent Span ID: {data.parentSpanId}</div>
+          <div className="flex-none text-xs px-4 py-2">
+            Attributes {JSON.stringify(data.attributes)}
+          </div>
         </div>
       </div>
       <div className="text-white flex flex-col">
