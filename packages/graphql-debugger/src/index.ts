@@ -1,11 +1,8 @@
 #!/usr/bin/env node
-
-process.env.DEBUG = process.env.DEBUG || 'graphql-debugger';
-
 import { debug } from './debug';
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
-import { app } from '@graphql-debugger/collector-proxy';
+import * as app from '@graphql-debugger/collector-proxy';
 
 // const argv = yargs(hideBin(process.argv)).argv;
 
@@ -15,7 +12,7 @@ async function start() {
 
     const PORT = process.env.PORT || 16686;
 
-    await app.listen(PORT);
+    await app.start();
 
     debug(`Debugger Online http://localhost:${PORT}`);
   } catch (error) {

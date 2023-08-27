@@ -10,7 +10,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node build/index.js",
-    "dev": "DEBUG=\"graphql-debugger\" NODE_ENV=development ts-node ./src/index.ts"
+    "dev": "NODE_ENV=development ts-node ./src/index.ts"
   },
   "dependencies": {
     "@graphql-debugger/collector-proxy": "workspace:^",

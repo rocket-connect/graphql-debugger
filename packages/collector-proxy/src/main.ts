@@ -1,9 +1,12 @@
 import { debug } from './debug';
 import * as app from './app';
+import { prisma } from './prisma';
 
 async function start() {
   try {
     debug('Starting application');
+
+    await prisma.$connect();
 
     await app.start();
 

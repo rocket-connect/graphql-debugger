@@ -1,3 +1,3 @@
 import Debug from 'debug';
 
-export const debug = Debug('graphql-debugger');
+export const debug = Debug('graphql-debugger:cli');

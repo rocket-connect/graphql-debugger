@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model TraceGroup {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  traceId   String
+  spans     Span[]
+}
+
+model Span {
+  id                String      @id @default(uuid())
+  spanId            String
+  parentSpanId      String?
+  traceId           String
+  name              String
+  kind              String
+  startTimeUnixNano BigInt
+  endTimeUnixNano   BigInt
+  attributes        String
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  traceGroup        TraceGroup? @relation(fields: [traceGroupId], references: [id])
+  traceGroupId      String?
+}
