@@ -11,7 +11,7 @@ Hey 👋, welcome to the monorepo for GraphQL Debugger. This is where we develop
 
 1. `@graphql-debugger/ui` - User interface for GraphQL Debugger
 2. `@graphql-debugger/collector-proxy` - Collects GraphQL queries, and serves the GraphQL Debugger UI.
-3. `@graphql-debugger/traced-schema` - Tool for tracing your GraphQL schema, sending the results to the debugger.
+3. `@graphql-debugger/trace-schema` - Tool for tracing your GraphQL schema, sending the results to the debugger.
 4. `graphql-debugger` - CLI for GraphQL Debugger
 
 ## Getting Started
@@ -28,7 +28,7 @@ npm i graphql-debugger @graphql-debugger/traced-schema
 
 ```ts
 import { makeExecutableSchema } from '@graphql-tools/schema';
-import { traceSchema } from '@graphql-debugger/traced-schema';
+import { traceSchema } from '@graphql-debugger/trace-schema';
 
 const schema = makeExecutableSchema({
   typeDefs,
