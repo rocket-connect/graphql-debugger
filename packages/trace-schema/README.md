@@ -1,3 +1,3 @@
-# graphql-debugger
+# @graphql-debugger/trace-schema
 
-User interface for GraphQL Debugger
+Wrapper around GraphQL OTEL, applies directive to all fields in your schema and sends traces to Debugger.
