@@ -12,15 +12,15 @@ model TraceGroup {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  traceId   String
-  spans     Span[]
+  traceId   String   @unique
+  spans     Span[]   @relation()
 }
 
 model Span {
   id                String      @id @default(uuid())
   spanId            String
   parentSpanId      String?
-  traceId           String
+  traceId           String      @unique
   name              String
   kind              String
   startTimeUnixNano BigInt

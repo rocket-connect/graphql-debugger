@@ -1,9 +1,9 @@
 import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import TreeItem from '@mui/lab/TreeItem';
 import 'tailwindcss/tailwind.css';
 import { gql, useQuery } from 'urql';
+import { Query, Span } from './graphql-types';
 
 const ListTraceGroups = gql`
   query {
@@ -31,49 +31,38 @@ const ListTraceGroups = gql`
   }
 `;
 
-type Trace = {
-  spanId: string;
-  name: string;
-  parentSpanId?: string;
-  traceId: string;
-  attributes: object;
-  timestamp: number;
-  duration: number;
-};
-
-type RenderTree = {
-  name: string;
-  spanId: string;
-  traceId: string;
-  attributes: object;
+type RenderTree = Omit<Span, '__typename'> & {
   children: RenderTree[];
-  timestamp: number;
-  duration: number;
-  parentSpanId?: string;
 };
 
-const createTreeData = (traceArray: Trace[]): RenderTree[] => {
+const createTreeData = (spanArray: Span[]): RenderTree[] => {
   const treeData: RenderTree[] = [];
   const lookup: { [key: string]: RenderTree } = {};
 
-  traceArray.forEach((trace) => {
-    lookup[trace.spanId] = {
-      spanId: trace.spanId,
-      name: trace.name,
-      traceId: trace.traceId,
-      attributes: trace.attributes,
+  spanArray.forEach((span) => {
+    lookup[span.spanId] = {
+      spanId: span.spanId,
+      name: span.name,
+      traceId: span.traceId,
+      attributes: span.attributes,
       children: [],
-      timestamp: trace.timestamp,
-      duration: trace.duration,
-      parentSpanId: trace.parentSpanId,
+      timestamp: span.timestamp,
+      duration: span.duration,
+      parentSpanId: span.parentSpanId as string,
+      createdAt: span.createdAt,
+      kind: span.kind,
+      endTimeUnixNano: span.endTimeUnixNano,
+      startTimeUnixNano: span.startTimeUnixNano,
+      id: span.id,
+      updatedAt: span.updatedAt,
     };
   });
 
-  traceArray.forEach((trace) => {
-    if (trace.parentSpanId) {
-      lookup[trace.parentSpanId]?.children?.push(lookup[trace.spanId]);
+  spanArray.forEach((span) => {
+    if (span.parentSpanId) {
+      lookup[span.parentSpanId]?.children?.push(lookup[span.spanId]);
     } else {
-      treeData.push(lookup[trace.spanId]);
+      treeData.push(lookup[span.spanId]);
     }
   });
 
@@ -90,31 +79,26 @@ const renderTree = (treeData, minTimestamp, maxTimestamp) => {
   }
 
   return (
-    <TreeItem
-      key={treeData.spanId}
-      nodeId={treeData.spanId}
-      label={
-        <div className="flex items-center w-full">
-          <div className="flex-none whitespace-nowrap overflow-hidden overflow-ellipsis text-graphql-otel-green text-lg px-4 py-2">
-            {treeData.name}
-          </div>
-
-          <div className="relative flex-grow">
-            <div
-              className="absolute h-1 bg-graphql-otel-green"
-              style={{
-                left,
-                width,
-              }}
-            ></div>
-          </div>
+    <div>
+      <div className="flex items-center w-full">
+        <div className="flex-none whitespace-nowrap overflow-hidden overflow-ellipsis text-graphql-otel-green text-lg px-4 py-2">
+          {treeData.name}
         </div>
-      }
-    >
+
+        <div className="relative flex-grow">
+          <div
+            className="absolute h-1 bg-graphql-otel-green"
+            style={{
+              left,
+              width,
+            }}
+          ></div>
+        </div>
+      </div>
       {Array.isArray(treeData.children)
         ? treeData.children.map((child) => renderTree(child, minTimestamp, maxTimestamp))
         : null}
-    </TreeItem>
+    </div>
   );
 };
 
@@ -136,37 +120,29 @@ const Span = ({ data, minTimestamp, maxTimestamp, isTopLevel }) => {
     left = '98%';
   }
 
-  console.log(data);
   return (
     <div className="relative">
       <div className="absolute h-3 bg-gray-300 w-full"></div>
       <div className="absolute h-3 bg-green-500" style={{ left, width }}></div>
-      <TreeItem
-        key={data.spanId}
-        nodeId={data.spanId}
-        label={
-          <div className="flex flex-col w-full my-1 overflow-hidden">
-            <div className="flex-none whitespace-nowrap overflow-ellipsis text-white font-bold text-lg p-2 text-2xl">
-              {data.name}
-            </div>
-          </div>
-        }
-      >
-        <div className="p-0">
-          <div className="flex">
-            <div className="flex-none text-xs px-4 py-2">
-              Duration: {data.duration.toFixed(2)} ms
-            </div>
 
-            <div className="flex-none text-xs px-4 py-2">Trace ID: {data.traceId}</div>
-          </div>
+      <div className="flex flex-col w-full my-1 overflow-hidden">
+        <div className="flex-none whitespace-nowrap overflow-ellipsis text-white font-bold text-lg p-2 text-2xl">
+          {data.name}
         </div>
-        {Array.isArray(data.children)
-          ? data.children.map((child) => (
-              <NestedSpan data={child} minTimestamp={minTimestamp} maxTimestamp={maxTimestamp} />
-            ))
-          : null}
-      </TreeItem>
+      </div>
+
+      <div className="p-0">
+        <div className="flex">
+          <div className="flex-none text-xs px-4 py-2">Duration: {data.duration.toFixed(2)} ms</div>
+
+          <div className="flex-none text-xs px-4 py-2">Trace ID: {data.traceId}</div>
+        </div>
+      </div>
+      {Array.isArray(data.children)
+        ? data.children.map((child) => (
+            <NestedSpan data={child} minTimestamp={minTimestamp} maxTimestamp={maxTimestamp} />
+          ))
+        : null}
     </div>
   );
 };
@@ -181,20 +157,8 @@ const ControlledTreeView = ({ traces }) => {
   const maxTimestamp = Math.max(...traces.map((t) => t.timestamp + t.duration));
 
   return (
-    <div className="min-h-screen text-white flex flex-col h-full w-full">
-      <div className="p-4 text-graphql-otel-green">
-        <div className="flex justify-between">
-          <div>
-            <span>Total Traces: </span> <span>{treeData.length}</span>{' '}
-          </div>
-          <div>
-            <span>Min Timestamp: </span> <span>{minTimestamp}</span>{' '}
-          </div>
-          <div>
-            <span>Max Timestamp: </span> <span>{maxTimestamp}</span>{' '}
-          </div>
-        </div>
-      </div>
+    <div className="text-white flex flex-col h-full w-full">
+      <div className="p-4 text-graphql-otel-green"></div>
 
       <TreeView
         className="text-white w-full h-full p-4"
@@ -217,7 +181,7 @@ const ControlledTreeView = ({ traces }) => {
 };
 
 export function App() {
-  const [result, reexecuteQuery] = useQuery({
+  const [result, reexecuteQuery] = useQuery<{ listTraceGroups: Query['listTraceGroups'] }>({
     query: ListTraceGroups,
   });
 
@@ -225,8 +189,6 @@ export function App() {
 
   if (fetching) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
-
-  console.log(data);
 
   return (
     <div className="min-h-screen bg-graphql-otel-dark gradient-background flex flex-col border rounded p-4">
@@ -238,8 +200,16 @@ export function App() {
           <h2 className="text-lg p-4">GraphQL Schema</h2>
           <p className="p-4">Schema information will go here.</p>
         </div>
-        <div className="flex-1 h-full border p-4 rounded">
-          <ControlledTreeView traces={data.listTraceGroups.traces[0].spans} />
+        <div className="flex flex-col h-full border p-4 rounded">
+          <div>
+            {data?.listTraceGroups.traces.map((t) => {
+              return (
+                <div key={t.id}>
+                  <ControlledTreeView traces={t.spans} />;
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

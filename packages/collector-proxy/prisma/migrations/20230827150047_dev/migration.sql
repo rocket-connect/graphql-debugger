@@ -22,3 +22,9 @@ CREATE TABLE "Span" (
     "traceGroupId" TEXT,
     CONSTRAINT "Span_traceGroupId_fkey" FOREIGN KEY ("traceGroupId") REFERENCES "TraceGroup" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "TraceGroup_traceId_key" ON "TraceGroup"("traceId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Span_traceId_key" ON "Span"("traceId");

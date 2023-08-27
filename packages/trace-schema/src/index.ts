@@ -67,3 +67,5 @@ export function traceSchema({ schema }: TraceSchemaInput): GraphQLSchema {
 
   return tracedSchema;
 }
+
+export * from 'graphql-otel';

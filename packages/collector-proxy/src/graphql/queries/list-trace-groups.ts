@@ -20,6 +20,8 @@ builder.queryField('listTraceGroups', (t) =>
     resolve: async (root, args) => {
       const traces = await prisma.traceGroup.findMany({
         select: { id: true, traceId: true, spans: true },
+        orderBy: { createdAt: 'desc' },
+        take: 3,
       });
 
       return {

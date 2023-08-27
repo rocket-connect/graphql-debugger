@@ -3,6 +3,7 @@ import { prisma } from '../prisma';
 import { z } from 'zod';
 import { ExportTraceServiceRequestSchema } from './schema';
 import { debug } from '../debug';
+import util from 'util';
 
 export const collector: Express = express();
 collector.use(express.json());
@@ -67,40 +68,57 @@ collector.post('/v1/traces', async (req, res) => {
       return _spans;
     });
 
-    for await (const span of spans) {
-      let traceGroupId = '';
+    void spans.forEach((span) => {
+      const duplicates = spans.filter((s) => s.spanId === span.spanId);
 
-      const foundTraceGroup = await prisma.traceGroup.findFirst({
-        where: {
-          traceId: span.traceId,
-        },
-      });
-
-      if (foundTraceGroup) {
-        traceGroupId = foundTraceGroup?.id;
-      } else {
-        const createdTraceGroup = await prisma.traceGroup.create({
-          data: {
-            traceId: span.traceId,
-          },
-        });
-        traceGroupId = createdTraceGroup.id;
+      if (duplicates.length > 1) {
+        debug('Duplicate spans', duplicates);
       }
+    });
 
-      await prisma.span.create({
-        data: {
-          spanId: span.spanId,
-          parentSpanId: span.parentSpanId,
-          name: span.name,
-          kind: span.kind.toString(),
-          startTimeUnixNano: span.startTimeUnixNano,
-          endTimeUnixNano: span.endTimeUnixNano,
-          attributes: span.attributes,
-          traceId: span.traceId,
-          traceGroupId,
-        },
-      });
-    }
+    (async () => {
+      try {
+        for (const span of spans) {
+          await util.promisify(setTimeout)(2000);
+
+          let traceGroupId = '';
+
+          const foundTraceGroup = await prisma.traceGroup.findFirst({
+            where: {
+              traceId: span.traceId,
+            },
+          });
+
+          if (foundTraceGroup) {
+            traceGroupId = foundTraceGroup?.id;
+          } else {
+            const createdTraceGroup = await prisma.traceGroup.create({
+              data: {
+                traceId: span.traceId,
+              },
+            });
+            traceGroupId = createdTraceGroup.id;
+          }
+
+          await prisma.span.create({
+            data: {
+              spanId: span.spanId,
+              parentSpanId: span.parentSpanId,
+              name: span.name,
+              kind: span.kind.toString(),
+              startTimeUnixNano: span.startTimeUnixNano,
+              endTimeUnixNano: span.endTimeUnixNano,
+              attributes: span.attributes,
+              traceId: `${span.spanId}-${span.traceId}`,
+              traceGroupId,
+            },
+          });
+        }
+      } catch (error) {
+        const e = error as Error;
+        debug('Error creating span', e);
+      }
+    })();
 
     return res.status(200).json({}).end();
   } catch (error) {

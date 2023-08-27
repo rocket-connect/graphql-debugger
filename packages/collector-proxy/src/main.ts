@@ -8,6 +8,9 @@ async function start() {
 
     await prisma.$connect();
 
+    // await prisma.span.deleteMany({});
+    // await prisma.traceGroup.deleteMany({});
+
     await app.start();
 
     debug('Application started');
