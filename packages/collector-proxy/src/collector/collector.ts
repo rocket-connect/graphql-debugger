@@ -4,6 +4,10 @@ import { z } from 'zod';
 import { ExportTraceServiceRequestSchema } from './schema';
 import { debug } from '../debug';
 import util from 'util';
+import crypto from 'crypto';
+import { print, parse, lexicographicSortSchema, printSchema } from 'graphql';
+import { makeExecutableSchema } from '@graphql-tools/schema';
+import { printSchemaWithDirectives } from '@graphql-tools/utils';
 
 export const collector: Express = express();
 collector.use(express.json());
@@ -83,7 +87,14 @@ collector.post('/v1/traces', async (req, res) => {
 
           await util.promisify(setTimeout)(500);
 
+          const attributes = JSON.parse(span.attributes);
+
           let traceGroupId = '';
+
+          let schemaHash = '';
+          if (attributes['graphql.schema.hash']) {
+            schemaHash = attributes['graphql.schema.hash'];
+          }
 
           const foundTraceGroup = await prisma.traceGroup.findFirst({
             where: {
@@ -101,6 +112,25 @@ collector.post('/v1/traces', async (req, res) => {
                 },
               });
               traceGroupId = createdTraceGroup.id;
+
+              if (schemaHash) {
+                const schema = await prisma.schema.findFirst({
+                  where: {
+                    hash: schemaHash,
+                  },
+                });
+
+                if (schema) {
+                  await prisma.traceGroup.update({
+                    where: {
+                      id: traceGroupId,
+                    },
+                    data: {
+                      schemaId: schema.id,
+                    },
+                  });
+                }
+              }
             } catch (error) {
               const foundTraceGroup = await prisma.traceGroup.findFirst({
                 where: {
@@ -143,4 +173,42 @@ collector.post('/v1/traces', async (req, res) => {
 
     return res.status(500).json({}).end();
   }
+});
+
+collector.post('/v1/schema', async (req, res) => {
+  const schema = req.body.schema;
+
+  if (!schema) {
+    return res.status(400).json({}).end();
+  } else if (typeof schema !== 'string') {
+    return res.status(400).json({}).end();
+  }
+
+  const executableSchema = makeExecutableSchema({
+    typeDefs: schema,
+    noLocation: true,
+  });
+
+  const sortedSchema = lexicographicSortSchema(executableSchema);
+  const printed = printSchema(sortedSchema);
+  const hash = crypto.createHash('sha256').update(printed).digest('hex');
+
+  const foundSchema = await prisma.schema.findFirst({
+    where: {
+      hash,
+    },
+  });
+
+  if (foundSchema) {
+    return res.status(200).json({}).end();
+  }
+
+  await prisma.schema.create({
+    data: {
+      hash,
+      typeDefs: print(parse(schema)),
+    },
+  });
+
+  return res.status(200).json({}).end();
 });

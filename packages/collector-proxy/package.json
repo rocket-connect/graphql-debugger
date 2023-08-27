@@ -17,6 +17,8 @@
   "dependencies": {
     "@graphql-debugger/trace-schema": "workspace:^",
     "@graphql-debugger/ui": "workspace:^",
+    "@graphql-tools/schema": "^10.0.0",
+    "@graphql-tools/utils": "^10.0.5",
     "@pothos/core": "^3.33.0",
     "@prisma/client": "^5.2.0",
     "debug": "^4.3.4",
