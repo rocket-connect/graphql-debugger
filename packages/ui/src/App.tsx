@@ -112,13 +112,9 @@ const Span = ({
 }) => {
   let width;
 
-  if (isTopLevel) {
-    width = '100%';
-  } else {
-    width = `${(data.duration / (maxTimestamp - minTimestamp)) * 100}%`;
-    if (parseFloat(width.split('%')[0]) < 5) {
-      width = '1%';
-    }
+  width = `${(data.duration / (maxTimestamp - minTimestamp)) * 100}%`;
+  if (parseFloat(width.split('%')[0]) < 5) {
+    width = '1%';
   }
 
   return (
@@ -166,9 +162,9 @@ const ControlledTreeView = ({ traces }) => {
 
   return (
     <div className="text-white flex flex-col px-10">
-      {treeData.map((treeItem, i) => (
+      {treeData.map((treeItem) => (
         <Span
-          isTopLevel={treeItem.parentSpanId === undefined}
+          isTopLevel={!treeItem.parentSpanId}
           key={treeItem.spanId}
           data={treeItem}
           minTimestamp={minTimestamp}
