@@ -11,38 +11,48 @@ Hey 👋, welcome to the monorepo for GraphQL Debugger. This is where we develop
 
 1. `@graphql-debugger/ui` - User interface for GraphQL Debugger
 2. `@graphql-debugger/collector-proxy` - Collects GraphQL queries, and serves the GraphQL Debugger UI.
-3. `graphql-debugger` - CLI for GraphQL Debugger
+3. `@graphql-debugger/traced-schema` - Tool for tracing your GraphQL schema, sending the results to the debugger.
+4. `graphql-debugger` - CLI for GraphQL Debugger
 
-## Getting started
+## Getting Started
 
-### Prerequisites
+### Install
 
-1. [Node.js](https://nodejs.org/en/) (v18 or higher)
-2. [PNPM](https://pnpm.io/) (v8 or higher)
+Install the GraphQL Debugger CLI and trace schema package.
 
-### Installation
-
-```bash
-pnpm install
+```
+npm i graphql-debugger @graphql-debugger/traced-schema
 ```
 
-### Development
+### Trace your schema
 
-### UI
+```ts
+import { makeExecutableSchema } from '@graphql-tools/schema';
+import { traceSchema } from '@graphql-debugger/traced-schema';
 
-To run the webpack dev server for the UI:
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers,
+});
 
-```bash
-pnpm run dev:ui
+const tracedSchema = traceSchema({
+  schema,
+});
+
+const yoga = createYoga({
+  schema: tracedSchema,
+});
 ```
 
-### Collector Proxy
+### Run the Debugger
 
-To run the collector proxy:
-
-```bash
-pnpm run dev:collector-proxy
 ```
+npx graphql-debugger
+```
+
+### Debug your GraphQL server
+
+SCREENSHOT HERE
 
 ## License
 
