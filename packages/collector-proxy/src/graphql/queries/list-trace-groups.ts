@@ -2,7 +2,6 @@ import { prisma } from '../../prisma';
 import { Span } from '../objects/span';
 import { Trace, TraceObject } from '../objects/trace';
 import { builder } from '../schema';
-import { Span as PrismaSpan } from '.prisma/client';
 
 export type ListTraceGroupsResponse = {
   traces: Trace[];
