@@ -25,6 +25,3 @@ CREATE TABLE "Span" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "TraceGroup_traceId_key" ON "TraceGroup"("traceId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Span_traceId_key" ON "Span"("traceId");

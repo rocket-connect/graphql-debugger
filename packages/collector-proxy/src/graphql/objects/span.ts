@@ -22,12 +22,7 @@ export const SpanObject = builder.objectType('Span', {
     id: t.exposeID('id'),
     spanId: t.exposeString('spanId'),
     parentSpanId: t.exposeString('parentSpanId', { nullable: true }),
-    traceId: t.field({
-      type: 'String',
-      resolve(root) {
-        return root.traceId.split('-')[1];
-      },
-    }),
+    traceId: t.exposeString('traceId'),
     name: t.exposeString('name'),
     kind: t.exposeString('kind'),
     startTimeUnixNano: t.exposeString('startTimeUnixNano'),

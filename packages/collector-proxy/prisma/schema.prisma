@@ -20,7 +20,7 @@ model Span {
   id                String      @id @default(uuid())
   spanId            String
   parentSpanId      String?
-  traceId           String      @unique
+  traceId           String
   name              String
   kind              String
   startTimeUnixNano BigInt

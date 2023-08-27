@@ -68,18 +68,10 @@ collector.post('/v1/traces', async (req, res) => {
       return _spans;
     });
 
-    void spans.forEach((span) => {
-      const duplicates = spans.filter((s) => s.spanId === span.spanId);
-
-      if (duplicates.length > 1) {
-        debug('Duplicate spans', duplicates);
-      }
-    });
-
     (async () => {
       try {
         for (const span of spans) {
-          await util.promisify(setTimeout)(2000);
+          await util.promisify(setTimeout)(500);
 
           let traceGroupId = '';
 
@@ -92,12 +84,27 @@ collector.post('/v1/traces', async (req, res) => {
           if (foundTraceGroup) {
             traceGroupId = foundTraceGroup?.id;
           } else {
-            const createdTraceGroup = await prisma.traceGroup.create({
-              data: {
-                traceId: span.traceId,
-              },
-            });
-            traceGroupId = createdTraceGroup.id;
+            try {
+              const createdTraceGroup = await prisma.traceGroup.create({
+                data: {
+                  traceId: span.traceId,
+                },
+              });
+              traceGroupId = createdTraceGroup.id;
+            } catch (error) {
+              const foundTraceGroup = await prisma.traceGroup.findFirst({
+                where: {
+                  traceId: span.traceId,
+                },
+              });
+
+              if (!foundTraceGroup) {
+                debug('Error creating trace group', error);
+                throw error;
+              }
+
+              traceGroupId = foundTraceGroup.id;
+            }
           }
 
           await prisma.span.create({
@@ -109,7 +116,7 @@ collector.post('/v1/traces', async (req, res) => {
               startTimeUnixNano: span.startTimeUnixNano,
               endTimeUnixNano: span.endTimeUnixNano,
               attributes: span.attributes,
-              traceId: `${span.spanId}-${span.traceId}`,
+              traceId: span.traceId,
               traceGroupId,
             },
           });
