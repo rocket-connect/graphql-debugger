@@ -71,6 +71,16 @@ collector.post('/v1/traces', async (req, res) => {
     (async () => {
       try {
         for (const span of spans) {
+          const existingSpan = await prisma.span.findFirst({
+            where: {
+              spanId: span.spanId,
+            },
+          });
+
+          if (existingSpan) {
+            continue;
+          }
+
           await util.promisify(setTimeout)(500);
 
           let traceGroupId = '';
