@@ -70,97 +70,107 @@ collector.post('/v1/traces', async (req, res) => {
       return _spans;
     });
 
+    const spanIds = spans.map((s) => s.spanId);
+    const traceIds = spans.map((s) => s.traceId);
+    const schemaHashes = spans.map((s) => {
+      const attributes = JSON.parse(s.attributes || '{}');
+      return attributes['graphql.schema.hash'];
+    });
+
+    const [existingSpans, traceGroups, schemas] = await Promise.all([
+      prisma.span.findMany({ where: { spanId: { in: spanIds } } }),
+      prisma.traceGroup.findMany({ where: { traceId: { in: traceIds } } }),
+      prisma.schema.findMany({ where: { hash: { in: schemaHashes } } }),
+    ]);
+
+    const spansToBeCreated = spans.filter(
+      (s) => !existingSpans.find((eS) => eS.spanId === s.spanId)
+    );
+
+    // We are using SQLite and all this data is quite alot for it to handle
+    // This trace collection, is for development purposes only!
+    // We leverage setTimeout to give SQLite some time to breathe
+    // This is not a good solution, but it works for now, it also allows the UI to be more responsive
     setTimeout(() => {
       (async () => {
         try {
-          for await (const span of spans) {
-            const existingSpan = await prisma.span.findFirst({
-              where: {
-                spanId: span.spanId,
-              },
-            });
+          await Promise.all(
+            spansToBeCreated.map(async (span) => {
+              const attributes = JSON.parse(span.attributes);
+              let traceGroupId = '';
 
-            if (existingSpan) {
-              continue;
-            }
+              let schemaHash = '';
+              if (attributes['graphql.schema.hash']) {
+                schemaHash = attributes['graphql.schema.hash'];
+              }
 
-            const attributes = JSON.parse(span.attributes);
+              const foundTraceGroup = traceGroups.find((t) => t.traceId === span.traceId);
+              if (foundTraceGroup) {
+                traceGroupId = foundTraceGroup?.id;
+              } else {
+                try {
+                  const createdTraceGroup = await prisma.traceGroup.create({
+                    data: {
+                      traceId: span.traceId,
+                    },
+                  });
+                  traceGroupId = createdTraceGroup.id;
 
-            let traceGroupId = '';
-
-            let schemaHash = '';
-            if (attributes['graphql.schema.hash']) {
-              schemaHash = attributes['graphql.schema.hash'];
-            }
-
-            const foundTraceGroup = await prisma.traceGroup.findFirst({
-              where: {
-                traceId: span.traceId,
-              },
-            });
-
-            if (foundTraceGroup) {
-              traceGroupId = foundTraceGroup?.id;
-            } else {
-              try {
-                const createdTraceGroup = await prisma.traceGroup.create({
-                  data: {
-                    traceId: span.traceId,
-                  },
-                });
-                traceGroupId = createdTraceGroup.id;
-
-                if (schemaHash) {
-                  const schema = await prisma.schema.findFirst({
+                  if (schemaHash) {
+                    const schema = schemas.find((s) => s.hash === schemaHash);
+                    if (schema) {
+                      await prisma.traceGroup.update({
+                        where: {
+                          id: traceGroupId,
+                        },
+                        data: {
+                          schemaId: schema.id,
+                        },
+                      });
+                    }
+                  }
+                } catch (error) {
+                  const foundTraceGroup = await prisma.traceGroup.findFirst({
                     where: {
-                      hash: schemaHash,
+                      traceId: span.traceId,
                     },
                   });
 
-                  if (schema) {
-                    await prisma.traceGroup.update({
-                      where: {
-                        id: traceGroupId,
-                      },
+                  if (!foundTraceGroup) {
+                    debug('Error creating trace group', error);
+                    throw error;
+                  }
+
+                  traceGroupId = foundTraceGroup.id;
+                }
+              }
+
+              setTimeout(() => {
+                (async () => {
+                  try {
+                    await prisma.span.create({
                       data: {
-                        schemaId: schema.id,
+                        spanId: span.spanId,
+                        parentSpanId: span.parentSpanId,
+                        name: span.name,
+                        kind: span.kind.toString(),
+                        startTimeUnixNano: span.startTimeUnixNano,
+                        endTimeUnixNano: span.endTimeUnixNano,
+                        attributes: span.attributes,
+                        traceId: span.traceId,
+                        traceGroupId,
                       },
                     });
+                  } catch (error) {
+                    debug('Error creating span', error);
                   }
-                }
-              } catch (error) {
-                const foundTraceGroup = await prisma.traceGroup.findFirst({
-                  where: {
-                    traceId: span.traceId,
-                  },
-                });
-
-                if (!foundTraceGroup) {
-                  debug('Error creating trace group', error);
-                  throw error;
-                }
-
-                traceGroupId = foundTraceGroup.id;
-              }
-            }
-
-            await prisma.span.create({
-              data: {
-                spanId: span.spanId,
-                parentSpanId: span.parentSpanId,
-                name: span.name,
-                kind: span.kind.toString(),
-                startTimeUnixNano: span.startTimeUnixNano,
-                endTimeUnixNano: span.endTimeUnixNano,
-                attributes: span.attributes,
-                traceId: span.traceId,
-                traceGroupId,
-              },
-            });
-          }
+                })();
+              });
+            })
+          );
         } catch (error) {
           const e = error as Error;
-          debug('Error creating span', e);
+          debug('Error creating spans', e);
         }
       })();
     });
