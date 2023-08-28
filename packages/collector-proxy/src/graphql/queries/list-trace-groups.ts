@@ -49,7 +49,7 @@ builder.queryField('listTraceGroups', (t) =>
         select: { id: true, traceId: true },
         orderBy: { createdAt: 'desc' },
         where,
-        take: 10,
+        take: 20,
       });
 
       return {

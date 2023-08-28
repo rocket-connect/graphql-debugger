@@ -19,8 +19,8 @@ collector.post('/v1/traces', async (req, res) => {
     let body: z.infer<typeof schema>['body'];
 
     try {
-      const parsed = schema.parse({ body: req.body });
-      body = parsed.body;
+      // const parsed = schema.parse({ body: req.body }); Skip parsing for now for performance reasons
+      body = req.body as z.infer<typeof schema>['body'];
     } catch (error) {
       debug('Error parsing body', error);
 

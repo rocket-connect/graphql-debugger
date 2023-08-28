@@ -5,11 +5,9 @@ import { useParams } from 'react-router-dom';
 export function TraceList({
   traces,
   onSelect,
-  selectedTrace,
 }: {
   traces: Trace[];
   onSelect: (trace: Trace) => void;
-  selectedTrace?: Trace;
 }) {
   const params = useParams();
   return (
@@ -35,7 +33,7 @@ export function TraceList({
             const startDate = new Date(Number(startTimeMillis));
 
             return (
-              <tr className="border-b" onClick={() => onSelect(trace)}>
+              <tr key={trace.id} className="border-b" onClick={() => onSelect(trace)}>
                 <th
                   scope="row"
                   className={`px-6 py-4 font-medium whitespace-nowrap ${

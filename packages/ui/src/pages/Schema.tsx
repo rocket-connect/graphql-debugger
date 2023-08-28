@@ -9,6 +9,7 @@ import { SchemaViewer } from '../components/SchemaViewer';
 
 function SchemaTraces({ schemaId }: { schemaId: string }) {
   const navigate = useNavigate();
+  const params = useParams();
   const [traces, setTraces] = useState<Trace[]>([]);
   const [selectedTrace, setSelectedTrace] = useState<Trace | undefined>(undefined);
 
@@ -19,10 +20,12 @@ function SchemaTraces({ schemaId }: { schemaId: string }) {
           where: {
             schemaId,
           },
-          includeSpans: true,
           includeRootSpan: true,
         });
 
+        if (!params.traceId && _traces.length) {
+          navigate(`/schema/${schemaId}/trace/${_traces[0].id}`);
+        }
         setTraces(_traces);
       } catch (error) {
         console.error(error);
@@ -35,9 +38,9 @@ function SchemaTraces({ schemaId }: { schemaId: string }) {
     if (selectedTrace) {
       navigate(`/schema/${schemaId}/trace/${selectedTrace?.id}`);
     }
-  }, [selectedTrace]);
+  }, [selectedTrace, traces]);
 
-  return TraceList({ traces, onSelect: setSelectedTrace, selectedTrace });
+  return TraceList({ traces, onSelect: setSelectedTrace });
 }
 
 export function Schema() {
@@ -81,7 +84,7 @@ export function Schema() {
         <div>
           {schema.name && <h2 className="text-2xl">{schema.name}</h2>}
           <div className="flex h-screen">
-            <div className="p-5 overflow-scroll">
+            <div className="p-10 overflow-scroll">
               <SchemaViewer typeDefs={schema.typeDefs} />
             </div>
             <div className="h-screen flex-1 flex flex-col p-5">
