@@ -1,6 +1,7 @@
 import { Span, Trace } from '../graphql-types';
 import { useEffect, useState } from 'react';
 import { listTraceGroups } from '../api/list-trace-groups';
+import { useParams } from 'react-router-dom';
 
 type RenderTree = Omit<Span, '__typename'> & {
   children: RenderTree[];
@@ -108,13 +109,6 @@ const Span = ({
           <div className="flex-none text-xs px-4 py-2">
             Duration: {data.duration.toFixed(12)} ms
           </div>
-
-          <div className="flex-none text-xs px-4 py-2">Trace ID: {data.traceId}</div>
-          <div className="flex-none text-xs px-4 py-2">Span ID: {data.spanId}</div>
-          <div className="flex-none text-xs px-4 py-2">Parent Span ID: {data.parentSpanId}</div>
-          <div className="flex-none text-xs px-4 py-2">
-            Attributes {JSON.stringify(data.attributes)}
-          </div>
         </div>
       </div>
       <div className="text-white flex flex-col">
@@ -139,7 +133,7 @@ const ControlledTreeView = ({ traces }) => {
   const maxTimestamp = Math.max(...traces.map((t) => t.timestamp + t.duration));
 
   return (
-    <div className="text-white flex flex-col px-10">
+    <div className="text-white flex flex-col">
       {treeData.map((treeItem) => (
         <Span
           isTopLevel={!treeItem.parentSpanId}
@@ -155,31 +149,34 @@ const ControlledTreeView = ({ traces }) => {
 
 export function TraceViewer() {
   const [traces, setTraces] = useState<Trace[]>([]);
+  const params = useParams();
 
   useEffect(() => {
     (async () => {
       try {
-        const _traces = await listTraceGroups();
-
-        setTraces([_traces[0]]);
+        if (params.traceId) {
+          const _traces = await listTraceGroups({
+            where: {
+              id: params.traceId,
+            },
+            includeSpans: true,
+          });
+          setTraces(_traces);
+        }
       } catch (error) {
         console.error(error);
         setTraces([]);
       }
     })();
-  }, []);
+  }, [params.traceId]);
 
   return (
-    <div className="flex flex-1 gap-5 py-10">
-      <div className="w-3/10 h-full text-graphql-otel-green border-r p-4 rounded">
-        <h2 className="text-lg p-4">GraphQL Schema</h2>
-        <p className="p-4">Schema information will go here.</p>
-      </div>
-      <div className="flex flex-1 flex-col">
+    <div className="flex gap-5">
+      <div className="flex flex-1 flex-col overflow-scroll">
         {traces.map((t) => {
           return (
             <div key={t?.id}>
-              <ControlledTreeView traces={t?.spans} />;
+              <ControlledTreeView traces={t?.spans} />
             </div>
           );
         })}

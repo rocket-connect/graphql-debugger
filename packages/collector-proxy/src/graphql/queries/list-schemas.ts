@@ -2,9 +2,21 @@ import { prisma } from '../../prisma';
 import { SchemaObject, Schema } from '../objects/schema';
 import { builder } from '../schema';
 
+export type ListSchemasWhere = {
+  id?: string;
+};
+
 export type ListSchemasResponse = {
   schemas: Schema[];
 };
+
+export const ListSchemasWhere = builder.inputType('ListSchemasWhere', {
+  fields: (t) => ({
+    id: t.string({
+      required: false,
+    }),
+  }),
+});
 
 export const ListSchemasResponse = builder.objectType('ListSchemasResponse', {
   fields: (t) => ({
@@ -17,8 +29,18 @@ export const ListSchemasResponse = builder.objectType('ListSchemasResponse', {
 builder.queryField('listSchemas', (t) =>
   t.field({
     type: ListSchemasResponse,
+    args: {
+      where: t.arg({
+        type: ListSchemasWhere,
+        required: false,
+      }),
+    },
     resolve: async (root, args) => {
-      const schemas = await prisma.schema.findMany();
+      const where = {
+        ...(args.where?.id ? { id: args.where.id } : {}),
+      };
+
+      const schemas = await prisma.schema.findMany({ where });
 
       return {
         schemas: schemas.map((schema) => ({

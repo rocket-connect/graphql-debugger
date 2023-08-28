@@ -1,5 +1,9 @@
-import { TraceViewer } from '../components/TraceViewer';
+import { Schemas } from './Schemas';
 
 export function Home() {
-  return <TraceViewer />;
+  return (
+    <div className="text-white bg-graphql-otel-dark gradient-background h-screen p-10">
+      <Schemas />
+    </div>
+  );
 }

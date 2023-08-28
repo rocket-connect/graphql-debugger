@@ -3,7 +3,7 @@ import { Router } from './pages/Router';
 
 export function App() {
   return (
-    <div className="bg-graphql-otel-dark gradient-background flex flex-col">
+    <div className="bg-graphql-otel-dark gradient-background text-white">
       <Header />
       <Router />
     </div>

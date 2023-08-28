@@ -1,13 +1,20 @@
-import { Query, Trace } from '../graphql-types';
+import { ListTraceGroupsWhere, Query, Trace } from '../graphql-types';
 import { api } from './api';
 
-const ListTraceGroups = /* GraphQL */ `
-  query {
-    listTraceGroups {
+const ListTraceGroupsQuery = /* GraphQL */ `
+  query (
+    $where: ListTraceGroupsWhere
+    $includeSpans: Boolean = false
+    $includeRootSpan: Boolean = false
+  ) {
+    listTraceGroups(where: $where) {
       traces {
         id
         traceId
-        spans {
+        spans @include(if: $includeSpans) {
+          ...SpanObject
+        }
+        rootSpan @include(if: $includeRootSpan) {
           ...SpanObject
         }
       }
@@ -24,12 +31,27 @@ const ListTraceGroups = /* GraphQL */ `
     attributes
     duration
     timestamp
+    endTimeUnixNano
+    startTimeUnixNano
   }
 `;
 
-export async function listTraceGroups(): Promise<Trace[]> {
+export async function listTraceGroups({
+  where,
+  includeSpans = false,
+  includeRootSpan = false,
+}: {
+  where?: ListTraceGroupsWhere;
+  includeSpans?: boolean;
+  includeRootSpan?: boolean;
+} = {}): Promise<Trace[]> {
   const { data, errors } = await api<{ listTraceGroups: Query['listTraceGroups'] }>({
-    query: ListTraceGroups,
+    query: ListTraceGroupsQuery,
+    variables: {
+      where,
+      includeSpans,
+      includeRootSpan,
+    },
   });
 
   if (errors && errors?.length > 0) {
@@ -37,4 +59,20 @@ export async function listTraceGroups(): Promise<Trace[]> {
   }
 
   return data.listTraceGroups.traces;
+}
+
+export async function getTraceGroup(id: string): Promise<Trace> {
+  const traceGroups = await listTraceGroups({
+    where: {
+      id,
+    },
+  });
+
+  const traceGroup = traceGroups.find((t) => t.id === id);
+
+  if (!traceGroup) {
+    throw new Error(`Trace group with id ${id} not found`);
+  }
+
+  return traceGroup;
 }

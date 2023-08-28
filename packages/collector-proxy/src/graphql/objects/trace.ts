@@ -6,20 +6,26 @@ export type Trace = {
   id: string;
   traceId: string;
   spans: Span[];
+  rootSpan?: Span;
 };
 
 export const TraceObject = builder.objectType('Trace', {
   fields: (t) => ({
     id: t.exposeString('id'),
     traceId: t.exposeString('traceId'),
+    rootSpan: t.field({
+      type: SpanObject,
+      nullable: true,
+      resolve: async (root, args, context) => {
+        const span = await context.loaders.rootSpanLoader.load(root.id);
+
+        return span;
+      },
+    }),
     spans: t.field({
       type: [SpanObject],
-      resolve: async (root) => {
-        const spans = await prisma.span.findMany({
-          where: {
-            traceGroupId: root.id,
-          },
-        });
+      resolve: async (root, args, context) => {
+        const spans = await context.loaders.spanLoader.load(root.id);
 
         return spans.reduce<Span[]>((list, span) => {
           // collapse duplicate spans and add together, this is for graphql field resolvers and n+1
@@ -32,12 +38,12 @@ export const TraceObject = builder.objectType('Trace', {
             const spanEndTime = span.endTimeUnixNano;
 
             groupSpan.startTimeUnixNano =
-              BigInt(groupSpan.startTimeUnixNano) > spanStartTime
+              groupSpan.startTimeUnixNano > spanStartTime
                 ? spanStartTime.toString()
                 : groupSpan.startTimeUnixNano;
 
             groupSpan.endTimeUnixNano =
-              BigInt(groupSpan.endTimeUnixNano) < spanEndTime
+              groupSpan.endTimeUnixNano < spanEndTime
                 ? spanEndTime.toString()
                 : groupSpan.endTimeUnixNano;
 
