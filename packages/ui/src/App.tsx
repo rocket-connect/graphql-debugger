@@ -1,33 +1,8 @@
 import 'tailwindcss/tailwind.css';
-import { gql, useQuery } from 'urql';
-import { Query, Span } from './graphql-types';
+import { Span, Trace } from './graphql-types';
 import { Header } from './components/Header';
-
-const ListTraceGroups = gql`
-  query {
-    listTraceGroups {
-      traces {
-        id
-        traceId
-        spans {
-          ...SpanObject
-        }
-      }
-    }
-  }
-
-  fragment SpanObject on Span {
-    id
-    spanId
-    traceId
-    parentSpanId
-    name
-    kind
-    attributes
-    duration
-    timestamp
-  }
-`;
+import { useEffect, useState } from 'react';
+import { listTraceGroups } from './api/list-trace-groups';
 
 type RenderTree = Omit<Span, '__typename'> & {
   children: RenderTree[];
@@ -110,12 +85,14 @@ const Span = ({
   maxTimestamp: number;
   isTopLevel: boolean;
 }) => {
-  let width;
+  let width, offset;
 
   width = `${(data.duration / (maxTimestamp - minTimestamp)) * 100}%`;
   if (parseFloat(width.split('%')[0]) < 5) {
     width = '1%';
   }
+
+  offset = `${((data.timestamp - minTimestamp) / (maxTimestamp - minTimestamp)) * 100}%`;
 
   return (
     <div className="relative overflow-hidden flex flex-col gap-3">
@@ -125,7 +102,7 @@ const Span = ({
 
       <div className="px-5">
         <div className="absolute h-3 bg-gray-300 w-full"></div>
-        <div className="absolute h-3 bg-green-500" style={{ width }}></div>
+        <div className="absolute h-3 bg-green-500" style={{ width, left: offset }}></div>
       </div>
 
       <div className="pt-5">
@@ -179,14 +156,20 @@ const ControlledTreeView = ({ traces }) => {
 };
 
 export function App() {
-  const [result] = useQuery<{ listTraceGroups: Query['listTraceGroups'] }>({
-    query: ListTraceGroups,
-  });
+  const [traces, setTraces] = useState<Trace[]>([]);
 
-  const { data, fetching, error } = result;
+  useEffect(() => {
+    (async () => {
+      try {
+        const _traces = await listTraceGroups();
 
-  if (fetching) return <p>Loading...</p>;
-  if (error) return <p>Oh no... {error.message}</p>;
+        setTraces([_traces[0]]);
+      } catch (error) {
+        console.error(error);
+        setTraces([]);
+      }
+    })();
+  }, []);
 
   return (
     <div className="bg-graphql-otel-dark gradient-background flex flex-col">
@@ -197,7 +180,7 @@ export function App() {
           <p className="p-4">Schema information will go here.</p>
         </div>
         <div className="flex flex-1 flex-col">
-          {[data?.listTraceGroups.traces[0]].map((t) => {
+          {traces.map((t) => {
             return (
               <div key={t?.id}>
                 <ControlledTreeView traces={t?.spans} />;
