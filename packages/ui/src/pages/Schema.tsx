@@ -84,10 +84,10 @@ export function Schema() {
         <div>
           {schema.name && <h2 className="text-2xl">{schema.name}</h2>}
           <div className="flex h-screen">
-            <div className="p-10 overflow-scroll">
+            <div className="p-10 overflow-scroll w-1/5">
               <SchemaViewer typeDefs={schema.typeDefs} />
             </div>
-            <div className="h-screen flex-1 flex flex-col p-5">
+            <div className="h-screen flex-1 flex flex-col p-5 w-4/5">
               <div className="h-1/2 overflow-scroll p-5">{trace && <TraceViewer />}</div>
               <div className="flex-1 h-1/2 overflow-scroll p-5">
                 <SchemaTraces schemaId={schema.id} />

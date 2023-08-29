@@ -42,47 +42,7 @@ const createTreeData = (spanArray: Span[]): RenderTree[] => {
     }
   });
 
-  // Sort the children so that leaf nodes come before non-leaf nodes.
-  const sortChildren = (node: RenderTree) => {
-    if (node.children.length > 0) {
-      node.children.forEach(sortChildren);
-      node.children.sort((a, b) => a.timestamp - b.timestamp);
-    }
-  };
-
-  treeData.forEach(sortChildren);
-
   return treeData;
-};
-
-const renderTree = (treeData, minTimestamp, maxTimestamp) => {
-  let width = `${(treeData.duration / (maxTimestamp - minTimestamp)) * 100}%`;
-  const widthNumber = parseFloat(width.split('%')[0]);
-  if (widthNumber < 5) {
-    width = '2%';
-  }
-
-  return (
-    <div className="flex items-center w-full">
-      <div className="px-1">
-        <div className="flex-none whitespace-nowrap overflow-hidden overflow-ellipsis text-graphql-otel-green text-lg px-4 py-2">
-          {treeData.name}
-        </div>
-
-        <div className="relative flex-grow">
-          <div
-            className="absolute h-1 bg-graphql-otel-green"
-            style={{
-              width,
-            }}
-          ></div>
-        </div>
-      </div>
-      {Array.isArray(treeData.children)
-        ? treeData.children.map((child) => renderTree(child, minTimestamp, maxTimestamp))
-        : null}
-    </div>
-  );
 };
 
 const Span = ({
@@ -108,34 +68,25 @@ const Span = ({
 
   return (
     <div className="relative overflow-hidden flex flex-col gap-5">
-      <div className="flex flex-col w-full">
+      <div className="py-4">
+        <div className={`absolute h-3 ${isSelected ? 'bg-gray-500' : 'bg-gray-100'} w-full`}></div>
         <div
-          className={`flex-none text-white ${
-            isSelected ? 'underline decoration-green-500 font-bold text-lg' : ''
-          }`}
-        >
-          {data.name}
-        </div>
-      </div>
-
-      <div>
-        <div className="absolute h-3 bg-gray-300 w-full"></div>
-        <div className="absolute h-3 bg-green-500" style={{ width, left: offset }}></div>
+          className={`absolute h-3 ${isSelected ? 'bg-green-900' : 'bg-green-500'}`}
+          style={{ width, left: offset }}
+        ></div>
       </div>
 
       <div className="text-white flex flex-col p-0 m-0">
         {Array.isArray(data.children)
-          ? data.children
-              .sort((a, b) => a.children.length - b.children.length)
-              .map((child) => (
-                <Span
-                  key={child.id}
-                  data={child}
-                  minTimestamp={minTimestamp}
-                  maxTimestamp={maxTimestamp}
-                  selectedSpanId={selectedSpanId}
-                />
-              ))
+          ? data.children.map((child) => (
+              <Span
+                key={child.id}
+                data={child}
+                minTimestamp={minTimestamp}
+                maxTimestamp={maxTimestamp}
+                selectedSpanId={selectedSpanId}
+              />
+            ))
           : null}
       </div>
     </div>
@@ -197,7 +148,7 @@ export default function RichObjectTreeView({
         nodeId={node.id}
         label={<span onClick={() => onSelect(node.id)}>{node.name}</span>}
       >
-        <div className="flex flex-col gap-8 pt-8">
+        <div className="flex flex-col gap-6 pt-6">
           {Array.isArray(node.children) ? node.children.map((node) => renderTree(node)) : null}
         </div>
       </TreeItem>
@@ -212,7 +163,7 @@ export default function RichObjectTreeView({
         defaultExpanded={['root']}
         defaultExpandIcon={<ChevronRightIcon />}
       >
-        <div className="flex flex-col gap-8">{data.map((node) => renderTree(node))}</div>
+        <div className="flex flex-col gap-6">{data.map((node) => renderTree(node))}</div>
       </TreeView>
     </div>
   );
