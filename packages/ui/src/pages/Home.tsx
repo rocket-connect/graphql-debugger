@@ -2,7 +2,7 @@ import { Schemas } from './Schemas';
 
 export function Home() {
   return (
-    <div className="text-white bg-graphql-otel-dark gradient-background h-screen p-10">
+    <div className="text-white bg-graphql-otel-dark h-screen p-10">
       <Schemas />
     </div>
   );

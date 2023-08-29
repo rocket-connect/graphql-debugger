@@ -194,7 +194,7 @@ export function TraceViewer() {
   }, [params.traceId]);
 
   return (
-    <div className="flex gap-5">
+    <div className="flex gap-5 h-full">
       <div className="flex flex-1 flex-row overflow-scroll">
         <div className="w-1/3">
           <RichObjectTreeView

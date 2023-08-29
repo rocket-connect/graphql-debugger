@@ -67,7 +67,7 @@ function RenderType({
   }
 
   return (
-    <div className="flex flex-col py-5 font-bold">
+    <div className="flex flex-col font-bold">
       <p>
         <span>{kindKeyword}</span> <span className="text-graphql-otel-green">{type.name}</span>{' '}
         {`{`}
@@ -85,8 +85,8 @@ export function SchemaViewer({ typeDefs }: { typeDefs: string }) {
   const parsed = parse(typeDefs);
 
   return (
-    <div>
-      <pre className="text-sm">
+    <div className="p-5">
+      <pre className="text-sm flex flex-col gap-5">
         {parsed.definitions.map((def, index) => {
           if (def.kind === 'ObjectTypeDefinition' || def.kind === 'InputObjectTypeDefinition') {
             const name = def.name.value;
