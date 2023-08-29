@@ -32,8 +32,6 @@ collector.post('/v1/traces', async (req, res) => {
         .end();
     }
 
-    return res.status(200).json({}).end();
-
     const spans = (body.resourceSpans || []).flatMap((rS) => {
       const _spans = rS.scopeSpans.flatMap((sS) => {
         return (sS.spans || []).map((s) => {
