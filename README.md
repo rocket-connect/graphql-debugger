@@ -4,10 +4,10 @@ Debug your GraphQL server locally.
 
 ## Packages
 
-1. [ `@graphql-debugger/ui`](./packages/ui/README.md)
-2. [`@graphql-debugger/collector-proxy`](./packages/collector-proxy/README.md)
-3. [`@graphql-debugger/trace-schema`](./packages/trace-schema/README.md)
-4. [`@graphql-debugger`](./packages/graphql-debugger/README.md)
+1. [ `@graphql-debugger/ui`](./packages/ui/README.md) - Frontend
+2. [`@graphql-debugger/collector-proxy`](./packages/collector-proxy/README.md) - Data Collector
+3. [`@graphql-debugger/trace-schema`](./packages/trace-schema/README.md) - Schema Plugin
+4. [`graphql-debugger`](./packages/graphql-debugger/README.md) - CLI
 
 ## Getting Started
 
