@@ -2,17 +2,12 @@
 
 Debug your GraphQL server locally.
 
-- [Website](https://graphql-debugger.com)
-- [Documentation](https://graphql-debugger.com/docs)
-
-Hey 👋, welcome to the monorepo for GraphQL Debugger. This is where we develop the GraphQL Debugger frontend UI and collector proxy.
-
 ## Packages
 
-1. `@graphql-debugger/ui` - User interface for GraphQL Debugger
-2. `@graphql-debugger/collector-proxy` - Collects GraphQL queries, and serves the GraphQL Debugger UI.
-3. `@graphql-debugger/trace-schema` - Tool for tracing your GraphQL schema, sending the results to the debugger.
-4. `graphql-debugger` - CLI for GraphQL Debugger
+1. [ `@graphql-debugger/ui`](./packages/ui/README.md)
+2. [`@graphql-debugger/collector-proxy`](./packages/collector-proxy/README.md)
+3. [`@graphql-debugger/trace-schema`](./packages/trace-schema/README.md)
+4. [`@graphql-debugger`](./packages/graphql-debugger/README.md)
 
 ## Getting Started
 
