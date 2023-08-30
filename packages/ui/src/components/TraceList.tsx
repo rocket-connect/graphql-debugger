@@ -29,22 +29,33 @@ export function TraceList({
         <tbody>
           {traces.map((trace) => {
             const rootSpan = trace.rootSpan;
-            const startTimeMillis = BigInt(rootSpan?.startTimeUnixNano || '') / BigInt(1000000);
+            const errorMessage = trace?.firstSpanErrorMessage;
+            const startTimeMillis = BigInt(rootSpan?.startTimeUnixNano || 0) / BigInt(1000000);
             const startDate = new Date(Number(startTimeMillis));
+            const isSelected = trace.id === params.traceId;
+
+            let traceClasses = 'absolute h-3 ';
+            if (isSelected) {
+              traceClasses += ' font-bold underline';
+            }
+
+            if (errorMessage) {
+              traceClasses += ' text-red-500 underline-graphql-otel-red-500';
+            } else {
+              traceClasses += ' text-green-500 underline-graphql-otel-green';
+            }
 
             return (
               <tr key={trace.id} className="border-b" onClick={() => onSelect(trace)}>
                 <th
                   scope="row"
-                  className={`px-6 py-4 font-medium whitespace-nowrap ${
-                    trace.id === params.traceId
-                      ? 'text-graphql-otel-green font-bold underline underline-graphql-otel-green'
-                      : ''
-                  }å}`}
+                  className={`px-6 py-4 font-medium whitespace-nowrap ${traceClasses}`}
                 >
                   {rootSpan?.name}
                 </th>
-                <td className="px-6 py-4">{rootSpan?.duration.toFixed(2)} ms</td>
+                <td className="px-6 py-4">
+                  {Number(BigInt(rootSpan?.durationNano || 0) / BigInt(1000000)).toFixed(2)} ms
+                </td>
                 <td className="px-6 py-4">{moment(startDate).fromNow()}</td>
               </tr>
             );

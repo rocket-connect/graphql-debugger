@@ -1,4 +1,8 @@
 import { parse, FieldDefinitionNode } from 'graphql';
+import { useEffect, useState } from 'react';
+import { aggregateSpans } from '../api/aggregate-spans';
+import { AggregateSpansResponse } from '../graphql-types';
+import moment from 'moment';
 
 function extractTypeName(typeNode): string {
   if (typeNode.kind === 'NamedType') {
@@ -14,9 +18,45 @@ function extractTypeName(typeNode): string {
   return '';
 }
 
-function RenderField({ field }: { field: FieldDefinitionNode }) {
+function RenderStats({ aggregate }: { aggregate: AggregateSpansResponse | null }) {
+  const lastResolveMilis = BigInt(aggregate?.lastResolved || 0) / BigInt(1000000);
+  const lastResolved = new Date(Number(lastResolveMilis));
+
+  return (
+    <div className="pl-2 text-xs font-light">
+      <ul className="list-disc list-inside marker:text-graphql-otel-green flex flex-col gap-2">
+        <li>
+          Resolve Count: <span className="font-bold">{aggregate?.resolveCount}</span>
+        </li>
+        <li>
+          Error Count: <span className="font-bold text-red-500">{aggregate?.errorCount}</span>
+        </li>
+        <li>
+          Average Duration:{' '}
+          <span className="font-bold">
+            {Number(BigInt(aggregate?.averageDuration || 0) / BigInt(1000000))} ms
+          </span>
+        </li>
+        <li>
+          Last Resolved: <span className="font-bold">{moment(lastResolved).fromNow()}</span>
+        </li>
+      </ul>
+    </div>
+  );
+}
+
+function RenderField({
+  field,
+  parentName,
+  schemaId,
+}: {
+  field: FieldDefinitionNode;
+  parentName: string;
+  schemaId: string;
+}) {
   const name = field.name.value;
   const type = extractTypeName(field.type);
+  const [aggregate, setAggregate] = useState<AggregateSpansResponse | null>(null);
 
   const processedType = Array.from(type).map((char, index) => {
     if (['!', '[', ']'].includes(char)) {
@@ -29,34 +69,41 @@ function RenderField({ field }: { field: FieldDefinitionNode }) {
     return char;
   });
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const _aggregate = await aggregateSpans({
+          where: {
+            name: `${parentName} ${name}`,
+            schemaId,
+          },
+        });
+
+        setAggregate(_aggregate);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, [name, schemaId]);
+
   return (
     <li className="my-2 ml-2 p-2">
       <div className="flex items-center">
         <span>{name}:</span>
         <span className="text-graphql-otel-green ml-2">{processedType}</span>
       </div>
-      <div className="pl-2 text-xs font-light">
-        <ul className="list-disc list-inside marker:text-graphql-otel-green">
-          <li>
-            Resolve Count: <span className="font-bold">45</span>
-          </li>
-          <li>
-            Error Count: <span className="font-bold text-red-500">3</span>
-          </li>
-          <li>
-            Average Duration: <span className="font-bold">100ms</span>
-          </li>
-          <li>
-            Last Resolved: <span className="font-bold">a few seconds ago</span>
-          </li>
-        </ul>
+      <div className="py-2">
+        <RenderStats aggregate={aggregate} />
       </div>
     </li>
   );
 }
+
 function RenderType({
+  schemaId,
   type,
 }: {
+  schemaId: string;
   type: { name: string; kind: string; fields: readonly FieldDefinitionNode[] };
 }) {
   let kindKeyword = '';
@@ -66,27 +113,35 @@ function RenderType({
     return null;
   }
 
+  let parentName = type.name;
+  if (['Query', 'Mutation'].includes(type.name)) {
+    parentName = type.name.toLocaleLowerCase();
+  }
+
   return (
-    <div className="flex flex-col font-bold">
+    <div className="flex flex-col font-bold tracking-widest spacing-widest">
       <p>
         <span>{kindKeyword}</span> <span className="text-graphql-otel-green">{type.name}</span>{' '}
         {`{`}
       </p>
-      <ul className="flex flex-col gap-2 border-l border-graphql-otel-green my-2 ml-2">
-        {type.fields.map((field, index) => (
-          <RenderField key={index} field={field} />
-        ))}
-      </ul>
+      <div className="border-l border-graphql-otel-green my-2 ml-2 pl-2">
+        <ul className="flex flex-col gap-2 my-4">
+          {type.fields.map((field, index) => (
+            <RenderField schemaId={schemaId} parentName={parentName} key={index} field={field} />
+          ))}
+        </ul>
+      </div>
       <p>{`}`}</p>
     </div>
   );
 }
-export function SchemaViewer({ typeDefs }: { typeDefs: string }) {
+
+export function SchemaViewer({ schemaId, typeDefs }: { schemaId: string; typeDefs: string }) {
   const parsed = parse(typeDefs);
 
   return (
     <div className="p-5">
-      <pre className="text-sm flex flex-col gap-5">
+      <pre className="text-sm flex flex-col gap-10">
         {parsed.definitions.map((def, index) => {
           if (def.kind === 'ObjectTypeDefinition' || def.kind === 'InputObjectTypeDefinition') {
             const name = def.name.value;
@@ -95,8 +150,13 @@ export function SchemaViewer({ typeDefs }: { typeDefs: string }) {
             return (
               <div className="flex flex-col" key={def.name.value}>
                 <RenderType
+                  schemaId={schemaId}
                   key={index}
-                  type={{ name, kind, fields: def.fields as FieldDefinitionNode[] }}
+                  type={{
+                    name,
+                    kind,
+                    fields: def.fields as FieldDefinitionNode[],
+                  }}
                 />
               </div>
             );

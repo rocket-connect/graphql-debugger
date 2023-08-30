@@ -8,10 +8,11 @@ export type Span = {
   traceId: PrismaSpan['traceId'];
   name: PrismaSpan['name'];
   kind: PrismaSpan['kind'];
-  duration: number;
-  timestamp: number;
-  startTimeUnixNano: string;
-  endTimeUnixNano: string;
+  durationNano: bigint;
+  startTimeUnixNano: bigint;
+  endTimeUnixNano: bigint;
+  errorMessage?: PrismaSpan['errorMessage'];
+  errorStack?: PrismaSpan['errorStack'];
   attributes: string;
   createdAt: string;
   updatedAt: string;
@@ -25,28 +26,27 @@ export const SpanObject = builder.objectType('Span', {
     traceId: t.exposeString('traceId'),
     name: t.exposeString('name'),
     kind: t.exposeString('kind'),
-    startTimeUnixNano: t.exposeString('startTimeUnixNano'),
-    timestamp: t.field({
-      type: 'Float',
+    durationNano: t.field({
+      type: 'String',
       resolve: (root) => {
-        const startTime = BigInt(root.startTimeUnixNano);
-        const timestamp = Number(startTime / BigInt(1000000));
-
-        return timestamp;
+        return root.durationNano.toString();
       },
     }),
-    duration: t.field({
-      type: 'Float',
+    startTimeUnixNano: t.field({
+      type: 'String',
       resolve: (root) => {
-        const startTime = BigInt(root.startTimeUnixNano);
-        const endTime = BigInt(root.endTimeUnixNano);
-        const duration = Number((endTime - startTime) / BigInt(1000000));
-
-        return duration;
+        return root.startTimeUnixNano.toString();
       },
     }),
-    endTimeUnixNano: t.exposeString('endTimeUnixNano'),
+    endTimeUnixNano: t.field({
+      type: 'String',
+      resolve: (root) => {
+        return root.endTimeUnixNano.toString();
+      },
+    }),
     attributes: t.exposeString('attributes'),
+    errorMessage: t.exposeString('errorMessage', { nullable: true }),
+    errorStack: t.exposeString('errorStack', { nullable: true }),
     createdAt: t.exposeString('createdAt'),
     updatedAt: t.exposeString('updatedAt'),
   }),

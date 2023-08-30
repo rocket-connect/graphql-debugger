@@ -27,7 +27,10 @@ model Span {
   kind              String
   startTimeUnixNano BigInt
   endTimeUnixNano   BigInt
+  durationNano      BigInt
   attributes        String
+  errorMessage      String?
+  errorStack        String?
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
   traceGroup        TraceGroup? @relation(fields: [traceGroupId], references: [id])

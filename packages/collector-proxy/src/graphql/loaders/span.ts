@@ -27,13 +27,15 @@ export function rootSpanLoader() {
         traceId: span.traceId,
         name: span.name as string,
         kind: span.kind,
-        startTimeUnixNano: span.startTimeUnixNano.toString(),
-        endTimeUnixNano: span.endTimeUnixNano.toString(),
-        attributes: span.attributes,
-        duration: 0,
+        startTimeUnixNano: span.startTimeUnixNano,
+        endTimeUnixNano: span.endTimeUnixNano,
+        durationNano: span.durationNano,
         timestamp: 0,
+        attributes: span.attributes,
         createdAt: span.createdAt.toString(),
         updatedAt: span.updatedAt.toString(),
+        errorMessage: span.errorMessage,
+        errorStack: span.errorStack,
       };
     });
   });
@@ -60,13 +62,15 @@ export function spanLoader() {
           traceId: span.traceId,
           name: span.name as string,
           kind: span.kind,
-          startTimeUnixNano: span.startTimeUnixNano.toString(),
-          endTimeUnixNano: span.endTimeUnixNano.toString(),
+          startTimeUnixNano: span.startTimeUnixNano,
+          endTimeUnixNano: span.endTimeUnixNano,
+          durationNano: span.durationNano,
           attributes: span.attributes,
-          duration: 0,
           timestamp: 0,
           createdAt: span.createdAt.toString(),
           updatedAt: span.updatedAt.toString(),
+          errorMessage: span.errorMessage,
+          errorStack: span.errorStack,
         };
       });
     });

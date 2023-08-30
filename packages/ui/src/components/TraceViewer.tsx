@@ -11,6 +11,8 @@ type RenderTree = Omit<Span, '__typename'> & {
   children: RenderTree[];
 };
 
+const ms = BigInt(1000000);
+
 const createTreeData = (spanArray: Span[]): RenderTree[] => {
   const treeData: RenderTree[] = [];
   const lookup: { [key: string]: RenderTree } = {};
@@ -22,15 +24,16 @@ const createTreeData = (spanArray: Span[]): RenderTree[] => {
       traceId: span.traceId,
       attributes: span.attributes,
       children: [],
-      timestamp: span.timestamp,
-      duration: span.duration,
+      startTimeUnixNano: span.startTimeUnixNano,
+      endTimeUnixNano: span.endTimeUnixNano,
+      durationNano: span.durationNano,
       parentSpanId: span.parentSpanId as string,
       createdAt: span.createdAt,
       kind: span.kind,
-      endTimeUnixNano: span.endTimeUnixNano,
-      startTimeUnixNano: span.startTimeUnixNano,
       id: span.id,
       updatedAt: span.updatedAt,
+      errorMessage: span.errorMessage,
+      errorStack: span.errorStack,
     };
   });
 
@@ -58,22 +61,33 @@ const Span = ({
 }) => {
   let width, offset;
 
-  const calculatedWidth = (data.duration / (maxTimestamp - minTimestamp)) * 100;
+  const calculatedWidth =
+    (Number(BigInt(data.durationNano) / ms) / (maxTimestamp - minTimestamp)) * 100;
   width = calculatedWidth < 5 ? '5%' : `${calculatedWidth}%`;
 
-  const calculatedOffset = ((data.timestamp - minTimestamp) / (maxTimestamp - minTimestamp)) * 100;
+  const calculatedOffset =
+    ((Number(BigInt(data.startTimeUnixNano) / ms) - minTimestamp) / (maxTimestamp - minTimestamp)) *
+    100;
   offset = calculatedOffset < 0 ? '0%' : `${calculatedOffset}%`;
 
   const isSelected = data.spanId === selectedSpanId;
 
+  let spanClasses = 'absolute h-3';
+  if (data.errorMessage) {
+    spanClasses += ' bg-red-500';
+  } else {
+    spanClasses += ' bg-green-500';
+  }
+
   return (
     <div className="relative overflow-hidden flex flex-col gap-5">
       <div className="py-4">
-        <div className={`absolute h-3 ${isSelected ? 'bg-gray-500' : 'bg-gray-100'} w-full`}></div>
         <div
-          className={`absolute h-3 ${isSelected ? 'bg-green-900' : 'bg-green-500'}`}
-          style={{ width, left: offset }}
+          className={`absolute h-3 ${data.errorMessage ? '' : ''} ${
+            isSelected ? 'bg-gray-500' : 'bg-gray-100'
+          } w-full`}
         ></div>
+        <div className={spanClasses} style={{ width, left: offset }}></div>
       </div>
 
       <div className="text-white flex flex-col p-0 m-0">
@@ -95,8 +109,8 @@ const Span = ({
 
 const TraceView = ({ spans, selectedSpanId }: { spans: Span[]; selectedSpanId?: string }) => {
   const treeData = createTreeData(spans);
-  const minTimestamp = Math.min(...spans.map((t) => t.timestamp));
-  const maxTimestamp = Math.max(...spans.map((t) => t.timestamp + t.duration));
+  const minTimestamp = Math.min(...spans.map((t) => Number(BigInt(t.startTimeUnixNano) / ms)));
+  const maxTimestamp = Math.max(...spans.map((t) => Number(BigInt(t.endTimeUnixNano) / ms)));
 
   return (
     <div className="text-white flex flex-col">

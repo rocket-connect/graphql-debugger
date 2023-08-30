@@ -83,13 +83,13 @@ export function Schema() {
   }, [params.traceId, setTrace]);
 
   return (
-    <div className="p-10">
+    <div className="p-5">
       {schema && (
-        <div className="flex p-10 gap-10">
+        <div className="flex p-5 gap-5">
           <div className="w-1/6 overflow-scroll flex-1 h-screen">
-            <SchemaViewer typeDefs={schema.typeDefs} />
+            <SchemaViewer typeDefs={schema.typeDefs} schemaId={schema.id} />
           </div>
-          <div className="flex flex-col w-4/6 gap-10 h-screen">
+          <div className="flex flex-col w-4/6 gap-5 h-screen">
             <div className="overflow-scroll h-1/2">{trace && <TraceViewer />}</div>
             <div className="h-1/2 overflow-scroll ">
               <SchemaTraces schemaId={schema.id} />

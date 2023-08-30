@@ -32,6 +32,8 @@ collector.post('/v1/traces', async (req, res) => {
         .end();
     }
 
+    // return res.status(200).json({}).end();
+
     const spans = (body.resourceSpans || []).flatMap((rS) => {
       const _spans = rS.scopeSpans.flatMap((sS) => {
         return (sS.spans || []).map((s) => {
@@ -54,6 +56,16 @@ collector.post('/v1/traces', async (req, res) => {
             return { ...acc, [val.key]: realValue };
           }, {});
 
+          const firstError = s.events.find((e) => e.name === 'exception');
+          let errorMessage: string | undefined;
+          let errorStack: string | undefined;
+          if (firstError) {
+            const message = firstError.attributes.find((a) => a.key === 'exception.message');
+            const stack = firstError.attributes.find((a) => a.key === 'exception.stacktrace');
+            errorMessage = message?.value.stringValue || 'Unknown Error';
+            errorStack = stack?.value.stringValue;
+          }
+
           return {
             spanId: s.spanId,
             traceId: s.traceId,
@@ -63,6 +75,8 @@ collector.post('/v1/traces', async (req, res) => {
             startTimeUnixNano: s.startTimeUnixNano,
             endTimeUnixNano: s.endTimeUnixNano,
             attributes: JSON.stringify(attributes),
+            errorMessage,
+            errorStack,
           };
         });
       });
@@ -148,17 +162,24 @@ collector.post('/v1/traces', async (req, res) => {
               setTimeout(() => {
                 (async () => {
                   try {
+                    const startTimeUnixNano = BigInt(span.startTimeUnixNano);
+                    const endTimeUnixNano = BigInt(span.endTimeUnixNano);
+                    const durationNano = endTimeUnixNano - startTimeUnixNano;
+
                     await prisma.span.create({
                       data: {
                         spanId: span.spanId,
                         parentSpanId: span.parentSpanId,
                         name: span.name,
                         kind: span.kind.toString(),
-                        startTimeUnixNano: span.startTimeUnixNano,
-                        endTimeUnixNano: span.endTimeUnixNano,
+                        startTimeUnixNano,
+                        endTimeUnixNano,
+                        durationNano,
                         attributes: span.attributes,
                         traceId: span.traceId,
                         traceGroupId,
+                        errorMessage: span.errorMessage,
+                        errorStack: span.errorStack,
                       },
                     });
                   } catch (error) {

@@ -2,7 +2,12 @@ import { ListTraceGroupsResponse, ListTraceGroupsWhere } from '../queries/list-t
 import { Span } from './span';
 import { Trace } from './trace';
 import { Schema } from './schema';
-import { ListSchemasResponse, ListSchemasWhere } from '../queries';
+import {
+  AggregateSpansResponse,
+  AggregateSpansWhere,
+  ListSchemasResponse,
+  ListSchemasWhere,
+} from '../queries';
 
 export interface Objects {
   Trace: Trace;
@@ -12,4 +17,6 @@ export interface Objects {
   ListSchemasResponse: ListSchemasResponse;
   ListTraceGroupsWhere: ListTraceGroupsWhere;
   ListTraceGroupsResponse: ListTraceGroupsResponse;
+  AggregateSpansWhere: AggregateSpansWhere;
+  AggregateSpansResponse: AggregateSpansResponse;
 }

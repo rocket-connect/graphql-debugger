@@ -1,4 +1,3 @@
-import { prisma } from '../../prisma';
 import { builder } from '../schema';
 import { Span, SpanObject } from './span';
 
@@ -7,6 +6,8 @@ export type Trace = {
   traceId: string;
   spans: Span[];
   rootSpan?: Span;
+  firstSpanErrorMessage?: string;
+  firstSpanErrorStack?: string;
 };
 
 export const TraceObject = builder.objectType('Trace', {
@@ -22,6 +23,24 @@ export const TraceObject = builder.objectType('Trace', {
         return span;
       },
     }),
+    firstSpanErrorMessage: t.field({
+      type: 'String',
+      nullable: true,
+      resolve: async (root, args, context) => {
+        const spans = await context.loaders.spanLoader.load(root.id);
+
+        return spans.find((span) => span.errorMessage !== null)?.errorMessage;
+      },
+    }),
+    firstSpanErrorStack: t.field({
+      type: 'String',
+      nullable: true,
+      resolve: async (root, args, context) => {
+        const spans = await context.loaders.spanLoader.load(root.id);
+
+        return spans.find((span) => span.errorMessage !== null)?.errorMessage;
+      },
+    }),
     spans: t.field({
       type: [SpanObject],
       resolve: async (root, args, context) => {
@@ -34,18 +53,16 @@ export const TraceObject = builder.objectType('Trace', {
           );
 
           if (groupSpan) {
-            const spanStartTime = span.startTimeUnixNano;
-            const spanEndTime = span.endTimeUnixNano;
+            const spanStartTime = BigInt(span.startTimeUnixNano);
+            const spanEndTime = BigInt(span.endTimeUnixNano);
 
             groupSpan.startTimeUnixNano =
               groupSpan.startTimeUnixNano > spanStartTime
-                ? spanStartTime.toString()
+                ? spanStartTime
                 : groupSpan.startTimeUnixNano;
 
             groupSpan.endTimeUnixNano =
-              groupSpan.endTimeUnixNano < spanEndTime
-                ? spanEndTime.toString()
-                : groupSpan.endTimeUnixNano;
+              groupSpan.endTimeUnixNano < spanEndTime ? spanEndTime : groupSpan.endTimeUnixNano;
 
             return list;
           } else {
@@ -58,13 +75,15 @@ export const TraceObject = builder.objectType('Trace', {
                 traceId: span.traceId,
                 name: span.name,
                 kind: span.kind,
-                startTimeUnixNano: span.startTimeUnixNano.toString(),
-                endTimeUnixNano: span.endTimeUnixNano.toString(),
+                startTimeUnixNano: span.startTimeUnixNano,
+                endTimeUnixNano: span.endTimeUnixNano,
+                durationNano: span.durationNano,
                 attributes: span.attributes,
-                duration: 0,
                 timestamp: 0,
                 createdAt: span.createdAt.toString(),
                 updatedAt: span.updatedAt.toString(),
+                errorMessage: span.errorMessage,
+                errorStack: span.errorStack,
               },
             ];
           }

@@ -11,6 +11,8 @@ const ListTraceGroupsQuery = /* GraphQL */ `
       traces {
         id
         traceId
+        firstSpanErrorMessage
+        firstSpanErrorStack
         spans @include(if: $includeSpans) {
           ...SpanObject
         }
@@ -29,10 +31,11 @@ const ListTraceGroupsQuery = /* GraphQL */ `
     name
     kind
     attributes
-    duration
-    timestamp
+    errorMessage
+    errorStack
     endTimeUnixNano
     startTimeUnixNano
+    durationNano
   }
 `;
 
@@ -55,7 +58,8 @@ export async function listTraceGroups({
   });
 
   if (errors && errors?.length > 0) {
-    throw new Error(errors.map((e) => e.message).join('\n'));
+    console.error(new Error(errors.map((e) => e.message).join('\n')));
+    return [];
   }
 
   return data.listTraceGroups.traces;
