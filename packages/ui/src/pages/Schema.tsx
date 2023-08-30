@@ -51,6 +51,7 @@ export function Schema() {
   const [schema, setSchema] = useState<Schema>();
   const [trace, setTrace] = useState<Trace>();
   const params = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -58,6 +59,7 @@ export function Schema() {
         const _schema = await getSchema(params.schemaId as string);
         setSchema(_schema);
       } catch (error) {
+        navigate('/');
         console.error(error);
       }
     })();
