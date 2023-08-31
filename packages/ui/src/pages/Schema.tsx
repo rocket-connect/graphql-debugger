@@ -44,8 +44,13 @@ function SchemaTraces({ schemaId }: { schemaId: string }) {
 
   return (
     <div className="relative">
-      <table className="text-sm text-left">
-        <thead className="text-xs">
+      <table className="text-sm text-left w-full table-fixed">
+        <colgroup>
+          <col className="w-1/3" /> {/* Adjust the percentage for even distribution */}
+          <col className="w-1/3" />
+          <col className="w-1/3" />
+        </colgroup>
+        <thead className="text-xs text-graphiql-light">
           <tr>
             <th scope="col" className="px-6 py-3">
               Name
@@ -78,7 +83,11 @@ function SchemaTraces({ schemaId }: { schemaId: string }) {
             }
 
             return (
-              <tr key={trace.id} className="border-b" onClick={() => setSelectedTrace(trace)}>
+              <tr
+                key={trace.id}
+                className="border-b border-graphiql-border text-graphiql-light"
+                onClick={() => setSelectedTrace(trace)}
+              >
                 <th
                   scope="row"
                   className={`px-6 py-4 font-medium whitespace-nowrap ${traceClasses}`}
@@ -137,7 +146,7 @@ export function Schema() {
 
   return (
     <div className="grid grid-cols-4 h-full p-3 overflow-hidden">
-      <div className="col-span-1 p-5 flex flex-col overflow-y-auto">
+      <div className="col-span-1 p-3 flex flex-col overflow-y-auto gap-6">
         <h2 className="text-graphiql-light font-bold text-3xl">Schema</h2>
         <p className="text-graphiql-light">Your GraphQL Schema with analytics on each field.</p>
         <div className="flex-1 overflow-scoll">
@@ -145,22 +154,42 @@ export function Schema() {
         </div>
       </div>
 
-      <div className="col-span-3 flex flex-col bg-graphiql-medium rounded-3xl p-3">
-        <div className="flex flex-row mx-2 ml-auto text-graphiql-light text-lg font-bold gap-2">
-          <img className="w-8" src={logo}></img>
-          <p>GraphQL Debugger</p>
+      <div className="col-span-3 flex flex-col bg-graphiql-medium rounded-3xl p-3 gap-3">
+        <div className="flex flex-row mx-2 text-graphiql-light text-lg font-bold gap-2 justify-between">
+          <div className="py-1 px-4 bg-graphiql-highlight rounded-xl">
+            {trace?.rootSpan?.graphqlDocument && (
+              <p className="text-graphiql-light text-sm">{trace?.rootSpan?.name}</p>
+            )}
+          </div>
+          <div className="flex flex-row gap-2">
+            <img className="w-8" src={logo}></img>
+            <p>GraphQL Debugger</p>
+          </div>
         </div>
 
         <div className="flex flex-row gap-5 w-full h-full">
-          <div className="overflow-y-auto p-5 bg-graphiql-dark rounded-3xl w-2/3">
-            {trace?.rootSpan?.graphqlDocument && (
-              <QueryViewer doc={trace?.rootSpan?.graphqlDocument} />
-            )}
+          <div className="h-full bg-graphiql-dark rounded-3xl w-1/3 flex flex-col justify-between">
+            <div className="grow p-6 flex flex-col gap-3">
+              <p className="text-graphiql-light">Query</p>
+              <div className="overflow-scroll">
+                {trace?.rootSpan?.graphqlDocument && (
+                  <QueryViewer doc={trace?.rootSpan?.graphqlDocument} />
+                )}
+              </div>
+            </div>
+            <div className="grow p-6 border-t border-graphiql-border flex flex-col gap-3">
+              <p className="text-graphiql-light">Query</p>
+              <div className="overflow-scroll">
+                {trace?.rootSpan?.graphqlDocument && (
+                  <QueryViewer doc={trace?.rootSpan?.graphqlDocument} />
+                )}
+              </div>
+            </div>
           </div>
 
-          <div className="flex flex-col gap-5 w-full flex-grow">
+          <div className="flex flex-col gap-5 w-full">
             <div className="overflow-scroll p-5 h-96 max-h-96">{trace && <TraceViewer />}</div>
-            <div className="p-5 bg-graphiql-dark rounded-3xl flex-grow overflow-scroll h-96 min-h-96">
+            <div className="p-5 bg-graphiql-dark rounded-3xl grow overflow-scroll h-96 min-h-96">
               {schema && <SchemaTraces schemaId={schema.id} />}
             </div>
           </div>

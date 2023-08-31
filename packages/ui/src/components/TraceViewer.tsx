@@ -2,11 +2,6 @@ import { Span, Trace } from '../graphql-types';
 import { useEffect, useState } from 'react';
 import { listTraceGroups } from '../api/list-trace-groups';
 import { useParams } from 'react-router-dom';
-import TreeView from '@mui/lab/TreeView';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import TreeItem from '@mui/lab/TreeItem';
-import { parse, print } from 'graphql';
 
 type RenderTree = Omit<Span, '__typename'> & {
   children: RenderTree[];
@@ -71,8 +66,6 @@ const Span = ({
     100;
   offset = calculatedOffset < 0 ? '0%' : `${calculatedOffset}%`;
 
-  const isSelected = data.spanId === selectedSpanId;
-
   let spanClasses = 'absolute h-2';
   if (data.errorMessage) {
     spanClasses += ' bg-red-500';
@@ -81,13 +74,15 @@ const Span = ({
   }
 
   return (
-    <div className="relative overflow-hidden flex flex-col gap-1">
+    <div className="relative overflow-hidden flex flex-col gap-1 text-xs">
       <div className="py-4">
-        <div
-          className={`absolute h-2 ${data.errorMessage ? '' : ''} ${
-            isSelected ? 'bg-gray-200' : 'bg-graphql-otel-dark'
-          } w-full`}
-        ></div>
+        <p className="py-1">
+          {data.name}{' '}
+          <span className="font-light">
+            {Number(BigInt(data?.durationNano || 0) / BigInt(1000000)).toFixed(2)} ms
+          </span>
+        </p>
+        <div className={`absolute h-2 bg-graphiql-border w-full`}></div>
         <div className={spanClasses} style={{ width, left: offset }}></div>
       </div>
 
@@ -141,48 +136,6 @@ const convertSingleNodeToRenderUITree = (node: RenderTree): RenderUITree => {
     children: node.children ? node.children.map(convertSingleNodeToRenderUITree) : undefined,
   };
 };
-
-const convertToRenderUITree = (treeDataArray: RenderTree[]): RenderUITree[] => {
-  return treeDataArray.map(convertSingleNodeToRenderUITree);
-};
-
-export default function RichObjectTreeView({
-  spans,
-  onSelect,
-}: {
-  spans: Span[];
-  onSelect: (spanId: string) => void;
-}) {
-  const treeData = createTreeData(spans);
-  const data = convertToRenderUITree(treeData);
-
-  const renderTree = (node: RenderUITree) => {
-    return (
-      <TreeItem
-        key={node.id}
-        nodeId={node.id}
-        label={<span onClick={() => onSelect(node.id)}>{node.name}</span>}
-      >
-        <div className="flex flex-col gap-6 pt-6">
-          {Array.isArray(node.children) ? node.children.map((node) => renderTree(node)) : null}
-        </div>
-      </TreeItem>
-    );
-  };
-
-  return (
-    <div className="pt-1">
-      <TreeView
-        aria-label="rich object"
-        defaultCollapseIcon={<ExpandMoreIcon />}
-        defaultExpanded={['root']}
-        defaultExpandIcon={<ChevronRightIcon />}
-      >
-        <div className="flex flex-col gap-6">{data.map((node) => renderTree(node))}</div>
-      </TreeView>
-    </div>
-  );
-}
 
 export function TraceViewer() {
   const [traces, setTraces] = useState<Trace[]>([]);

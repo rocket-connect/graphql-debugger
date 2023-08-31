@@ -11,6 +11,7 @@ module.exports = {
         ['graphiql-light']: '#B7C2D7',
         ['graphiql-border']: '#3B4355',
         ['graphiql-pink']: '#FF5794',
+        ['graphiql-highlight']: '#444D60',
       },
     },
   },
