@@ -28,6 +28,7 @@ model Span {
   startTimeUnixNano BigInt
   endTimeUnixNano   BigInt
   durationNano      BigInt
+  graphqlDocument   String?
   attributes        String
   errorMessage      String?
   errorStack        String?

@@ -79,6 +79,7 @@ export const TraceObject = builder.objectType('Trace', {
                 endTimeUnixNano: span.endTimeUnixNano,
                 durationNano: span.durationNano,
                 attributes: span.attributes,
+                graphqlDocument: span.graphqlDocument,
                 timestamp: 0,
                 createdAt: span.createdAt.toString(),
                 updatedAt: span.updatedAt.toString(),

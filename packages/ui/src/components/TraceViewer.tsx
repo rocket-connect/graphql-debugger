@@ -6,6 +6,7 @@ import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
+import { parse, print } from 'graphql';
 
 type RenderTree = Omit<Span, '__typename'> & {
   children: RenderTree[];
@@ -72,19 +73,19 @@ const Span = ({
 
   const isSelected = data.spanId === selectedSpanId;
 
-  let spanClasses = 'absolute h-3';
+  let spanClasses = 'absolute h-2';
   if (data.errorMessage) {
     spanClasses += ' bg-red-500';
   } else {
-    spanClasses += ' bg-green-500';
+    spanClasses += ' bg-graphql-otel-green';
   }
 
   return (
-    <div className="relative overflow-hidden flex flex-col gap-5">
+    <div className="relative overflow-hidden flex flex-col gap-1">
       <div className="py-4">
         <div
-          className={`absolute h-3 ${data.errorMessage ? '' : ''} ${
-            isSelected ? 'bg-gray-500' : 'bg-gray-100'
+          className={`absolute h-2 ${data.errorMessage ? '' : ''} ${
+            isSelected ? 'bg-gray-200' : 'bg-graphql-otel-dark'
           } w-full`}
         ></div>
         <div className={spanClasses} style={{ width, left: offset }}></div>
@@ -207,17 +208,26 @@ export function TraceViewer() {
     })();
   }, [params.traceId]);
 
+  const rootSpan = traces[0]?.spans?.find((s) => !s.parentSpanId);
+
   return (
     <div className="flex gap-5 h-full">
-      <div className="flex flex-1 flex-row overflow-scroll">
-        <div className="w-1/3">
-          <RichObjectTreeView
-            spans={traces[0]?.spans || []}
-            onSelect={(s) => setSelectedSpanId(s)}
-          />
+      <div className="flex flex-1 flex-col">
+        <div className="flex">
+          <div className="w-2/3">
+            <RichObjectTreeView
+              spans={traces[0]?.spans || []}
+              onSelect={(s) => setSelectedSpanId(s)}
+            />
+          </div>
+          <div className="flex align-center justify-center w-1/3">
+            <p className="my-auto">
+              {rootSpan?.graphqlDocument && <pre>{print(parse(rootSpan.graphqlDocument))}</pre>}
+            </p>
+          </div>
         </div>
 
-        <div className="w-2/3">
+        <div>
           {traces?.length && (
             <TraceView spans={traces[0]?.spans || []} selectedSpanId={selectedSpanId} />
           )}

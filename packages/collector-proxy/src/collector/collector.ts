@@ -6,6 +6,7 @@ import { debug } from '../debug';
 import crypto from 'crypto';
 import { print, parse, lexicographicSortSchema, printSchema } from 'graphql';
 import { makeExecutableSchema } from '@graphql-tools/schema';
+import { AttributeName } from '@graphql-debugger/trace-schema';
 
 export const collector: Express = express();
 collector.use(express.json());
@@ -54,7 +55,7 @@ collector.post('/v1/traces', async (req, res) => {
             }
 
             return { ...acc, [val.key]: realValue };
-          }, {});
+          }, {}) as Record<string, any>;
 
           const firstError = s.events.find((e) => e.name === 'exception');
           let errorMessage: string | undefined;
@@ -114,8 +115,22 @@ collector.post('/v1/traces', async (req, res) => {
               let traceGroupId = '';
 
               let schemaHash = '';
-              if (attributes['graphql.schema.hash']) {
-                schemaHash = attributes['graphql.schema.hash'];
+              if (!span.parentSpanId && attributes[AttributeName.SCHEMA_HASH]) {
+                schemaHash = attributes[AttributeName.SCHEMA_HASH];
+              }
+
+              const document = attributes[AttributeName.DOCUMENT];
+              let graphqlDocument: string | undefined;
+              if (!span.parentSpanId && document) {
+                try {
+                  const parsed = parse(document);
+                  const printed = print(parsed);
+
+                  graphqlDocument = printed;
+                } catch (error) {
+                  debug('Error parsing document', error);
+                  throw error;
+                }
               }
 
               const foundTraceGroup = traceGroups.find((t) => t.traceId === span.traceId);
@@ -180,6 +195,7 @@ collector.post('/v1/traces', async (req, res) => {
                         traceGroupId,
                         errorMessage: span.errorMessage,
                         errorStack: span.errorStack,
+                        graphqlDocument,
                       },
                     });
                   } catch (error) {

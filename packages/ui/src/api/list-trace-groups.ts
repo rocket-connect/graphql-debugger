@@ -36,6 +36,7 @@ const ListTraceGroupsQuery = /* GraphQL */ `
     endTimeUnixNano
     startTimeUnixNano
     durationNano
+    graphqlDocument
   }
 `;
 

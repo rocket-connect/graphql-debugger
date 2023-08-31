@@ -13,6 +13,7 @@ export type Span = {
   endTimeUnixNano: bigint;
   errorMessage?: PrismaSpan['errorMessage'];
   errorStack?: PrismaSpan['errorStack'];
+  graphqlDocument?: PrismaSpan['graphqlDocument'];
   attributes: string;
   createdAt: string;
   updatedAt: string;
@@ -44,6 +45,7 @@ export const SpanObject = builder.objectType('Span', {
         return root.endTimeUnixNano.toString();
       },
     }),
+    graphqlDocument: t.exposeString('graphqlDocument', { nullable: true }),
     attributes: t.exposeString('attributes'),
     errorMessage: t.exposeString('errorMessage', { nullable: true }),
     errorStack: t.exposeString('errorStack', { nullable: true }),
