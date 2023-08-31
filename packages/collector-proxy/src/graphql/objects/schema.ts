@@ -8,6 +8,7 @@ export type Schema = {
   name?: string;
   typeDefs: string;
   traceGroups: Trace[];
+  createdAt: Date;
 };
 
 export const SchemaObject = builder.objectType('Schema', {
@@ -16,6 +17,10 @@ export const SchemaObject = builder.objectType('Schema', {
     hash: t.exposeString('hash'),
     name: t.exposeString('name', { nullable: true }),
     typeDefs: t.exposeString('typeDefs'),
+    createdAt: t.field({
+      type: 'String',
+      resolve: (root) => root.createdAt.toISOString(),
+    }),
     traceGroups: t.field({
       type: [TraceObject],
       resolve: async (root) => {

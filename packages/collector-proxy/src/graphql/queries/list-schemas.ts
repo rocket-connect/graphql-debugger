@@ -49,6 +49,7 @@ builder.queryField('listSchemas', (t) =>
           hash: schema.hash,
           typeDefs: schema.typeDefs,
           traceGroups: [],
+          createdAt: schema.createdAt,
         })),
       };
     },

@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import { Schema } from '../graphql-types';
 import { listSchemas } from '../api/list-schemas';
 import { parse, print } from 'graphql';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function Schemas() {
+  const navigate = useNavigate();
   const [schemas, setSchemas] = useState<Schema[]>([]);
 
   useEffect(() => {
@@ -13,6 +14,10 @@ export function Schemas() {
         const _schemas = await listSchemas();
 
         setSchemas(_schemas);
+
+        if (!_schemas.length) return;
+
+        navigate(`/schema/${_schemas[0].id}`);
       } catch (error) {
         console.error(error);
         setSchemas([]);

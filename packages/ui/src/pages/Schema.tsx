@@ -6,6 +6,8 @@ import { listTraceGroups } from '../api/list-trace-groups';
 import { TraceViewer } from '../components/TraceViewer';
 import { SchemaViewer } from '../components/SchemaViewer';
 import moment from 'moment';
+import { logo } from '../utils/images';
+import { QueryViewer } from '../components/QueryViewer';
 
 function SchemaTraces({ schemaId }: { schemaId: string }) {
   const navigate = useNavigate();
@@ -41,8 +43,8 @@ function SchemaTraces({ schemaId }: { schemaId: string }) {
   }, [selectedTrace, traces]);
 
   return (
-    <div className="relative overflow-x-auto h-full overflow-y-auto">
-      <table className="w-full text-sm text-left">
+    <div className="relative">
+      <table className="text-sm text-left">
         <thead className="text-xs">
           <tr>
             <th scope="col" className="px-6 py-3">
@@ -134,20 +136,36 @@ export function Schema() {
   }, [params.traceId, setTrace]);
 
   return (
-    <div className="p-5">
-      {schema && (
-        <div className="flex p-5 gap-5">
-          <div className="w-1/6 overflow-scroll flex-1 h-screen">
-            <SchemaViewer typeDefs={schema.typeDefs} schemaId={schema.id} />
+    <div className="grid grid-cols-4 h-screen p-3">
+      <div className="col-span-1 p-5 flex flex-col overflow-y-auto">
+        <h2 className="text-graphiql-light font-bold text-3xl">Schema</h2>
+        <p className="text-graphiql-light">Your GraphQL Schema with analytics on each field.</p>
+        <div className="flex-1 overflow-y-auto">
+          {schema && <SchemaViewer typeDefs={schema.typeDefs} schemaId={schema.id} />}
+        </div>
+      </div>
+
+      <div className="col-span-3 flex flex-col bg-graphiql-medium rounded-3xl p-3">
+        <div className="flex flex-row mx-2 ml-auto text-graphiql-light text-lg font-bold gap-2">
+          <img className="w-8" src={logo}></img>
+          <p>GraphQL Debugger</p>
+        </div>
+
+        <div className="flex flex-row gap-5 w-full h-full">
+          <div className="overflow-y-auto p-5 bg-graphiql-dark rounded-3xl w-2/3">
+            {trace?.rootSpan?.graphqlDocument && (
+              <QueryViewer doc={trace?.rootSpan?.graphqlDocument} />
+            )}
           </div>
-          <div className="flex flex-col w-4/6 gap-5 h-screen">
-            <div className="overflow-scroll h-2/3">{trace && <TraceViewer />}</div>
-            <div className="h-1/3 overflow-scroll">
-              <SchemaTraces schemaId={schema.id} />
+
+          <div className="flex flex-col gap-5 w-full flex-grow">
+            <div className="overflow-scroll p-5 h-96 max-h-96">{trace && <TraceViewer />}</div>
+            <div className="p-5 bg-graphiql-dark rounded-3xl flex-grow overflow-scroll h-96 min-h-96">
+              {schema && <SchemaTraces schemaId={schema.id} />}
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

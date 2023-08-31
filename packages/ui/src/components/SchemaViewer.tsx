@@ -23,7 +23,7 @@ function RenderStats({ aggregate }: { aggregate: AggregateSpansResponse | null }
   const lastResolved = new Date(Number(lastResolveMilis));
 
   return (
-    <div className="pl-2 text-xs font-light">
+    <div className="pl-2 text-xs font-light text-graphiql-light">
       <ul className="list-disc list-inside marker:text-graphql-otel-green flex flex-col gap-2">
         <li>
           Resolve Count: <span className="font-bold">{aggregate?.resolveCount}</span>
@@ -87,9 +87,9 @@ function RenderField({
   }, [name, schemaId]);
 
   return (
-    <li className="my-2 ml-2 p-2">
+    <li className="ml-2 p-2">
       <div className="flex items-center">
-        <span>{name}:</span>
+        <span className="text-graphiql-light">{name}:</span>
         <span className="text-graphql-otel-green ml-2">{processedType}</span>
       </div>
       <div className="py-2">
@@ -119,19 +119,20 @@ function RenderType({
   }
 
   return (
-    <div className="flex flex-col font-bold tracking-widest spacing-widest">
+    <div className="flex flex-col tracking-widest spacing-widest">
       <p>
-        <span>{kindKeyword}</span> <span className="text-graphql-otel-green">{type.name}</span>{' '}
-        {`{`}
+        <span className="text-graphiql-pink">{kindKeyword}</span>{' '}
+        <span className="text-graphql-otel-green">{type.name}</span>{' '}
+        <span className="text-graphiql-light">{`{`}</span>
       </p>
-      <div className="border-l border-graphql-otel-green my-2 ml-2 pl-2">
-        <ul className="flex flex-col gap-2 my-4">
+      <div className="border-l border-graphiql-border ml-2 pl-2 my-2">
+        <ul className="flex flex-col gap-2">
           {type.fields.map((field, index) => (
             <RenderField schemaId={schemaId} parentName={parentName} key={index} field={field} />
           ))}
         </ul>
       </div>
-      <p>{`}`}</p>
+      <span className="text-graphiql-light">{`}`}</span>
     </div>
   );
 }
@@ -140,8 +141,8 @@ export function SchemaViewer({ schemaId, typeDefs }: { schemaId: string; typeDef
   const parsed = parse(typeDefs);
 
   return (
-    <div className="p-5">
-      <pre className="text-sm flex flex-col gap-10">
+    <div className="flex-1 overflow-y-auto">
+      <pre className="text-xs flex flex-col gap-5">
         {parsed.definitions.map((def, index) => {
           if (def.kind === 'ObjectTypeDefinition' || def.kind === 'InputObjectTypeDefinition') {
             const name = def.name.value;

@@ -8,6 +8,7 @@ const ListSchemasQuery = /* GraphQL */ `
         id
         name
         typeDefs
+        createdAt
       }
     }
   }

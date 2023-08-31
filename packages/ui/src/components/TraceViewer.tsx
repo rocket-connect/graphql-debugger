@@ -187,7 +187,7 @@ export default function RichObjectTreeView({
 export function TraceViewer() {
   const [traces, setTraces] = useState<Trace[]>([]);
   const params = useParams();
-  const [selectedSpanId, setSelectedSpanId] = useState<string>();
+  const [selectedSpanId] = useState<string>();
 
   useEffect(() => {
     (async () => {
@@ -208,31 +208,11 @@ export function TraceViewer() {
     })();
   }, [params.traceId]);
 
-  const rootSpan = traces[0]?.spans?.find((s) => !s.parentSpanId);
-
   return (
-    <div className="flex gap-5 h-full">
-      <div className="flex flex-1 flex-col">
-        <div className="flex">
-          <div className="w-2/3">
-            <RichObjectTreeView
-              spans={traces[0]?.spans || []}
-              onSelect={(s) => setSelectedSpanId(s)}
-            />
-          </div>
-          <div className="flex align-center justify-center w-1/3">
-            <p className="my-auto">
-              {rootSpan?.graphqlDocument && <pre>{print(parse(rootSpan.graphqlDocument))}</pre>}
-            </p>
-          </div>
-        </div>
-
-        <div>
-          {traces?.length && (
-            <TraceView spans={traces[0]?.spans || []} selectedSpanId={selectedSpanId} />
-          )}
-        </div>
-      </div>
+    <div>
+      {traces?.length && (
+        <TraceView spans={traces[0]?.spans || []} selectedSpanId={selectedSpanId} />
+      )}
     </div>
   );
 }

@@ -1,11 +1,12 @@
-import { Header } from './components/Header';
+import { SideBar } from './components/SideBar';
 import { Router } from './pages/Router';
 
 export function App() {
   return (
-    <div className="bg-graphql-otel-dark text-white">
-      <Header />
-      <Router />
+    <div className="bg-graphiql-dark flex h-screen">
+      <Router>
+        <SideBar />
+      </Router>
     </div>
   );
 }
