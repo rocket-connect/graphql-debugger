@@ -136,11 +136,11 @@ export function Schema() {
   }, [params.traceId, setTrace]);
 
   return (
-    <div className="grid grid-cols-4 h-screen p-3">
+    <div className="grid grid-cols-4 h-full p-3 overflow-hidden">
       <div className="col-span-1 p-5 flex flex-col overflow-y-auto">
         <h2 className="text-graphiql-light font-bold text-3xl">Schema</h2>
         <p className="text-graphiql-light">Your GraphQL Schema with analytics on each field.</p>
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-scoll">
           {schema && <SchemaViewer typeDefs={schema.typeDefs} schemaId={schema.id} />}
         </div>
       </div>
