@@ -29,7 +29,7 @@ model Span {
   endTimeUnixNano   BigInt
   durationNano      BigInt
   graphqlDocument   String?
-  attributes        String
+  graphqlVariables  String?
   errorMessage      String?
   errorStack        String?
   createdAt         DateTime    @default(now())

@@ -30,13 +30,13 @@ const ListTraceGroupsQuery = /* GraphQL */ `
     parentSpanId
     name
     kind
-    attributes
     errorMessage
     errorStack
     endTimeUnixNano
     startTimeUnixNano
     durationNano
     graphqlDocument
+    graphqlVariables
   }
 `;
 

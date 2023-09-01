@@ -1,4 +1,4 @@
-import { parse, FieldDefinitionNode } from 'graphql';
+import { parse, FieldDefinitionNode, ObjectTypeDefinitionNode } from 'graphql';
 import { useEffect, useState } from 'react';
 import { aggregateSpans } from '../api/aggregate-spans';
 import { AggregateSpansResponse } from '../graphql-types';
@@ -24,7 +24,7 @@ function RenderStats({ aggregate }: { aggregate: AggregateSpansResponse | null }
 
   return (
     <div className="pl-2 text-xs font-light text-graphiql-light">
-      <ul className="list-disc list-inside marker:text-graphql-otel-green flex flex-col gap-2">
+      <ul className="list-disc list-inside marker:text-graphql-otel-green flex flex-col gap-2 ">
         <li>
           Resolve Count: <span className="font-bold">{aggregate?.resolveCount}</span>
         </li>
@@ -119,7 +119,7 @@ function RenderType({
   }
 
   return (
-    <div className="flex flex-col tracking-widest spacing-widest">
+    <div className="flex flex-col">
       <p>
         <span className="text-graphiql-pink">{kindKeyword}</span>{' '}
         <span className="text-graphql-otel-green">{type.name}</span>{' '}
@@ -140,10 +140,29 @@ function RenderType({
 export function SchemaViewer({ schemaId, typeDefs }: { schemaId: string; typeDefs: string }) {
   const parsed = parse(typeDefs);
 
+  const queryDefs: ObjectTypeDefinitionNode[] = [];
+  const mutationDefs: ObjectTypeDefinitionNode[] = [];
+  const otherDefs: ObjectTypeDefinitionNode[] = [];
+
+  parsed.definitions.forEach((def) => {
+    if (def.kind === 'ObjectTypeDefinition') {
+      if (def.name.value === 'Query') {
+        queryDefs.push(def);
+      } else if (def.name.value === 'Mutation') {
+        mutationDefs.push(def);
+      } else {
+        otherDefs.push(def);
+      }
+    }
+  });
+
+  // Combine the sorted definitions
+  const sortedDefs = [...queryDefs, ...mutationDefs, ...otherDefs];
+
   return (
     <div className="flex-1 overflow-y-auto">
       <pre className="text-xs flex flex-col gap-5">
-        {parsed.definitions.map((def, index) => {
+        {sortedDefs.map((def, index) => {
           if (def.kind === 'ObjectTypeDefinition' || def.kind === 'InputObjectTypeDefinition') {
             const name = def.name.value;
             const kind = def.kind;

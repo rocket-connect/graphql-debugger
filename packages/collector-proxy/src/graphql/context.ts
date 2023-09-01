@@ -11,7 +11,9 @@ export type Context = {
 
 export function context(...args: any[]): Context {
   return {
-    GraphQLOTELContext: new GraphQLOTELContext(),
+    GraphQLOTELContext: new GraphQLOTELContext({
+      includeVariables: true,
+    }),
     loaders: {
       rootSpanLoader: rootSpanLoader(),
       spanLoader: spanLoader(),

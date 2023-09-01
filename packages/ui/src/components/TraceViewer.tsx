@@ -18,7 +18,6 @@ const createTreeData = (spanArray: Span[]): RenderTree[] => {
       spanId: span.spanId,
       name: span.name,
       traceId: span.traceId,
-      attributes: span.attributes,
       children: [],
       startTimeUnixNano: span.startTimeUnixNano,
       endTimeUnixNano: span.endTimeUnixNano,

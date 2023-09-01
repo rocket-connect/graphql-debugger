@@ -20,7 +20,7 @@ CREATE TABLE "Span" (
     "endTimeUnixNano" BIGINT NOT NULL,
     "durationNano" BIGINT NOT NULL,
     "graphqlDocument" TEXT,
-    "attributes" TEXT NOT NULL,
+    "graphqlVariables" TEXT,
     "errorMessage" TEXT,
     "errorStack" TEXT,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

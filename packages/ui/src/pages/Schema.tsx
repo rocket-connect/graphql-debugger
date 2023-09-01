@@ -8,6 +8,7 @@ import { SchemaViewer } from '../components/SchemaViewer';
 import moment from 'moment';
 import { logo } from '../utils/images';
 import { QueryViewer } from '../components/QueryViewer';
+import { VariablesViewer } from '../components/VariablesViewer';
 
 function SchemaTraces({ schemaId }: { schemaId: string }) {
   const navigate = useNavigate();
@@ -44,9 +45,9 @@ function SchemaTraces({ schemaId }: { schemaId: string }) {
 
   return (
     <div className="relative">
-      <table className="text-sm text-left w-full table-fixed">
+      <table className="text-xs text-left w-full table-fixed">
         <colgroup>
-          <col className="w-1/3" /> {/* Adjust the percentage for even distribution */}
+          <col className="w-1/3" />
           <col className="w-1/3" />
           <col className="w-1/3" />
         </colgroup>
@@ -145,11 +146,15 @@ export function Schema() {
   }, [params.traceId, setTrace]);
 
   return (
-    <div className="grid grid-cols-4 h-full p-3 overflow-hidden">
-      <div className="col-span-1 p-3 flex flex-col overflow-y-auto gap-6">
-        <h2 className="text-graphiql-light font-bold text-3xl">Schema</h2>
-        <p className="text-graphiql-light">Your GraphQL Schema with analytics on each field.</p>
-        <div className="flex-1 overflow-scoll">
+    <div className="grid grid-cols-4 h-full p-3 overflow-y-auto">
+      <div className="col-span-1 p-3 flex flex-col overflow-y-auto gap-2">
+        <div>
+          <h2 className="text-graphiql-light font-bold">Schema</h2>
+          <p className="text-graphiql-light py-2 text-xs">
+            Your GraphQL Schema with analytics on each field.
+          </p>
+        </div>
+        <div className="flex-1 overflow-y-auto overflow-scoll">
           {schema && <SchemaViewer typeDefs={schema.typeDefs} schemaId={schema.id} />}
         </div>
       </div>
@@ -167,30 +172,47 @@ export function Schema() {
           </div>
         </div>
 
-        <div className="flex flex-row gap-5 w-full h-full">
-          <div className="h-full bg-graphiql-dark rounded-3xl w-1/3 flex flex-col justify-between">
-            <div className="grow p-6 flex flex-col gap-3">
-              <p className="text-graphiql-light">Query</p>
+        <div className="flex flex-row gap-5 w-full h-full overflow-y-hidden">
+          <div className="h-full bg-graphiql-dark rounded-3xl w-2/3 flex flex-col justify-between">
+            <div className="grow h-2/3 p-6 flex flex-col gap-3">
+              <h2 className="text-graphiql-light font-bold">Query</h2>
+              <p className="text-graphiql-light text-xs">The issued GraphQL Query.</p>
               <div className="overflow-scroll">
                 {trace?.rootSpan?.graphqlDocument && (
                   <QueryViewer doc={trace?.rootSpan?.graphqlDocument} />
                 )}
               </div>
             </div>
-            <div className="grow p-6 border-t border-graphiql-border flex flex-col gap-3">
-              <p className="text-graphiql-light">Query</p>
+            <div className="grow h-1/3 p-6 border-t border-graphiql-border flex flex-col gap-3">
+              <h2 className="text-graphiql-light font-bold">Variables</h2>
+              <p className="text-graphiql-light text-xs">JSON variables attached to the Query.</p>
+
               <div className="overflow-scroll">
-                {trace?.rootSpan?.graphqlDocument && (
-                  <QueryViewer doc={trace?.rootSpan?.graphqlDocument} />
+                {trace?.rootSpan?.graphqlVariables && (
+                  <VariablesViewer json={trace?.rootSpan?.graphqlVariables} />
                 )}
               </div>
             </div>
           </div>
 
           <div className="flex flex-col gap-5 w-full">
-            <div className="overflow-scroll p-5 h-96 max-h-96">{trace && <TraceViewer />}</div>
-            <div className="p-5 bg-graphiql-dark rounded-3xl grow overflow-scroll h-96 min-h-96">
-              {schema && <SchemaTraces schemaId={schema.id} />}
+            <div className="p-3 h-96 max-h-96 p-6">
+              <h2 className="text-graphiql-light font-bold">Trace</h2>
+              <p className="text-graphiql-light text-xs py-3">
+                Breakdown of resolver execution time during the query.
+              </p>
+
+              <div className="overflow-scroll h-5/6">{trace && <TraceViewer />}</div>
+            </div>
+            <div className="bg-graphiql-dark rounded-3xl grow h-96 min-h-96">
+              <div className="p-6 gap-3 flex flex-col border-b border-graphiql-border">
+                <h2 className="text-graphiql-light font-bold">Traces</h2>
+                <p className="text-graphiql-light text-xs">List of the latest GraphQL queries.</p>
+              </div>
+
+              <div className="overflow-scroll h-5/6">
+                {schema && <SchemaTraces schemaId={schema.id} />}
+              </div>
             </div>
           </div>
         </div>

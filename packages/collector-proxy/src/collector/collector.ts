@@ -133,6 +133,17 @@ collector.post('/v1/traces', async (req, res) => {
                 }
               }
 
+              const variables = attributes[AttributeName.OPERATION_ARGS];
+              let graphqlVariables: string | undefined;
+              if (!span.parentSpanId && variables) {
+                try {
+                  graphqlVariables = JSON.stringify(JSON.parse(variables));
+                } catch (error) {
+                  debug('Error parsing variables', error);
+                  throw error;
+                }
+              }
+
               const foundTraceGroup = traceGroups.find((t) => t.traceId === span.traceId);
               if (foundTraceGroup) {
                 traceGroupId = foundTraceGroup?.id;
@@ -190,12 +201,12 @@ collector.post('/v1/traces', async (req, res) => {
                         startTimeUnixNano,
                         endTimeUnixNano,
                         durationNano,
-                        attributes: span.attributes,
                         traceId: span.traceId,
                         traceGroupId,
                         errorMessage: span.errorMessage,
                         errorStack: span.errorStack,
                         graphqlDocument,
+                        graphqlVariables,
                       },
                     });
                   } catch (error) {
