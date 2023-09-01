@@ -30,6 +30,7 @@ model Span {
   durationNano      BigInt
   graphqlDocument   String?
   graphqlVariables  String?
+  graphqlResult     String?
   errorMessage      String?
   errorStack        String?
   createdAt         DateTime    @default(now())

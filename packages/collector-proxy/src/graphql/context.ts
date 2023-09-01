@@ -13,6 +13,7 @@ export function context(...args: any[]): Context {
   return {
     GraphQLOTELContext: new GraphQLOTELContext({
       includeVariables: true,
+      includeResult: true,
     }),
     loaders: {
       rootSpanLoader: rootSpanLoader(),

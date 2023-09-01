@@ -8,7 +8,7 @@ import { SchemaViewer } from '../components/SchemaViewer';
 import moment from 'moment';
 import { logo } from '../utils/images';
 import { QueryViewer } from '../components/QueryViewer';
-import { VariablesViewer } from '../components/VariablesViewer';
+import { JsonViewer } from '../components/JsonViewer';
 
 function SchemaTraces({ schemaId }: { schemaId: string }) {
   const navigate = useNavigate();
@@ -113,6 +113,7 @@ export function Schema() {
   const [trace, setTrace] = useState<Trace>();
   const params = useParams();
   const navigate = useNavigate();
+  const [selectedMeta, setSelectedMeta] = useState<'variables' | 'result' | 'errors'>('variables');
 
   useEffect(() => {
     (async () => {
@@ -135,6 +136,7 @@ export function Schema() {
               id: params.traceId,
             },
             includeRootSpan: true,
+            includeSpans: true,
           });
 
           setTrace(_trace[0]);
@@ -183,13 +185,75 @@ export function Schema() {
                 )}
               </div>
             </div>
-            <div className="grow h-1/3 p-6 border-t border-graphiql-border flex flex-col gap-3">
-              <h2 className="text-graphiql-light font-bold">Variables</h2>
-              <p className="text-graphiql-light text-xs">JSON variables attached to the Query.</p>
+            <div className="grow h-96 max-h-96 p-6 border-t border-graphiql-border flex flex-col gap-3">
+              <div className="flex flex-row gap-6 text-graphiql-border font-bold">
+                <p
+                  onClick={() => setSelectedMeta('variables')}
+                  className={`${
+                    selectedMeta === 'variables'
+                      ? 'text-graphiql-light'
+                      : 'hover:text-graphiql-light hover:font-bold hover:cursor-pointer'
+                  }`}
+                >
+                  Variables
+                </p>
+                <p
+                  onClick={() => setSelectedMeta('result')}
+                  className={`${
+                    selectedMeta === 'result'
+                      ? 'text-graphiql-light'
+                      : 'hover:text-graphiql-light hover:font-bold hover:cursor-pointer'
+                  }`}
+                >
+                  Result
+                </p>
+                <p
+                  onClick={() => setSelectedMeta('errors')}
+                  className={`${
+                    selectedMeta === 'errors'
+                      ? 'text-graphiql-light'
+                      : 'hover:text-graphiql-light hover:font-bold hover:cursor-pointer'
+                  }`}
+                >
+                  Errors
+                </p>
+              </div>
 
-              <div className="overflow-scroll">
-                {trace?.rootSpan?.graphqlVariables && (
-                  <VariablesViewer json={trace?.rootSpan?.graphqlVariables} />
+              {selectedMeta === 'variables' && (
+                <p className="text-graphiql-light text-xs">JSON variables attached to the Query.</p>
+              )}
+
+              {selectedMeta === 'result' && (
+                <p className="text-graphiql-light text-xs">The result of the Query.</p>
+              )}
+
+              {selectedMeta === 'errors' && (
+                <p className="text-graphiql-light text-xs">Errors of each resolver</p>
+              )}
+
+              <div className="overflow-scroll h-96 max-h-96 w-96 max-w-96">
+                {selectedMeta === 'variables' && (
+                  <JsonViewer json={trace?.rootSpan?.graphqlVariables || '{}'} />
+                )}
+                {selectedMeta === 'result' && (
+                  <JsonViewer json={trace?.rootSpan?.graphqlResult || '{}'} />
+                )}
+                {selectedMeta === 'errors' && (
+                  <JsonViewer
+                    json={JSON.stringify(
+                      (trace?.spans || []).reduce((result, span) => {
+                        console.log(span);
+                        if (span.errorMessage || span.errorStack) {
+                          result[span.name] = {
+                            errorMessage: span.errorMessage,
+                            errorStack: span.errorStack,
+                          };
+                        }
+
+                        return result;
+                      }, {})
+                    )}
+                  />
                 )}
               </div>
             </div>

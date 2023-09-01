@@ -21,6 +21,7 @@ CREATE TABLE "Span" (
     "durationNano" BIGINT NOT NULL,
     "graphqlDocument" TEXT,
     "graphqlVariables" TEXT,
+    "graphqlResult" TEXT,
     "errorMessage" TEXT,
     "errorStack" TEXT,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

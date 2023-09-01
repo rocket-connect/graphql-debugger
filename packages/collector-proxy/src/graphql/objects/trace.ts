@@ -80,6 +80,7 @@ export const TraceObject = builder.objectType('Trace', {
                 durationNano: span.durationNano,
                 graphqlDocument: span.graphqlDocument,
                 graphqlVariables: span.graphqlVariables,
+                graphqlResult: span.graphqlResult,
                 timestamp: 0,
                 createdAt: span.createdAt.toString(),
                 updatedAt: span.updatedAt.toString(),

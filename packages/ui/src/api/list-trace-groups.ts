@@ -37,6 +37,7 @@ const ListTraceGroupsQuery = /* GraphQL */ `
     durationNano
     graphqlDocument
     graphqlVariables
+    graphqlResult
   }
 `;
 

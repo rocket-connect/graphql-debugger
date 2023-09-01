@@ -75,7 +75,7 @@ const Span = ({
   return (
     <div className="relative overflow-hidden flex flex-col gap-1 text-xs">
       <div className="py-4">
-        <p className="py-1">
+        <p className={`${data.errorMessage || data.errorStack ? 'text-red-500' : {}} py-1`}>
           {data.name}{' '}
           <span className="font-light">
             {Number(BigInt(data?.durationNano || 0) / BigInt(1000000)).toFixed(2)} ms

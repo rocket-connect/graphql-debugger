@@ -157,13 +157,15 @@ export function QueryViewer({ doc }: QueryViewerProps) {
                     <span>{' {'}</span>
                   </span>
                 </div>
-                <div className="py-1">
+                <div className="py-1 pl-2">
                   <ul className="flex flex-col gap-1">
                     {def.selectionSet.selections.map((selection, selectionIndex) =>
                       renderSelection(selection, selectionIndex)
                     )}
                   </ul>
                 </div>
+
+                <span className="text-graphiql-light">{' }'}</span>
               </div>
             );
           }

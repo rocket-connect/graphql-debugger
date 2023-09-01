@@ -33,7 +33,7 @@ collector.post('/v1/traces', async (req, res) => {
         .end();
     }
 
-    // return res.status(200).json({}).end();
+    return res.status(200).json({}).end();
 
     const spans = (body.resourceSpans || []).flatMap((rS) => {
       const _spans = rS.scopeSpans.flatMap((sS) => {
@@ -144,6 +144,19 @@ collector.post('/v1/traces', async (req, res) => {
                 }
               }
 
+              const result = attributes[AttributeName.OPERATION_RESULT];
+              let graphqlResult: string | undefined;
+              if (!span.parentSpanId && result) {
+                try {
+                  graphqlResult = JSON.stringify({
+                    result: JSON.parse(result),
+                  });
+                } catch (error) {
+                  debug('Error parsing result', error);
+                  throw error;
+                }
+              }
+
               const foundTraceGroup = traceGroups.find((t) => t.traceId === span.traceId);
               if (foundTraceGroup) {
                 traceGroupId = foundTraceGroup?.id;
@@ -207,6 +220,7 @@ collector.post('/v1/traces', async (req, res) => {
                         errorStack: span.errorStack,
                         graphqlDocument,
                         graphqlVariables,
+                        graphqlResult,
                       },
                     });
                   } catch (error) {
