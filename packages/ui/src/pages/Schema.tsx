@@ -201,9 +201,9 @@ export function Schema() {
                 </div>
               )}
             </div>
-            <div className="flex flex-row gap-2">
-              <img className="w-8" src={logo}></img>
-              <p>GraphQL Debugger</p>
+            <div className="flex flex-row gap-2 py-1">
+              <img className="w-10 my-auto" src={logo}></img>
+              <p className="my-auto text-large">GraphQL Debugger</p>
             </div>
           </div>
 
