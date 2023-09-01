@@ -14,6 +14,7 @@ export function context(...args: any[]): Context {
     GraphQLOTELContext: new GraphQLOTELContext({
       includeVariables: true,
       includeResult: true,
+      includeContext: true,
     }),
     loaders: {
       rootSpanLoader: rootSpanLoader(),

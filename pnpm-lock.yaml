@@ -200,8 +200,8 @@ importers:
         specifier: ^16.8.0
         version: 16.8.0
       graphql-otel:
-        specifier: ^0.1.4
-        version: 0.1.4
+        specifier: ^0.1.10
+        version: 0.1.10
       node-fetch:
         specifier: '2'
         version: 2.7.0
@@ -5843,8 +5843,8 @@ packages:
       - utf-8-validate
     dev: true
 
-  /graphql-otel@0.1.4:
-    resolution: {integrity: sha512-ayPd0YDZazvl5s2i6BwrQVZL4CbSMr6H3eCY6VJMt9Cj5JLpnEZa9rnj7rCGYvYOayZT7p6OSVLemGXC3QTb+g==}
+  /graphql-otel@0.1.10:
+    resolution: {integrity: sha512-TyzW8xGGbDC+th4ZQGdjFFGUPAn++Jl3LUJ/wz36E/AsRcPkS2LegLqbhvrY1OQxjvncmFl9C3OvmdV4CWmTEA==}
     engines: {node: '>=18.0.0'}
     dependencies:
       '@graphql-tools/utils': 10.0.5(graphql@16.8.0)

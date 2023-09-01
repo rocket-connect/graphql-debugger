@@ -81,6 +81,7 @@ export const TraceObject = builder.objectType('Trace', {
                 graphqlDocument: span.graphqlDocument,
                 graphqlVariables: span.graphqlVariables,
                 graphqlResult: span.graphqlResult,
+                graphqlContext: span.graphqlContext,
                 timestamp: 0,
                 createdAt: span.createdAt.toString(),
                 updatedAt: span.updatedAt.toString(),

@@ -16,6 +16,7 @@ export type Span = {
   graphqlDocument?: PrismaSpan['graphqlDocument'];
   graphqlVariables?: PrismaSpan['graphqlVariables'];
   graphqlResult?: PrismaSpan['graphqlResult'];
+  graphqlContext?: PrismaSpan['graphqlContext'];
   createdAt: string;
   updatedAt: string;
 };
@@ -50,6 +51,7 @@ export const SpanObject = builder.objectType('Span', {
     graphqlDocument: t.exposeString('graphqlDocument', { nullable: true }),
     graphqlVariables: t.exposeString('graphqlVariables', { nullable: true }),
     graphqlResult: t.exposeString('graphqlResult', { nullable: true }),
+    graphqlContext: t.exposeString('graphqlContext', { nullable: true }),
     errorMessage: t.exposeString('errorMessage', { nullable: true }),
     errorStack: t.exposeString('errorStack', { nullable: true }),
     createdAt: t.exposeString('createdAt'),

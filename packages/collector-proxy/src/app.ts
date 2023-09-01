@@ -7,7 +7,6 @@ import { yoga } from './graphql';
 
 export const app: Express = express();
 app.use('/graphql', yoga);
-app.use(express.json());
 app.use(express.static(path.join(__dirname, config.STATIC_FOLDER)));
 app.use(express.static('public'));
 

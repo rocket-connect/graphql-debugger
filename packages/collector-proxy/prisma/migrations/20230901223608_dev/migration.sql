@@ -22,6 +22,7 @@ CREATE TABLE "Span" (
     "graphqlDocument" TEXT,
     "graphqlVariables" TEXT,
     "graphqlResult" TEXT,
+    "graphqlContext" TEXT,
     "errorMessage" TEXT,
     "errorStack" TEXT,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

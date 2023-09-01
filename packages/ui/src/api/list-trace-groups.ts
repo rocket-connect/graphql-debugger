@@ -38,6 +38,7 @@ const ListTraceGroupsQuery = /* GraphQL */ `
     graphqlDocument
     graphqlVariables
     graphqlResult
+    graphqlContext
   }
 `;
 

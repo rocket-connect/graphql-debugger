@@ -123,7 +123,9 @@ export function Schema() {
   const params = useParams();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [selectedMeta, setSelectedMeta] = useState<'variables' | 'result' | 'errors'>('variables');
+  const [selectedMeta, setSelectedMeta] = useState<'variables' | 'result' | 'context' | 'errors'>(
+    'variables'
+  );
 
   useEffect(() => {
     (async () => {
@@ -222,6 +224,16 @@ export function Schema() {
                     Result
                   </p>
                   <p
+                    onClick={() => setSelectedMeta('context')}
+                    className={`${
+                      selectedMeta === 'context'
+                        ? 'text-graphiql-light'
+                        : 'hover:text-graphiql-light hover:font-bold hover:cursor-pointer'
+                    }`}
+                  >
+                    Context
+                  </p>
+                  <p
                     onClick={() => setSelectedMeta('errors')}
                     className={`${
                       selectedMeta === 'errors'
@@ -241,6 +253,11 @@ export function Schema() {
                 {selectedMeta === 'result' && (
                   <p className="text-graphiql-light text-xs">The result of the Query.</p>
                 )}
+                {selectedMeta === 'context' && (
+                  <p className="text-graphiql-light text-xs">
+                    Safe JSON of the GraphQL context obj.
+                  </p>
+                )}
                 {selectedMeta === 'errors' && (
                   <p className="text-graphiql-light text-xs">Errors of each resolver</p>
                 )}
@@ -251,6 +268,9 @@ export function Schema() {
                   )}
                   {selectedMeta === 'result' && (
                     <JsonViewer json={trace?.rootSpan?.graphqlResult || '{}'} />
+                  )}
+                  {selectedMeta === 'context' && (
+                    <JsonViewer json={trace?.rootSpan?.graphqlContext || '{}'} />
                   )}
                   {selectedMeta === 'errors' && (
                     <JsonViewer

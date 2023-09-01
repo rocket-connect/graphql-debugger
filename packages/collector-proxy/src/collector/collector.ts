@@ -9,7 +9,7 @@ import { makeExecutableSchema } from '@graphql-tools/schema';
 import { AttributeName } from '@graphql-debugger/trace-schema';
 
 export const collector: Express = express();
-collector.use(express.json());
+collector.use(express.json({ limit: '50mb' }));
 
 const schema = z.object({
   body: ExportTraceServiceRequestSchema.required(),
@@ -32,8 +32,6 @@ collector.post('/v1/traces', async (req, res) => {
         })
         .end();
     }
-
-    return res.status(200).json({}).end();
 
     const spans = (body.resourceSpans || []).flatMap((rS) => {
       const _spans = rS.scopeSpans.flatMap((sS) => {
@@ -157,6 +155,18 @@ collector.post('/v1/traces', async (req, res) => {
                 }
               }
 
+              const context = attributes[AttributeName.OPERATION_CONTEXT];
+              let graphqlContext: string | undefined;
+              if (!span.parentSpanId && context) {
+                try {
+                  graphqlContext = context;
+                  console.log(graphqlContext);
+                } catch (error) {
+                  debug('Error parsing context', error);
+                  throw error;
+                }
+              }
+
               const foundTraceGroup = traceGroups.find((t) => t.traceId === span.traceId);
               if (foundTraceGroup) {
                 traceGroupId = foundTraceGroup?.id;
@@ -221,6 +231,7 @@ collector.post('/v1/traces', async (req, res) => {
                         graphqlDocument,
                         graphqlVariables,
                         graphqlResult,
+                        graphqlContext,
                       },
                     });
                   } catch (error) {
