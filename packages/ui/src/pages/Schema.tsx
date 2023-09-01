@@ -127,6 +127,9 @@ export function Schema() {
     'variables'
   );
 
+  const tracestartTimeMillis = BigInt(trace?.rootSpan?.startTimeUnixNano || 0) / BigInt(1000000);
+  const traceStartDate = new Date(Number(tracestartTimeMillis));
+
   useEffect(() => {
     (async () => {
       try {
@@ -180,8 +183,22 @@ export function Schema() {
         <div className="col-span-3 flex flex-col bg-graphiql-medium rounded-3xl p-3 gap-3">
           <div className="flex flex-row mx-2 text-graphiql-light text-lg font-bold gap-2 justify-between">
             <div className="py-1 px-4 bg-graphiql-highlight rounded-xl">
-              {trace?.rootSpan?.graphqlDocument && (
-                <p className="text-graphiql-light text-sm">{trace?.rootSpan?.name}</p>
+              {trace?.rootSpan?.name && (
+                <div className="text-graphiql-light text-sm">
+                  <div className="flex flex-row gap-3 justify-center align-center">
+                    <p>{trace?.rootSpan?.name}</p>
+                    <p>-</p>
+                    <p className="text-xs my-auto">
+                      {Number(BigInt(trace?.rootSpan?.durationNano || 0) / BigInt(1000000)).toFixed(
+                        2
+                      )}{' '}
+                      ms
+                    </p>
+                  </div>
+                  <p className="py-1 text-xs text-graphiql-dark italic">
+                    {moment(traceStartDate).fromNow()}
+                  </p>
+                </div>
               )}
             </div>
             <div className="flex flex-row gap-2">
