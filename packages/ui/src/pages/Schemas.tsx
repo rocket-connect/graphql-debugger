@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Schema } from '../graphql-types';
 import { listSchemas } from '../api/list-schemas';
-import { parse, print } from 'graphql';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export function Schemas() {
   const navigate = useNavigate();
@@ -17,6 +16,7 @@ export function Schemas() {
 
         if (!_schemas.length) return;
 
+        // We take the first schema
         navigate(`/schema/${_schemas[0].id}`);
       } catch (error) {
         console.error(error);
@@ -25,27 +25,24 @@ export function Schemas() {
     })();
   }, []);
 
+  if (schemas.length) return <div className="hidden"></div>;
+
   return (
-    <div>
-      <h2 className="text-4xl mb-10">Schemas</h2>
-
-      {!schemas.length && <p>No schemas found.</p>}
-
-      <div className="flex flex-row gap-10 text-white">
-        {schemas.map((schema) => (
-          <div className="border border-white">
-            <div className="border border-white p-5">
-              <h2 className="text-2xl">{schema.name || 'Untitled Schema'}</h2>
-            </div>
-            <p>
-              <Link to={`/schema/${schema.id}`}>View traces</Link>
-            </p>
-
-            <div className="overflow-scroll w-80 h-80 m-20">
-              <pre>{print(parse(schema.typeDefs))}</pre>
-            </div>
-          </div>
-        ))}
+    <div className="flex h-screen justify-center items-center">
+      <div className="mx-auto border rounded-lg shadow-md p-8 w-96">
+        <p className="text-center text-gray-600 text-lg">No Schemas found</p>
+        <p className="text-center text-gray-400 mt-2">
+          You can set up tracing by looking at the docs{' '}
+          <a
+            href="https://github.com/rocket-connect/graphql-debugger"
+            className="text-blue-500 hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            here
+          </a>
+          .
+        </p>
       </div>
     </div>
   );

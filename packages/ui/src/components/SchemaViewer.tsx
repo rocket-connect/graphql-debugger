@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { aggregateSpans } from '../api/aggregate-spans';
 import { AggregateSpansResponse } from '../graphql-types';
 import moment from 'moment';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 function extractTypeName(typeNode): string {
   if (typeNode.kind === 'NamedType') {
@@ -54,6 +55,9 @@ function RenderField({
   parentName: string;
   schemaId: string;
 }) {
+  const [searchParams] = useSearchParams();
+  const rootSpanName = searchParams.get('rootSpanName');
+  const navigate = useNavigate();
   const name = field.name.value;
   const type = extractTypeName(field.type);
   const [aggregate, setAggregate] = useState<AggregateSpansResponse | null>(null);
@@ -86,10 +90,30 @@ function RenderField({
     })();
   }, [name, schemaId]);
 
+  const renderFieldName = () => {
+    if (['query', 'mutation'].includes(parentName)) {
+      const _rootSpanName = `${parentName} ${name}`;
+      return (
+        <span
+          className={`text-graphiql-light underline hover:cursor-pointer ${
+            rootSpanName === _rootSpanName ? 'font-bold decoration-graphiql-pink' : ''
+          }`}
+          onClick={() => {
+            navigate(`?${new URLSearchParams({ rootSpanName: _rootSpanName }).toString()}`);
+          }}
+        >
+          {name}:
+        </span>
+      );
+    } else {
+      return <span className="text-graphiql-light">{name}:</span>;
+    }
+  };
+
   return (
     <li className="ml-2 p-2">
       <div className="flex items-center">
-        <span className="text-graphiql-light">{name}:</span>
+        {renderFieldName()}
         <span className="text-graphql-otel-green ml-2">{processedType}</span>
       </div>
       <div className="py-2">
@@ -156,7 +180,6 @@ export function SchemaViewer({ schemaId, typeDefs }: { schemaId: string; typeDef
     }
   });
 
-  // Combine the sorted definitions
   const sortedDefs = [...queryDefs, ...mutationDefs, ...otherDefs];
 
   return (

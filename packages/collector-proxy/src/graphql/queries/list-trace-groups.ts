@@ -9,6 +9,7 @@ export type ListTraceGroupsResponse = {
 export type ListTraceGroupsWhere = {
   id?: string;
   schemaId?: string;
+  rootSpanName?: string;
 };
 
 export const ListTraceGroupsWhere = builder.inputType('ListTraceGroupsWhere', {
@@ -17,6 +18,9 @@ export const ListTraceGroupsWhere = builder.inputType('ListTraceGroupsWhere', {
       required: false,
     }),
     schemaId: t.string({
+      required: false,
+    }),
+    rootSpanName: t.string({
       required: false,
     }),
   }),
@@ -43,6 +47,18 @@ builder.queryField('listTraceGroups', (t) =>
       const where = {
         ...(args.where?.id ? { id: args.where.id } : {}),
         ...(args.where?.schemaId ? { schemaId: args.where.schemaId } : {}),
+        ...(args.where?.rootSpanName
+          ? {
+              spans: {
+                some: {
+                  parentSpanId: null,
+                  name: {
+                    equals: args.where?.rootSpanName,
+                  },
+                },
+              },
+            }
+          : {}),
       };
 
       const traces = await prisma.traceGroup.findMany({
