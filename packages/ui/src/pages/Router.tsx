@@ -7,7 +7,7 @@ export function Router(props: React.PropsWithChildren<{}>) {
   return (
     <HashRouter>
       <div className="flex flex-row">
-        {props.children}
+        <div className="grow">{props.children}</div>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/schemas" element={<Schemas />} />
