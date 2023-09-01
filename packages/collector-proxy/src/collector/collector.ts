@@ -160,7 +160,6 @@ collector.post('/v1/traces', async (req, res) => {
               if (!span.parentSpanId && context) {
                 try {
                   graphqlContext = context;
-                  console.log(graphqlContext);
                 } catch (error) {
                   debug('Error parsing context', error);
                   throw error;
