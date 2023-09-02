@@ -1,8 +1,14 @@
-# graphql-debugger
+<div align="center" style="text-align: center;">
 
-Debug your GraphQL server locally.
+<img src="./packages/ui/public/logo.svg" width="20%" alt="GraphQL Debugger">
 
-![set url](./docs/screenshot.png 'GraphQL Debugger')
+<h1>GraphQL Debugger</h1>
+
+<p>Debug your GraphQL server locally.</p>
+
+<img src="./docs/screenshot.png" width="800%" alt="GraphQL Debugger">
+
+</div>
 
 GraphQL Debugger is a Open Telemetry collector with a user interface that is tailored for debugging GraphQL servers. It is designed to be used locally during development.
 
