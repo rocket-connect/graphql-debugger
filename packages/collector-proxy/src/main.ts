@@ -1,5 +1,6 @@
 import { debug } from './debug';
 import * as app from './app';
+import { queue } from './collector/queue';
 import { prisma } from './prisma';
 
 async function start() {
@@ -8,9 +9,7 @@ async function start() {
 
     await prisma.$connect();
 
-    // await prisma.span.deleteMany({});
-    // await prisma.traceGroup.deleteMany({});
-    // await prisma.schema.deleteMany({});
+    await queue.length();
 
     await app.start();
 

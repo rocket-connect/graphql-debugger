@@ -100,3 +100,7 @@ export const ExportTracePartialSuccessSchema = z.object({
 export const ExportTraceServiceResponseSchema = z.object({
   partialSuccess: ExportTracePartialSuccessSchema.optional(),
 });
+
+export const schema = z.object({
+  body: ExportTraceServiceRequestSchema.required(),
+});
