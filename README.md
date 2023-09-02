@@ -2,6 +2,8 @@
 
 Debug your GraphQL server locally.
 
+![set url](./docs/screenshot.png 'GraphQL Debugger')
+
 ## Packages
 
 1. [ `@graphql-debugger/ui`](./packages/ui/README.md) - Frontend
