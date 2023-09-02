@@ -68,11 +68,11 @@ export const SpanSchema = z.object({
   startTimeUnixNano: z.number(),
   endTimeUnixNano: z.number(),
   attributes: z.array(KeyValueSchema),
-  droppedAttributesCount: z.number(),
-  events: z.array(EventSchema),
-  droppedEventsCount: z.number(),
-  links: z.array(LinkSchema),
-  droppedLinksCount: z.number(),
+  droppedAttributesCount: z.number().optional(),
+  events: z.array(EventSchema).optional(),
+  droppedEventsCount: z.number().optional(),
+  links: z.array(LinkSchema).optional(),
+  droppedLinksCount: z.number().optional(),
   status: StatusSchema,
 });
 

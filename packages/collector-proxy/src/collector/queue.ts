@@ -37,7 +37,7 @@ async function worker(data: Data) {
               return { ...acc, [val.key]: realValue };
             }, {}) as Record<string, any>;
 
-            const firstError = s.events.find((e) => e.name === 'exception');
+            const firstError = (s.events || []).find((e) => e.name === 'exception');
             let errorMessage: string | undefined;
             let errorStack: string | undefined;
 
