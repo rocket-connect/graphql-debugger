@@ -9,13 +9,17 @@
 <img src="./docs/screenshot.png" width="100%" alt="GraphQL Debugger">
 </div>
 
-<div align="left">
-<h2>About</h2>
-<p style="margin-top: 10px;">GraphQL Debugger is a Open Telemetry collector with a user interface that is tailored for debugging GraphQL servers. It is designed to be used locally during development.</p>
+## About
 
-<p  style="margin-top: 10px;"> GraphQL debugger will help you spot errors, slow queries and other issues in your GraphQL server, without having to use console.log.</p>
+GraphQL Debugger is a [Open Telemetry](https://opentelemetry.io/) collector with a user interface that is tailored for debugging GraphQL servers.
 
-</div>
+It is designed to be used locally during development, to help you spot errors, slow queries and other issues in your GraphQL server, without having to use console.log.
+
+Simply use the [trace schema package](https://github.com/rocket-connect/graphql-debugger/tree/main/packages/trace-schema) to trace your schema and then run the GraphQL Debugger CLI to start debugging.
+
+```
+npx graphql-debugger
+```
 
 ## Packages
 
