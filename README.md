@@ -10,6 +10,7 @@
 </div>
 
 <div align="left">
+<h2>About</h2>
 <p style="margin-top: 10px;">GraphQL Debugger is a Open Telemetry collector with a user interface that is tailored for debugging GraphQL servers. It is designed to be used locally during development.</p>
 
 <p  style="margin-top: 10px;"> GraphQL debugger will help you spot errors, slow queries and other issues in your GraphQL server, without having to use console.log.</p>
