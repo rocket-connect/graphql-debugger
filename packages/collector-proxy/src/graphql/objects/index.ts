@@ -8,6 +8,7 @@ import {
   ListSchemasResponse,
   ListSchemasWhere,
 } from '../queries';
+import { DeleteTracesResponse, DeleteTracesWhere } from '../mutations/delete-traces';
 
 export interface Objects {
   Trace: Trace;
@@ -19,4 +20,6 @@ export interface Objects {
   ListTraceGroupsResponse: ListTraceGroupsResponse;
   AggregateSpansWhere: AggregateSpansWhere;
   AggregateSpansResponse: AggregateSpansResponse;
+  DeleteTracesWhere: DeleteTracesWhere;
+  DeleteTracesResponse: DeleteTracesResponse;
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Schema, Trace } from '../graphql-types';
 import { getSchema } from '../api/list-schemas';
@@ -11,6 +11,7 @@ import { QueryViewer } from '../components/QueryViewer';
 import { JsonViewer } from '../components/JsonViewer';
 import { SideBar } from '../components/SideBar';
 import { SchemaTraces } from '../components/SchemaTraces';
+import { deleteTraces } from '../api/delete-traces';
 
 export function Schema() {
   const [schema, setSchema] = useState<Schema>();
@@ -56,6 +57,24 @@ export function Schema() {
       })();
     }
   }, [params.traceId, setTrace, searchParams]);
+
+  const _deleteTraces = useCallback(async () => {
+    try {
+      const where = {
+        schemaId: params.schemaId as string,
+        rootSpanName: searchParams.get('rootSpanName') || undefined,
+      };
+
+      const response = confirm('are you sure you want to delete all traces?');
+
+      if (response) {
+        await deleteTraces({ where });
+        navigate(`/schema/${params.schemaId}`);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, [navigate]);
 
   return (
     <div className="flex flex-row h-screen">
@@ -224,13 +243,23 @@ export function Schema() {
                   </div>
 
                   <div className="ml-auto">
-                    <span
-                      onClick={() => {
-                        navigate(`/schema/${params.schemaId}`);
-                      }}
-                      className="text-graphiql-light italic underline hover:bold hover:cursor-pointer text-sm"
-                    >
-                      Refresh Filters
+                    <span className="text-graphiql-light italic text-xs flex flex-row gap-3">
+                      <span
+                        onClick={() => {
+                          navigate(`/schema/${params.schemaId}`);
+                        }}
+                        className="underline hover:bold hover:cursor-pointer"
+                      >
+                        Refresh Filters
+                      </span>
+                      <span
+                        onClick={() => {
+                          _deleteTraces();
+                        }}
+                        className="underline hover:bold hover:cursor-pointer"
+                      >
+                        Delete Traces
+                      </span>
                     </span>
                   </div>
                 </div>

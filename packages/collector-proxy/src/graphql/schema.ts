@@ -11,8 +11,10 @@ export const builder = new SchemaBuilder<{
 }>({});
 
 builder.queryType({});
+builder.mutationType({});
 
 require('./queries');
+require('./mutations');
 
 const build = builder.toSchema();
 
