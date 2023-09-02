@@ -157,7 +157,7 @@ export function QueryViewer({ doc }: QueryViewerProps) {
           if (def.kind === Kind.OPERATION_DEFINITION) {
             let kind = def.operation;
             const variableDefinitions = def.variableDefinitions
-              ? def.variableDefinitions.map((varDef, varIndex) => (
+              ? def.variableDefinitions.map((varDef) => (
                   <div key={varDef.variable.name.value}>
                     <span className="text-graphql-otel-green"> ${varDef.variable.name.value}</span>:{' '}
                     {renderType(varDef.type)}
@@ -169,13 +169,16 @@ export function QueryViewer({ doc }: QueryViewerProps) {
               <div key={index} className="flex flex-col">
                 <div className="flex items-center">
                   <span className="text-graphiql-light">
-                    <span className="text-graphiql-pink">{kind}</span>{' '}
-                    {variableDefinitions && (
+                    <span className="text-graphiql-pink">{kind}</span>
+                    {variableDefinitions?.length ? (
                       <span>
+                        {' '}
                         {'('}
                         <div className="flex flex-col ml-3">{variableDefinitions}</div>
                         {')'}
                       </span>
+                    ) : (
+                      <></>
                     )}
                     <span>{' {'}</span>
                   </span>
