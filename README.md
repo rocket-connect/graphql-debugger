@@ -4,6 +4,10 @@ Debug your GraphQL server locally.
 
 ![set url](./docs/screenshot.png 'GraphQL Debugger')
 
+GraphQL Debugger is a Open Telemetry collector with a user interface that is tailored for debugging GraphQL servers. It is designed to be used locally during development.
+
+GraphQL debugger will help you spot errors, slow queries and other issues in your GraphQL server, without having to use console.log.
+
 ## Packages
 
 1. [ `@graphql-debugger/ui`](./packages/ui/README.md) - Frontend
@@ -46,10 +50,6 @@ const yoga = createYoga({
 ```
 npx graphql-debugger
 ```
-
-### Debug your GraphQL server
-
-SCREENSHOT HERE
 
 ## License
 
