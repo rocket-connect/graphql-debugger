@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-import { debugRootNamespace } from './debug';
-process.env.DEBUG = `${debugRootNamespace}:*`;
+process.env.DEBUG = process.env.DEBUG || `@graphql-debugger:*`;
 import { debug } from './debug';
 
 import * as app from '@graphql-debugger/collector-proxy';
