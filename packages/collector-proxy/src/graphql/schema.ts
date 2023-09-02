@@ -1,8 +1,9 @@
-import { GraphQLOTELContext, traceSchema } from '@graphql-debugger/trace-schema';
+import { traceSchema } from '@graphql-debugger/trace-schema';
 import SchemaBuilder from '@pothos/core';
 import { Objects } from './objects';
 import { GraphQLSchema } from 'graphql';
 import { Context } from './context';
+import { TRACE_SCHEMA } from '../config';
 
 export const builder = new SchemaBuilder<{
   Objects: Objects;
@@ -13,4 +14,6 @@ builder.queryType({});
 
 require('./queries');
 
-export const schema: GraphQLSchema = traceSchema({ schema: builder.toSchema() });
+const build = builder.toSchema();
+
+export const schema: GraphQLSchema = TRACE_SCHEMA ? traceSchema({ schema: build }) : build;

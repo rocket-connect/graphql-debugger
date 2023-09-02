@@ -9,7 +9,7 @@ import { makeExecutableSchema } from '@graphql-tools/schema';
 import { AttributeName } from '@graphql-debugger/trace-schema';
 
 export const collector: Express = express();
-collector.use(express.json({ limit: '50mb' }));
+collector.use(express.json({ limit: '500mb' }));
 
 const schema = z.object({
   body: ExportTraceServiceRequestSchema.required(),
