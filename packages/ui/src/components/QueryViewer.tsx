@@ -7,6 +7,7 @@ import {
   InlineFragmentNode,
   SelectionNode,
   TypeNode,
+  ArgumentNode,
 } from 'graphql';
 
 interface QueryViewerProps {
@@ -31,12 +32,13 @@ function renderType(type: TypeNode): JSX.Element {
 
 export function RenderField({ field, renderSelection }: RenderFieldProps) {
   const name = field.name.value;
+
   const args = field.arguments
     ? field.arguments.map((arg, argIndex) => (
-        <span key={argIndex}>
-          <span className="text-graphql-otel-pink">{arg.name.value}</span>:{' '}
-          {renderArgumentValue(arg.value)}
-        </span>
+        <div key={argIndex}>
+          <span className="text-graphql-otel-green">{arg.name.value}</span>:{' '}
+          <span>{renderArgumentValue(arg.value)}</span>
+        </div>
       ))
     : null;
 
@@ -45,25 +47,26 @@ export function RenderField({ field, renderSelection }: RenderFieldProps) {
   );
 
   return (
-    <li className="ml-1 p-1">
-      <div className="flex items-center">
-        <span className="text-graphiql-light">
-          {name}
-          {args && args.length > 0 && <span className="ml-1">({args})</span>}
-          {selections && selections.length > 0 && <span className="ml-1">{'{'}</span>}
-        </span>
-      </div>
+    <div className="text-graphiql-light pl-2">
+      <span>{name}</span>
+      {args && args.length > 0 && <span className="ml-1">{'('}</span>}
+      {args && args.length > 0 && <div className="ml-3">{args}</div>}
+      {args && args.length > 0 && <span className="ml-1">{')'}</span>}
+      {selections && selections.length > 0 && <span className="ml-1">{'{'}</span>}
+
       {selections && selections.length > 0 && (
-        <ul className="flex flex-col gap-1 ml-2">{selections}</ul>
+        <div>
+          {selections}
+          <span>{'}'}</span>
+        </div>
       )}
-      {selections && selections.length > 0 && (
-        <span className="ml-1 text-graphiql-light">{'}'}</span>
-      )}
-    </li>
+    </div>
   );
 }
 
-function renderArgumentValue(value: any) {
+function renderArgumentValue(value: ArgumentNode['value'], indentLevel: number = 0) {
+  const indent = ' '.repeat(indentLevel * 2);
+
   if (value.kind === Kind.INT || value.kind === Kind.FLOAT) {
     return <span>{value.value}</span>;
   } else if (value.kind === Kind.STRING) {
@@ -74,22 +77,42 @@ function renderArgumentValue(value: any) {
     return <span>{value.value}</span>;
   } else if (value.kind === Kind.LIST) {
     const items = value.values.map((item, index) => (
-      <span key={index}>
-        {renderArgumentValue(item)}
+      <div key={index}>
+        {indent}
+        {renderArgumentValue(item, indentLevel + 1)}
         {index !== value.values.length - 1 && ', '}
-      </span>
+      </div>
     ));
-    return <span className="text-graphql-otel-green">[{items}]</span>;
+    return (
+      <span className="text-graphql-otel-green">
+        [<div className="ml-2">{items}</div>
+        {indent}]
+      </span>
+    );
   } else if (value.kind === Kind.OBJECT) {
-    const fields = value.fields.map((field, index) => (
-      <span key={index}>
-        <span>{field.name.value}</span>: {renderArgumentValue(field.value)}
-        {index !== value.fields.length - 1 && ', '}
-      </span>
+    const properties = value.fields.map((field, i) => (
+      <div key={field.name.value}>
+        <span className="text-graphiql-light">
+          {indent}
+          {field.name.value}:{' '}
+        </span>
+        {renderArgumentValue(field.value, indentLevel + 1)}
+        {i !== value.fields.length - 1 && ', '}
+      </div>
     ));
-    return <span className="text-graphql-otel-green">{'{' + fields + '}'}</span>;
+
+    return (
+      <span className="text-graphiql-highlight">
+        {'{'}
+        <div className="ml-2">{properties}</div>
+        {indent}
+        {'}'}
+      </span>
+    );
   } else if (value.kind === Kind.VARIABLE) {
-    return <span className="text-graphql-otel-pink">${value.name.value}</span>;
+    return <span className="text-graphql-otel-green">${value.name.value}</span>;
+  } else {
+    return <span className="text-graphql-otel-gray">[Unsupported Value]</span>;
   }
 }
 
@@ -135,10 +158,10 @@ export function QueryViewer({ doc }: QueryViewerProps) {
             let kind = def.operation;
             const variableDefinitions = def.variableDefinitions
               ? def.variableDefinitions.map((varDef, varIndex) => (
-                  <span key={varDef.variable.name.value}>
+                  <div key={varDef.variable.name.value}>
                     <span className="text-graphql-otel-green"> ${varDef.variable.name.value}</span>:{' '}
                     {renderType(varDef.type)}
-                  </span>
+                  </div>
                 ))
               : null;
 
@@ -150,7 +173,7 @@ export function QueryViewer({ doc }: QueryViewerProps) {
                     {variableDefinitions && (
                       <span>
                         {'('}
-                        <span className="flex flex-col ml-3"> {variableDefinitions}</span>
+                        <div className="flex flex-col ml-3">{variableDefinitions}</div>
                         {')'}
                       </span>
                     )}
