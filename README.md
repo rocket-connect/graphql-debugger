@@ -42,19 +42,32 @@ npm i graphql-debugger @graphql-debugger/trace-schema
 
 ```ts
 import { makeExecutableSchema } from '@graphql-tools/schema';
-import { traceSchema } from '@graphql-debugger/trace-schema';
+import { createYoga } from 'graphql-yoga';
+import { traceSchema, GraphQLOTELContext } from '@graphql-debugger/trace-schema';
 
+// Common GraphQL schema
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
 });
 
+// Wrap all resolvers and fields with tracing
 const tracedSchema = traceSchema({
   schema,
 });
 
 const yoga = createYoga({
   schema: tracedSchema,
+  context: (req) => {
+    return {
+      // Include variables, result and context in traces
+      GraphQLOTELContext: new GraphQLOTELContext({
+        includeVariables: true,
+        includeResult: true,
+        includeContext: true,
+      }),
+    };
+  },
 });
 ```
 
@@ -63,6 +76,8 @@ const yoga = createYoga({
 ```
 npx graphql-debugger
 ```
+
+Navgiating to [http://localhost:16686](http://localhost:16686) will open the GraphQL Debugger UI.
 
 ## License
 

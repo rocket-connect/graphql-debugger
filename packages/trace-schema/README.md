@@ -18,19 +18,32 @@ Finally, it sets up the nessessary OpenTelemetry instrumentation packages and pr
 
 ```ts
 import { makeExecutableSchema } from '@graphql-tools/schema';
-import { traceSchema } from '@graphql-debugger/trace-schema';
+import { createYoga } from 'graphql-yoga';
+import { traceSchema, GraphQLOTELContext } from '@graphql-debugger/trace-schema';
 
+// Common GraphQL schema
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
 });
 
+// Wrap all resolvers and fields with tracing
 const tracedSchema = traceSchema({
   schema,
 });
 
 const yoga = createYoga({
   schema: tracedSchema,
+  context: (req) => {
+    return {
+      // Include variables, result and context in traces
+      GraphQLOTELContext: new GraphQLOTELContext({
+        includeVariables: true,
+        includeResult: true,
+        includeContext: true,
+      }),
+    };
+  },
 });
 ```
 
