@@ -6,7 +6,9 @@
 
 ## About
 
-This is the user interface for the GraphQL Debugger collector. It is designed to be used locally during development.
+This is the user interface for the GraphQL Debugger collector.
+
+It is designed to be used locally during development.
 
 ## License
 
