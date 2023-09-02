@@ -6,9 +6,13 @@
 
 ## About
 
-This is a Node.js express server exposing a GraphQL endpoint that serves the [User Interface](https://github.com/rocket-connect/graphql-debugger/tree/main/packages/ui).
+This is a Node.js express server exposing a GraphQL endpoint that serves the [user interface](https://github.com/rocket-connect/graphql-debugger/tree/main/packages/ui), and a proxy endpoint around the Open Telemetry Collector's `/v1/traces` endpoint.
 
-This server also exposes two other HTTP endpoints:
+## Endpoints
+
+### /graphql
+
+This is the GraphQL endpoint that serves the [user interface](https://github.com/rocket-connect/graphql-debugger/tree/main/packages/ui).
 
 ### /v1/traces
 
@@ -16,7 +20,7 @@ This is a proxy endpoint around the Open Telemetry Collector's `/v1/traces` endp
 
 ### /v1/schema
 
-This is used by the [Trace Schema Package](https://github.com/rocket-connect/graphql-debugger/tree/main/packages/trace-schema), it sends the GraphQL schema here.
+This is used by the [trace schema package](https://github.com/rocket-connect/graphql-debugger/tree/main/packages/trace-schema), it sends the GraphQL schema here.
 
 ## Database
 
