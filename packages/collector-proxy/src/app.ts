@@ -17,8 +17,8 @@ export async function start() {
     await app.listen(config.UI_PORT);
     await collector.listen(config.COLLECTOR_PORT);
 
-    debug('Server Online port: ', config.UI_PORT);
-    debug('Server Online port: ', config.COLLECTOR_PORT);
+    debug('GraphQL online on port: ', config.UI_PORT);
+    debug('Collector online on port: ', config.COLLECTOR_PORT);
 
     return {
       collector: `http://localhost:${config.COLLECTOR_PORT}`,
