@@ -256,39 +256,44 @@ collector.post('/v1/traces', async (req, res) => {
 });
 
 collector.post('/v1/schema', async (req, res) => {
-  const schema = req.body.schema;
+  try {
+    const schema = req.body.schema;
 
-  if (!schema) {
-    return res.status(400).json({}).end();
-  } else if (typeof schema !== 'string') {
-    return res.status(400).json({}).end();
-  }
+    if (!schema) {
+      return res.status(400).json({}).end();
+    } else if (typeof schema !== 'string') {
+      return res.status(400).json({}).end();
+    }
 
-  const executableSchema = makeExecutableSchema({
-    typeDefs: schema,
-    noLocation: true,
-  });
+    const executableSchema = makeExecutableSchema({
+      typeDefs: schema,
+      noLocation: true,
+    });
 
-  const sortedSchema = lexicographicSortSchema(executableSchema);
-  const printed = printSchema(sortedSchema);
-  const hash = crypto.createHash('sha256').update(printed).digest('hex');
+    const sortedSchema = lexicographicSortSchema(executableSchema);
+    const printed = printSchema(sortedSchema);
+    const hash = crypto.createHash('sha256').update(printed).digest('hex');
 
-  const foundSchema = await prisma.schema.findFirst({
-    where: {
-      hash,
-    },
-  });
+    const foundSchema = await prisma.schema.findFirst({
+      where: {
+        hash,
+      },
+    });
 
-  if (foundSchema) {
+    if (foundSchema) {
+      return res.status(200).json({}).end();
+    }
+
+    await prisma.schema.create({
+      data: {
+        hash,
+        typeDefs: print(parse(schema)),
+      },
+    });
+
     return res.status(200).json({}).end();
+  } catch (error) {
+    debug('Error posting schema', error);
+    return res.status(500).json({}).end();
   }
-
-  await prisma.schema.create({
-    data: {
-      hash,
-      typeDefs: print(parse(schema)),
-    },
-  });
-
-  return res.status(200).json({}).end();
 });
