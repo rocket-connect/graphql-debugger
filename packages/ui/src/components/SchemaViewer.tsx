@@ -116,9 +116,12 @@ function RenderField({
         {renderFieldName()}
         <span className="text-graphql-otel-green ml-2">{processedType}</span>
       </div>
-      <div className="py-2">
-        <RenderStats aggregate={aggregate} />
-      </div>
+
+      {['query', 'mutation'].includes(parentName) && (
+        <div className="py-2">
+          <RenderStats aggregate={aggregate} />
+        </div>
+      )}
     </li>
   );
 }
