@@ -15,6 +15,7 @@
 <p  style="text-align: left; margin-top: 20px;"> GraphQL debugger will help you spot errors, slow queries and other issues in your GraphQL server, without having to use console.log.</p>
 
 </div>
+
 ## Packages
 
 1. [ `@graphql-debugger/ui`](./packages/ui/README.md) - Frontend
