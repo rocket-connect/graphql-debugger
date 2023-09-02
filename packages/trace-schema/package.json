@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/trace-schema",
-  "version": "0.0.0-alpha.23",
+  "version": "0.0.0-alpha.24",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -9,6 +9,9 @@
   "scripts": {
     "build": "tsc",
     "test": "NODE_ENV=test jest"
+  },
+  "peerDependencies": {
+    "graphql": "^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0"
   },
   "dependencies": {
     "@graphql-tools/schema": "^10.0.0",
@@ -21,8 +24,7 @@
     "@opentelemetry/sdk-trace-base": "^1.15.2",
     "@opentelemetry/semantic-conventions": "^1.15.2",
     "debug": "^4.3.4",
-    "graphql": "^16.8.0",
-    "graphql-otel": "^0.1.10",
+    "graphql-otel": "^0.1.11",
     "node-fetch": "2"
   },
   "devDependencies": {

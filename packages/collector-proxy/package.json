@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/collector-proxy",
-  "version": "0.0.0-alpha.23",
+  "version": "0.0.0-alpha.24",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -13,6 +13,9 @@
     "test": "NODE_ENV=test jest",
     "generate-types": "ts-node ./src/graphql/generate && graphql-codegen --config codegen.ts",
     "postinstall": "npx prisma generate && npx prisma db push"
+  },
+  "peerDependencies": {
+    "graphql": "^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0"
   },
   "dependencies": {
     "@graphql-debugger/trace-schema": "workspace:^",
@@ -27,7 +30,6 @@
     "express": "^4.18.2",
     "express-static-gzip": "^2.1.7",
     "fastq": "^1.15.0",
-    "graphql": "^16.8.0",
     "graphql-yoga": "^4.0.4",
     "neo4j-driver": "^5.11.0",
     "prisma": "^5.2.0",

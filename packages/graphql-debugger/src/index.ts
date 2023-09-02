@@ -2,11 +2,7 @@
 process.env.DEBUG = process.env.DEBUG || 'graphql-debugger:*';
 
 import { debug } from './debug';
-import yargs from 'yargs/yargs';
-import { hideBin } from 'yargs/helpers';
 import * as app from '@graphql-debugger/collector-proxy';
-
-// const argv = yargs(hideBin(process.argv)).argv;
 
 async function start() {
   try {
