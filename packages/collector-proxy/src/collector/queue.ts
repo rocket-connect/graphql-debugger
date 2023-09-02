@@ -3,7 +3,7 @@ import { schema } from './schema';
 import { z } from 'zod';
 import { prisma } from '../prisma';
 import { debug } from '../debug';
-import { print, parse } from 'graphql';
+import { graphql } from '@graphql-debugger/utils';
 import { AttributeName } from '@graphql-debugger/trace-schema';
 
 export type Data = z.infer<typeof schema>['body'];
@@ -95,8 +95,8 @@ async function worker(data: Data) {
           let graphqlDocument: string | undefined;
           if (!span.parentSpanId && document) {
             try {
-              const parsed = parse(document);
-              const printed = print(parsed);
+              const parsed = graphql.parse(document);
+              const printed = graphql.print(parsed);
               graphqlDocument = printed;
             } catch (error) {
               debug('Error parsing document', error);

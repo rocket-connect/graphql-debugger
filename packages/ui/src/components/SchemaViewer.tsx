@@ -1,4 +1,4 @@
-import { parse, FieldDefinitionNode, ObjectTypeDefinitionNode } from 'graphql';
+import { graphql } from '@graphql-debugger/utils';
 import { useEffect, useState } from 'react';
 import { aggregateSpans } from '../api/aggregate-spans';
 import { AggregateSpansResponse } from '../graphql-types';
@@ -51,7 +51,7 @@ function RenderField({
   parentName,
   schemaId,
 }: {
-  field: FieldDefinitionNode;
+  field: graphql.FieldDefinitionNode;
   parentName: string;
   schemaId: string;
 }) {
@@ -131,7 +131,7 @@ function RenderType({
   type,
 }: {
   schemaId: string;
-  type: { name: string; kind: string; fields: readonly FieldDefinitionNode[] };
+  type: { name: string; kind: string; fields: readonly graphql.FieldDefinitionNode[] };
 }) {
   let kindKeyword = '';
   if (type.kind === 'ObjectTypeDefinition') {
@@ -165,11 +165,11 @@ function RenderType({
 }
 
 export function SchemaViewer({ schemaId, typeDefs }: { schemaId: string; typeDefs: string }) {
-  const parsed = parse(typeDefs);
+  const parsed = graphql.parse(typeDefs);
 
-  const queryDefs: ObjectTypeDefinitionNode[] = [];
-  const mutationDefs: ObjectTypeDefinitionNode[] = [];
-  const otherDefs: ObjectTypeDefinitionNode[] = [];
+  const queryDefs: graphql.ObjectTypeDefinitionNode[] = [];
+  const mutationDefs: graphql.ObjectTypeDefinitionNode[] = [];
+  const otherDefs: graphql.ObjectTypeDefinitionNode[] = [];
 
   parsed.definitions.forEach((def) => {
     if (def.kind === 'ObjectTypeDefinition') {
@@ -201,7 +201,7 @@ export function SchemaViewer({ schemaId, typeDefs }: { schemaId: string; typeDef
                   type={{
                     name,
                     kind,
-                    fields: def.fields as FieldDefinitionNode[],
+                    fields: def.fields as graphql.FieldDefinitionNode[],
                   }}
                 />
               </div>

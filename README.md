@@ -26,7 +26,8 @@ npx graphql-debugger
 1. [ `@graphql-debugger/ui`](./packages/ui/README.md) - Frontend
 2. [`@graphql-debugger/collector-proxy`](./packages/collector-proxy/README.md) - Data Collector
 3. [`@graphql-debugger/trace-schema`](./packages/trace-schema/README.md) - Schema Plugin
-4. [`graphql-debugger`](./packages/graphql-debugger/README.md) - CLI
+4. [`@graphql-debugger/utils`](./packages/utils/README.md) - Utilities
+5. [`graphql-debugger`](./packages/graphql-debugger/README.md) - CLI
 
 ## Getting Started
 

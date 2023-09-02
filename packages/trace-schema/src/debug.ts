@@ -1,3 +1,5 @@
-import Debug from 'debug';
+import { Debug, type Debugger } from '@graphql-debugger/utils';
 
-export const debug = Debug('graphql-debugger:traced-schema');
+const debugNamespace = 'trace-schema';
+
+export const debug: Debugger = Debug(debugNamespace);

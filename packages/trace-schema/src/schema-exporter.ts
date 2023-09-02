@@ -1,5 +1,5 @@
 import { OTLPExporterNodeConfigBase } from '@opentelemetry/otlp-exporter-base';
-import { GraphQLSchema, lexicographicSortSchema, printSchema } from 'graphql';
+import { graphql } from '@graphql-debugger/utils';
 import fetch from 'node-fetch';
 import { debug } from './debug';
 
@@ -13,11 +13,14 @@ export class SchemaExporer {
   private url: string;
   private schemaString: string;
 
-  constructor(public schema: GraphQLSchema, public exporterConfig?: OTLPExporterNodeConfigBase) {
+  constructor(
+    public schema: graphql.GraphQLSchema,
+    public exporterConfig?: OTLPExporterNodeConfigBase
+  ) {
     this.url = exporterConfig?.url ?? DEFAULT_URL;
 
-    const sortedSchema = lexicographicSortSchema(this.schema);
-    this.schemaString = printSchema(sortedSchema);
+    const sortedSchema = graphql.lexicographicSortSchema(this.schema);
+    this.schemaString = graphql.printSchema(sortedSchema);
   }
 
   public start() {

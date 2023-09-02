@@ -1,4 +1,4 @@
-import { print, parse } from 'graphql';
+import { graphql } from '@graphql-debugger/utils';
 import { API_URL } from '../config';
 
 export async function api<D = unknown>({
@@ -8,7 +8,7 @@ export async function api<D = unknown>({
   query: any;
   variables?: any;
 }): Promise<{ data: D; errors: any[] }> {
-  const validQuery = print(parse(query));
+  const validQuery = graphql.print(graphql.parse(query));
 
   const response = await fetch(API_URL, {
     method: 'POST',

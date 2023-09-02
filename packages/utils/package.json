@@ -1,11 +1,11 @@
 {
-  "name": "graphql-debugger",
+  "name": "@graphql-debugger/utils",
   "version": "0.0.0-alpha.27",
-  "bin": {
-    "graphql-debugger": "./build/index.js"
-  },
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
   "files": [
-    "build"
+    "build",
+    "prisma"
   ],
   "scripts": {
     "build": "tsc",
@@ -13,14 +13,15 @@
     "dev": "NODE_ENV=development ts-node ./src/index.ts"
   },
   "dependencies": {
-    "@graphql-debugger/collector-proxy": "workspace:^",
-    "@graphql-debugger/utils": "workspace:^",
-    "typescript": "^5.1.6"
+    "debug": "^4.3.4",
+    "typescript": "^5.1.6",
+    "graphql": "^15.0.0 || ^16.0.0 || ^17.0.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.22.10",
     "@babel/preset-typescript": "^7.22.5",
     "@tsconfig/node18": "1.0.1",
+    "@types/debug": "^4.1.8",
     "@types/node": "^20.5.3"
   }
 }

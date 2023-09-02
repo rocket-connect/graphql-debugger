@@ -1,3 +1,5 @@
-import Debug from 'debug';
+import { Debug, type Debugger } from '@graphql-debugger/utils';
 
-export const debug = Debug('graphql-debugger:collector-proxy');
+const debugNamespace = 'collector-proxy';
+
+export const debug: Debugger = Debug(debugNamespace);

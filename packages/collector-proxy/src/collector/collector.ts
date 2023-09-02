@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { schema } from './schema';
 import { debug } from '../debug';
 import crypto from 'crypto';
-import { print, parse, lexicographicSortSchema, printSchema } from 'graphql';
+import { graphql } from '@graphql-debugger/utils';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { queue } from './queue';
 
@@ -54,8 +54,8 @@ collector.post('/v1/schema', async (req, res) => {
       noLocation: true,
     });
 
-    const sortedSchema = lexicographicSortSchema(executableSchema);
-    const printed = printSchema(sortedSchema);
+    const sortedSchema = graphql.lexicographicSortSchema(executableSchema);
+    const printed = graphql.printSchema(sortedSchema);
     const hash = crypto.createHash('sha256').update(printed).digest('hex');
 
     const foundSchema = await prisma.schema.findFirst({
@@ -71,7 +71,7 @@ collector.post('/v1/schema', async (req, res) => {
     await prisma.schema.create({
       data: {
         hash,
-        typeDefs: print(parse(schema)),
+        typeDefs: graphql.print(graphql.parse(schema)),
       },
     });
 

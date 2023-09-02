@@ -3,34 +3,26 @@ import type { OTLPExporterNodeConfigBase } from '@opentelemetry/otlp-exporter-ba
 
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { getResolversFromSchema } from '@graphql-tools/utils';
-import {
-  GraphQLSchema,
-  Kind,
-  printSchema,
-  visit,
-  parse,
-  FieldDefinitionNode,
-  print,
-} from 'graphql';
+import { graphql } from '@graphql-debugger/utils';
 import { traceDirective } from 'graphql-otel';
 import { debug } from './debug';
 import { SchemaExporer } from './schema-exporter';
 
 export interface TraceSchemaInput {
-  schema: GraphQLSchema;
+  schema: graphql.GraphQLSchema;
   exporterConfig?: OTLPExporterNodeConfigBase;
 }
 
-export function traceSchema({ schema, exporterConfig }: TraceSchemaInput): GraphQLSchema {
+export function traceSchema({ schema, exporterConfig }: TraceSchemaInput): graphql.GraphQLSchema {
   debug('Tracing schema');
 
   setupOtel({ exporterConfig });
 
   const directive = traceDirective();
 
-  const ast = visit(parse(printSchema(schema)), {
+  const ast = graphql.visit(graphql.parse(graphql.printSchema(schema)), {
     FieldDefinition: {
-      enter(node: FieldDefinitionNode) {
+      enter(node: graphql.FieldDefinitionNode) {
         const existingTraceDirective = node.directives?.find(
           (directive) => directive.name.value === 'trace'
         );
@@ -42,9 +34,9 @@ export function traceSchema({ schema, exporterConfig }: TraceSchemaInput): Graph
         const newDirectives = [
           ...(node.directives ?? []),
           {
-            kind: Kind.DIRECTIVE,
+            kind: graphql.Kind.DIRECTIVE,
             name: {
-              kind: Kind.NAME,
+              kind: graphql.Kind.NAME,
               value: 'trace',
             },
           },
@@ -62,7 +54,7 @@ export function traceSchema({ schema, exporterConfig }: TraceSchemaInput): Graph
 
   const tracedSchema = directive.transformer(
     makeExecutableSchema({
-      typeDefs: [print(ast), directive.typeDefs],
+      typeDefs: [graphql.print(ast), directive.typeDefs],
       resolvers,
     })
   );

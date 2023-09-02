@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/trace-schema",
-  "version": "0.0.0-alpha.26",
+  "version": "0.0.0-alpha.27",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -10,10 +10,8 @@
     "build": "tsc",
     "test": "NODE_ENV=test jest"
   },
-  "peerDependencies": {
-    "graphql": "^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0"
-  },
   "dependencies": {
+    "@graphql-debugger/utils": "workspace:^",
     "@graphql-tools/schema": "^10.0.0",
     "@graphql-tools/utils": "^10.0.5",
     "@opentelemetry/api": "^1.4.1",
@@ -23,7 +21,6 @@
     "@opentelemetry/resources": "^1.15.2",
     "@opentelemetry/sdk-trace-base": "^1.15.2",
     "@opentelemetry/semantic-conventions": "^1.15.2",
-    "debug": "^4.3.4",
     "graphql-otel": "^0.1.11",
     "node-fetch": "2"
   },
@@ -33,7 +30,6 @@
     "@jest/globals": "^29.6.4",
     "@opentelemetry/otlp-exporter-base": "^0.41.2",
     "@tsconfig/node18": "1.0.1",
-    "@types/debug": "^4.1.8",
     "@types/jest": "^29.5.4",
     "@types/node": "^20.5.3",
     "@types/node-fetch": "^2.6.4",

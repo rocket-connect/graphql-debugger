@@ -1,7 +1,7 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
-function updatePackageJsonVersion(filePath, version) {
+function updatePackageJsonVersion(filePath: string, version: string) {
   const content = fs.readFileSync(filePath, 'utf-8');
   const json = JSON.parse(content);
   json.version = version;
@@ -21,7 +21,7 @@ function updatePackageJsonVersion(filePath, version) {
   fs.writeFileSync(filePath, updatedContent);
 }
 
-function searchAndReplace(rootDir, version) {
+export function searchAndReplace(rootDir: string, version: string) {
   const entries = fs.readdirSync(rootDir, { withFileTypes: true });
 
   for (const entry of entries) {
@@ -38,12 +38,16 @@ function searchAndReplace(rootDir, version) {
 }
 
 const version = process.env.VERSION;
+const startPath = process.env.START_PATH;
 
 if (!version) {
   console.error('Please set the VERSION environment variable.');
   process.exit(1);
 }
 
-const startDir = '.';
+if (!startPath) {
+  console.error('Please set the START_PATH environment variable.');
+  process.exit(1);
+}
 
-searchAndReplace(startDir, version);
+searchAndReplace(startPath, version);
