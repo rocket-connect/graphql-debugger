@@ -16,7 +16,7 @@ Debug your GraphQL server locally.
 Install the GraphQL Debugger CLI and trace schema package.
 
 ```
-npm i graphql-debugger @graphql-debugger/traced-schema
+npm i graphql-debugger @graphql-debugger/trace-schema
 ```
 
 ### Trace your schema
