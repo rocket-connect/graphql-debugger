@@ -13,8 +13,7 @@ describe('POST /v1/traces', () => {
     await prisma.traceGroup.deleteMany();
   });
 
-  // Removed input validation for performance reasons
-  test.skip('should throw when no body is sent', async () => {
+  test('should throw when no body is sent', async () => {
     const response = await request().post('/v1/traces').send({});
 
     expect(response.status).toBe(400);
@@ -37,8 +36,7 @@ describe('POST /v1/traces', () => {
 `);
   });
 
-  // Removed input validation for performance reasons
-  test.skip('should throw span validation error when not sent correctly', async () => {
+  test('should throw span validation error when not sent correctly', async () => {
     const payload: z.infer<typeof ExportTraceServiceRequestSchema> = {
       resourceSpans: [
         {
@@ -157,86 +155,6 @@ describe('POST /v1/traces', () => {
       "spans",
       0,
       "attributes"
-    ],
-    "message": "Required"
-  },
-  {
-    "code": "invalid_type",
-    "expected": "number",
-    "received": "undefined",
-    "path": [
-      "body",
-      "resourceSpans",
-      0,
-      "scopeSpans",
-      0,
-      "spans",
-      0,
-      "droppedAttributesCount"
-    ],
-    "message": "Required"
-  },
-  {
-    "code": "invalid_type",
-    "expected": "array",
-    "received": "undefined",
-    "path": [
-      "body",
-      "resourceSpans",
-      0,
-      "scopeSpans",
-      0,
-      "spans",
-      0,
-      "events"
-    ],
-    "message": "Required"
-  },
-  {
-    "code": "invalid_type",
-    "expected": "number",
-    "received": "undefined",
-    "path": [
-      "body",
-      "resourceSpans",
-      0,
-      "scopeSpans",
-      0,
-      "spans",
-      0,
-      "droppedEventsCount"
-    ],
-    "message": "Required"
-  },
-  {
-    "code": "invalid_type",
-    "expected": "array",
-    "received": "undefined",
-    "path": [
-      "body",
-      "resourceSpans",
-      0,
-      "scopeSpans",
-      0,
-      "spans",
-      0,
-      "links"
-    ],
-    "message": "Required"
-  },
-  {
-    "code": "invalid_type",
-    "expected": "number",
-    "received": "undefined",
-    "path": [
-      "body",
-      "resourceSpans",
-      0,
-      "scopeSpans",
-      0,
-      "spans",
-      0,
-      "droppedLinksCount"
     ],
     "message": "Required"
   },
