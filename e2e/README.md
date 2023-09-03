@@ -1,22 +1,20 @@
-# graphql-debugger
+# @graphql-debugger/e2e
 
 - [graphql-debugger.com](http://www.graphql-debugger.com)
 
-[![npm version](https://badge.fury.io/js/graphql-debugger.svg)](https://badge.fury.io/js/graphql-debugger) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## About
 
-This is the CLI for GraphQL Debugger.
+This package contains the end-to-end tests for the GraphQL Debugger.
 
-Its spawns the [Collector](https://github.com/rocket-connect/graphql-debugger/tree/main/packages/collector-proxy) and serves the [User Interface](https://github.com/rocket-connect/graphql-debugger/tree/main/packages/ui).
+They spawn the collector, serve the ui and then run puppeteer tests against them.
 
 ## Usage
 
+```bash
+pnpm run test
 ```
-npx graphql-debugger
-```
-
-Navgiating to [http://localhost:16686](http://localhost:16686) will open the GraphQL Debugger UI.
 
 ## License
 
