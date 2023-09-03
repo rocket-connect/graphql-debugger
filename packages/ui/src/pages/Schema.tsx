@@ -207,7 +207,6 @@ export function Schema() {
                     <JsonViewer
                       json={JSON.stringify(
                         (trace?.spans || []).reduce((result, span) => {
-                          console.log(span);
                           if (span.errorMessage || span.errorStack) {
                             result[span.name] = {
                               errorMessage: span.errorMessage,
