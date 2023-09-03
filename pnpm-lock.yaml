@@ -72,7 +72,7 @@ importers:
         specifier: ^7.0.4
         version: 7.0.4
       puppeteer:
-        specifier: ^21.1.1
+        specifier: 21.1.1
         version: 21.1.1
 
   packages/collector-proxy:
