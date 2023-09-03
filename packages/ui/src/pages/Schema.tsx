@@ -12,6 +12,7 @@ import { SideBar } from '../components/SideBar';
 import { SchemaTraces } from '../components/SchemaTraces';
 import { deleteTraces } from '../api/delete-traces';
 import { UnixNanoTimeStamp } from '@graphql-debugger/time';
+import { IDS } from '../testing';
 
 export function Schema() {
   const [schema, setSchema] = useState<Schema>();
@@ -77,7 +78,7 @@ export function Schema() {
   }, [navigate]);
 
   return (
-    <div className="flex flex-row h-screen">
+    <div id={IDS.SCHEMA} data-schema={`${schema?.id}`} className="flex flex-row h-screen">
       <div>
         <SideBar />
       </div>

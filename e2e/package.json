@@ -7,12 +7,13 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "cd ../packages/ui && pnpm run test:build && cd ../../e2e && NODE_ENV=test jest"
+    "test": "cd ../packages/ui && pnpm run build && cd ../../e2e && NODE_ENV=test DEBUG=\"@graphql-debugger:*\" jest --runInBand"
   },
   "dependencies": {},
   "devDependencies": {
     "@graphql-debugger/utils": "workspace:^",
     "@graphql-debugger/ui": "workspace:^",
+    "@graphql-debugger/collector-proxy": "workspace:^",
     "puppeteer": "^21.1.1",
     "@types/puppeteer": "^7.0.4"
   }
