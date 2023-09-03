@@ -1,10 +1,11 @@
 {
-  "name": "@graphql-debugger/utils",
+  "name": "@graphql-debugger/data-access",
   "version": "0.0.0-alpha.40",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
-    "build"
+    "build",
+    "prisma"
   ],
   "license": "MIT",
   "repository": {
@@ -14,14 +15,11 @@
   "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
   "scripts": {
     "build": "tsc",
-    "start": "node build/index.js",
-    "dev": "NODE_ENV=development ts-node ./src/index.ts"
+    "postinstall": "npx prisma generate && npx prisma db push"
   },
   "dependencies": {
-    "debug": "^4.3.4",
-    "graphql": "^16.0.0 || ^17.0.0"
+    "prisma": "5.2.0",
+    "@prisma/client": "5.2.0"
   },
-  "devDependencies": {
-    "@types/debug": "^4.1.8"
-  }
+  "devDependencies": {}
 }

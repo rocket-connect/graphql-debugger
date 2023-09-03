@@ -1,10 +1,10 @@
+import { prisma } from '@graphql-debugger/data-access';
+import { graphql, hashSchema } from '@graphql-debugger/utils';
+import { makeExecutableSchema } from '@graphql-tools/schema';
 import express, { Express } from 'express';
-import { prisma } from '../prisma';
 import { z } from 'zod';
 import { schema } from './schema';
 import { debug } from '../debug';
-import { graphql, hashSchema } from '@graphql-debugger/utils';
-import { makeExecutableSchema } from '@graphql-tools/schema';
 import { queue } from './queue';
 
 export const collector: Express = express();

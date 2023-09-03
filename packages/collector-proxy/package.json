@@ -1,11 +1,10 @@
 {
   "name": "@graphql-debugger/collector-proxy",
-  "version": "0.0.0-alpha.39",
+  "version": "0.0.0-alpha.40",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
-    "build",
-    "prisma"
+    "build"
   ],
   "license": "MIT",
   "repository": {
@@ -17,18 +16,17 @@
     "build": "tsc && npm run generate-types",
     "dev": "DEBUG=\"@graphql-debugger:*\" TRACE_SCHEMA=\"true\" NODE_ENV=development ts-node ./src/main.ts",
     "test": "NODE_ENV=test jest",
-    "generate-types": "ts-node ./src/graphql/generate && graphql-codegen --config codegen.ts",
-    "postinstall": "npx prisma generate && npx prisma db push"
+    "generate-types": "ts-node ./src/graphql/generate && graphql-codegen --config codegen.ts"
   },
   "dependencies": {
     "@graphql-debugger/time": "workspace:^",
     "@graphql-debugger/trace-schema": "workspace:^",
     "@graphql-debugger/ui": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
+    "@graphql-debugger/data-access": "workspace:^",
     "@graphql-tools/schema": "^10.0.0",
     "@graphql-tools/utils": "^10.0.5",
     "@pothos/core": "^3.33.0",
-    "@prisma/client": "^5.2.0",
     "cors": "^2.8.5",
     "dataloader": "^2.2.2",
     "dotenv": "^16.3.1",
@@ -37,7 +35,6 @@
     "fastq": "^1.15.0",
     "graphql-yoga": "^4.0.4",
     "neo4j-driver": "^5.11.0",
-    "prisma": "^5.2.0",
     "ts-node": "^10.9.1",
     "zod": "^3.22.2"
   },

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { request } from './utils';
 import { ExportTraceServiceRequestSchema } from '../../src/collector/schema';
-import { prisma } from '../../src/prisma';
+import { prisma } from '@graphql-debugger/data-access';
 import util from 'util';
 import { describe, beforeEach, test, expect } from '@jest/globals';
 

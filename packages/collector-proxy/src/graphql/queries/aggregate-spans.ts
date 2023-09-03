@@ -1,5 +1,5 @@
 import { UnixNanoTimeStamp } from '@graphql-debugger/time';
-import { prisma } from '../../prisma';
+import { prisma } from '@graphql-debugger/data-access';
 import { builder } from '../schema';
 import { Span as PrismaSpan } from '.prisma/client';
 

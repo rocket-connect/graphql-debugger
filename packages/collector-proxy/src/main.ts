@@ -1,7 +1,7 @@
+import { prisma } from '@graphql-debugger/data-access';
 import { debug } from './debug';
 import * as app from './app';
 import { queue } from './collector/queue';
-import { prisma } from './prisma';
 
 async function start() {
   try {

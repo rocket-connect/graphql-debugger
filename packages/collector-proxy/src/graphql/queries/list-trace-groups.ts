@@ -1,4 +1,4 @@
-import { prisma } from '../../prisma';
+import { prisma } from '@graphql-debugger/data-access';
 import { Trace, TraceObject } from '../objects/trace';
 import { builder } from '../schema';
 

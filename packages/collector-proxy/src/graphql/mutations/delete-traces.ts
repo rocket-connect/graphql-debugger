@@ -1,4 +1,4 @@
-import { prisma } from '../../prisma';
+import { prisma } from '@graphql-debugger/data-access';
 import { builder } from '../schema';
 
 export type DeleteTracesWhere = {

@@ -1,6 +1,6 @@
 import { TimeStamp, UnixNanoTimeStamp } from '@graphql-debugger/time';
 import { builder } from '../schema';
-import type { Span as PrismaSpan } from '.prisma/client';
+import type { Span as PrismaSpan } from '@graphql-debugger/data-access';
 
 export type Span = {
   id: PrismaSpan['id'];

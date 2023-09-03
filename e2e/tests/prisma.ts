@@ -1,6 +1,6 @@
-import { prisma } from '@graphql-debugger/collector-proxy';
+import { prisma } from '@graphql-debugger/data-access';
 
-export { prisma } from '@graphql-debugger/collector-proxy';
+export { prisma } from '@graphql-debugger/data-access';
 
 export async function clearDB() {
   await prisma.$transaction(async (tx) => {

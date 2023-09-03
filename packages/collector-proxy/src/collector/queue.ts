@@ -1,11 +1,11 @@
-import fastq from 'fastq';
-import { schema } from './schema';
-import { z } from 'zod';
-import { prisma } from '../prisma';
-import { debug } from '../debug';
+import { prisma } from '@graphql-debugger/data-access';
 import { graphql } from '@graphql-debugger/utils';
 import { UnixNanoTimeStamp } from '@graphql-debugger/time';
 import { AttributeName } from '@graphql-debugger/trace-schema';
+import fastq from 'fastq';
+import { schema } from './schema';
+import { z } from 'zod';
+import { debug } from '../debug';
 
 export type Data = z.infer<typeof schema>['body'];
 

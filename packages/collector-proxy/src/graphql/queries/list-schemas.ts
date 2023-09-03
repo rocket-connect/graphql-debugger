@@ -1,4 +1,4 @@
-import { prisma } from '../../prisma';
+import { prisma } from '@graphql-debugger/data-access';
 import { SchemaObject, Schema } from '../objects/schema';
 import { builder } from '../schema';
 
