@@ -5,6 +5,12 @@
   "publishConfig": {
     "publish": false
   },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rocket-connect/graphql-debugger.git"
+  },
+  "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
   "scripts": {
     "build": "tsc",
     "test": "cd ../packages/ui && pnpm run build && cd ../../e2e && NODE_ENV=test DEBUG=\"@graphql-debugger:*\" jest --runInBand"

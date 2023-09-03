@@ -7,6 +7,12 @@
     "build",
     "prisma"
   ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rocket-connect/graphql-debugger.git"
+  },
+  "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
   "scripts": {
     "build": "tsc && npm run generate-types",
     "dev": "DEBUG=\"@graphql-debugger:*\" TRACE_SCHEMA=\"true\" NODE_ENV=development ts-node ./src/main.ts",
