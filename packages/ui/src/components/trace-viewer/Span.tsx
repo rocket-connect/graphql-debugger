@@ -28,7 +28,10 @@ export function Span({
   }
 
   return (
-    <div className="relative overflow-hidden flex flex-col gap-1 text-xs">
+    <div
+      data-trace-view-spanid={data.id}
+      className="relative overflow-hidden flex flex-col gap-1 text-xs"
+    >
       <div className="py-4">
         <p className={`${data.errorMessage || data.errorStack ? 'text-red-500' : {}} py-1`}>
           {data.name}{' '}

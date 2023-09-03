@@ -124,7 +124,10 @@ export function Schema() {
                 <p className="text-graphiql-light text-xs">The issued GraphQL Query.</p>
                 <div className="overflow-scroll">
                   {trace?.rootSpan?.graphqlDocument && (
-                    <QueryViewer doc={trace?.rootSpan?.graphqlDocument} />
+                    <QueryViewer
+                      doc={trace?.rootSpan?.graphqlDocument}
+                      spanId={trace?.rootSpan?.id}
+                    />
                   )}
                 </div>
               </div>
@@ -141,6 +144,7 @@ export function Schema() {
                     Variables
                   </p>
                   <p
+                    id={IDS.RESULT_BUTTON}
                     onClick={() => setSelectedMeta('result')}
                     className={`${
                       selectedMeta === 'result'

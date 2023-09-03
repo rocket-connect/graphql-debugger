@@ -1,12 +1,13 @@
 import { graphql } from '@graphql-debugger/utils';
 import { Type } from './Type';
 import { Selection } from './Selection';
+import { IDS } from '../../testing';
 
-export function QueryViewer({ doc }: { doc: string }) {
+export function QueryViewer({ doc, spanId }: { doc: string; spanId: string }) {
   const ast: graphql.DocumentNode = graphql.parse(doc);
 
   return (
-    <div className="flex-1 overflow-y-auto">
+    <div id={IDS.QUERY_VIEWER} data-query-view-spanid={spanId} className="flex-1 overflow-y-auto">
       <pre className="text-xs flex flex-col gap-5">
         {ast?.definitions.map((def, index) => {
           if (def.kind === graphql.Kind.OPERATION_DEFINITION) {

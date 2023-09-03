@@ -12,6 +12,8 @@ export type Data = z.infer<typeof schema>['body'];
 export const queue = fastq.promise<Data>(worker, 1);
 
 async function worker(data: Data) {
+  debug('Worker started');
+
   try {
     const body = data;
 
@@ -205,6 +207,8 @@ async function worker(data: Data) {
   } catch (error) {
     const e = error as Error;
     debug('Error creating spans', e);
+  } finally {
+    debug('Worker finished');
   }
 }
 

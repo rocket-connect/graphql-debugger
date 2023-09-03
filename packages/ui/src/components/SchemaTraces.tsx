@@ -3,6 +3,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { ListTraceGroupsWhere, Trace } from '../graphql-types';
 import { listTraceGroups } from '../api/list-trace-groups';
 import { UnixNanoTimeStamp } from '@graphql-debugger/time';
+import { IDS } from '../testing';
 
 export function SchemaTraces({ schemaId }: { schemaId: string }) {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ export function SchemaTraces({ schemaId }: { schemaId: string }) {
   }, [selectedTrace, traces]);
 
   return (
-    <div className="relative">
+    <div className="relative" id={IDS.SCHEMA_TRACES}>
       <table className="text-xs text-left w-full table-fixed">
         <colgroup>
           <col className="w-1/3" />
@@ -89,6 +90,7 @@ export function SchemaTraces({ schemaId }: { schemaId: string }) {
 
             return (
               <tr
+                data-spanid={rootSpan?.id}
                 key={trace.id}
                 className="border-b border-graphiql-border text-graphiql-light"
                 onClick={() => setSelectedTrace(trace)}

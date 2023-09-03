@@ -3,8 +3,7 @@ import { prisma } from '../prisma';
 import { z } from 'zod';
 import { schema } from './schema';
 import { debug } from '../debug';
-import crypto from 'crypto';
-import { graphql } from '@graphql-debugger/utils';
+import { graphql, hashSchema } from '@graphql-debugger/utils';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { queue } from './queue';
 
@@ -12,6 +11,8 @@ export const collector: Express = express();
 collector.use(express.json({ limit: '500mb' }));
 
 collector.post('/v1/traces', async (req, res) => {
+  debug('POST /v1/traces');
+
   try {
     let body: z.infer<typeof schema>['body'];
 
@@ -54,9 +55,7 @@ collector.post('/v1/schema', async (req, res) => {
       noLocation: true,
     });
 
-    const sortedSchema = graphql.lexicographicSortSchema(executableSchema);
-    const printed = graphql.printSchema(sortedSchema);
-    const hash = crypto.createHash('sha256').update(printed).digest('hex');
+    const hash = hashSchema(executableSchema);
 
     const foundSchema = await prisma.schema.findFirst({
       where: {

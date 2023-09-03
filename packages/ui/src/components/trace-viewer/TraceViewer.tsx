@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Span } from './Span';
 import { createTreeData, ms } from './utils';
 import { Span as TSpan, Trace } from '../../graphql-types';
+import { IDS } from '../../testing';
 
 const TraceView = ({ spans }: { spans: TSpan[] }) => {
   const treeData = createTreeData(spans);
@@ -47,5 +48,13 @@ export function TraceViewer() {
     })();
   }, [params.traceId]);
 
-  return <div>{traces?.length && <TraceView spans={traces[0]?.spans || []} />}</div>;
+  if (!traces?.length) {
+    return <div></div>;
+  }
+
+  return (
+    <div id={IDS.TRACE_VIEWER}>
+      {traces?.length && <TraceView spans={traces[0]?.spans || []} />}
+    </div>
+  );
 }
