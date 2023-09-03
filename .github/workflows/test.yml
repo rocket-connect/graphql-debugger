@@ -20,4 +20,5 @@ jobs:
       - run: npm i -g turbo@1.10.7
       - run: pnpm install
       - run: pnpm build --force
+      - run: npm i -g puppeteer@21.1.1
       - run: pnpm test

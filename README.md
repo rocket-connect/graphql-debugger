@@ -32,7 +32,8 @@ We welcome contributions to GraphQL Debugger. Please read our [contributing guid
 3. [`@graphql-debugger/trace-schema`](./packages/trace-schema/README.md) - Schema Plugin
 4. [`@graphql-debugger/utils`](./packages/utils/README.md) - Utilities
 5. [`@graphql-debugger/time`](./packages/time/README.md) - Time Utils
-6. [`graphql-debugger`](./packages/graphql-debugger/README.md) - CLI
+6. [`@graphql-debugger/e2e`](./packages/e2e/README.md) - E2E Tests
+7. [`graphql-debugger`](./packages/graphql-debugger/README.md) - CLI
 
 ## Getting Started
 
