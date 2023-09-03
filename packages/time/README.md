@@ -6,7 +6,14 @@
 
 ## About
 
-Time utils for GraphQL Debugger.
+The [collector](https://github.com/rocket-connect/graphql-debugger/tree/main/packages/collector-proxy) `/v1/traces` endpoint receives the following Unix Nano timestamps:
+
+1. `startTimeUnixNano` - the time when the span started
+2. `endTimeUnixNano` - the time when the span ended
+
+The `@graphql-debugger/time` package provides functions to, store, convert and calculate the difference and offset between these timestamps plus other date and time related functions.
+
+> The package comes bundeled with moment aswell as other Date and Number libraries. We should use this package when working with dates and times.
 
 ## License
 
