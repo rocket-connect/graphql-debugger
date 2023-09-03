@@ -4,12 +4,10 @@ export function Span({
   data,
   minTimestamp,
   maxTimestamp,
-  selectedSpanId,
 }: {
   data: RenderTree;
   minTimestamp: number;
   maxTimestamp: number;
-  selectedSpanId?: string;
 }) {
   let width, offset;
 
@@ -50,7 +48,6 @@ export function Span({
                 data={child}
                 minTimestamp={minTimestamp}
                 maxTimestamp={maxTimestamp}
-                selectedSpanId={selectedSpanId}
               />
             ))
           : null}
