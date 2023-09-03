@@ -3,7 +3,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Schema, Trace } from '../graphql-types';
 import { getSchema } from '../api/list-schemas';
 import { listTraceGroups } from '../api/list-trace-groups';
-import { TraceViewer } from '../components/TraceViewer';
+import { TraceViewer } from '../components/trace-viewer/TraceViewer';
 import { SchemaViewer } from '../components/schema-viewer/SchemaViewer';
 import { logo } from '../utils/images';
 import { QueryViewer } from '../components/query-viewer/QueryViewer';
