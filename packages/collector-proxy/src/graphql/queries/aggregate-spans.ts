@@ -1,7 +1,6 @@
 import { UnixNanoTimeStamp } from '@graphql-debugger/time';
-import { prisma } from '@graphql-debugger/data-access';
+import { prisma, Span as PrismaSpan } from '@graphql-debugger/data-access';
 import { builder } from '../schema';
-import { Span as PrismaSpan } from '.prisma/client';
 
 export type AggregateSpansWhere = {
   schemaId: string;
