@@ -3,7 +3,7 @@ import express, { Express } from 'express';
 import * as config from './config';
 import path from 'path';
 import cors from 'cors';
-import { yoga } from './graphql';
+import { yoga } from '@graphql-debugger/graphql-schema';
 import { collector } from './collector/collector';
 export { collector } from './collector/collector';
 

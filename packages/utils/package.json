@@ -17,9 +17,11 @@
     "start": "node build/index.js",
     "dev": "NODE_ENV=development ts-node ./src/index.ts"
   },
-  "dependencies": {
-    "debug": "^4.3.4",
+  "peerDependencies": {
     "graphql": "^16.0.0 || ^17.0.0"
+  },
+  "dependencies": {
+    "debug": "^4.3.4"
   },
   "devDependencies": {
     "@types/debug": "^4.1.8"

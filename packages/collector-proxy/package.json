@@ -13,10 +13,9 @@
   },
   "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
   "scripts": {
-    "build": "tsc && npm run generate-types",
+    "build": "tsc",
     "dev": "DEBUG=\"@graphql-debugger:*\" TRACE_SCHEMA=\"true\" NODE_ENV=development ts-node ./src/main.ts",
-    "test": "NODE_ENV=test jest",
-    "generate-types": "ts-node ./src/graphql/generate && graphql-codegen --config codegen.ts"
+    "test": "NODE_ENV=test jest"
   },
   "dependencies": {
     "@graphql-debugger/time": "workspace:^",
@@ -24,29 +23,21 @@
     "@graphql-debugger/ui": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
     "@graphql-debugger/data-access": "workspace:^",
+    "@graphql-debugger/graphql-schema": "workspace:^",
     "@graphql-tools/schema": "^10.0.0",
-    "@graphql-tools/utils": "^10.0.5",
-    "@pothos/core": "^3.33.0",
     "cors": "^2.8.5",
-    "dataloader": "^2.2.2",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-static-gzip": "^2.1.7",
     "fastq": "^1.15.0",
-    "graphql-yoga": "^4.0.4",
     "neo4j-driver": "^5.11.0",
     "ts-node": "^10.9.1",
     "zod": "^3.22.2"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
-    "@graphql-codegen/cli": "5.0.0",
-    "@graphql-codegen/client-preset": "^4.1.0",
-    "@graphql-codegen/typescript": "4.0.1",
-    "@graphql-codegen/typescript-resolvers": "4.0.1",
     "@opentelemetry/otlp-transformer": "^0.41.2",
     "@types/cors": "^2.8.13",
-    "@types/express": "^4.17.17",
-    "gql-tag": "^1.0.1"
+    "@types/express": "^4.17.17"
   }
 }

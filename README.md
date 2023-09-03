@@ -29,14 +29,15 @@ We welcome contributions to GraphQL Debugger. Please read our [contributing guid
 
 ## Packages
 
-- [ `@graphql-debugger/ui`](./packages/ui/README.md) - Frontend
-- [`@graphql-debugger/collector-proxy`](./packages/collector-proxy/README.md) - Data Collector
-- [`@graphql-debugger/trace-schema`](./packages/trace-schema/README.md) - Schema Plugin
-- [`@graphql-debugger/utils`](./packages/utils/README.md) - Utilities
-- [`@graphql-debugger/time`](./packages/time/README.md) - Time Utils
-- [`@graphql-debugger/data-access`](./packages/data-access/README.md) - Data Access
+- [ `@graphql-debugger/ui`](./packages/ui/README.md) - user interface
+- [`@graphql-debugger/collector-proxy`](./packages/collector-proxy/README.md) - data collector
+- [`@graphql-debugger/trace-schema`](./packages/trace-schema/README.md) - schema plugin
+- [`@graphql-debugger/utils`](./packages/utils/README.md) - general utils
+- [`@graphql-debugger/time`](./packages/time/README.md) - time utils
+- [`@graphql-debugger/data-access`](./packages/data-access/README.md) - data access
+- [`@graphql-debugger/graphql-schema`](./packages/graphql-schema/README.md) - graphql schema
 - [`@graphql-debugger/e2e`](./e2e/README.md) - E2E Tests
-- [`graphql-debugger`](./packages/graphql-debugger/README.md) - CLI
+- [`graphql-debugger`](./packages/graphql-debugger/README.md) - CLI <-- Entry point
 
 ## Getting Started
 
