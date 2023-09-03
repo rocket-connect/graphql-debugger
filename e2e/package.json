@@ -7,10 +7,13 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "NODE_ENV=test jest"
+    "test": "cd ../packages/ui && pnpm run test:build && cd ../../e2e && NODE_ENV=test jest"
   },
-  "dependencies": {
-    "@graphql-debugger/utils": "workspace:^"
-  },
-  "devDependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "@graphql-debugger/utils": "workspace:^",
+    "@graphql-debugger/ui": "workspace:^",
+    "puppeteer": "^21.1.1",
+    "@types/puppeteer": "^7.0.4"
+  }
 }
