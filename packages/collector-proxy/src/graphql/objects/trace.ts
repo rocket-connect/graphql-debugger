@@ -53,16 +53,18 @@ export const TraceObject = builder.objectType('Trace', {
           );
 
           if (groupSpan) {
-            const spanStartTime = BigInt(span.startTimeUnixNano);
-            const spanEndTime = BigInt(span.endTimeUnixNano);
+            const spanStartTime = span.startTimeUnixNano;
+            const spanEndTime = span.endTimeUnixNano;
 
             groupSpan.startTimeUnixNano =
-              groupSpan.startTimeUnixNano > spanStartTime
+              groupSpan.startTimeUnixNano.getBigInt() > spanStartTime.getBigInt()
                 ? spanStartTime
                 : groupSpan.startTimeUnixNano;
 
             groupSpan.endTimeUnixNano =
-              groupSpan.endTimeUnixNano < spanEndTime ? spanEndTime : groupSpan.endTimeUnixNano;
+              groupSpan.endTimeUnixNano.getBigInt() < spanEndTime.getBigInt()
+                ? spanEndTime
+                : groupSpan.endTimeUnixNano;
 
             return list;
           } else {
@@ -83,8 +85,8 @@ export const TraceObject = builder.objectType('Trace', {
                 graphqlResult: span.graphqlResult,
                 graphqlContext: span.graphqlContext,
                 timestamp: 0,
-                createdAt: span.createdAt.toString(),
-                updatedAt: span.updatedAt.toString(),
+                createdAt: span.createdAt,
+                updatedAt: span.updatedAt,
                 errorMessage: span.errorMessage,
                 errorStack: span.errorStack,
               },

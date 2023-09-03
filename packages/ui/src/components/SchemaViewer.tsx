@@ -2,8 +2,8 @@ import { graphql } from '@graphql-debugger/utils';
 import { useEffect, useState } from 'react';
 import { aggregateSpans } from '../api/aggregate-spans';
 import { AggregateSpansResponse } from '../graphql-types';
-import moment from 'moment';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { UnixNanoTimeStamp } from '@graphql-debugger/time';
 
 function extractTypeName(typeNode): string {
   if (typeNode.kind === 'NamedType') {
@@ -20,8 +20,8 @@ function extractTypeName(typeNode): string {
 }
 
 function RenderStats({ aggregate }: { aggregate: AggregateSpansResponse | null }) {
-  const lastResolveMilis = BigInt(aggregate?.lastResolved || 0) / BigInt(1000000);
-  const lastResolved = new Date(Number(lastResolveMilis));
+  const lastResolveUnixNano = UnixNanoTimeStamp.fromString(aggregate?.lastResolved || '0');
+  const averageDurationUnixNano = UnixNanoTimeStamp.fromString(aggregate?.averageDuration || '0');
 
   return (
     <div className="pl-2 text-xs font-light text-graphiql-light">
@@ -33,13 +33,11 @@ function RenderStats({ aggregate }: { aggregate: AggregateSpansResponse | null }
           Error Count: <span className="font-bold text-red-500">{aggregate?.errorCount}</span>
         </li>
         <li>
-          Average Duration:{' '}
-          <span className="font-bold">
-            {Number(BigInt(aggregate?.averageDuration || 0) / BigInt(1000000))} ms
-          </span>
+          Average Duration: <span className="font-bold">{averageDurationUnixNano.toMS()} ms</span>
         </li>
         <li>
-          Last Resolved: <span className="font-bold">{moment(lastResolved).fromNow()}</span>
+          Last Resolved:{' '}
+          <span className="font-bold">{lastResolveUnixNano.toTimeStamp().moment.fromNow()}</span>
         </li>
       </ul>
     </div>

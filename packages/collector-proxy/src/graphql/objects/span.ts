@@ -1,3 +1,4 @@
+import { TimeStamp, UnixNanoTimeStamp } from '@graphql-debugger/time';
 import { builder } from '../schema';
 import type { Span as PrismaSpan } from '.prisma/client';
 
@@ -8,17 +9,17 @@ export type Span = {
   traceId: PrismaSpan['traceId'];
   name: PrismaSpan['name'];
   kind: PrismaSpan['kind'];
-  durationNano: bigint;
-  startTimeUnixNano: bigint;
-  endTimeUnixNano: bigint;
+  durationNano: UnixNanoTimeStamp;
+  startTimeUnixNano: UnixNanoTimeStamp;
+  endTimeUnixNano: UnixNanoTimeStamp;
   errorMessage?: PrismaSpan['errorMessage'];
   errorStack?: PrismaSpan['errorStack'];
   graphqlDocument?: PrismaSpan['graphqlDocument'];
   graphqlVariables?: PrismaSpan['graphqlVariables'];
   graphqlResult?: PrismaSpan['graphqlResult'];
   graphqlContext?: PrismaSpan['graphqlContext'];
-  createdAt: string;
-  updatedAt: string;
+  createdAt: TimeStamp;
+  updatedAt: TimeStamp;
 };
 
 export const SpanObject = builder.objectType('Span', {
@@ -44,7 +45,6 @@ export const SpanObject = builder.objectType('Span', {
     endTimeUnixNano: t.field({
       type: 'String',
       resolve: (root) => {
-        // throw new Error('endTimeUnixNano is not implemented');
         return root.endTimeUnixNano.toString();
       },
     }),
@@ -54,7 +54,17 @@ export const SpanObject = builder.objectType('Span', {
     graphqlContext: t.exposeString('graphqlContext', { nullable: true }),
     errorMessage: t.exposeString('errorMessage', { nullable: true }),
     errorStack: t.exposeString('errorStack', { nullable: true }),
-    createdAt: t.exposeString('createdAt'),
-    updatedAt: t.exposeString('updatedAt'),
+    createdAt: t.field({
+      type: 'String',
+      resolve: (root) => {
+        return root.createdAt.toString();
+      },
+    }),
+    updatedAt: t.field({
+      type: 'String',
+      resolve: (root) => {
+        return root.updatedAt.toString();
+      },
+    }),
   }),
 });

@@ -5,13 +5,13 @@ import { getSchema } from '../api/list-schemas';
 import { listTraceGroups } from '../api/list-trace-groups';
 import { TraceViewer } from '../components/TraceViewer';
 import { SchemaViewer } from '../components/SchemaViewer';
-import moment from 'moment';
 import { logo } from '../utils/images';
 import { QueryViewer } from '../components/QueryViewer';
 import { JsonViewer } from '../components/JsonViewer';
 import { SideBar } from '../components/SideBar';
 import { SchemaTraces } from '../components/SchemaTraces';
 import { deleteTraces } from '../api/delete-traces';
+import { UnixNanoTimeStamp } from '@graphql-debugger/time';
 
 export function Schema() {
   const [schema, setSchema] = useState<Schema>();
@@ -23,8 +23,8 @@ export function Schema() {
     'variables'
   );
 
-  const tracestartTimeMillis = BigInt(trace?.rootSpan?.startTimeUnixNano || 0) / BigInt(1000000);
-  const traceStartDate = new Date(Number(tracestartTimeMillis));
+  const startTimeUnixNano = UnixNanoTimeStamp.fromString(trace?.rootSpan?.startTimeUnixNano || '0');
+  const traceDurationUnixNano = UnixNanoTimeStamp.fromString(trace?.rootSpan?.durationNano || '0');
 
   useEffect(() => {
     (async () => {
@@ -102,15 +102,10 @@ export function Schema() {
                   <div className="flex flex-row gap-3 justify-center align-center">
                     <p>{trace?.rootSpan?.name}</p>
                     <p>-</p>
-                    <p className="text-xs my-auto">
-                      {Number(BigInt(trace?.rootSpan?.durationNano || 0) / BigInt(1000000)).toFixed(
-                        2
-                      )}{' '}
-                      ms
-                    </p>
+                    <p className="text-xs my-auto">{traceDurationUnixNano.toMS().toFixed(2)} ms</p>
                   </div>
                   <p className="py-1 text-xs text-graphiql-dark italic">
-                    {moment(traceStartDate).fromNow()}
+                    {startTimeUnixNano.toTimeStamp().moment.fromNow()}
                   </p>
                 </div>
               )}

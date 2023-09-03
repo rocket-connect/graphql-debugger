@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { ListTraceGroupsWhere, Trace } from '../graphql-types';
 import { listTraceGroups } from '../api/list-trace-groups';
-import moment from 'moment';
+import { UnixNanoTimeStamp } from '@graphql-debugger/time';
 
 export function SchemaTraces({ schemaId }: { schemaId: string }) {
   const navigate = useNavigate();
@@ -68,11 +68,13 @@ export function SchemaTraces({ schemaId }: { schemaId: string }) {
         </thead>
         <tbody>
           {traces.map((trace) => {
+            const isSelected = trace.id === params.traceId;
             const rootSpan = trace.rootSpan;
             const errorMessage = trace?.firstSpanErrorMessage;
-            const startTimeMillis = BigInt(rootSpan?.startTimeUnixNano || 0) / BigInt(1000000);
-            const startDate = new Date(Number(startTimeMillis));
-            const isSelected = trace.id === params.traceId;
+            const startTimeUnixNano = UnixNanoTimeStamp.fromString(
+              rootSpan?.startTimeUnixNano || '0'
+            );
+            const durationUnixNano = UnixNanoTimeStamp.fromString(rootSpan?.durationNano || '0');
 
             let traceClasses = 'absolute h-3 ';
             if (isSelected) {
@@ -97,10 +99,8 @@ export function SchemaTraces({ schemaId }: { schemaId: string }) {
                 >
                   {rootSpan?.name}
                 </th>
-                <td className="px-6 py-4">
-                  {Number(BigInt(rootSpan?.durationNano || 0) / BigInt(1000000)).toFixed(2)} ms
-                </td>
-                <td className="px-6 py-4">{moment(startDate).fromNow()}</td>
+                <td className="px-6 py-4">{durationUnixNano.toMS().toFixed(2)} ms</td>
+                <td className="px-6 py-4">{startTimeUnixNano.toTimeStamp().moment.fromNow()}</td>
               </tr>
             );
           })}

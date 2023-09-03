@@ -1,6 +1,7 @@
 import DataLoader from 'dataloader';
 import { prisma } from '../../prisma';
 import { Span } from '../objects/span';
+import { TimeStamp, UnixNanoTimeStamp } from '@graphql-debugger/time';
 
 export function rootSpanLoader() {
   return new DataLoader(async (traceIds: readonly string[]): Promise<(Span | undefined)[]> => {
@@ -27,16 +28,16 @@ export function rootSpanLoader() {
         traceId: span.traceId,
         name: span.name as string,
         kind: span.kind,
-        startTimeUnixNano: span.startTimeUnixNano,
-        endTimeUnixNano: span.endTimeUnixNano,
-        durationNano: span.durationNano,
+        startTimeUnixNano: new UnixNanoTimeStamp(span.startTimeUnixNano),
+        endTimeUnixNano: new UnixNanoTimeStamp(span.endTimeUnixNano),
+        durationNano: new UnixNanoTimeStamp(span.durationNano),
         graphqlDocument: span.graphqlDocument,
         graphqlVariables: span.graphqlVariables,
         graphqlResult: span.graphqlResult,
         graphqlContext: span.graphqlContext,
         timestamp: 0,
-        createdAt: span.createdAt.toString(),
-        updatedAt: span.updatedAt.toString(),
+        createdAt: new TimeStamp(span.createdAt),
+        updatedAt: new TimeStamp(span.updatedAt),
         errorMessage: span.errorMessage,
         errorStack: span.errorStack,
       };
@@ -65,16 +66,16 @@ export function spanLoader() {
           traceId: span.traceId,
           name: span.name as string,
           kind: span.kind,
-          startTimeUnixNano: span.startTimeUnixNano,
-          endTimeUnixNano: span.endTimeUnixNano,
-          durationNano: span.durationNano,
+          startTimeUnixNano: new UnixNanoTimeStamp(span.startTimeUnixNano),
+          endTimeUnixNano: new UnixNanoTimeStamp(span.endTimeUnixNano),
+          durationNano: new UnixNanoTimeStamp(span.durationNano),
           graphqlDocument: span.graphqlDocument,
           graphqlVariables: span.graphqlVariables,
           graphqlResult: span.graphqlResult,
           graphqlContext: span.graphqlContext,
           timestamp: 0,
-          createdAt: span.createdAt.toString(),
-          updatedAt: span.updatedAt.toString(),
+          createdAt: new TimeStamp(span.createdAt),
+          updatedAt: new TimeStamp(span.updatedAt),
           errorMessage: span.errorMessage,
           errorStack: span.errorStack,
         };

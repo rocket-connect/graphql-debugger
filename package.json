@@ -1,6 +1,6 @@
 {
   "name": "@graphql-otel/monorepo",
-  "version": "0.0.0-alpha.30",
+  "version": "0.0.0-alpha.31",
   "private": true,
   "scripts": {
     "dev": "DEBUG=\"@graphql-debugger:*\" TRACE_SCHEMA=\"true\" turbo dev --filter \"graphql-debugger\"",
@@ -9,7 +9,8 @@
   },
   "devDependencies": {
     "turbo": "^1.10.7",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "ts-node": "10.9.1"
   },
   "pnpm": {
     "peerDependencyRules": {

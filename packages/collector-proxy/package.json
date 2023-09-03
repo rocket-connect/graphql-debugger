@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/collector-proxy",
-  "version": "0.0.0-alpha.30",
+  "version": "0.0.0-alpha.31",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -18,6 +18,7 @@
     "@graphql-debugger/trace-schema": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
     "@graphql-debugger/ui": "workspace:^",
+    "@graphql-debugger/time": "workspace:^",
     "@graphql-tools/schema": "^10.0.0",
     "@graphql-tools/utils": "^10.0.5",
     "@pothos/core": "^3.33.0",

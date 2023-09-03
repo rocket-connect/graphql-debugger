@@ -102,6 +102,7 @@ const Span = ({
   );
 };
 
+// TODO refactor times to use time lib
 const TraceView = ({ spans, selectedSpanId }: { spans: Span[]; selectedSpanId?: string }) => {
   const treeData = createTreeData(spans);
   const minTimestamp = Math.min(...spans.map((t) => Number(BigInt(t.startTimeUnixNano) / ms)));

@@ -1,3 +1,4 @@
+import { UnixNanoTimeStamp } from '@graphql-debugger/time';
 import { prisma } from '../../prisma';
 import { builder } from '../schema';
 import { Span as PrismaSpan } from '.prisma/client';
@@ -45,11 +46,9 @@ export const AggregateSpansResponse = builder.objectType('AggregateSpansResponse
           return '0';
         }
 
-        const durations = root.spans.map((s) => s.durationNano);
-        const sum = durations.reduce((a, b) => BigInt(a + b), BigInt(0));
-        const lengthBigInt = BigInt(durations.length);
-        const bigintOne = BigInt(1);
-        const average = (sum > 0 ? sum : bigintOne) / (lengthBigInt > 0 ? lengthBigInt : bigintOne);
+        const durations = root.spans.map((s) => new UnixNanoTimeStamp(s.durationNano));
+
+        const average = UnixNanoTimeStamp.average(durations);
 
         return average.toString();
       },
@@ -61,14 +60,9 @@ export const AggregateSpansResponse = builder.objectType('AggregateSpansResponse
           return '0';
         }
 
-        const timestamps = root.spans.map((s) => s.endTimeUnixNano);
-        const max = timestamps.reduce((a, b) => {
-          if (a > b) {
-            return a;
-          }
+        const timestamps = root.spans.map((s) => new UnixNanoTimeStamp(s.endTimeUnixNano));
 
-          return b;
-        }, BigInt(0));
+        const max = UnixNanoTimeStamp.latest(timestamps);
 
         return max.toString();
       },
