@@ -21,6 +21,10 @@ To get started, use the [trace schema package](https://github.com/rocket-connect
 npx graphql-debugger
 ```
 
+## Contributing
+
+We welcome contributions to GraphQL Debugger. Please read our [contributing guide](./docs/CONTRIBUTING.md) to get started.
+
 ## Packages
 
 1. [ `@graphql-debugger/ui`](./packages/ui/README.md) - Frontend
