@@ -4,7 +4,7 @@ import { Schema, Trace } from '../graphql-types';
 import { getSchema } from '../api/list-schemas';
 import { listTraceGroups } from '../api/list-trace-groups';
 import { TraceViewer } from '../components/TraceViewer';
-import { SchemaViewer } from '../components/SchemaViewer';
+import { SchemaViewer } from '../components/schema-viewer/SchemaViewer';
 import { logo } from '../utils/images';
 import { QueryViewer } from '../components/query-viewer/QueryViewer';
 import { JsonViewer } from '../components/json-viewer/JsonViewer';
