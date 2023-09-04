@@ -9,7 +9,7 @@ import { collector } from '@graphql-debugger/collector-proxy';
 export const backend: Express = express();
 backend.use(cors());
 backend.use('/graphql', yoga);
-backend.use(express.static(path.join(__dirname, config.STATIC_FOLDER)));
+backend.use(express.static(path.join(__dirname, '../node_modules/@graphql-debugger/ui/dist')));
 backend.use(express.static('public'));
 
 export async function start({
