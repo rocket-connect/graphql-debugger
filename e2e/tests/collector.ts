@@ -1,4 +1,4 @@
-import { start, stop } from '@graphql-debugger/backend';
+import { start, stop, BACKEND_PORT, COLLECTOR_PORT } from '@graphql-debugger/backend';
 import http from 'http';
 import { debug } from '../src/debug';
 
@@ -14,8 +14,8 @@ export async function listen() {
 
   if (!isListening) {
     server = await start({
-      backendPort: '16686',
-      collectorPort: '4318',
+      backendPort: BACKEND_PORT,
+      collectorPort: COLLECTOR_PORT,
     });
 
     isListening = true;

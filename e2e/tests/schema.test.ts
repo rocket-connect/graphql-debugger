@@ -1,4 +1,4 @@
-import { BACKEND_PORT } from '@graphql-debugger/collector-proxy';
+import { BACKEND_PORT } from '@graphql-debugger/backend';
 import { prisma } from './prisma';
 import { getBrowser, getPage, Browser } from './puppeteer';
 import { IDS } from '@graphql-debugger/ui/src/testing';

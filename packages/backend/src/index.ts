@@ -2,7 +2,7 @@ import { prisma } from '@graphql-debugger/data-access';
 import { queue } from '@graphql-debugger/collector-proxy';
 import { debug } from './debug';
 import * as app from './app';
-export * from './app';
+
 import http from 'http';
 
 export async function start({
@@ -43,3 +43,6 @@ export async function stop({
   await backend.close();
   await collector.close();
 }
+
+export * from './app';
+export * from './config';
