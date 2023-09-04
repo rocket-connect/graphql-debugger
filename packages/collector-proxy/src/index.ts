@@ -1,3 +1,4 @@
-export * from './app';
-export * from './config';
+export * from './collector/app';
 export * from './collector/queue';
+export * from './collector/schema';
+export * from './config';

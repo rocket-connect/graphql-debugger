@@ -1,6 +1,6 @@
 {
   "name": "graphql-debugger",
-  "version": "0.0.0-alpha.41",
+  "version": "0.0.0-alpha.42",
   "bin": {
     "graphql-debugger": "./build/index.js"
   },
@@ -19,7 +19,7 @@
     "dev": "NODE_ENV=development ts-node ./src/index.ts"
   },
   "dependencies": {
-    "@graphql-debugger/collector-proxy": "workspace:^",
+    "@graphql-debugger/backend": "workspace:^",
     "@graphql-debugger/utils": "workspace:^"
   }
 }

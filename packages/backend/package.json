@@ -1,5 +1,5 @@
 {
-  "name": "@graphql-debugger/collector-proxy",
+  "name": "@graphql-debugger/backend",
   "version": "0.0.0-alpha.42",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -13,22 +13,19 @@
   },
   "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
   "scripts": {
-    "build": "tsc",
-    "dev": "DEBUG=\"@graphql-debugger:*\" TRACE_SCHEMA=\"true\" NODE_ENV=development ts-node ./src/main.ts",
-    "test": "NODE_ENV=test jest"
+    "build": "tsc"
   },
   "dependencies": {
-    "@graphql-debugger/time": "workspace:^",
-    "@graphql-debugger/utils": "workspace:^",
+    "@graphql-debugger/collector-proxy": "workspace:^",
+    "@graphql-debugger/graphql-schema": "workspace:^",
     "@graphql-debugger/data-access": "workspace:^",
-    "@graphql-debugger/trace-schema": "workspace:^",
-    "@graphql-tools/schema": "^10.0.0",
+    "@graphql-debugger/utils": "workspace:^",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
-    "fastq": "^1.15.0",
-    "zod": "^3.22.2"
+    "express-static-gzip": "^2.1.7"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.0.2",
+    "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17"
   }
 }

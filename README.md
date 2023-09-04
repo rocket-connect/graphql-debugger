@@ -36,6 +36,7 @@ We welcome contributions to GraphQL Debugger. Please read our [contributing guid
 - [`@graphql-debugger/time`](./packages/time/README.md) - time utils
 - [`@graphql-debugger/data-access`](./packages/data-access/README.md) - data access
 - [`@graphql-debugger/graphql-schema`](./packages/graphql-schema/README.md) - graphql schema
+- [`@graphql-debugger/backend`](./packages/graphql-schema/README.md) - collector, ui and schema
 - [`@graphql-debugger/e2e`](./e2e/README.md) - E2E Tests
 - [`graphql-debugger`](./packages/graphql-debugger/README.md) - CLI <-- Entry point
 

@@ -6,13 +6,9 @@
 
 ## About
 
-This is a Node.js express server exposing a GraphQL endpoint that serves the [user interface](https://github.com/rocket-connect/graphql-debugger/tree/main/packages/ui), and a proxy endpoint around the Open Telemetry Collector's `/v1/traces` endpoint.
+The collector is a proxy ontop of the Open Telemetry Collector, it is used to collect traces from the GraphQL Debugger trace schema.
 
 ## Endpoints
-
-### /graphql
-
-This is the GraphQL endpoint that serves the [user interface](https://github.com/rocket-connect/graphql-debugger/tree/main/packages/ui).
 
 ### /v1/traces
 
@@ -21,16 +17,6 @@ This is a proxy endpoint around the Open Telemetry Collector's `/v1/traces` endp
 ### /v1/schema
 
 This is used by the [trace schema package](https://github.com/rocket-connect/graphql-debugger/tree/main/packages/trace-schema), it sends the GraphQL schema here.
-
-## Database
-
-The collector uses a SQLite database to store traces.
-
-SQLite is used because it is a single file database, and it is easy to setup, so we can get up and running quickly.
-
-This does mean however, that the database is not very performant, and it is not recommended to use this in production.
-
-We have adopoted a simple queue system to write to the database, and leveraged data loaders to batch queries.
 
 ## License
 

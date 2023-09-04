@@ -1,4 +1,4 @@
-import { UI_PORT } from '@graphql-debugger/collector-proxy';
+import { BACKEND_PORT } from '@graphql-debugger/collector-proxy';
 import { prisma } from './prisma';
 import { getBrowser, getPage, Browser } from './puppeteer';
 import { IDS } from '@graphql-debugger/ui/src/testing';
@@ -70,7 +70,7 @@ describe('schema', () => {
 
     const page = await getPage({ browser });
 
-    await page.goto(`http://localhost:${UI_PORT}/#/schema/${schema.id}`);
+    await page.goto(`http://localhost:${BACKEND_PORT}/#/schema/${schema.id}`);
 
     await page.waitForNetworkIdle();
 
