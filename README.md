@@ -25,20 +25,9 @@ npx graphql-debugger
 
 ## Contributing
 
-We welcome contributions to GraphQL Debugger. Please read our [contributing guide](./docs/CONTRIBUTING.md) to get started.
+We welcome contributions to GraphQL Debugger.
 
-## Packages
-
-- [ `@graphql-debugger/ui`](./packages/ui/README.md) - user interface
-- [`@graphql-debugger/collector-proxy`](./packages/collector-proxy/README.md) - data collector
-- [`@graphql-debugger/trace-schema`](./packages/trace-schema/README.md) - schema plugin
-- [`@graphql-debugger/utils`](./packages/utils/README.md) - general utils
-- [`@graphql-debugger/time`](./packages/time/README.md) - time utils
-- [`@graphql-debugger/data-access`](./packages/data-access/README.md) - data access
-- [`@graphql-debugger/graphql-schema`](./packages/graphql-schema/README.md) - graphql schema
-- [`@graphql-debugger/backend`](./packages/graphql-schema/README.md) - collector, ui and schema
-- [`@graphql-debugger/e2e`](./e2e/README.md) - E2E Tests
-- [`graphql-debugger`](./packages/graphql-debugger/README.md) - CLI <-- Entry point
+Please read our [contributing guide](./docs/CONTRIBUTING.md) to get started.
 
 ## Getting Started
 
