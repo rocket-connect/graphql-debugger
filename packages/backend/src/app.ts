@@ -8,7 +8,7 @@ import { collector, queue } from '@graphql-debugger/collector-proxy';
 export const backend: Express = express();
 backend.use(cors());
 backend.use('/graphql', yoga);
-backend.use(express.static(path.join(__dirname, '../node_modules/@graphql-debugger/ui/build')));
+backend.use(express.static(path.join(__dirname, '../../ui/build')));
 backend.use(express.static('public'));
 
 export async function start({
