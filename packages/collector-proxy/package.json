@@ -14,7 +14,6 @@
   "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
   "scripts": {
     "build": "tsc",
-    "dev": "DEBUG=\"@graphql-debugger:*\" TRACE_SCHEMA=\"true\" NODE_ENV=development ts-node ./src/main.ts",
     "test": "NODE_ENV=test jest"
   },
   "dependencies": {
