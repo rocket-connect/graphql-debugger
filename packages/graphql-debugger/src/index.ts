@@ -8,8 +8,8 @@ async function start() {
   try {
     debug('Starting debugger');
 
-    const COLLECTOR_PORT = process.env.COLLECTOR_PORT || '4318';
-    const BACKEND_PORT = process.env.BACKEND_PORT || '16686';
+    const COLLECTOR_PORT = backend.COLLECTOR_PORT;
+    const BACKEND_PORT = backend.BACKEND_PORT;
 
     await backend.start({
       collectorPort: COLLECTOR_PORT,
