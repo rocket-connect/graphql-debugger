@@ -1,18 +1,18 @@
-import { prisma } from '@graphql-debugger/data-access';
-import { graphql } from '@graphql-debugger/utils';
-import { UnixNanoTimeStamp } from '@graphql-debugger/time';
-import { AttributeName } from '@graphql-debugger/trace-schema';
-import fastq from 'fastq';
-import { schema } from './schema';
-import { z } from 'zod';
-import { debug } from '../debug';
+import { prisma } from "@graphql-debugger/data-access";
+import { graphql } from "@graphql-debugger/utils";
+import { UnixNanoTimeStamp } from "@graphql-debugger/time";
+import { AttributeName } from "@graphql-debugger/trace-schema";
+import fastq from "fastq";
+import { schema } from "./schema";
+import { z } from "zod";
+import { debug } from "../debug";
 
-export type Data = z.infer<typeof schema>['body'];
+export type Data = z.infer<typeof schema>["body"];
 
 export const queue = fastq.promise<Data>(worker, 1);
 
 async function worker(data: Data) {
-  debug('Worker started');
+  debug("Worker started");
 
   try {
     const body = data;
@@ -39,14 +39,20 @@ async function worker(data: Data) {
             return { ...acc, [val.key]: realValue };
           }, {}) as Record<string, any>;
 
-          const firstError = (s.events || []).find((e) => e.name === 'exception');
+          const firstError = (s.events || []).find(
+            (e) => e.name === "exception",
+          );
           let errorMessage: string | undefined;
           let errorStack: string | undefined;
 
           if (firstError) {
-            const message = firstError.attributes.find((a) => a.key === 'exception.message');
-            const stack = firstError.attributes.find((a) => a.key === 'exception.stacktrace');
-            errorMessage = message?.value.stringValue || 'Unknown Error';
+            const message = firstError.attributes.find(
+              (a) => a.key === "exception.message",
+            );
+            const stack = firstError.attributes.find(
+              (a) => a.key === "exception.stacktrace",
+            );
+            errorMessage = message?.value.stringValue || "Unknown Error";
             errorStack = stack?.value.stringValue;
           }
 
@@ -70,8 +76,8 @@ async function worker(data: Data) {
     const spanIds = spans.map((s) => s.spanId);
     const traceIds = spans.map((s) => s.traceId);
     const schemaHashes = spans.map((s) => {
-      const attributes = JSON.parse(s.attributes || '{}');
-      return attributes['graphql.schema.hash'];
+      const attributes = JSON.parse(s.attributes || "{}");
+      return attributes["graphql.schema.hash"];
     });
 
     const [existingSpans, traceGroups, schemas] = await Promise.all([
@@ -81,14 +87,14 @@ async function worker(data: Data) {
     ]);
 
     const spansToBeCreated = spans.filter(
-      (s) => !existingSpans.find((eS) => eS.spanId === s.spanId)
+      (s) => !existingSpans.find((eS) => eS.spanId === s.spanId),
     );
 
     await Promise.all(
       spansToBeCreated.map(async (span) => {
         const attributes = JSON.parse(span.attributes);
-        let traceGroupId = '';
-        let schemaHash = '';
+        let traceGroupId = "";
+        let schemaHash = "";
         if (!span.parentSpanId && attributes[AttributeName.SCHEMA_HASH]) {
           schemaHash = attributes[AttributeName.SCHEMA_HASH];
         }
@@ -101,7 +107,7 @@ async function worker(data: Data) {
             const printed = graphql.print(parsed);
             graphqlDocument = printed;
           } catch (error) {
-            debug('Error parsing document', error);
+            debug("Error parsing document", error);
             throw error;
           }
         }
@@ -112,7 +118,7 @@ async function worker(data: Data) {
           try {
             graphqlVariables = JSON.stringify(JSON.parse(variables));
           } catch (error) {
-            debug('Error parsing variables', error);
+            debug("Error parsing variables", error);
             throw error;
           }
         }
@@ -125,7 +131,7 @@ async function worker(data: Data) {
               result: JSON.parse(result),
             });
           } catch (error) {
-            debug('Error parsing result', error);
+            debug("Error parsing result", error);
             throw error;
           }
         }
@@ -136,12 +142,14 @@ async function worker(data: Data) {
           try {
             graphqlContext = context;
           } catch (error) {
-            debug('Error parsing context', error);
+            debug("Error parsing context", error);
             throw error;
           }
         }
 
-        const foundTraceGroup = traceGroups.find((t) => t.traceId === span.traceId);
+        const foundTraceGroup = traceGroups.find(
+          (t) => t.traceId === span.traceId,
+        );
         if (foundTraceGroup) {
           traceGroupId = foundTraceGroup?.id;
         } else {
@@ -172,7 +180,7 @@ async function worker(data: Data) {
               },
             });
             if (!foundTraceGroup) {
-              debug('Error creating trace group', error);
+              debug("Error creating trace group", error);
               throw error;
             }
             traceGroupId = foundTraceGroup.id;
@@ -181,7 +189,10 @@ async function worker(data: Data) {
 
         const startTimeUnixNano = new UnixNanoTimeStamp(span.startTimeUnixNano);
         const endTimeUnixNano = new UnixNanoTimeStamp(span.endTimeUnixNano);
-        const durationNano = UnixNanoTimeStamp.duration(startTimeUnixNano, endTimeUnixNano);
+        const durationNano = UnixNanoTimeStamp.duration(
+          startTimeUnixNano,
+          endTimeUnixNano,
+        );
 
         await prisma.span.create({
           data: {
@@ -202,13 +213,13 @@ async function worker(data: Data) {
             graphqlContext,
           },
         });
-      })
+      }),
     );
   } catch (error) {
     const e = error as Error;
-    debug('Error creating spans', e);
+    debug("Error creating spans", e);
   } finally {
-    debug('Worker finished');
+    debug("Worker finished");
   }
 }
 

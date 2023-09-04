@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { Schema } from '../graphql-types';
-import { listSchemas } from '../api/list-schemas';
-import { useNavigate } from 'react-router-dom';
-import { logo } from '../utils/images';
-import { IDS } from '../testing';
+import { useEffect, useState } from "react";
+import { Schema } from "../graphql-types";
+import { listSchemas } from "../api/list-schemas";
+import { useNavigate } from "react-router-dom";
+import { logo } from "../utils/images";
+import { IDS } from "../testing";
 
 export function Schemas() {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ export function Schemas() {
         setSchemas([]);
       }
     })();
-  }, []);
+  }, [navigate]);
 
   if (schemas.length) return <div className="hidden"></div>;
 

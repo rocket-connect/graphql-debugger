@@ -1,5 +1,5 @@
-import * as backend from './backend';
-import { clearDB } from './prisma';
+import * as backend from "./backend";
+import { clearDB } from "./prisma";
 
 beforeAll(async () => {
   await backend.listen();

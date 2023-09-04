@@ -1,15 +1,19 @@
-import { useEffect, useState } from 'react';
-import { listTraceGroups } from '../../api/list-trace-groups';
-import { useParams } from 'react-router-dom';
-import { Span } from './Span';
-import { createTreeData, ms } from './utils';
-import { Span as TSpan, Trace } from '../../graphql-types';
-import { IDS } from '../../testing';
+import { useEffect, useState } from "react";
+import { listTraceGroups } from "../../api/list-trace-groups";
+import { useParams } from "react-router-dom";
+import { Span } from "./Span";
+import { createTreeData, ms } from "./utils";
+import { Span as TSpan, Trace } from "../../graphql-types";
+import { IDS } from "../../testing";
 
 const TraceView = ({ spans }: { spans: TSpan[] }) => {
   const treeData = createTreeData(spans);
-  const minTimestamp = Math.min(...spans.map((t) => Number(BigInt(t.startTimeUnixNano) / ms)));
-  const maxTimestamp = Math.max(...spans.map((t) => Number(BigInt(t.endTimeUnixNano) / ms)));
+  const minTimestamp = Math.min(
+    ...spans.map((t) => Number(BigInt(t.startTimeUnixNano) / ms)),
+  );
+  const maxTimestamp = Math.max(
+    ...spans.map((t) => Number(BigInt(t.endTimeUnixNano) / ms)),
+  );
 
   return (
     <div className="text-white flex flex-col">

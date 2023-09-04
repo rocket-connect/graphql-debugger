@@ -1,4 +1,4 @@
-import { RenderTree, ms } from './utils';
+import { RenderTree, ms } from "./utils";
 
 export function Span({
   data,
@@ -9,22 +9,22 @@ export function Span({
   minTimestamp: number;
   maxTimestamp: number;
 }) {
-  let width, offset;
-
   const calculatedWidth =
-    (Number(BigInt(data.durationNano) / ms) / (maxTimestamp - minTimestamp)) * 100;
-  width = calculatedWidth < 5 ? '5%' : `${calculatedWidth}%`;
+    (Number(BigInt(data.durationNano) / ms) / (maxTimestamp - minTimestamp)) *
+    100;
+  const width = calculatedWidth < 5 ? "5%" : `${calculatedWidth}%`;
 
   const calculatedOffset =
-    ((Number(BigInt(data.startTimeUnixNano) / ms) - minTimestamp) / (maxTimestamp - minTimestamp)) *
+    ((Number(BigInt(data.startTimeUnixNano) / ms) - minTimestamp) /
+      (maxTimestamp - minTimestamp)) *
     100;
-  offset = calculatedOffset < 0 ? '0%' : `${calculatedOffset}%`;
+  const offset = calculatedOffset < 0 ? "0%" : `${calculatedOffset}%`;
 
-  let spanClasses = 'absolute h-2';
+  let spanClasses = "absolute h-2";
   if (data.errorMessage) {
-    spanClasses += ' bg-red-500';
+    spanClasses += " bg-red-500";
   } else {
-    spanClasses += ' bg-graphql-otel-green';
+    spanClasses += " bg-graphql-otel-green";
   }
 
   return (
@@ -33,10 +33,17 @@ export function Span({
       className="relative overflow-hidden flex flex-col gap-1 text-xs"
     >
       <div className="py-4">
-        <p className={`${data.errorMessage || data.errorStack ? 'text-red-500' : {}} py-1`}>
-          {data.name}{' '}
+        <p
+          className={`${
+            data.errorMessage || data.errorStack ? "text-red-500" : {}
+          } py-1`}
+        >
+          {data.name}{" "}
           <span className="font-light">
-            {Number(BigInt(data?.durationNano || 0) / BigInt(1000000)).toFixed(2)} ms
+            {Number(BigInt(data?.durationNano || 0) / BigInt(1000000)).toFixed(
+              2,
+            )}{" "}
+            ms
           </span>
         </p>
         <div className={`absolute h-2 bg-graphiql-border w-full`}></div>

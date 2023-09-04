@@ -42,9 +42,12 @@ npm i graphql-debugger @graphql-debugger/trace-schema
 ### Trace your schema
 
 ```ts
-import { makeExecutableSchema } from '@graphql-tools/schema';
-import { createYoga } from 'graphql-yoga';
-import { traceSchema, GraphQLOTELContext } from '@graphql-debugger/trace-schema';
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { createYoga } from "graphql-yoga";
+import {
+  traceSchema,
+  GraphQLOTELContext,
+} from "@graphql-debugger/trace-schema";
 
 // Common GraphQL schema
 const schema = makeExecutableSchema({

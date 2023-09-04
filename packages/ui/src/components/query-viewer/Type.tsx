@@ -1,4 +1,4 @@
-import { graphql } from '@graphql-debugger/utils';
+import { graphql } from "@graphql-debugger/utils";
 
 export function Type({ type }: { type: graphql.TypeNode }) {
   if (type.kind === graphql.Kind.NAMED_TYPE) {

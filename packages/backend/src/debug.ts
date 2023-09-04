@@ -1,5 +1,5 @@
-import { Debug, type Debugger } from '@graphql-debugger/utils';
+import { Debug, type Debugger } from "@graphql-debugger/utils";
 
-const debugNamespace = 'backend';
+const debugNamespace = "backend";
 
 export const debug: Debugger = Debug(debugNamespace);

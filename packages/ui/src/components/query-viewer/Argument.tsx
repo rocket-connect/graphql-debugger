@@ -1,13 +1,13 @@
-import { graphql } from '@graphql-debugger/utils';
+import { graphql } from "@graphql-debugger/utils";
 
 export function Argument({
   value,
   indentLevel = 0,
 }: {
-  value: graphql.ArgumentNode['value'];
+  value: graphql.ArgumentNode["value"];
   indentLevel?: number;
 }) {
-  const indent = ' '.repeat(indentLevel * 2);
+  const indent = " ".repeat(indentLevel * 2);
 
   if (value.kind === graphql.Kind.INT || value.kind === graphql.Kind.FLOAT) {
     return <span>{value.value}</span>;
@@ -18,7 +18,7 @@ export function Argument({
   }
 
   if (value.kind === graphql.Kind.BOOLEAN) {
-    return <span>{value.value ? 'true' : 'false'}</span>;
+    return <span>{value.value ? "true" : "false"}</span>;
   }
 
   if (value.kind === graphql.Kind.ENUM) {
@@ -30,7 +30,7 @@ export function Argument({
       <div key={index}>
         {indent}
         <Argument value={item} indentLevel={indentLevel + 1} />
-        {index !== value.values.length - 1 && ', '}
+        {index !== value.values.length - 1 && ", "}
       </div>
     ));
 
@@ -47,19 +47,19 @@ export function Argument({
       <div key={field.name.value}>
         <span className="text-graphiql-light">
           {indent}
-          {field.name.value}:{' '}
+          {field.name.value}:{" "}
         </span>
         <Argument value={field.value} indentLevel={indentLevel + 1} />
-        {i !== value.fields.length - 1 && ', '}
+        {i !== value.fields.length - 1 && ", "}
       </div>
     ));
 
     return (
       <span className="text-graphiql-highlight">
-        {'{'}
+        {"{"}
         <div className="ml-2">{properties}</div>
         {indent}
-        {'}'}
+        {"}"}
       </span>
     );
   }

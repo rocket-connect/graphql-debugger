@@ -1,5 +1,5 @@
-import { graphql } from '@graphql-debugger/utils';
-import { API_URL } from '../config';
+import { graphql } from "@graphql-debugger/utils";
+import { API_URL } from "../config";
 
 export async function api<D = unknown>({
   query,
@@ -11,8 +11,8 @@ export async function api<D = unknown>({
   const validQuery = graphql.print(graphql.parse(query));
 
   const response = await fetch(API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ query: validQuery, variables }),
   });
 

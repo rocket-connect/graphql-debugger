@@ -1,1 +1,1 @@
-export * from './delete-traces';
+export * from "./delete-traces";

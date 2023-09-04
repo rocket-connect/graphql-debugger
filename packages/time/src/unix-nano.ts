@@ -1,4 +1,4 @@
-import { TimeStamp } from './timestamp';
+import { TimeStamp } from "./timestamp";
 
 export class UnixNanoTimeStamp {
   private input: number | bigint;
@@ -31,20 +31,24 @@ export class UnixNanoTimeStamp {
 
   public calculateWidthAndOffset(
     minTimestamp: UnixNanoTimeStamp,
-    maxTimestamp: UnixNanoTimeStamp
+    maxTimestamp: UnixNanoTimeStamp,
   ): {
     width: string;
     offset: string;
   } {
-    const diffMs = Number(maxTimestamp.subtract(minTimestamp).divide(BigInt(1000000)));
+    const diffMs = Number(
+      maxTimestamp.subtract(minTimestamp).divide(BigInt(1000000)),
+    );
 
-    const startTimeMs = Number(this.subtract(minTimestamp).divide(BigInt(1000000)));
+    const startTimeMs = Number(
+      this.subtract(minTimestamp).divide(BigInt(1000000)),
+    );
 
     const calculatedWidth = (startTimeMs / diffMs) * 100;
-    const width = calculatedWidth < 5 ? '5%' : `${calculatedWidth}%`;
+    const width = calculatedWidth < 5 ? "5%" : `${calculatedWidth}%`;
 
     const calculatedOffset = (startTimeMs / diffMs) * 100;
-    const offset = calculatedOffset < 0 ? '0%' : `${calculatedOffset}%`;
+    const offset = calculatedOffset < 0 ? "0%" : `${calculatedOffset}%`;
 
     return { width, offset };
   }
@@ -55,7 +59,10 @@ export class UnixNanoTimeStamp {
     return new TimeStamp(new Date(ms));
   }
 
-  public static duration(from: UnixNanoTimeStamp, to: UnixNanoTimeStamp): UnixNanoTimeStamp {
+  public static duration(
+    from: UnixNanoTimeStamp,
+    to: UnixNanoTimeStamp,
+  ): UnixNanoTimeStamp {
     const duration = to.getBigInt() - from.getBigInt();
 
     return new UnixNanoTimeStamp(duration);
@@ -65,7 +72,9 @@ export class UnixNanoTimeStamp {
     const sum = times.reduce((a, b) => a + b.getBigInt(), BigInt(0));
     const lengthBigInt = BigInt(times.length);
     const bigintOne = BigInt(1);
-    const average = (sum > 0 ? sum : bigintOne) / (lengthBigInt > 0 ? lengthBigInt : bigintOne);
+    const average =
+      (sum > 0 ? sum : bigintOne) /
+      (lengthBigInt > 0 ? lengthBigInt : bigintOne);
 
     return new UnixNanoTimeStamp(average);
   }
@@ -92,7 +101,8 @@ export class UnixNanoTimeStamp {
 
   public subtract(another: UnixNanoTimeStamp | bigint): UnixNanoTimeStamp {
     const result =
-      this.getBigInt() - (another instanceof UnixNanoTimeStamp ? another.getBigInt() : another);
+      this.getBigInt() -
+      (another instanceof UnixNanoTimeStamp ? another.getBigInt() : another);
     return new UnixNanoTimeStamp(result);
   }
 

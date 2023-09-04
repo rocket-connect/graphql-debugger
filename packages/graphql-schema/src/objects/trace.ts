@@ -1,5 +1,5 @@
-import { builder } from '../schema';
-import { Span, SpanObject } from './span';
+import { builder } from "../schema";
+import { Span, SpanObject } from "./span";
 
 export type Trace = {
   id: string;
@@ -10,10 +10,10 @@ export type Trace = {
   firstSpanErrorStack?: string;
 };
 
-export const TraceObject = builder.objectType('Trace', {
+export const TraceObject = builder.objectType("Trace", {
   fields: (t) => ({
-    id: t.exposeString('id'),
-    traceId: t.exposeString('traceId'),
+    id: t.exposeString("id"),
+    traceId: t.exposeString("traceId"),
     rootSpan: t.field({
       type: SpanObject,
       nullable: true,
@@ -24,7 +24,7 @@ export const TraceObject = builder.objectType('Trace', {
       },
     }),
     firstSpanErrorMessage: t.field({
-      type: 'String',
+      type: "String",
       nullable: true,
       resolve: async (root, args, context) => {
         const spans = await context.loaders.spanLoader.load(root.id);
@@ -33,7 +33,7 @@ export const TraceObject = builder.objectType('Trace', {
       },
     }),
     firstSpanErrorStack: t.field({
-      type: 'String',
+      type: "String",
       nullable: true,
       resolve: async (root, args, context) => {
         const spans = await context.loaders.spanLoader.load(root.id);
@@ -49,7 +49,7 @@ export const TraceObject = builder.objectType('Trace', {
         return spans.reduce<Span[]>((list, span) => {
           // collapse duplicate spans and add together, this is for graphql field resolvers and n+1
           const groupSpan = list.find(
-            (s) => s.name === span.name && s.parentSpanId === span.parentSpanId
+            (s) => s.name === span.name && s.parentSpanId === span.parentSpanId,
           );
 
           if (groupSpan) {
@@ -57,7 +57,8 @@ export const TraceObject = builder.objectType('Trace', {
             const spanEndTime = span.endTimeUnixNano;
 
             groupSpan.startTimeUnixNano =
-              groupSpan.startTimeUnixNano.getBigInt() > spanStartTime.getBigInt()
+              groupSpan.startTimeUnixNano.getBigInt() >
+              spanStartTime.getBigInt()
                 ? spanStartTime
                 : groupSpan.startTimeUnixNano;
 

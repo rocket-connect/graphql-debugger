@@ -1,8 +1,8 @@
-import { HashRouter, Route, Routes } from 'react-router-dom';
-import { Schemas } from './Schemas';
-import { Schema } from './Schema';
+import { HashRouter, Route, Routes } from "react-router-dom";
+import { Schemas } from "./Schemas";
+import { Schema } from "./Schema";
 
-export function Router(props: React.PropsWithChildren<{}>) {
+export function Router() {
   return (
     <HashRouter>
       <Routes>

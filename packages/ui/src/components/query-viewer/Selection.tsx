@@ -1,5 +1,5 @@
-import { graphql } from '@graphql-debugger/utils';
-import { Field } from './Field';
+import { graphql } from "@graphql-debugger/utils";
+import { Field } from "./Field";
 
 export function Selection({
   selection,
@@ -13,7 +13,9 @@ export function Selection({
       <Field
         key={index}
         field={selection as graphql.FieldNode}
-        renderSelection={(selection, index) => <Selection selection={selection} index={index} />}
+        renderSelection={(selection, index) => (
+          <Selection selection={selection} index={index} />
+        )}
       />
     );
   }
@@ -23,7 +25,10 @@ export function Selection({
 
     return (
       <div key={index} className="ml-1 p-1 text-graphiql-light">
-        ...<span className="text-graphql-otel-green">{fragmentSpread.name.value}</span>
+        ...
+        <span className="text-graphql-otel-green">
+          {fragmentSpread.name.value}
+        </span>
       </div>
     );
   }
@@ -33,12 +38,14 @@ export function Selection({
 
     return (
       <div key={index} className="ml-1 p-1 text-graphiql-light">
-        {'... on '}
+        {"... on "}
         {inlineFragment.typeCondition?.name.value}
         <ul className="flex flex-col gap-1">
-          {inlineFragment.selectionSet.selections.map((selection, selectionIndex) => (
-            <Selection selection={selection} index={selectionIndex} />
-          ))}
+          {inlineFragment.selectionSet.selections.map(
+            (selection, selectionIndex) => (
+              <Selection selection={selection} index={selectionIndex} />
+            ),
+          )}
         </ul>
       </div>
     );

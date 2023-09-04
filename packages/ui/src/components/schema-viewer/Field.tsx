@@ -1,22 +1,22 @@
-import { graphql } from '@graphql-debugger/utils';
-import { useEffect, useState } from 'react';
-import { aggregateSpans } from '../../api/aggregate-spans';
-import { AggregateSpansResponse } from '../../graphql-types';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Stats } from './Stats';
+import { graphql } from "@graphql-debugger/utils";
+import { useEffect, useState } from "react";
+import { aggregateSpans } from "../../api/aggregate-spans";
+import { AggregateSpansResponse } from "../../graphql-types";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { Stats } from "./Stats";
 
 function extractTypeName(typeNode): string {
-  if (typeNode.kind === 'NamedType') {
+  if (typeNode.kind === "NamedType") {
     return typeNode.name.value;
   }
-  if (typeNode.kind === 'ListType') {
+  if (typeNode.kind === "ListType") {
     return `[${extractTypeName(typeNode.type)}]`;
   }
-  if (typeNode.kind === 'NonNullType') {
+  if (typeNode.kind === "NonNullType") {
     return `${extractTypeName(typeNode.type)}!`;
   }
 
-  return '';
+  return "";
 }
 
 export function Field({
@@ -29,14 +29,16 @@ export function Field({
   schemaId: string;
 }) {
   const [searchParams] = useSearchParams();
-  const rootSpanName = searchParams.get('rootSpanName');
+  const rootSpanName = searchParams.get("rootSpanName");
   const navigate = useNavigate();
   const name = field.name.value;
   const type = extractTypeName(field.type);
-  const [aggregate, setAggregate] = useState<AggregateSpansResponse | null>(null);
+  const [aggregate, setAggregate] = useState<AggregateSpansResponse | null>(
+    null,
+  );
 
   const processedType = Array.from(type).map((char, index) => {
-    if (['!', '[', ']'].includes(char)) {
+    if (["!", "[", "]"].includes(char)) {
       return (
         <span key={index} className="text-white">
           {char}
@@ -61,18 +63,24 @@ export function Field({
         console.error(error);
       }
     })();
-  }, [name, schemaId]);
+  }, [name, schemaId, parentName]);
 
   const renderFieldName = () => {
-    if (['query', 'mutation'].includes(parentName)) {
+    if (["query", "mutation"].includes(parentName)) {
       const _rootSpanName = `${parentName} ${name}`;
       return (
         <span
           className={`text-graphiql-light underline hover:cursor-pointer ${
-            rootSpanName === _rootSpanName ? 'font-bold decoration-graphiql-pink' : ''
+            rootSpanName === _rootSpanName
+              ? "font-bold decoration-graphiql-pink"
+              : ""
           }`}
           onClick={() => {
-            navigate(`?${new URLSearchParams({ rootSpanName: _rootSpanName }).toString()}`);
+            navigate(
+              `?${new URLSearchParams({
+                rootSpanName: _rootSpanName,
+              }).toString()}`,
+            );
           }}
         >
           {name}:
@@ -90,7 +98,7 @@ export function Field({
         <span className="text-graphql-otel-green ml-2">{processedType}</span>
       </div>
 
-      {['query', 'mutation'].includes(parentName) && (
+      {["query", "mutation"].includes(parentName) && (
         <div className="py-2">
           <Stats aggregate={aggregate} />
         </div>

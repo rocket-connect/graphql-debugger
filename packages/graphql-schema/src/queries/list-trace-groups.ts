@@ -1,6 +1,6 @@
-import { prisma } from '@graphql-debugger/data-access';
-import { Trace, TraceObject } from '../objects/trace';
-import { builder } from '../schema';
+import { prisma } from "@graphql-debugger/data-access";
+import { Trace, TraceObject } from "../objects/trace";
+import { builder } from "../schema";
 
 export type ListTraceGroupsResponse = {
   traces: Trace[];
@@ -12,7 +12,7 @@ export type ListTraceGroupsWhere = {
   rootSpanName?: string;
 };
 
-export const ListTraceGroupsWhere = builder.inputType('ListTraceGroupsWhere', {
+export const ListTraceGroupsWhere = builder.inputType("ListTraceGroupsWhere", {
   fields: (t) => ({
     id: t.string({
       required: false,
@@ -26,15 +26,18 @@ export const ListTraceGroupsWhere = builder.inputType('ListTraceGroupsWhere', {
   }),
 });
 
-export const ListTraceGroupsResponse = builder.objectType('ListTraceGroupsResponse', {
-  fields: (t) => ({
-    traces: t.expose('traces', {
-      type: [TraceObject],
+export const ListTraceGroupsResponse = builder.objectType(
+  "ListTraceGroupsResponse",
+  {
+    fields: (t) => ({
+      traces: t.expose("traces", {
+        type: [TraceObject],
+      }),
     }),
-  }),
-});
+  },
+);
 
-builder.queryField('listTraceGroups', (t) =>
+builder.queryField("listTraceGroups", (t) =>
   t.field({
     type: ListTraceGroupsResponse,
     args: {
@@ -62,7 +65,7 @@ builder.queryField('listTraceGroups', (t) =>
       };
 
       const traces = await prisma.traceGroup.findMany({
-        orderBy: { createdAt: 'desc' },
+        orderBy: { createdAt: "desc" },
         where,
         take: 20,
       });
@@ -77,5 +80,5 @@ builder.queryField('listTraceGroups', (t) =>
         }),
       };
     },
-  })
+  }),
 );

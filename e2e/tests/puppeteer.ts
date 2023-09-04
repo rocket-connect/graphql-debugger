@@ -1,6 +1,6 @@
-import { BACKEND_PORT } from '@graphql-debugger/backend';
-import puppeteer, { Browser, Page } from 'puppeteer';
-export { Browser } from 'puppeteer';
+import { BACKEND_PORT } from "@graphql-debugger/backend";
+import puppeteer, { Browser, Page } from "puppeteer";
+export { Browser } from "puppeteer";
 
 let browser: Browser | null;
 
@@ -18,9 +18,9 @@ export async function getBrowser() {
   }
 
   browser = await puppeteer.launch({
-    headless: 'new',
+    headless: "new",
     defaultViewport: null,
-    args: ['--disable-web-security'],
+    args: ["--disable-web-security"],
   });
 
   return browser;

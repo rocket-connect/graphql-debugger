@@ -1,7 +1,13 @@
-import { graphql } from '@graphql-debugger/utils';
-import { Type } from './Type';
+import { graphql } from "@graphql-debugger/utils";
+import { Type } from "./Type";
 
-export function SchemaViewer({ schemaId, typeDefs }: { schemaId: string; typeDefs: string }) {
+export function SchemaViewer({
+  schemaId,
+  typeDefs,
+}: {
+  schemaId: string;
+  typeDefs: string;
+}) {
   const parsed = graphql.parse(typeDefs);
 
   const queryDefs: graphql.ObjectTypeDefinitionNode[] = [];
@@ -9,10 +15,10 @@ export function SchemaViewer({ schemaId, typeDefs }: { schemaId: string; typeDef
   const otherDefs: graphql.ObjectTypeDefinitionNode[] = [];
 
   parsed.definitions.forEach((def) => {
-    if (def.kind === 'ObjectTypeDefinition') {
-      if (def.name.value === 'Query') {
+    if (def.kind === "ObjectTypeDefinition") {
+      if (def.name.value === "Query") {
         queryDefs.push(def);
-      } else if (def.name.value === 'Mutation') {
+      } else if (def.name.value === "Mutation") {
         mutationDefs.push(def);
       } else {
         otherDefs.push(def);
@@ -26,7 +32,10 @@ export function SchemaViewer({ schemaId, typeDefs }: { schemaId: string; typeDef
     <div className="flex-1 overflow-y-auto">
       <pre className="text-xs flex flex-col gap-5">
         {sortedDefs.map((def, index) => {
-          if (def.kind === 'ObjectTypeDefinition' || def.kind === 'InputObjectTypeDefinition') {
+          if (
+            def.kind === "ObjectTypeDefinition" ||
+            def.kind === "InputObjectTypeDefinition"
+          ) {
             const name = def.name.value;
             const kind = def.kind;
 

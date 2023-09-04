@@ -1,20 +1,23 @@
-import { setupOtel } from './setup-otel';
-import type { OTLPExporterNodeConfigBase } from '@opentelemetry/otlp-exporter-base';
+import { setupOtel } from "./setup-otel";
+import type { OTLPExporterNodeConfigBase } from "@opentelemetry/otlp-exporter-base";
 
-import { makeExecutableSchema } from '@graphql-tools/schema';
-import { getResolversFromSchema } from '@graphql-tools/utils';
-import { graphql } from '@graphql-debugger/utils';
-import { traceDirective } from 'graphql-otel';
-import { debug } from './debug';
-import { SchemaExporer } from './schema-exporter';
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { getResolversFromSchema } from "@graphql-tools/utils";
+import { graphql } from "@graphql-debugger/utils";
+import { traceDirective } from "graphql-otel";
+import { debug } from "./debug";
+import { SchemaExporer } from "./schema-exporter";
 
 export interface TraceSchemaInput {
   schema: graphql.GraphQLSchema;
   exporterConfig?: OTLPExporterNodeConfigBase;
 }
 
-export function traceSchema({ schema, exporterConfig }: TraceSchemaInput): graphql.GraphQLSchema {
-  debug('Tracing schema');
+export function traceSchema({
+  schema,
+  exporterConfig,
+}: TraceSchemaInput): graphql.GraphQLSchema {
+  debug("Tracing schema");
 
   setupOtel({ exporterConfig });
 
@@ -24,7 +27,7 @@ export function traceSchema({ schema, exporterConfig }: TraceSchemaInput): graph
     FieldDefinition: {
       enter(node: graphql.FieldDefinitionNode) {
         const existingTraceDirective = node.directives?.find(
-          (directive) => directive.name.value === 'trace'
+          (directive) => directive.name.value === "trace",
         );
 
         if (existingTraceDirective) {
@@ -37,7 +40,7 @@ export function traceSchema({ schema, exporterConfig }: TraceSchemaInput): graph
             kind: graphql.Kind.DIRECTIVE,
             name: {
               kind: graphql.Kind.NAME,
-              value: 'trace',
+              value: "trace",
             },
           },
         ];
@@ -56,15 +59,15 @@ export function traceSchema({ schema, exporterConfig }: TraceSchemaInput): graph
     makeExecutableSchema({
       typeDefs: [graphql.print(ast), directive.typeDefs],
       resolvers,
-    })
+    }),
   );
 
   const schemaExporer = new SchemaExporer(tracedSchema, exporterConfig);
   schemaExporer.start();
 
-  debug('Traced schema');
+  debug("Traced schema");
 
   return tracedSchema;
 }
 
-export * from 'graphql-otel';
+export * from "graphql-otel";

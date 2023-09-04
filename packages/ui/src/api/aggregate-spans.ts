@@ -1,5 +1,9 @@
-import { AggregateSpansResponse, AggregateSpansWhere, Query } from '../graphql-types';
-import { api } from './api';
+import {
+  AggregateSpansResponse,
+  AggregateSpansWhere,
+  Query,
+} from "../graphql-types";
+import { api } from "./api";
 
 const AggregateSpansQuery = /* GraphQL */ `
   query ($where: AggregateSpansWhere!) {
@@ -17,7 +21,9 @@ export async function aggregateSpans({
 }: {
   where: AggregateSpansWhere;
 }): Promise<AggregateSpansResponse> {
-  const { data, errors } = await api<{ aggregateSpans: Query['aggregateSpans'] }>({
+  const { data, errors } = await api<{
+    aggregateSpans: Query["aggregateSpans"];
+  }>({
     query: AggregateSpansQuery,
     variables: {
       where,
@@ -25,7 +31,7 @@ export async function aggregateSpans({
   });
 
   if (errors && errors?.length > 0) {
-    throw new Error(errors.map((e) => e.message).join('\n'));
+    throw new Error(errors.map((e) => e.message).join("\n"));
   }
 
   return data.aggregateSpans;

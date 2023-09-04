@@ -1,5 +1,5 @@
-import { GraphQLOTELContext } from '@graphql-debugger/trace-schema';
-import { rootSpanLoader, spanLoader } from './loaders/span';
+import { GraphQLOTELContext } from "@graphql-debugger/trace-schema";
+import { rootSpanLoader, spanLoader } from "./loaders/span";
 
 export type Context = {
   GraphQLOTELContext: GraphQLOTELContext;
@@ -9,7 +9,7 @@ export type Context = {
   };
 };
 
-export function context(...args: any[]): Context {
+export function context(): Context {
   return {
     GraphQLOTELContext: new GraphQLOTELContext({
       includeVariables: true,

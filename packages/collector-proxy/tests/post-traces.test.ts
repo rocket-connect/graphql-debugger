@@ -1,20 +1,20 @@
-import { z } from 'zod';
-import { request } from './utils';
-import { ExportTraceServiceRequestSchema } from '../src/collector/schema';
-import { prisma } from '@graphql-debugger/data-access';
-import util from 'util';
-import { describe, beforeEach, test, expect } from '@jest/globals';
+import { z } from "zod";
+import { request } from "./utils";
+import { ExportTraceServiceRequestSchema } from "../src/collector/schema";
+import { prisma } from "@graphql-debugger/data-access";
+import util from "util";
+import { describe, beforeEach, test, expect } from "@jest/globals";
 
 const sleep = util.promisify(setTimeout);
 
-describe('POST /v1/traces', () => {
+describe("POST /v1/traces", () => {
   beforeEach(async () => {
     await prisma.span.deleteMany();
     await prisma.traceGroup.deleteMany();
   });
 
-  test('should throw when no body is sent', async () => {
-    const response = await request().post('/v1/traces').send({});
+  test("should throw when no body is sent", async () => {
+    const response = await request().post("/v1/traces").send({});
 
     expect(response.status).toBe(400);
 
@@ -36,16 +36,17 @@ describe('POST /v1/traces', () => {
 `);
   });
 
-  test('should throw span validation error when not sent correctly', async () => {
+  test("should throw span validation error when not sent correctly", async () => {
     const payload: z.infer<typeof ExportTraceServiceRequestSchema> = {
       resourceSpans: [
         {
           scopeSpans: [
             {
               spans: [
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore - testing the validation error on a span
                 {
-                  spanId: '1',
+                  spanId: "1",
                 },
               ],
             },
@@ -54,7 +55,7 @@ describe('POST /v1/traces', () => {
       ],
     };
 
-    const response = await request().post('/v1/traces').send(payload);
+    const response = await request().post("/v1/traces").send(payload);
 
     expect(response.status).toBe(400);
 
@@ -178,7 +179,7 @@ describe('POST /v1/traces', () => {
 `);
   });
 
-  test('should receive traces and map them correctly in the database', async () => {
+  test("should receive traces and map them correctly in the database", async () => {
     const payload: z.infer<typeof ExportTraceServiceRequestSchema> = {
       resourceSpans: [
         {
@@ -186,47 +187,47 @@ describe('POST /v1/traces', () => {
             {
               spans: [
                 {
-                  spanId: '2a5f8b696abf9858',
-                  traceId: '46cb720c4cc8b0c1e28cabd112057b78',
+                  spanId: "2a5f8b696abf9858",
+                  traceId: "46cb720c4cc8b0c1e28cabd112057b78",
                   parentSpanId: undefined,
-                  name: 'query users',
+                  name: "query users",
                   kind: 0,
                   attributes: [
                     {
-                      key: 'graphql.operation.name',
+                      key: "graphql.operation.name",
                       value: {
-                        stringValue: 'users',
+                        stringValue: "users",
                       },
                     },
                     {
-                      key: 'graphql.operation.type',
+                      key: "graphql.operation.type",
                       value: {
-                        stringValue: 'query',
+                        stringValue: "query",
                       },
                     },
                     {
-                      key: 'graphql.document',
+                      key: "graphql.document",
                       value: {
                         stringValue:
-                          '{\n' +
-                          '  users {\n' +
-                          '    name\n' +
-                          '    age\n' +
-                          '    posts {\n' +
-                          '      title\n' +
-                          '      content\n' +
-                          '      comments {\n' +
-                          '        content\n' +
-                          '      }\n' +
-                          '    }\n' +
-                          '  }\n' +
-                          '}',
+                          "{\n" +
+                          "  users {\n" +
+                          "    name\n" +
+                          "    age\n" +
+                          "    posts {\n" +
+                          "      title\n" +
+                          "      content\n" +
+                          "      comments {\n" +
+                          "        content\n" +
+                          "      }\n" +
+                          "    }\n" +
+                          "  }\n" +
+                          "}",
                       },
                     },
                     {
-                      key: 'graphql.operation.returnType',
+                      key: "graphql.operation.returnType",
                       value: {
-                        stringValue: '[User]',
+                        stringValue: "[User]",
                       },
                     },
                   ],
@@ -242,10 +243,10 @@ describe('POST /v1/traces', () => {
                   },
                 },
                 {
-                  spanId: 'b496e68882240e49',
-                  traceId: '46cb720c4cc8b0c1e28cabd112057b78',
-                  parentSpanId: '2a5f8b696abf9858',
-                  name: 'User name',
+                  spanId: "b496e68882240e49",
+                  traceId: "46cb720c4cc8b0c1e28cabd112057b78",
+                  parentSpanId: "2a5f8b696abf9858",
+                  name: "User name",
                   kind: 0,
                   attributes: [],
                   droppedAttributesCount: 0,
@@ -260,10 +261,10 @@ describe('POST /v1/traces', () => {
                   },
                 },
                 {
-                  spanId: '443fd2e5e4f00845',
-                  traceId: '46cb720c4cc8b0c1e28cabd112057b78',
-                  parentSpanId: '2a5f8b696abf9858',
-                  name: 'User age',
+                  spanId: "443fd2e5e4f00845",
+                  traceId: "46cb720c4cc8b0c1e28cabd112057b78",
+                  parentSpanId: "2a5f8b696abf9858",
+                  name: "User age",
                   kind: 0,
                   attributes: [],
                   droppedAttributesCount: 0,
@@ -278,10 +279,10 @@ describe('POST /v1/traces', () => {
                   },
                 },
                 {
-                  spanId: 'c96662d3273a7415',
-                  traceId: '46cb720c4cc8b0c1e28cabd112057b78',
-                  parentSpanId: '2a5f8b696abf9858',
-                  name: 'User posts',
+                  spanId: "c96662d3273a7415",
+                  traceId: "46cb720c4cc8b0c1e28cabd112057b78",
+                  parentSpanId: "2a5f8b696abf9858",
+                  name: "User posts",
                   kind: 0,
                   attributes: [],
                   droppedAttributesCount: 0,
@@ -296,10 +297,10 @@ describe('POST /v1/traces', () => {
                   },
                 },
                 {
-                  spanId: '4aa8f7495bc7546c',
-                  traceId: '46cb720c4cc8b0c1e28cabd112057b78',
-                  parentSpanId: 'c96662d3273a7415',
-                  name: 'Posts title',
+                  spanId: "4aa8f7495bc7546c",
+                  traceId: "46cb720c4cc8b0c1e28cabd112057b78",
+                  parentSpanId: "c96662d3273a7415",
+                  name: "Posts title",
                   kind: 0,
                   attributes: [],
                   droppedAttributesCount: 0,
@@ -314,10 +315,10 @@ describe('POST /v1/traces', () => {
                   },
                 },
                 {
-                  spanId: 'b8b21753292a8794',
-                  traceId: '46cb720c4cc8b0c1e28cabd112057b78',
-                  parentSpanId: 'c96662d3273a7415',
-                  name: 'Posts content',
+                  spanId: "b8b21753292a8794",
+                  traceId: "46cb720c4cc8b0c1e28cabd112057b78",
+                  parentSpanId: "c96662d3273a7415",
+                  name: "Posts content",
                   kind: 0,
                   attributes: [],
                   droppedAttributesCount: 0,
@@ -332,10 +333,10 @@ describe('POST /v1/traces', () => {
                   },
                 },
                 {
-                  spanId: '3877c153fa0d43d6',
-                  traceId: '46cb720c4cc8b0c1e28cabd112057b78',
-                  parentSpanId: 'c96662d3273a7415',
-                  name: 'Posts comments',
+                  spanId: "3877c153fa0d43d6",
+                  traceId: "46cb720c4cc8b0c1e28cabd112057b78",
+                  parentSpanId: "c96662d3273a7415",
+                  name: "Posts comments",
                   kind: 0,
                   attributes: [],
                   droppedAttributesCount: 0,
@@ -350,10 +351,10 @@ describe('POST /v1/traces', () => {
                   },
                 },
                 {
-                  spanId: '9c027ebcb7fb03a3',
-                  traceId: '46cb720c4cc8b0c1e28cabd112057b78',
-                  parentSpanId: '3877c153fa0d43d6',
-                  name: 'Comment content',
+                  spanId: "9c027ebcb7fb03a3",
+                  traceId: "46cb720c4cc8b0c1e28cabd112057b78",
+                  parentSpanId: "3877c153fa0d43d6",
+                  name: "Comment content",
                   kind: 0,
                   attributes: [],
                   droppedAttributesCount: 0,
@@ -374,7 +375,7 @@ describe('POST /v1/traces', () => {
       ],
     };
 
-    const response = await request().post('/v1/traces').send(payload);
+    const response = await request().post("/v1/traces").send(payload);
 
     expect(response.status).toBe(200);
 

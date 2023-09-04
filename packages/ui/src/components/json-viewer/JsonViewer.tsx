@@ -1,5 +1,5 @@
-import { IDS } from '../../testing';
-import { JsonValue } from './JsonValue';
+import { IDS } from "../../testing";
+import { JsonValue } from "./JsonValue";
 
 export function JsonViewer({ json }: { json: string }) {
   const data = JSON.parse(json);

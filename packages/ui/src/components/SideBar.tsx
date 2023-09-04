@@ -1,4 +1,4 @@
-import { docsFilled } from '../utils/images';
+import { docsFilled } from "../utils/images";
 
 export function SideBar() {
   return (
