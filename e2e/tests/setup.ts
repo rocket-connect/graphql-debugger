@@ -1,8 +1,8 @@
-import * as collector from './collector';
+import * as backend from './backend';
 import { clearDB } from './prisma';
 
 beforeAll(async () => {
-  await collector.listen();
+  await backend.listen();
 });
 
 beforeEach(async () => {
@@ -10,5 +10,5 @@ beforeEach(async () => {
 });
 
 afterAll(async () => {
-  await collector.close();
+  await backend.close();
 });

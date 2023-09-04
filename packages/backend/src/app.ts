@@ -1,15 +1,14 @@
 import { debug } from './debug';
 import express, { Express } from 'express';
-import * as config from './config';
 import path from 'path';
 import cors from 'cors';
 import { yoga } from '@graphql-debugger/graphql-schema';
-import { collector } from '@graphql-debugger/collector-proxy';
+import { collector, queue } from '@graphql-debugger/collector-proxy';
 
 export const backend: Express = express();
 backend.use(cors());
 backend.use('/graphql', yoga);
-backend.use(express.static(path.join(__dirname, '../node_modules/@graphql-debugger/ui/dist')));
+backend.use(express.static(path.join(__dirname, '../node_modules/@graphql-debugger/ui/build')));
 backend.use(express.static('public'));
 
 export async function start({
@@ -21,6 +20,8 @@ export async function start({
 }) {
   try {
     debug('Starting app');
+
+    await queue.length();
 
     const _backend = await backend.listen(backendPort);
     const _collector = await collector.listen(collectorPort);
