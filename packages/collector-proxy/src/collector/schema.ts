@@ -1,7 +1,12 @@
-import { z } from 'zod';
+import { z } from "zod";
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore - Recursive type
-export const AnyValueSchema = z.lazy(() => AnyValueInnerSchema) as z.ZodUnion<[...z.ZodTypeAny[]]>;
+export const AnyValueSchema = z.lazy(() => AnyValueInnerSchema) as z.ZodUnion<
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  [...z.ZodTypeAny[]]
+>;
 
 export const KeyValueSchema = z.object({
   key: z.string(),

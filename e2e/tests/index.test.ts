@@ -1,7 +1,7 @@
-import { getBrowser, getPage, Browser } from './puppeteer';
-import { IDS } from '@graphql-debugger/ui/src/testing';
+import { getBrowser, getPage, Browser } from "./puppeteer";
+import { IDS } from "@graphql-debugger/ui/src/testing";
 
-describe('index', () => {
+describe("index", () => {
   let browser: Browser;
 
   beforeAll(async () => {
@@ -12,7 +12,7 @@ describe('index', () => {
     await browser.close();
   });
 
-  test('should display no schemas found and logo when there are no', async () => {
+  test("should display no schemas found and logo when there are no", async () => {
     const page = await getPage({ browser });
 
     await page.waitForSelector(`#${IDS.NO_SCHEMAS_FOUND}`);

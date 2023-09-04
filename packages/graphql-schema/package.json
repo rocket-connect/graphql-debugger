@@ -21,15 +21,15 @@
     "@graphql-debugger/trace-schema": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
     "@graphql-debugger/data-access": "workspace:^",
-    "@pothos/core": "^3.33.0",
-    "dataloader": "^2.2.2",
-    "graphql-yoga": "^4.0.4"
+    "@pothos/core": "3.33.0",
+    "dataloader": "2.2.2",
+    "graphql-yoga": "4.0.4"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^5.0.0",
-    "@graphql-codegen/client-preset": "^4.1.0",
-    "@graphql-codegen/typescript": "^4.0.1",
-    "@graphql-codegen/typescript-resolvers": "^4.0.1",
-    "@opentelemetry/otlp-transformer": "^0.41.2"
+    "@graphql-codegen/cli": "5.0.0",
+    "@graphql-codegen/client-preset": "4.1.0",
+    "@graphql-codegen/typescript": "4.0.1",
+    "@graphql-codegen/typescript-resolvers": "4.0.1",
+    "@opentelemetry/otlp-transformer": "0.41.2"
   }
 }

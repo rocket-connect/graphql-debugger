@@ -1,10 +1,10 @@
-import { makeExecutableSchema } from '@graphql-tools/schema';
-import { traceSchema } from '../src';
-import { printSchemaWithDirectives } from '@graphql-tools/utils';
-import { describe, test, expect } from '@jest/globals';
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { traceSchema } from "../src";
+import { printSchemaWithDirectives } from "@graphql-tools/utils";
+import { describe, test, expect } from "@jest/globals";
 
-describe('tracedSchema', () => {
-  test('should add trace directive to all fields in schema', () => {
+describe("tracedSchema", () => {
+  test("should add trace directive to all fields in schema", () => {
     const typeDefs = `
         type User {
             name: String!
@@ -17,7 +17,7 @@ describe('tracedSchema', () => {
 
     const resolvers = {
       Query: {
-        user: () => ({ name: 'John' }),
+        user: () => ({ name: "John" }),
       },
     };
 

@@ -1,5 +1,5 @@
-import { prisma } from '@graphql-debugger/data-access';
-import { builder } from '../schema';
+import { prisma } from "@graphql-debugger/data-access";
+import { builder } from "../schema";
 
 export type DeleteTracesWhere = {
   schemaId: string;
@@ -10,7 +10,7 @@ export type DeleteTracesResponse = {
   success: boolean;
 };
 
-export const DeleteTracesWhere = builder.inputType('DeleteTracesWhere', {
+export const DeleteTracesWhere = builder.inputType("DeleteTracesWhere", {
   fields: (t) => ({
     schemaId: t.string({
       required: true,
@@ -21,13 +21,13 @@ export const DeleteTracesWhere = builder.inputType('DeleteTracesWhere', {
   }),
 });
 
-export const DeleteTracesResponse = builder.objectType('DeleteTracesResponse', {
+export const DeleteTracesResponse = builder.objectType("DeleteTracesResponse", {
   fields: (t) => ({
-    success: t.exposeBoolean('success'),
+    success: t.exposeBoolean("success"),
   }),
 });
 
-builder.mutationField('deleteTraces', (t) =>
+builder.mutationField("deleteTraces", (t) =>
   t.field({
     type: DeleteTracesResponse,
     args: {
@@ -61,5 +61,5 @@ builder.mutationField('deleteTraces', (t) =>
         success: true,
       };
     },
-  })
+  }),
 );

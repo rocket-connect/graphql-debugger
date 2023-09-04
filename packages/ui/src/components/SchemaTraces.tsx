@@ -1,16 +1,18 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { ListTraceGroupsWhere, Trace } from '../graphql-types';
-import { listTraceGroups } from '../api/list-trace-groups';
-import { UnixNanoTimeStamp } from '@graphql-debugger/time';
-import { IDS } from '../testing';
+import { useEffect, useState } from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { ListTraceGroupsWhere, Trace } from "../graphql-types";
+import { listTraceGroups } from "../api/list-trace-groups";
+import { UnixNanoTimeStamp } from "@graphql-debugger/time";
+import { IDS } from "../testing";
 
 export function SchemaTraces({ schemaId }: { schemaId: string }) {
   const navigate = useNavigate();
   const params = useParams();
   const [searchParams] = useSearchParams();
   const [traces, setTraces] = useState<Trace[]>([]);
-  const [selectedTrace, setSelectedTrace] = useState<Trace | undefined>(undefined);
+  const [selectedTrace, setSelectedTrace] = useState<Trace | undefined>(
+    undefined,
+  );
 
   useEffect(() => {
     (async () => {
@@ -19,7 +21,7 @@ export function SchemaTraces({ schemaId }: { schemaId: string }) {
           schemaId,
         };
 
-        const name = searchParams.get('rootSpanName');
+        const name = searchParams.get("rootSpanName");
         if (name) {
           where.rootSpanName = name;
         }
@@ -38,13 +40,16 @@ export function SchemaTraces({ schemaId }: { schemaId: string }) {
         setTraces([]);
       }
     })();
-  }, [searchParams.get('rootSpanName'), schemaId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams.get("rootSpanName"), schemaId]);
 
   useEffect(() => {
     if (selectedTrace) {
-      navigate(`/schema/${schemaId}/trace/${selectedTrace?.id}?${searchParams.toString()}`);
+      navigate(
+        `/schema/${schemaId}/trace/${selectedTrace?.id}?${searchParams.toString()}`,
+      );
     }
-  }, [selectedTrace, traces]);
+  }, [selectedTrace, traces, navigate, searchParams, schemaId]);
 
   return (
     <div className="relative" id={IDS.SCHEMA_TRACES}>
@@ -73,19 +78,21 @@ export function SchemaTraces({ schemaId }: { schemaId: string }) {
             const rootSpan = trace.rootSpan;
             const errorMessage = trace?.firstSpanErrorMessage;
             const startTimeUnixNano = UnixNanoTimeStamp.fromString(
-              rootSpan?.startTimeUnixNano || '0'
+              rootSpan?.startTimeUnixNano || "0",
             );
-            const durationUnixNano = UnixNanoTimeStamp.fromString(rootSpan?.durationNano || '0');
+            const durationUnixNano = UnixNanoTimeStamp.fromString(
+              rootSpan?.durationNano || "0",
+            );
 
-            let traceClasses = 'absolute h-3 ';
+            let traceClasses = "absolute h-3 ";
             if (isSelected) {
-              traceClasses += ' font-bold underline';
+              traceClasses += " font-bold underline";
             }
 
             if (errorMessage) {
-              traceClasses += ' text-red-500 underline-graphql-otel-red-500';
+              traceClasses += " text-red-500 underline-graphql-otel-red-500";
             } else {
-              traceClasses += ' text-green-500 underline-graphql-otel-green';
+              traceClasses += " text-green-500 underline-graphql-otel-green";
             }
 
             return (
@@ -101,8 +108,12 @@ export function SchemaTraces({ schemaId }: { schemaId: string }) {
                 >
                   {rootSpan?.name}
                 </th>
-                <td className="px-6 py-4">{durationUnixNano.toMS().toFixed(2)} ms</td>
-                <td className="px-6 py-4">{startTimeUnixNano.toTimeStamp().moment.fromNow()}</td>
+                <td className="px-6 py-4">
+                  {durationUnixNano.toMS().toFixed(2)} ms
+                </td>
+                <td className="px-6 py-4">
+                  {startTimeUnixNano.toTimeStamp().moment.fromNow()}
+                </td>
               </tr>
             );
           })}

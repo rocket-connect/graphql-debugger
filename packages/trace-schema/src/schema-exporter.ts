@@ -1,12 +1,12 @@
-import { OTLPExporterNodeConfigBase } from '@opentelemetry/otlp-exporter-base';
-import { graphql } from '@graphql-debugger/utils';
-import fetch from 'node-fetch';
-import { debug } from './debug';
+import { OTLPExporterNodeConfigBase } from "@opentelemetry/otlp-exporter-base";
+import { graphql } from "@graphql-debugger/utils";
+import fetch from "node-fetch";
+import { debug } from "./debug";
 
-const DEFAULT_URL = 'http://localhost:4318/v1/traces';
+const DEFAULT_URL = "http://localhost:4318/v1/traces";
 
 function stripURL(url: string) {
-  return url.replace('/v1/traces', '');
+  return url.replace("/v1/traces", "");
 }
 
 export class SchemaExporer {
@@ -15,7 +15,7 @@ export class SchemaExporer {
 
   constructor(
     public schema: graphql.GraphQLSchema,
-    public exporterConfig?: OTLPExporterNodeConfigBase
+    public exporterConfig?: OTLPExporterNodeConfigBase,
   ) {
     this.url = exporterConfig?.url ?? DEFAULT_URL;
 
@@ -26,18 +26,18 @@ export class SchemaExporer {
   public start() {
     let counter = 0;
 
-    let interval = setInterval(() => {
+    const interval = setInterval(() => {
       (async () => {
         try {
-          debug('Sending schema');
+          debug("Sending schema");
 
-          const response = await fetch(stripURL(this.url) + '/v1/schema', {
-            method: 'POST',
+          const response = await fetch(stripURL(this.url) + "/v1/schema", {
+            method: "POST",
             body: JSON.stringify({
               schema: this.schemaString,
             }),
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
           });
 
@@ -47,7 +47,7 @@ export class SchemaExporer {
         } catch (error) {
           clearInterval(interval);
 
-          debug('Error sending schema', error);
+          debug("Error sending schema", error);
         } finally {
           counter++;
 

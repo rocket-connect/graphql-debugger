@@ -1,6 +1,6 @@
-import { prisma } from '@graphql-debugger/data-access';
-import { SchemaObject, Schema } from '../objects/schema';
-import { builder } from '../schema';
+import { prisma } from "@graphql-debugger/data-access";
+import { SchemaObject, Schema } from "../objects/schema";
+import { builder } from "../schema";
 
 export type ListSchemasWhere = {
   id?: string;
@@ -10,7 +10,7 @@ export type ListSchemasResponse = {
   schemas: Schema[];
 };
 
-export const ListSchemasWhere = builder.inputType('ListSchemasWhere', {
+export const ListSchemasWhere = builder.inputType("ListSchemasWhere", {
   fields: (t) => ({
     id: t.string({
       required: false,
@@ -18,15 +18,15 @@ export const ListSchemasWhere = builder.inputType('ListSchemasWhere', {
   }),
 });
 
-export const ListSchemasResponse = builder.objectType('ListSchemasResponse', {
+export const ListSchemasResponse = builder.objectType("ListSchemasResponse", {
   fields: (t) => ({
-    schemas: t.expose('schemas', {
+    schemas: t.expose("schemas", {
       type: [SchemaObject],
     }),
   }),
 });
 
-builder.queryField('listSchemas', (t) =>
+builder.queryField("listSchemas", (t) =>
   t.field({
     type: ListSchemasResponse,
     args: {
@@ -53,5 +53,5 @@ builder.queryField('listSchemas', (t) =>
         })),
       };
     },
-  })
+  }),
 );

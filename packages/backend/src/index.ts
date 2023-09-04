@@ -1,9 +1,9 @@
-import { prisma } from '@graphql-debugger/data-access';
-import { queue } from '@graphql-debugger/collector-proxy';
-import { debug } from './debug';
-import * as app from './app';
+import { prisma } from "@graphql-debugger/data-access";
+import { queue } from "@graphql-debugger/collector-proxy";
+import { debug } from "./debug";
+import * as app from "./app";
 
-import http from 'http';
+import http from "http";
 
 export async function start({
   backendPort,
@@ -13,7 +13,7 @@ export async function start({
   collectorPort: string;
 }) {
   try {
-    debug('Starting application');
+    debug("Starting application");
 
     await prisma.$connect();
 
@@ -24,11 +24,11 @@ export async function start({
       collectorPort,
     });
 
-    debug('Application started');
+    debug("Application started");
 
     return { backend, collector };
   } catch (error) {
-    debug('Application failed to start', error);
+    debug("Application failed to start", error);
     throw error;
   }
 }
@@ -44,5 +44,5 @@ export async function stop({
   await collector.close();
 }
 
-export * from './app';
-export * from './config';
+export * from "./app";
+export * from "./config";

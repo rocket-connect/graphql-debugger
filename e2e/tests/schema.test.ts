@@ -1,15 +1,18 @@
-import { BACKEND_PORT } from '@graphql-debugger/backend';
-import { prisma } from './prisma';
-import { getBrowser, getPage, Browser } from './puppeteer';
-import { IDS } from '@graphql-debugger/ui/src/testing';
-import util from 'util';
-import { makeExecutableSchema } from '@graphql-tools/schema';
-import { traceSchema, GraphQLOTELContext } from '@graphql-debugger/trace-schema';
-import { graphql, hashSchema } from '@graphql-debugger/utils';
+import { BACKEND_PORT } from "@graphql-debugger/backend";
+import { prisma } from "./prisma";
+import { getBrowser, getPage, Browser } from "./puppeteer";
+import { IDS } from "@graphql-debugger/ui/src/testing";
+import util from "util";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import {
+  traceSchema,
+  GraphQLOTELContext,
+} from "@graphql-debugger/trace-schema";
+import { graphql, hashSchema } from "@graphql-debugger/utils";
 
 const sleep = util.promisify(setTimeout);
 
-describe('schema', () => {
+describe("schema", () => {
   let browser: Browser;
 
   beforeAll(async () => {
@@ -20,7 +23,7 @@ describe('schema', () => {
     await browser.close();
   });
 
-  test('should fetch and display the schema with stats', async () => {
+  test("should fetch and display the schema with stats", async () => {
     const schemas = await prisma.schema.count();
     expect(schemas).toBe(0);
 
@@ -41,7 +44,7 @@ describe('schema', () => {
           return [
             {
               id: 1,
-              name: 'John',
+              name: "John",
             },
           ];
         },
@@ -76,7 +79,7 @@ describe('schema', () => {
 
     await page.waitForSelector(`#${IDS.SCHEMA}`);
     const dataValues = await page.$$eval(`#${IDS.SCHEMA}`, (divs) =>
-      divs.map((div) => div.dataset.schema)
+      divs.map((div) => div.dataset.schema),
     );
 
     expect(dataValues).toHaveLength(1);
@@ -84,7 +87,7 @@ describe('schema', () => {
 
     const response = await graphql.graphql({
       schema: tracedSchema,
-      source: '{ users { id name } }',
+      source: "{ users { id name } }",
       contextValue: {
         GraphQLOTELContext: new GraphQLOTELContext({
           includeResult: true,
@@ -119,15 +122,15 @@ describe('schema', () => {
     const rootSpan = trace.spans.find((span) => !span.parentSpanId);
     expect(rootSpan).toBeDefined();
     expect(rootSpan?.name).toEqual(`query users`);
-    expect(graphql.print(graphql.parse(rootSpan?.graphqlDocument as string))).toEqual(
-      graphql.print(graphql.parse('{ users { id name } }'))
-    );
+    expect(
+      graphql.print(graphql.parse(rootSpan?.graphqlDocument as string)),
+    ).toEqual(graphql.print(graphql.parse("{ users { id name } }")));
     expect(rootSpan?.graphqlResult).toBeDefined();
 
-    const idSpan = trace.spans.find((span) => span.name === 'User id');
+    const idSpan = trace.spans.find((span) => span.name === "User id");
     expect(idSpan).toBeDefined();
 
-    const nameSpan = trace.spans.find((span) => span.name === 'User name');
+    const nameSpan = trace.spans.find((span) => span.name === "User name");
     expect(nameSpan).toBeDefined();
 
     await page.waitForSelector(`[data-spanid*="${rootSpan?.id}"]`);
@@ -145,7 +148,7 @@ describe('schema', () => {
     await page.waitForSelector(`#${IDS.JSON_VIEWER}`);
 
     const jsonValues = await page.$$eval(`#${IDS.JSON_VIEWER}`, (divs) =>
-      divs.map((div) => div.dataset.json)
+      divs.map((div) => div.dataset.json),
     );
 
     expect(jsonValues[0]).toEqual(rootSpan?.graphqlResult);

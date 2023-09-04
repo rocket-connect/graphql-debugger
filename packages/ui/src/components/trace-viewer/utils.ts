@@ -1,6 +1,6 @@
-import { Span } from 'src/graphql-types';
+import { Span } from "src/graphql-types";
 
-export type RenderTree = Omit<Span, '__typename'> & {
+export type RenderTree = Omit<Span, "__typename"> & {
   children: RenderTree[];
 };
 

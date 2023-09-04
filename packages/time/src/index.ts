@@ -1,2 +1,2 @@
-export * from './unix-nano';
-export * from './timestamp';
+export * from "./unix-nano";
+export * from "./timestamp";
