@@ -1,4 +1,3 @@
-import { BACKEND_PORT } from "@graphql-debugger/backend";
 import { prisma } from "./prisma";
 import { getBrowser, getPage, Browser } from "./puppeteer";
 import { IDS } from "@graphql-debugger/ui/src/testing";
@@ -62,6 +61,11 @@ describe("schema", () => {
 
     const hash = hashSchema(tracedSchema);
 
+    const page = await getPage({ browser });
+    await page.waitForNetworkIdle();
+
+    await page.waitForSelector(`#${IDS.NO_SCHEMAS_FOUND}`);
+
     const schema = await prisma.schema.create({
       data: {
         hash,
@@ -71,11 +75,11 @@ describe("schema", () => {
 
     await sleep(1000);
 
-    const page = await getPage({ browser });
-
-    await page.goto(`http://localhost:${BACKEND_PORT}/#/schema/${schema.id}`);
-
+    await page.reload();
     await page.waitForNetworkIdle();
+
+    await page.waitForSelector(`[data-schemaid*="${schema?.id}"]`);
+    await page.click(`[data-schemaid*="${schema?.id}"]`);
 
     await page.waitForSelector(`#${IDS.SCHEMA}`);
     const dataValues = await page.$$eval(`#${IDS.SCHEMA}`, (divs) =>

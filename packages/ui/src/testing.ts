@@ -7,4 +7,5 @@ export const IDS = {
   QUERY_VIEWER: "query-viewer",
   RESULT_BUTTON: "result-button",
   JSON_VIEWER: "json-viewer",
+  SCHEMAS: "schemas",
 };
