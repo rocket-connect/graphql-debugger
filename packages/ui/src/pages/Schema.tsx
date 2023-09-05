@@ -1,5 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { Schema, Trace } from "../graphql-types";
 import { getSchema } from "../api/list-schemas";
 import { listTraceGroups } from "../api/list-trace-groups";
@@ -123,10 +128,12 @@ export function Schema() {
                 </div>
               )}
             </div>
-            <div className="flex flex-row gap-2 py-1">
-              <img className="w-10 my-auto" src={logo}></img>
-              <p className="my-auto text-large">GraphQL Debugger</p>
-            </div>
+            <Link to="/">
+              <div className="flex flex-row gap-2 py-1">
+                <img className="w-10 my-auto" src={logo}></img>
+                <p className="my-auto text-large">GraphQL Debugger</p>
+              </div>
+            </Link>
           </div>
 
           <div className="flex flex-row gap-5 w-full h-full overflow-y-hidden">

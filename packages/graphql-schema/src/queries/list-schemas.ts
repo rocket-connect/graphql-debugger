@@ -40,7 +40,10 @@ builder.queryField("listSchemas", (t) =>
         ...(args.where?.id ? { id: args.where.id } : {}),
       };
 
-      const schemas = await prisma.schema.findMany({ where });
+      const schemas = await prisma.schema.findMany({
+        orderBy: { createdAt: "desc" },
+        where,
+      });
 
       return {
         schemas: schemas.map((schema) => ({

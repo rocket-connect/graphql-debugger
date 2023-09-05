@@ -7,6 +7,7 @@ const ListSchemasQuery = /* GraphQL */ `
       schemas {
         id
         name
+        hash
         typeDefs
         createdAt
       }

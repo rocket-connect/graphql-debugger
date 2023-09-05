@@ -7,6 +7,7 @@ export function Router() {
     <HashRouter>
       <Routes>
         <Route path="/" element={<Schemas />} />
+        <Route path="*" element={<Schemas />} />
         <Route path="/schema/:schemaId" element={<Schema />} />
         <Route path="/schema/:schemaId/trace/:traceId" element={<Schema />} />
       </Routes>
