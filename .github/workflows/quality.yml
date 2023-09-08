@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/setup-project.yml
+      - uses: ./.github/actions/setup-project
       - name: Install puppeteer
         run: npm i -g puppeteer@21.1.1
       - name: Run tests
@@ -22,6 +22,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/setup-project.yml
+      - uses: ./.github/actions/setup-project
       - name: Lint source
         run: pnpm lint
