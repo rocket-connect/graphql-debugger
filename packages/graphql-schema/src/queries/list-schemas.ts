@@ -1,6 +1,7 @@
-import { prisma } from "@graphql-debugger/data-access";
+import { ObjectRef } from "@pothos/core";
 import { SchemaObject, Schema } from "../objects/schema";
 import { builder } from "../schema";
+import { prisma } from "@graphql-debugger/data-access";
 
 export type ListSchemasWhere = {
   id?: string;
@@ -18,13 +19,14 @@ export const ListSchemasWhere = builder.inputType("ListSchemasWhere", {
   }),
 });
 
-export const ListSchemasResponse = builder.objectType("ListSchemasResponse", {
-  fields: (t) => ({
-    schemas: t.expose("schemas", {
-      type: [SchemaObject],
+export const ListSchemasResponse: ObjectRef<ListSchemasResponse> =
+  builder.objectType("ListSchemasResponse", {
+    fields: (t) => ({
+      schemas: t.expose("schemas", {
+        type: [SchemaObject],
+      }),
     }),
-  }),
-});
+  });
 
 builder.queryField("listSchemas", (t) =>
   t.field({

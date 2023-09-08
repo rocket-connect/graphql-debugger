@@ -1,6 +1,7 @@
+import type { Span as PrismaSpan } from "@graphql-debugger/data-access";
+import { ObjectRef } from "@pothos/core";
 import { TimeStamp, UnixNanoTimeStamp } from "@graphql-debugger/time";
 import { builder } from "../schema";
-import type { Span as PrismaSpan } from "@graphql-debugger/data-access";
 
 export type Span = {
   id: PrismaSpan["id"];
@@ -22,7 +23,7 @@ export type Span = {
   updatedAt: TimeStamp;
 };
 
-export const SpanObject = builder.objectType("Span", {
+export const SpanObject: ObjectRef<Span> = builder.objectType("Span", {
   fields: (t) => ({
     id: t.exposeID("id"),
     spanId: t.exposeString("spanId"),

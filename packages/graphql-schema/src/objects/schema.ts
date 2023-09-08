@@ -1,4 +1,5 @@
 import { prisma } from "@graphql-debugger/data-access";
+import { ObjectRef } from "@pothos/core";
 import { builder } from "../schema";
 import { Trace, TraceObject } from "./trace";
 
@@ -11,7 +12,7 @@ export type Schema = {
   createdAt: Date;
 };
 
-export const SchemaObject = builder.objectType("Schema", {
+export const SchemaObject: ObjectRef<Schema> = builder.objectType("Schema", {
   fields: (t) => ({
     id: t.exposeID("id"),
     hash: t.exposeString("hash"),

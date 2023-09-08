@@ -1,6 +1,7 @@
+import { ObjectRef } from "@pothos/core";
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
-import { prisma, Span as PrismaSpan } from "@graphql-debugger/data-access";
 import { builder } from "../schema";
+import { prisma, Span as PrismaSpan } from "@graphql-debugger/data-access";
 
 export type AggregateSpansWhere = {
   schemaId: string;
@@ -26,9 +27,8 @@ export const AggregateSpansWhere = builder.inputType("AggregateSpansWhere", {
   }),
 });
 
-export const AggregateSpansResponse = builder.objectType(
-  "AggregateSpansResponse",
-  {
+export const AggregateSpansResponse: ObjectRef<AggregateSpansResponse> =
+  builder.objectType("AggregateSpansResponse", {
     fields: (t) => ({
       resolveCount: t.field({
         type: "Int",
@@ -74,8 +74,7 @@ export const AggregateSpansResponse = builder.objectType(
         },
       }),
     }),
-  },
-);
+  });
 
 builder.queryField("aggregateSpans", (t) =>
   t.field({
