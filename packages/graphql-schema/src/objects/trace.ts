@@ -1,3 +1,4 @@
+import { ObjectRef } from "@pothos/core";
 import { builder } from "../schema";
 import { Span, SpanObject } from "./span";
 
@@ -10,7 +11,7 @@ export type Trace = {
   firstSpanErrorStack?: string;
 };
 
-export const TraceObject = builder.objectType("Trace", {
+export const TraceObject: ObjectRef<Trace> = builder.objectType("Trace", {
   fields: (t) => ({
     id: t.exposeString("id"),
     traceId: t.exposeString("traceId"),
