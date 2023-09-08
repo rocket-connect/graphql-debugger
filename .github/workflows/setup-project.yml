@@ -12,7 +12,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
         with:
           version: ${{ env.PNPM_VERSION }}

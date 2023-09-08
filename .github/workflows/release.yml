@@ -9,6 +9,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: ./.github/workflows/setup-project.yml
       - run: cd ./packages/graphql-debugger && chmod +x ./build/index.js
       - run: START_PATH="." node ./packages/utils/build/bump-versions.js
