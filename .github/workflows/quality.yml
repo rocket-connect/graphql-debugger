@@ -1,0 +1,25 @@
+name: Quality
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/workflows/setup-project.yml
+      - name: Install puppeteer
+        run: npm i -g puppeteer@21.1.1
+      - name: Run tests
+        run: pnpm test
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/workflows/setup-project.yml
+      - name: Lint source
+        run: pnpm lint

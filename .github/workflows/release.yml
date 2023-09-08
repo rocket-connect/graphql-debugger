@@ -9,17 +9,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8.0.0
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
-      - run: npm i -g turbo@1.10.7
-      - run: pnpm install
-      - run: pnpm build
+      - uses: ./.github/workflows/setup-project.yml
       - run: cd ./packages/graphql-debugger && chmod +x ./build/index.js
       - run: START_PATH="." node ./packages/utils/build/bump-versions.js
         env:
