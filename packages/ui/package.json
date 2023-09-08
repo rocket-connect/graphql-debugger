@@ -27,10 +27,9 @@
     "react-router-dom": "6.7.0"
   },
   "devDependencies": {
-    "@tsconfig/create-react-app": "1.0.2",
-    "@types/react": "17.0.39",
-    "@types/react-dom": "17.0.11",
-    "@types/webpack": "5.28.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/webpack": "^5.28.0",
     "autoprefixer": "10.4.2",
     "clean-webpack-plugin": "4.0.0",
     "compression-webpack-plugin": "9.2.0",
