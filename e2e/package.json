@@ -23,7 +23,6 @@
     "@graphql-debugger/trace-schema": "workspace:^",
     "@graphql-debugger/data-access": "workspace:^",
     "puppeteer": "21.1.1",
-    "@types/puppeteer": "7.0.4",
     "@graphql-tools/schema": "10.0.0",
     "@graphql-tools/utils": "10.0.6"
   }
