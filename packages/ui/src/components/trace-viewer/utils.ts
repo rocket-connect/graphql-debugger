@@ -4,8 +4,6 @@ export type RenderTree = Omit<Span, "__typename"> & {
   children: RenderTree[];
 };
 
-export const ms = BigInt(1000000);
-
 export const createTreeData = (spanArray: Span[]): RenderTree[] => {
   const treeData: RenderTree[] = [];
   const lookup: { [key: string]: RenderTree } = {};

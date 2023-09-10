@@ -1,4 +1,5 @@
-import { RenderTree, ms } from "./utils";
+import { UnixNanoTimeStamp } from "@graphql-debugger/time";
+import { RenderTree } from "./utils";
 
 export function Span({
   data,
@@ -6,19 +7,21 @@ export function Span({
   maxTimestamp,
 }: {
   data: RenderTree;
-  minTimestamp: number;
-  maxTimestamp: number;
+  minTimestamp: UnixNanoTimeStamp;
+  maxTimestamp: UnixNanoTimeStamp;
 }) {
-  const calculatedWidth =
-    (Number(BigInt(data.durationNano) / ms) / (maxTimestamp - minTimestamp)) *
-    100;
-  const width = calculatedWidth < 5 ? "5%" : `${calculatedWidth}%`;
+  const durationNano = UnixNanoTimeStamp.fromString(data.durationNano);
+  const startTimeUnixNano = UnixNanoTimeStamp.fromString(
+    data.startTimeUnixNano,
+  );
 
-  const calculatedOffset =
-    ((Number(BigInt(data.startTimeUnixNano) / ms) - minTimestamp) /
-      (maxTimestamp - minTimestamp)) *
-    100;
-  const offset = calculatedOffset < 0 ? "0%" : `${calculatedOffset}%`;
+  const { width, offset } = durationNano.calculateWidthAndOffset(
+    startTimeUnixNano,
+    minTimestamp,
+    maxTimestamp,
+  );
+
+  const { value, unit } = durationNano.toSIUnits();
 
   let spanClasses = "absolute h-2";
   if (data.errorMessage) {
@@ -40,10 +43,7 @@ export function Span({
         >
           {data.name}{" "}
           <span className="font-light">
-            {Number(BigInt(data?.durationNano || 0) / BigInt(1000000)).toFixed(
-              2,
-            )}{" "}
-            ms
+            {Number(value).toFixed(2)} {unit}
           </span>
         </p>
         <div className={`absolute h-2 bg-graphiql-border w-full`}></div>
