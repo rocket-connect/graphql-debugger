@@ -1,0 +1,32 @@
+name: Setup Project
+
+inputs:
+  pnpm-version:
+    required: false
+    default: 8.0.0
+  node-version:
+    required: false
+    default: 18
+  turbo-version:
+    required: false
+    default: 1.10.7
+
+runs:
+  using: composite
+  steps:
+    - uses: pnpm/action-setup@v2
+      with:
+        version: ${{ inputs.pnpm-version }}
+    - uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: "pnpm"
+    - name: Install Turbo
+      run: npm i -g turbo@${{ inputs.turbo-version }}
+      shell: bash
+    - name: Install dependencies
+      run: pnpm install
+      shell: bash
+    - name: Build project
+      run: pnpm build
+      shell: bash
