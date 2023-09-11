@@ -28,11 +28,15 @@ export class Queue<Data> {
     debug(`Queue Starting`);
 
     await this.queue.length();
+
+    debug(`Queue Started`);
   }
 
   public async add(data: Data) {
     debug(`Queue Adding`);
 
     await this.queue.push(data);
+
+    debug(`Queue Added`);
   }
 }

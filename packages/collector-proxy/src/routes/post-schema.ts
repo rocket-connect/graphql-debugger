@@ -2,20 +2,18 @@ import { Request, Response } from "express";
 import { debug } from "../debug";
 import { validateRequest } from "../validate-request";
 import { PostSchema, PostSchemaSchema } from "../schemas/post-schema";
-import { prisma } from "@graphql-debugger/data-access";
-import { graphql, hashSchema } from "@graphql-debugger/utils";
 import { makeExecutableSchema } from "@graphql-tools/schema";
+import { postSchemaQueue } from "..";
 
 async function postSchemaHandler(req: Request, res: Response) {
-  debug("POST /v1/traces");
+  debug("POST /v1/schema");
 
   try {
     const body = req.body as PostSchema["body"];
     const schema = body.schema;
 
-    let executableSchema: graphql.GraphQLSchema;
     try {
-      executableSchema = makeExecutableSchema({
+      makeExecutableSchema({
         typeDefs: schema,
         noLocation: true,
       });
@@ -28,24 +26,7 @@ async function postSchemaHandler(req: Request, res: Response) {
         .end();
     }
 
-    const hash = hashSchema(executableSchema);
-
-    const foundSchema = await prisma.schema.findFirst({
-      where: {
-        hash,
-      },
-    });
-
-    if (foundSchema) {
-      return res.status(200).json({}).end();
-    }
-
-    await prisma.schema.create({
-      data: {
-        hash,
-        typeDefs: graphql.print(graphql.parse(schema)),
-      },
-    });
+    await postSchemaQueue.add(body);
 
     return res.status(200).json({}).end();
   } catch (error) {

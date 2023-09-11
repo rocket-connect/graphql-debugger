@@ -1,12 +1,11 @@
 import supertest from "supertest";
-import { collector, postTracesQueue } from "../src/index";
+import { collector, postSchemaQueue, postTracesQueue } from "../src/index";
 
 export function request() {
-  postTracesQueue
-    .start()
+  Promise.all([postTracesQueue.start(), postSchemaQueue.start()])
     .then(() => {})
     .catch((e) => {
-      console.log("Failed to start postTracesQueue");
+      console.log("Failed to start queues");
       console.log(e);
     });
 
