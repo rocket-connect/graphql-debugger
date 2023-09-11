@@ -1,6 +1,6 @@
 {
   "name": "@graphql-otel/monorepo",
-  "version": "0.0.0-alpha.46",
+  "version": "0.0.0-alpha.47",
   "private": true,
   "scripts": {
     "dev": "DEBUG=\"@graphql-debugger:*\" TRACE_SCHEMA=\"true\" turbo dev --filter \"graphql-debugger\"",
