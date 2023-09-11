@@ -1,5 +1,6 @@
 import { prisma } from "@graphql-debugger/data-access";
 import { builder } from "../schema";
+import { ObjectRef } from "@pothos/core";
 
 export type DeleteTracesWhere = {
   schemaId: string;
@@ -21,11 +22,12 @@ export const DeleteTracesWhere = builder.inputType("DeleteTracesWhere", {
   }),
 });
 
-export const DeleteTracesResponse = builder.objectType("DeleteTracesResponse", {
-  fields: (t) => ({
-    success: t.exposeBoolean("success"),
-  }),
-});
+export const DeleteTracesResponse: ObjectRef<DeleteTracesResponse> =
+  builder.objectType("DeleteTracesResponse", {
+    fields: (t) => ({
+      success: t.exposeBoolean("success"),
+    }),
+  });
 
 builder.mutationField("deleteTraces", (t) =>
   t.field({

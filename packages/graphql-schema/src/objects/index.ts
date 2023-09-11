@@ -11,10 +11,7 @@ import {
   ListSchemasResponse,
   ListSchemasWhere,
 } from "../queries";
-import {
-  DeleteTracesResponse,
-  DeleteTracesWhere,
-} from "../mutations/delete-traces";
+import type { DeleteTracesResponse, DeleteTracesWhere } from "../mutations";
 
 export interface Objects {
   Trace: Trace;

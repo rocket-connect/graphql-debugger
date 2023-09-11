@@ -1,6 +1,7 @@
-import { prisma } from "@graphql-debugger/data-access";
+import { ObjectRef } from "@pothos/core";
 import { Trace, TraceObject } from "../objects/trace";
 import { builder } from "../schema";
+import { prisma } from "@graphql-debugger/data-access";
 
 export type ListTraceGroupsResponse = {
   traces: Trace[];
@@ -26,16 +27,14 @@ export const ListTraceGroupsWhere = builder.inputType("ListTraceGroupsWhere", {
   }),
 });
 
-export const ListTraceGroupsResponse = builder.objectType(
-  "ListTraceGroupsResponse",
-  {
+export const ListTraceGroupsResponse: ObjectRef<ListTraceGroupsResponse> =
+  builder.objectType("ListTraceGroupsResponse", {
     fields: (t) => ({
       traces: t.expose("traces", {
         type: [TraceObject],
       }),
     }),
-  },
-);
+  });
 
 builder.queryField("listTraceGroups", (t) =>
   t.field({
