@@ -25,7 +25,7 @@
     "@opentelemetry/exporter-trace-otlp-http": "0.41.2",
     "@opentelemetry/instrumentation": "0.41.2",
     "@opentelemetry/resources": "1.15.2",
-    "@opentelemetry/sdk-trace-base": "1.15.2",
+    "@opentelemetry/sdk-trace-base": "1.16.0",
     "@opentelemetry/semantic-conventions": "1.15.2",
     "graphql-otel": "0.1.11",
     "node-fetch": "2"
