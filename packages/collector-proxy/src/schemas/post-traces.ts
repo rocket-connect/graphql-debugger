@@ -106,6 +106,8 @@ export const ExportTraceServiceResponseSchema = z.object({
   partialSuccess: ExportTracePartialSuccessSchema.optional(),
 });
 
-export const schema = z.object({
+export const PostTracesSchema = z.object({
   body: ExportTraceServiceRequestSchema.required(),
 });
+
+export type PostTraces = z.infer<typeof PostTracesSchema>;

@@ -1,17 +1,11 @@
+import { PostTraces } from "../schemas/post-traces";
 import { prisma } from "@graphql-debugger/data-access";
 import { graphql } from "@graphql-debugger/utils";
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import { AttributeName } from "@graphql-debugger/trace-schema";
-import fastq from "fastq";
-import { schema } from "./schema";
-import { z } from "zod";
 import { debug } from "../debug";
 
-export type Data = z.infer<typeof schema>["body"];
-
-export const queue = fastq.promise<Data>(worker, 1);
-
-async function worker(data: Data) {
+export async function postTracesWorker(data: PostTraces["body"]) {
   debug("Worker started");
 
   try {
@@ -222,5 +216,3 @@ async function worker(data: Data) {
     debug("Worker finished");
   }
 }
-
-export default queue;
