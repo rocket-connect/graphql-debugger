@@ -31,7 +31,7 @@
     "node-fetch": "2"
   },
   "devDependencies": {
-    "@opentelemetry/otlp-exporter-base": "0.41.2",
+    "@opentelemetry/otlp-exporter-base": "0.42.0",
     "@types/node-fetch": "2.6.4"
   }
 }
