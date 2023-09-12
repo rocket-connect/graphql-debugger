@@ -150,6 +150,9 @@ importers:
       '@graphql-debugger/data-access':
         specifier: workspace:^
         version: link:../data-access
+      '@graphql-debugger/queue':
+        specifier: workspace:^
+        version: link:../queue
       '@graphql-debugger/time':
         specifier: workspace:^
         version: link:../time
@@ -165,9 +168,6 @@ importers:
       express:
         specifier: 4.18.2
         version: 4.18.2
-      fastq:
-        specifier: 1.15.0
-        version: 1.15.0
       zod:
         specifier: 3.22.2
         version: 3.22.2
@@ -236,6 +236,15 @@ importers:
       '@opentelemetry/otlp-transformer':
         specifier: 0.41.2
         version: 0.41.2(@opentelemetry/api@1.4.1)
+
+  packages/queue:
+    dependencies:
+      '@graphql-debugger/utils':
+        specifier: workspace:^
+        version: link:../utils
+      fastq:
+        specifier: 1.15.0
+        version: 1.15.0
 
   packages/time:
     dependencies:

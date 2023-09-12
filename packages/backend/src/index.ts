@@ -1,8 +1,10 @@
 import { prisma } from "@graphql-debugger/data-access";
-import { queue } from "@graphql-debugger/collector-proxy";
+import {
+  postSchemaQueue,
+  postTracesQueue,
+} from "@graphql-debugger/collector-proxy";
 import { debug } from "./debug";
 import * as app from "./app";
-
 import http from "http";
 
 export async function start({
@@ -17,7 +19,8 @@ export async function start({
 
     await prisma.$connect();
 
-    await queue.length();
+    await postSchemaQueue.start();
+    await postTracesQueue.start();
 
     const { backend, collector } = await app.start({
       backendPort,

@@ -1,0 +1,38 @@
+import { Request, Response, NextFunction } from "express";
+import { AnyZodObject } from "zod";
+import { debug } from "./debug";
+
+export function validateRequest(schema: AnyZodObject) {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    debug(`Request ${req.method} ${req.url}`);
+
+    try {
+      for (const key in req.body) {
+        if (["body", "headers"].includes(key)) {
+          try {
+            JSON.parse(req.body[key] || "{}");
+          } catch (error) {
+            return res
+              .status(400)
+              .send(`body.${key} is not a valid JSON string`)
+              .end();
+          }
+        }
+      }
+
+      await schema.parseAsync({
+        body: req.body,
+        query: req.query,
+        params: req.params,
+      });
+
+      return next();
+    } catch (error) {
+      const e = error as Error;
+
+      return res.status(400).json({
+        message: e.message,
+      });
+    }
+  };
+}

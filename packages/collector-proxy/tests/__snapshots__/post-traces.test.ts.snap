@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`POST /v1/traces should throw span validation error when not sent correctly 1`] = `
+"[
+  {
+    "code": "invalid_type",
+    "expected": "string",
+    "received": "undefined",
+    "path": [
+      "body",
+      "resourceSpans",
+      0,
+      "scopeSpans",
+      0,
+      "spans",
+      0,
+      "traceId"
+    ],
+    "message": "Required"
+  },
+  {
+    "code": "invalid_type",
+    "expected": "string",
+    "received": "undefined",
+    "path": [
+      "body",
+      "resourceSpans",
+      0,
+      "scopeSpans",
+      0,
+      "spans",
+      0,
+      "name"
+    ],
+    "message": "Required"
+  },
+  {
+    "code": "invalid_type",
+    "expected": "number",
+    "received": "undefined",
+    "path": [
+      "body",
+      "resourceSpans",
+      0,
+      "scopeSpans",
+      0,
+      "spans",
+      0,
+      "kind"
+    ],
+    "message": "Required"
+  },
+  {
+    "code": "invalid_type",
+    "expected": "number",
+    "received": "undefined",
+    "path": [
+      "body",
+      "resourceSpans",
+      0,
+      "scopeSpans",
+      0,
+      "spans",
+      0,
+      "startTimeUnixNano"
+    ],
+    "message": "Required"
+  },
+  {
+    "code": "invalid_type",
+    "expected": "number",
+    "received": "undefined",
+    "path": [
+      "body",
+      "resourceSpans",
+      0,
+      "scopeSpans",
+      0,
+      "spans",
+      0,
+      "endTimeUnixNano"
+    ],
+    "message": "Required"
+  },
+  {
+    "code": "invalid_type",
+    "expected": "array",
+    "received": "undefined",
+    "path": [
+      "body",
+      "resourceSpans",
+      0,
+      "scopeSpans",
+      0,
+      "spans",
+      0,
+      "attributes"
+    ],
+    "message": "Required"
+  },
+  {
+    "code": "invalid_type",
+    "expected": "object",
+    "received": "undefined",
+    "path": [
+      "body",
+      "resourceSpans",
+      0,
+      "scopeSpans",
+      0,
+      "spans",
+      0,
+      "status"
+    ],
+    "message": "Required"
+  }
+]"
+`;
+
+exports[`POST /v1/traces should throw when no body is sent 1`] = `
+"[
+  {
+    "code": "invalid_type",
+    "expected": "array",
+    "received": "undefined",
+    "path": [
+      "body",
+      "resourceSpans"
+    ],
+    "message": "Required"
+  }
+]"
+`;
