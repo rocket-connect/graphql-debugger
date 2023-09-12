@@ -123,7 +123,7 @@ export function Schema() {
                     </p>
                   </div>
                   <p className="py-1 text-xs text-graphiql-dark italic">
-                    {startTimeUnixNano.toTimeStamp().moment.fromNow()}
+                    {startTimeUnixNano.formatUnixNanoTimestamp()}
                   </p>
                 </div>
               )}

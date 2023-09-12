@@ -112,7 +112,7 @@ export function SchemaTraces({ schemaId }: { schemaId: string }) {
                   {durationUnixNano.toMS().toFixed(2)} ms
                 </td>
                 <td className="px-6 py-4">
-                  {startTimeUnixNano.toTimeStamp().moment.fromNow()}
+                  {startTimeUnixNano.formatUnixNanoTimestamp()}
                 </td>
               </tr>
             );
