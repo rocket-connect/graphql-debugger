@@ -1,7 +1,8 @@
 import { ObjectRef } from "@pothos/core";
-import { SchemaObject, Schema } from "../objects/schema";
+import { SchemaObject } from "../objects/schema";
 import { builder } from "../schema";
 import { prisma } from "@graphql-debugger/data-access";
+import { Schema } from "@graphql-debugger/types";
 
 export type ListSchemasWhere = {
   id?: string;
@@ -54,7 +55,7 @@ builder.queryField("listSchemas", (t) =>
           hash: schema.hash,
           typeDefs: schema.typeDefs,
           traceGroups: [],
-          createdAt: schema.createdAt,
+          createdAt: schema.createdAt.toISOString(),
         })),
       };
     },

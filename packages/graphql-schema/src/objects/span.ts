@@ -10,41 +10,16 @@ export const SpanObject: ObjectRef<Span> = builder.objectType("Span", {
     traceId: t.exposeString("traceId"),
     name: t.exposeString("name"),
     kind: t.exposeString("kind"),
-    durationNano: t.field({
-      type: "String",
-      resolve: (root) => {
-        return root.durationNano.toString();
-      },
-    }),
-    startTimeUnixNano: t.field({
-      type: "String",
-      resolve: (root) => {
-        return root.startTimeUnixNano.toString();
-      },
-    }),
-    endTimeUnixNano: t.field({
-      type: "String",
-      resolve: (root) => {
-        return root.endTimeUnixNano.toString();
-      },
-    }),
+    durationNano: t.exposeString("durationNano"),
+    startTimeUnixNano: t.exposeString("startTimeUnixNano"),
+    endTimeUnixNano: t.exposeString("endTimeUnixNano"),
     graphqlDocument: t.exposeString("graphqlDocument", { nullable: true }),
     graphqlVariables: t.exposeString("graphqlVariables", { nullable: true }),
     graphqlResult: t.exposeString("graphqlResult", { nullable: true }),
     graphqlContext: t.exposeString("graphqlContext", { nullable: true }),
     errorMessage: t.exposeString("errorMessage", { nullable: true }),
     errorStack: t.exposeString("errorStack", { nullable: true }),
-    createdAt: t.field({
-      type: "String",
-      resolve: (root) => {
-        return root.createdAt.toString();
-      },
-    }),
-    updatedAt: t.field({
-      type: "String",
-      resolve: (root) => {
-        return root.updatedAt.toString();
-      },
-    }),
+    createdAt: t.exposeString("createdAt"),
+    updatedAt: t.exposeString("updatedAt"),
   }),
 });

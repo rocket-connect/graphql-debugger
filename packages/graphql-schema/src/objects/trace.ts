@@ -1,17 +1,8 @@
 import { ObjectRef } from "@pothos/core";
 import { builder } from "../schema";
 import { SpanObject } from "./span";
-import { Span } from "@graphql-debugger/types";
+import { Span, Trace } from "@graphql-debugger/types";
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
-
-export type Trace = {
-  id: string;
-  traceId: string;
-  spans: Span[];
-  rootSpan?: Span;
-  firstSpanErrorMessage?: string;
-  firstSpanErrorStack?: string;
-};
 
 export const TraceObject: ObjectRef<Trace> = builder.objectType("Trace", {
   fields: (t) => ({
