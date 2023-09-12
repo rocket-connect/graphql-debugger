@@ -211,7 +211,7 @@ describe("UnixNanoTimeStamp", () => {
 
       const formattedTimestamp = unixNanoTimeStamp.formatUnixNanoTimestamp();
 
-      const expectedFormat = "Sep 8, 2023 at 11:51:39 PM";
+      const expectedFormat = "Sep 8, 2023 at 10:51:39 PM UTC";
 
       expect(formattedTimestamp).toContain(expectedFormat);
     });

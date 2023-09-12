@@ -112,6 +112,7 @@ export class UnixNanoTimeStamp {
       year: "numeric",
       month: "short",
       day: "numeric",
+      timeZone: "UTC",
     });
 
     const formattedTime = date.toLocaleTimeString("en-US", {
@@ -119,6 +120,7 @@ export class UnixNanoTimeStamp {
       minute: "2-digit",
       second: "2-digit",
       timeZoneName: "short",
+      timeZone: "UTC",
     });
 
     return `${formattedDate} at ${formattedTime}`;
