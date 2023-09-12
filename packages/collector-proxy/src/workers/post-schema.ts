@@ -2,7 +2,7 @@ import { prisma } from "@graphql-debugger/data-access";
 import { graphql, hashSchema } from "@graphql-debugger/utils";
 import { debug } from "../debug";
 import { makeExecutableSchema } from "@graphql-tools/schema";
-import { PostSchema } from "../schemas/post-schema";
+import { PostSchema } from "@graphql-debugger/schemas";
 
 export async function postSchemaWorker(data: PostSchema["body"]) {
   debug("Worker started");

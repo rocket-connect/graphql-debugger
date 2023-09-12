@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { debug } from "../debug";
 import { validateRequest } from "../validate-request";
-import { PostSchema, PostSchemaSchema } from "../schemas/post-schema";
+import { PostSchema, PostSchemaSchema } from "@graphql-debugger/schemas";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { postSchemaQueue } from "..";
 

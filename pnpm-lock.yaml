@@ -153,6 +153,9 @@ importers:
       '@graphql-debugger/queue':
         specifier: workspace:^
         version: link:../queue
+      '@graphql-debugger/schemas':
+        specifier: workspace:^
+        version: link:../schemas
       '@graphql-debugger/time':
         specifier: workspace:^
         version: link:../time
@@ -245,6 +248,12 @@ importers:
       fastq:
         specifier: 1.15.0
         version: 1.15.0
+
+  packages/schemas:
+    dependencies:
+      zod:
+        specifier: 3.22.2
+        version: 3.22.2
 
   packages/time:
     dependencies:
