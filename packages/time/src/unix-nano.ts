@@ -99,9 +99,29 @@ export class UnixNanoTimeStamp {
   }
 
   public toTimeStamp(): TimeStamp {
-    const date = new Date(Number(this.input) / Number(ms));
+    const date = new Date(Number(this.input));
 
     return new TimeStamp(date);
+  }
+
+  public formatUnixNanoTimestamp() {
+    const milliseconds = Number(this.getBigInt()) / 1e6;
+    const date = new Date(milliseconds);
+
+    const formattedDate = date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+
+    const formattedTime = date.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      timeZoneName: "short",
+    });
+
+    return `${formattedDate} at ${formattedTime}`;
   }
 
   public static duration(

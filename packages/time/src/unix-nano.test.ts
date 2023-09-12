@@ -202,4 +202,18 @@ describe("UnixNanoTimeStamp", () => {
       expect(ts.multiply(BigInt(2)).getBigInt()).toBe(BigInt(200));
     });
   });
+
+  describe("formatUnixNanoTimestamp", () => {
+    it("should format the UnixNanoTimeStamp as expected", () => {
+      const unixNanoTimeStamp = UnixNanoTimeStamp.fromString(
+        "1694213499416000000",
+      );
+
+      const formattedTimestamp = unixNanoTimeStamp.formatUnixNanoTimestamp();
+
+      const expectedFormat = "Sep 8, 2023 at 11:51:39 PM";
+
+      expect(formattedTimestamp).toContain(expectedFormat);
+    });
+  });
 });

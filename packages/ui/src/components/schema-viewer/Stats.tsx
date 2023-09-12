@@ -36,7 +36,7 @@ export function Stats({
           <li>
             Last Resolved:{" "}
             <span className="font-bold">
-              {lastResolveUnixNano.toTimeStamp().moment.fromNow()}
+              {lastResolveUnixNano.formatUnixNanoTimestamp()}
             </span>
           </li>
         ) : (
