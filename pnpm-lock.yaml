@@ -326,8 +326,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.7
       '@types/webpack':
-        specifier: ^5.28.0
-        version: 5.28.0(webpack-cli@5.1.4)
+        specifier: ^5.28.2
+        version: 5.28.2(webpack-cli@5.1.4)
       autoprefixer:
         specifier: 10.4.15
         version: 10.4.15(postcss@8.4.29)
@@ -3798,8 +3798,8 @@ packages:
       '@types/superagent': 4.1.18
     dev: true
 
-  /@types/webpack@5.28.0(webpack-cli@5.1.4):
-    resolution: {integrity: sha512-8cP0CzcxUiFuA9xGJkfeVpqmWTk9nx6CWwamRGCj95ph1SmlRRk9KlCZ6avhCbZd4L68LvYT6l1kpdEnQXrF8w==}
+  /@types/webpack@5.28.2(webpack-cli@5.1.4):
+    resolution: {integrity: sha512-7tcxyrIOd7WGimZIcWU6pDsNh2edGGnwYExOvd3l/nMvuxqwVPrFXnnTbYCnplqV9BJoU7Mo2mfFtiH8CNFvYw==}
     dependencies:
       '@types/node': 18.17.14
       tapable: 2.2.1
