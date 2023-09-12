@@ -1,5 +1,17 @@
 import { TimeStamp } from "./timestamp";
 
+/** BigInt representation of a second */
+const s = BigInt(1_000_000_000);
+/** BigInt representation of a millisecond */
+const ms = BigInt(1_000_000);
+/** BigInt representation of a microsecond */
+const us = BigInt(1_000);
+
+/** Helper constant for calculating percentages without losing resolution */
+const percentageMultiplyer = BigInt(100);
+/** Helper constant representing the number 1 */
+const bigintOne = BigInt(1);
+
 export class UnixNanoTimeStamp {
   private input: number | bigint;
 
@@ -24,39 +36,94 @@ export class UnixNanoTimeStamp {
   }
 
   public toMS(): number {
-    const ms = Number(BigInt(this.getBigInt()) / BigInt(1000000));
+    const _ms = Number(this.getBigInt() / ms);
 
-    return ms;
+    return _ms;
+  }
+
+  public toSIUnits(): {
+    value: number;
+    unit: "s" | "ms" | "μs" | "ns";
+  } {
+    const bigintInput = this.getBigInt();
+
+    if (bigintInput >= s) {
+      return {
+        value: Number(this.multiply(s).divide(s).getBigInt()) / Number(s),
+        unit: "s",
+      };
+    } else if (bigintInput >= ms) {
+      return {
+        value: Number(this.multiply(ms).divide(ms).getBigInt()) / Number(ms),
+        unit: "ms",
+      };
+    } else if (bigintInput >= us) {
+      return {
+        value: Number(this.multiply(us).divide(us).getBigInt()) / Number(us),
+        unit: "μs",
+      };
+    } else {
+      return {
+        value: Number(bigintInput),
+        unit: "ns",
+      };
+    }
   }
 
   public calculateWidthAndOffset(
+    startTimestamp: UnixNanoTimeStamp,
     minTimestamp: UnixNanoTimeStamp,
     maxTimestamp: UnixNanoTimeStamp,
   ): {
     width: string;
     offset: string;
   } {
-    const diffMs = Number(
-      maxTimestamp.subtract(minTimestamp).divide(BigInt(1000000)),
-    );
+    const timespan = UnixNanoTimeStamp.duration(
+      minTimestamp,
+      maxTimestamp,
+    ).getBigInt();
 
-    const startTimeMs = Number(
-      this.subtract(minTimestamp).divide(BigInt(1000000)),
-    );
-
-    const calculatedWidth = (startTimeMs / diffMs) * 100;
+    const calculatedWidth = this.multiply(percentageMultiplyer)
+      .divide(timespan)
+      .getBigInt();
     const width = calculatedWidth < 5 ? "5%" : `${calculatedWidth}%`;
 
-    const calculatedOffset = (startTimeMs / diffMs) * 100;
+    const calculatedOffset = startTimestamp
+      .subtract(minTimestamp)
+      .multiply(percentageMultiplyer)
+      .divide(timespan)
+      .getBigInt();
     const offset = calculatedOffset < 0 ? "0%" : `${calculatedOffset}%`;
 
     return { width, offset };
   }
 
   public toTimeStamp(): TimeStamp {
-    const ms = this.toMS();
+    const date = new Date(Number(this.input));
 
-    return new TimeStamp(new Date(ms));
+    return new TimeStamp(date);
+  }
+
+  public formatUnixNanoTimestamp({ timeZone }: { timeZone?: "utc" } = {}) {
+    const milliseconds = Number(this.getBigInt()) / 1e6;
+    const date = new Date(milliseconds);
+
+    const formattedDate = date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      timeZone,
+    });
+
+    const formattedTime = date.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      timeZoneName: "short",
+      timeZone,
+    });
+
+    return `${formattedDate} at ${formattedTime}`;
   }
 
   public static duration(
@@ -70,33 +137,20 @@ export class UnixNanoTimeStamp {
 
   public static average(times: UnixNanoTimeStamp[]): UnixNanoTimeStamp {
     const sum = times.reduce((a, b) => a + b.getBigInt(), BigInt(0));
-    const lengthBigInt = BigInt(times.length);
-    const bigintOne = BigInt(1);
+    const length = BigInt(times.length);
+
     const average =
-      (sum > 0 ? sum : bigintOne) /
-      (lengthBigInt > 0 ? lengthBigInt : bigintOne);
+      (sum > 0 ? sum : bigintOne) / (length > 0 ? length : bigintOne);
 
     return new UnixNanoTimeStamp(average);
   }
 
   public static earliest(times: UnixNanoTimeStamp[]): UnixNanoTimeStamp {
-    let minTimestamp = times[0];
-    for (const timestamp of times) {
-      if (timestamp.getBigInt() < minTimestamp.getBigInt()) {
-        minTimestamp = timestamp;
-      }
-    }
-    return minTimestamp;
+    return times.reduce((min, c) => (c.input < min.input ? c : min));
   }
 
   public static latest(times: UnixNanoTimeStamp[]): UnixNanoTimeStamp {
-    let maxTimestamp = times[0];
-    for (const timestamp of times) {
-      if (timestamp.getBigInt() > maxTimestamp.getBigInt()) {
-        maxTimestamp = timestamp;
-      }
-    }
-    return maxTimestamp;
+    return times.reduce((max, c) => (c.input > max.input ? c : max));
   }
 
   public subtract(another: UnixNanoTimeStamp | bigint): UnixNanoTimeStamp {
@@ -108,6 +162,11 @@ export class UnixNanoTimeStamp {
 
   public divide(divisor: bigint): UnixNanoTimeStamp {
     const result = this.getBigInt() / divisor;
+    return new UnixNanoTimeStamp(result);
+  }
+
+  public multiply(multiplier: bigint): UnixNanoTimeStamp {
+    const result = this.getBigInt() * multiplier;
     return new UnixNanoTimeStamp(result);
   }
 }
