@@ -1,8 +1,8 @@
-# @graphql-debugger/schema
+# @graphql-debugger/schemas
 
 - [graphql-debugger.com](http://www.graphql-debugger.com)
 
-[![npm version](https://badge.fury.io/js/@graphql-debugger%2Fschema.svg)](https://badge.fury.io/js/@graphql-debugger%2Fschema) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![npm version](https://badge.fury.io/js/@graphql-debugger%2Fschemas.svg)](https://badge.fury.io/js/@graphql-debugger%2Fschemas) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## About
 
