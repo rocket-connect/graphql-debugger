@@ -78,7 +78,6 @@ export class UnixNanoTimeStamp {
     width: string;
     offset: string;
   } {
-
     const timespan = UnixNanoTimeStamp.duration(
       minTimestamp,
       maxTimestamp,
@@ -100,7 +99,9 @@ export class UnixNanoTimeStamp {
   }
 
   public toTimeStamp(): TimeStamp {
-    return new TimeStamp(new Date(Number(this.input)));
+    const date = new Date(Number(this.input) / Number(ms));
+
+    return new TimeStamp(date);
   }
 
   public static duration(
