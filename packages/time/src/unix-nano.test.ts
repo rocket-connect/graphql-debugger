@@ -209,7 +209,9 @@ describe("UnixNanoTimeStamp", () => {
         "1694213499416000000",
       );
 
-      const formattedTimestamp = unixNanoTimeStamp.formatUnixNanoTimestamp();
+      const formattedTimestamp = unixNanoTimeStamp.formatUnixNanoTimestamp({
+        timeZone: "utc",
+      });
 
       const expectedFormat = "Sep 8, 2023 at 10:51:39 PM UTC";
 
