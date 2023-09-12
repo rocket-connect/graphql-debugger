@@ -64,7 +64,6 @@ const StatusSchema = z.object({
 });
 
 const OTELSpan = z.object({
-  id: z.string(),
   traceId: z.string(),
   spanId: z.string(),
   traceState: z.string().nullable().optional(),
