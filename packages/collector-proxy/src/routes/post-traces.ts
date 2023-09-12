@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { debug } from "../debug";
 import { validateRequest } from "../validate-request";
-import { PostTraces, PostTracesSchema } from "@graphql-debugger/schemas";
+import { PostTracesSchema } from "@graphql-debugger/schemas";
+import type { PostTraces } from "@graphql-debugger/types";
 import { postTracesQueue } from "..";
 
 async function postTracesHandler(req: Request, res: Response) {

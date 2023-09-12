@@ -26,6 +26,7 @@
     "graphql-yoga": "4.0.4"
   },
   "devDependencies": {
+    "@graphql-debugger/types": "workspace:^",
     "@graphql-codegen/cli": "5.0.0",
     "@graphql-codegen/client-preset": "4.1.0",
     "@graphql-codegen/typescript": "4.0.1",

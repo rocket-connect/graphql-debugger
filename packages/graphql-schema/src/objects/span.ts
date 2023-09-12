@@ -1,31 +1,10 @@
-import type { Span as PrismaSpan } from "@graphql-debugger/data-access";
 import { ObjectRef } from "@pothos/core";
-import { TimeStamp, UnixNanoTimeStamp } from "@graphql-debugger/time";
 import { builder } from "../schema";
-
-export type Span = {
-  id: PrismaSpan["id"];
-  spanId: PrismaSpan["spanId"];
-  parentSpanId: PrismaSpan["parentSpanId"];
-  traceId: PrismaSpan["traceId"];
-  name: PrismaSpan["name"];
-  kind: PrismaSpan["kind"];
-  durationNano: UnixNanoTimeStamp;
-  startTimeUnixNano: UnixNanoTimeStamp;
-  endTimeUnixNano: UnixNanoTimeStamp;
-  errorMessage?: PrismaSpan["errorMessage"];
-  errorStack?: PrismaSpan["errorStack"];
-  graphqlDocument?: PrismaSpan["graphqlDocument"];
-  graphqlVariables?: PrismaSpan["graphqlVariables"];
-  graphqlResult?: PrismaSpan["graphqlResult"];
-  graphqlContext?: PrismaSpan["graphqlContext"];
-  createdAt: TimeStamp;
-  updatedAt: TimeStamp;
-};
+import { Span } from "@graphql-debugger/types";
 
 export const SpanObject: ObjectRef<Span> = builder.objectType("Span", {
   fields: (t) => ({
-    id: t.exposeID("id"),
+    id: t.exposeString("id"),
     spanId: t.exposeString("spanId"),
     parentSpanId: t.exposeString("parentSpanId", { nullable: true }),
     traceId: t.exposeString("traceId"),

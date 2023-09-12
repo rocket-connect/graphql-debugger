@@ -1,6 +1,8 @@
 import { ObjectRef } from "@pothos/core";
 import { builder } from "../schema";
-import { Span, SpanObject } from "./span";
+import { SpanObject } from "./span";
+import { Span } from "@graphql-debugger/types";
+import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 
 export type Trace = {
   id: string;
@@ -54,19 +56,29 @@ export const TraceObject: ObjectRef<Trace> = builder.objectType("Trace", {
           );
 
           if (groupSpan) {
-            const spanStartTime = span.startTimeUnixNano;
-            const spanEndTime = span.endTimeUnixNano;
+            const spanStartTime = UnixNanoTimeStamp.fromString(
+              span.startTimeUnixNano,
+            );
+            const spanEndTime = UnixNanoTimeStamp.fromString(
+              span.endTimeUnixNano,
+            );
+
+            const groupSpanStartTime = UnixNanoTimeStamp.fromString(
+              groupSpan.startTimeUnixNano,
+            );
+            const groupSpanEndTime = UnixNanoTimeStamp.fromString(
+              groupSpan.endTimeUnixNano,
+            );
 
             groupSpan.startTimeUnixNano =
-              groupSpan.startTimeUnixNano.getBigInt() >
-              spanStartTime.getBigInt()
-                ? spanStartTime
-                : groupSpan.startTimeUnixNano;
+              groupSpanStartTime.getBigInt() > spanStartTime.getBigInt()
+                ? spanStartTime.toString()
+                : groupSpanStartTime.toString();
 
             groupSpan.endTimeUnixNano =
-              groupSpan.endTimeUnixNano.getBigInt() < spanEndTime.getBigInt()
-                ? spanEndTime
-                : groupSpan.endTimeUnixNano;
+              groupSpanEndTime.getBigInt() < spanEndTime.getBigInt()
+                ? spanEndTime.toString()
+                : groupSpanEndTime.toString();
 
             return list;
           } else {

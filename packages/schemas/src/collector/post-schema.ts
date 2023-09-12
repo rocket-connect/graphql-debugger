@@ -7,5 +7,3 @@ export const PostSchemaSchema = z.object({
     })
     .required(),
 });
-
-export type PostSchema = z.infer<typeof PostSchemaSchema>;
