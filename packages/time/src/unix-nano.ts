@@ -78,12 +78,6 @@ export class UnixNanoTimeStamp {
     width: string;
     offset: string;
   } {
-    console.log({
-      duration: this.getBigInt(),
-      startTimestamp,
-      minTimestamp,
-      maxTimestamp,
-    });
 
     const timespan = UnixNanoTimeStamp.duration(
       minTimestamp,
