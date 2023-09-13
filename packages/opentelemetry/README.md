@@ -6,7 +6,7 @@
 
 ## About
 
-This package exports all the relevant opentelemetry methods and types for GraphQL Debugger.
+This package exports opentelemetry methods and types for GraphQL Debugger.
 
 ## License
 
