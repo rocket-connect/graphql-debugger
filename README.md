@@ -14,7 +14,7 @@
 
 ## Watch the talk
 
-[![Watch the video](https://img.youtube.com/vi/EpC6xmw2a6Y/hqdefault.jpg)](https://youtu.be/EpC6xmw2a6Y)
+[![Watch the video](https://img.youtube.com/vi/EpC6xmw2a6Y/maxresdefault.jpg)](https://youtu.be/EpC6xmw2a6Y)
 
 ## About
 
