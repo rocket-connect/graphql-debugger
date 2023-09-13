@@ -28,7 +28,6 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-promise": "^6.1.0",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "graphql": "^16.0.0 || ^17.0.0",
     "jest": "29.6.4",
     "prettier": "^3",
     "supertest": "6.3.3",

@@ -1,31 +1,37 @@
-import { setupOtel } from "./setup-otel";
-import type { OTLPExporterNodeConfigBase } from "@opentelemetry/otlp-exporter-base";
-
-import { makeExecutableSchema } from "@graphql-tools/schema";
-import { getResolversFromSchema } from "@graphql-tools/utils";
-import { graphql } from "@graphql-debugger/utils";
-import { traceDirective } from "graphql-otel";
+import { setupOtel, SetupOtelInput } from "@graphql-debugger/opentelemetry";
+import { traceDirective } from "@graphql-debugger/trace-directive";
 import { debug } from "./debug";
 import { SchemaExporer } from "./schema-exporter";
+import {
+  visit,
+  parse,
+  printSchema,
+  GraphQLSchema,
+  FieldDefinitionNode,
+  Kind,
+  print,
+  getResolversFromSchema,
+  makeExecutableSchema,
+} from "@graphql-debugger/utils";
 
 export interface TraceSchemaInput {
-  schema: graphql.GraphQLSchema;
-  exporterConfig?: OTLPExporterNodeConfigBase;
+  schema: GraphQLSchema;
+  exporterConfig?: SetupOtelInput["exporterConfig"];
 }
 
 export function traceSchema({
   schema,
   exporterConfig,
-}: TraceSchemaInput): graphql.GraphQLSchema {
+}: TraceSchemaInput): GraphQLSchema {
   debug("Tracing schema");
 
   setupOtel({ exporterConfig });
 
   const directive = traceDirective();
 
-  const ast = graphql.visit(graphql.parse(graphql.printSchema(schema)), {
+  const ast = visit(parse(printSchema(schema)), {
     FieldDefinition: {
-      enter(node: graphql.FieldDefinitionNode) {
+      enter(node: FieldDefinitionNode) {
         const existingTraceDirective = node.directives?.find(
           (directive) => directive.name.value === "trace",
         );
@@ -37,9 +43,9 @@ export function traceSchema({
         const newDirectives = [
           ...(node.directives ?? []),
           {
-            kind: graphql.Kind.DIRECTIVE,
+            kind: Kind.DIRECTIVE,
             name: {
-              kind: graphql.Kind.NAME,
+              kind: Kind.NAME,
               value: "trace",
             },
           },
@@ -57,7 +63,7 @@ export function traceSchema({
 
   const tracedSchema = directive.transformer(
     makeExecutableSchema({
-      typeDefs: [graphql.print(ast), directive.typeDefs],
+      typeDefs: [print(ast), directive.typeDefs],
       resolvers,
     }),
   );

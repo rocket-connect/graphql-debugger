@@ -1,4 +1,4 @@
-import { ObjectRef } from "@pothos/core";
+import { ObjectRef } from "@graphql-debugger/utils";
 import { SchemaObject } from "../objects/schema";
 import { builder } from "../schema";
 import { prisma } from "@graphql-debugger/data-access";

@@ -1,7 +1,6 @@
-import { makeExecutableSchema } from "@graphql-tools/schema";
 import { traceSchema } from "../src";
+import { makeExecutableSchema } from "@graphql-tools/schema";
 import { printSchemaWithDirectives } from "@graphql-tools/utils";
-import { describe, test, expect } from "@jest/globals";
 
 describe("tracedSchema", () => {
   test("should add trace directive to all fields in schema", () => {
@@ -21,7 +20,10 @@ describe("tracedSchema", () => {
       },
     };
 
-    const schema = makeExecutableSchema({ typeDefs, resolvers });
+    const schema = makeExecutableSchema({
+      typeDefs,
+      resolvers,
+    });
 
     const tracedSchema = traceSchema({ schema });
 

@@ -1,5 +1,5 @@
 {
-  "name": "@graphql-debugger/collector-proxy",
+  "name": "@graphql-debugger/trace-directive",
   "version": "0.0.0-alpha.47",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -17,17 +17,8 @@
     "test": "NODE_ENV=test jest"
   },
   "dependencies": {
-    "@graphql-debugger/time": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
-    "@graphql-debugger/data-access": "workspace:^",
-    "@graphql-debugger/trace-schema": "workspace:^",
-    "@graphql-debugger/queue": "workspace:^",
-    "@graphql-debugger/schemas": "workspace:^",
-    "express": "4.18.2"
+    "@graphql-debugger/opentelemetry": "workspace:^"
   },
-  "devDependencies": {
-    "@graphql-debugger/types": "workspace:^",
-    "@faker-js/faker": "8.0.2",
-    "@types/express": "4.17.17"
-  }
+  "devDependencies": {}
 }

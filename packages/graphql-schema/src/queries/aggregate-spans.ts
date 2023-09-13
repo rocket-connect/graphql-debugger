@@ -1,4 +1,4 @@
-import { ObjectRef } from "@pothos/core";
+import { ObjectRef } from "@graphql-debugger/utils";
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import { builder } from "../schema";
 import { prisma, Span as PrismaSpan } from "@graphql-debugger/data-access";

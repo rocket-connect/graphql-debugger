@@ -1,9 +1,8 @@
 import { traceSchema } from "@graphql-debugger/trace-schema";
-import SchemaBuilder from "@pothos/core";
+import { SchemaBuilder } from "@graphql-debugger/utils";
 import { Objects } from "./objects";
 import { Context } from "./context";
 import { TRACE_SCHEMA } from "./config";
-import { graphql } from "@graphql-debugger/utils";
 
 export const builder = new SchemaBuilder<{
   Objects: Objects;
@@ -18,6 +17,4 @@ require("./mutations");
 
 const build = builder.toSchema();
 
-export const schema: graphql.GraphQLSchema = TRACE_SCHEMA
-  ? traceSchema({ schema: build })
-  : build;
+export const schema = TRACE_SCHEMA ? traceSchema({ schema: build }) : build;

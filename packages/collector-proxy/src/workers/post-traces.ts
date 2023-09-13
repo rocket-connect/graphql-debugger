@@ -1,8 +1,8 @@
 import type { PostTraces } from "@graphql-debugger/types";
 import { prisma } from "@graphql-debugger/data-access";
-import { graphql } from "@graphql-debugger/utils";
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import { AttributeName } from "@graphql-debugger/trace-schema";
+import { print, parse } from "@graphql-debugger/utils";
 import { debug } from "../debug";
 
 export async function postTracesWorker(data: PostTraces["body"]) {
@@ -97,8 +97,8 @@ export async function postTracesWorker(data: PostTraces["body"]) {
         let graphqlDocument: string | undefined;
         if (!span.parentSpanId && document) {
           try {
-            const parsed = graphql.parse(document);
-            const printed = graphql.print(parsed);
+            const parsed = parse(document);
+            const printed = print(parsed);
             graphqlDocument = printed;
           } catch (error) {
             debug("Error parsing document", error);

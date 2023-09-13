@@ -1,31 +1,31 @@
-import { graphql } from "@graphql-debugger/utils";
+import { ArgumentNode, Kind } from "@graphql-debugger/utils";
 
 export function Argument({
   value,
   indentLevel = 0,
 }: {
-  value: graphql.ArgumentNode["value"];
+  value: ArgumentNode["value"];
   indentLevel?: number;
 }) {
   const indent = " ".repeat(indentLevel * 2);
 
-  if (value.kind === graphql.Kind.INT || value.kind === graphql.Kind.FLOAT) {
+  if (value.kind === Kind.INT || value.kind === Kind.FLOAT) {
     return <span>{value.value}</span>;
   }
 
-  if (value.kind === graphql.Kind.STRING) {
+  if (value.kind === Kind.STRING) {
     return <span>"{value.value}"</span>;
   }
 
-  if (value.kind === graphql.Kind.BOOLEAN) {
+  if (value.kind === Kind.BOOLEAN) {
     return <span>{value.value ? "true" : "false"}</span>;
   }
 
-  if (value.kind === graphql.Kind.ENUM) {
+  if (value.kind === Kind.ENUM) {
     return <span>{value.value}</span>;
   }
 
-  if (value.kind === graphql.Kind.LIST) {
+  if (value.kind === Kind.LIST) {
     const items = value.values.map((item, index) => (
       <div key={index}>
         {indent}
@@ -42,7 +42,7 @@ export function Argument({
     );
   }
 
-  if (value.kind === graphql.Kind.OBJECT) {
+  if (value.kind === Kind.OBJECT) {
     const properties = value.fields.map((field, i) => (
       <div key={field.name.value}>
         <span className="text-graphiql-light">
@@ -64,7 +64,7 @@ export function Argument({
     );
   }
 
-  if (value.kind === graphql.Kind.VARIABLE) {
+  if (value.kind === Kind.VARIABLE) {
     return <span className="text-graphql-otel-green">${value.name.value}</span>;
   }
 

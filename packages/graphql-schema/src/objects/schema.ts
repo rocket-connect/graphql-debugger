@@ -1,5 +1,5 @@
 import { prisma } from "@graphql-debugger/data-access";
-import { ObjectRef } from "@pothos/core";
+import { ObjectRef } from "@graphql-debugger/utils";
 import { builder } from "../schema";
 import { TraceObject } from "./trace";
 import { Schema } from "@graphql-debugger/types";
