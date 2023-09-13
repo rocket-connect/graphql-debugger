@@ -14,11 +14,15 @@
 
 ## Watch the talk!
 
+<div align="center" style="text-align: center;">
+
 [![](https://markdown-videos-api.jorgenkh.no/youtube/EpC6xmw2a6Y)](https://youtu.be/EpC6xmw2a6Y)
 
 <p>
   <a href="https://youtu.be/EpC6xmw2a6Y">https://youtu.be/EpC6xmw2a6Y</a>
 </p>
+
+<div>
 
 ## About
 
