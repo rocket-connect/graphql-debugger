@@ -6,9 +6,22 @@
 
 <p>Debug your GraphQL server locally.</p>
 
-[![Test](https://github.com/rocket-connect/graphql-debugger/actions/workflows/test.yml/badge.svg?branch=main&event=push)](https://github.com/rocket-connect/graphql-debugger/actions/workflows/test.yml) [![npm version](https://badge.fury.io/js/graphql-debugger.svg)](https://badge.fury.io/js/graphql-debugger) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Quality](https://github.com/rocket-connect/graphql-debugger/actions/workflows/quality.yml/badge.svg)](https://github.com/rocket-connect/graphql-debugger/actions/workflows/quality.yml) [![Release](https://github.com/rocket-connect/graphql-debugger/actions/workflows/release.yml/badge.svg)](https://github.com/rocket-connect/graphql-debugger/actions/workflows/release.yml) [![npm version](https://badge.fury.io/js/graphql-debugger.svg)](https://badge.fury.io/js/graphql-debugger) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <img src="./docs/screenshot.png" width="100%" alt="GraphQL Debugger">
+
+</div>
+
+## Watch the talk!
+
+<div align="center" style="text-align: center;">
+
+[![](https://markdown-videos-api.jorgenkh.no/youtube/EpC6xmw2a6Y)](https://youtu.be/EpC6xmw2a6Y)
+
+<p>
+  <a href="https://youtu.be/EpC6xmw2a6Y">https://youtu.be/EpC6xmw2a6Y</a>
+</p>
+
 </div>
 
 ## About
