@@ -12,9 +12,20 @@
 
 </div>
 
-## Watch the talk
+## Watch the talk!
 
-[![Watch the video](https://img.youtube.com/vi/EpC6xmw2a6Y/maxresdefault.jpg)](https://youtu.be/EpC6xmw2a6Y)
+<div align="center" style="text-align: center;">
+
+<a href="https://youtu.be/EpC6xmw2a6Y">
+<img src="https://github.com/rocket-connect/graphql-debugger/assets/35999252/a031136d-09ce-42f2-a749-df1b9ddbe17b" width="50%" alt="Talk">
+
+</a>
+
+<p>
+  https://youtu.be/EpC6xmw2a6Y
+</p>
+</div>
+
 
 ## About
 
