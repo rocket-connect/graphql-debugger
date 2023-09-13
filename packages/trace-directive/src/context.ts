@@ -5,8 +5,8 @@ import {
   Span,
   trace,
   context,
+  runInSpan,
 } from "@graphql-debugger/opentelemetry";
-import { runInSpan } from "./run-in-span";
 import { GraphQLSchema } from "graphql";
 
 export interface GraphQLOTELContextOptions {

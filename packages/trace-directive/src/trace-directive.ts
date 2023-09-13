@@ -6,9 +6,9 @@ import {
   Context,
   context as otelContext,
   Span,
+  runInSpan,
 } from "@graphql-debugger/opentelemetry";
 import { GraphQLOTELContext } from "./context";
-import { runInSpan } from "./run-in-span";
 
 export function traceDirective(directiveName = "trace") {
   return {
@@ -79,34 +79,41 @@ export function traceDirective(directiveName = "trace") {
 
               const operationArgs = safeJson(args || {});
 
+              const attributes = {
+                [AttributeNames.OPERATION_NAME]: info.fieldName,
+
+                [AttributeNames.OPERATION_TYPE]:
+                  info.operation.operation.toLowerCase(),
+                ...(isRoot
+                  ? {
+                      [AttributeNames.DOCUMENT]: print(info.operation),
+                    }
+                  : {}),
+
+                [AttributeNames.SCHEMA_HASH]: internalCtx.schemaHash,
+
+                [AttributeNames.OPERATION_RETURN_TYPE]:
+                  info.returnType.toString(),
+
+                ...(internalCtx.includeVariables && isRoot
+                  ? { [AttributeNames.OPERATION_ARGS]: operationArgs }
+                  : {}),
+
+                ...(internalCtx.includeContext && isRoot
+                  ? {
+                      [AttributeNames.OPERATION_CONTEXT]:
+                        safeJson(attributeContext),
+                    }
+                  : {}),
+              };
+
               const result = await runInSpan(
                 {
                   name,
                   context: traceCTX,
                   tracer: internalCtx.tracer,
                   parentSpan,
-                  attributes: {
-                    [AttributeNames.OPERATION_NAME]: info.fieldName,
-                    [AttributeNames.OPERATION_TYPE]:
-                      info.operation.operation.toLowerCase(),
-                    ...(isRoot
-                      ? {
-                          [AttributeNames.DOCUMENT]: print(info.operation),
-                        }
-                      : {}),
-                    [AttributeNames.SCHEMA_HASH]: internalCtx.schemaHash,
-                    [AttributeNames.OPERATION_RETURN_TYPE]:
-                      info.returnType.toString(),
-                    ...(internalCtx.includeVariables && isRoot
-                      ? { [AttributeNames.OPERATION_ARGS]: operationArgs }
-                      : {}),
-                    ...(internalCtx.includeContext && isRoot
-                      ? {
-                          [AttributeNames.OPERATION_CONTEXT]:
-                            safeJson(attributeContext),
-                        }
-                      : {}),
-                  },
+                  attributes,
                 },
                 async (span) => {
                   if (!internalCtx.getRootSpan()) {

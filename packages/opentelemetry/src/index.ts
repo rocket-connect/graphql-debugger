@@ -1,6 +1,7 @@
 export * from "./setup-otel";
 export * from "./build-span-tree";
 export * from "./attribute-names";
+export * from "./run-in-span";
 
 export { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
 export {
