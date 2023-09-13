@@ -14,7 +14,7 @@
 
 ## Watch the talk!
 
-[![name](https://github.com/rocket-connect/graphql-debugger/assets/35999252/a031136d-09ce-42f2-a749-df1b9ddbe17b)](https://youtu.be/EpC6xmw2a6Y)
+[![](https://markdown-videos-api.jorgenkh.no/youtube/EpC6xmw2a6Y)](https://youtu.be/EpC6xmw2a6Y)
 
 <p>
   <a href="https://youtu.be/EpC6xmw2a6Y">https://youtu.be/EpC6xmw2a6Y</a>
