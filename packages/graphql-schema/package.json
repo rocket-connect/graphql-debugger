@@ -21,7 +21,7 @@
     "@graphql-debugger/trace-schema": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
     "@graphql-debugger/data-access": "workspace:^",
-    "@pothos/core": "3.34.0",
+    "@pothos/core": "3.35.0",
     "dataloader": "2.2.2",
     "graphql-yoga": "4.0.4"
   },
