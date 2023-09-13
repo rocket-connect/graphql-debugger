@@ -3,11 +3,11 @@ import { listTraceGroups } from "../../api/list-trace-groups";
 import { useParams } from "react-router-dom";
 import { Span } from "./Span";
 import { createTreeData } from "./utils";
-import { Span as TSpan, Trace } from "../../graphql-types";
+import { graphql } from "@graphql-debugger/types";
 import { IDS } from "../../testing";
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 
-const TraceView = ({ spans }: { spans: TSpan[] }) => {
+const TraceView = ({ spans }: { spans: graphql.Span[] }) => {
   const treeData = createTreeData(spans);
 
   const minTimestamp = UnixNanoTimeStamp.earliest(
@@ -32,7 +32,7 @@ const TraceView = ({ spans }: { spans: TSpan[] }) => {
 };
 
 export function TraceViewer() {
-  const [traces, setTraces] = useState<Trace[]>([]);
+  const [traces, setTraces] = useState<graphql.Trace[]>([]);
   const params = useParams();
 
   useEffect(() => {

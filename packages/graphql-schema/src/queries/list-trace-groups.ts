@@ -1,7 +1,8 @@
 import { ObjectRef } from "@pothos/core";
-import { Trace, TraceObject } from "../objects/trace";
+import { TraceObject } from "../objects/trace";
 import { builder } from "../schema";
 import { prisma } from "@graphql-debugger/data-access";
+import { Trace } from "@graphql-debugger/types";
 
 export type ListTraceGroupsResponse = {
   traces: Trace[];

@@ -2,7 +2,9 @@ import { OTLPExporterNodeConfigBase } from "@opentelemetry/otlp-exporter-base";
 import { graphql } from "@graphql-debugger/utils";
 import fetch from "node-fetch";
 import { debug } from "./debug";
+import { PostSchema } from "@graphql-debugger/types";
 
+// collector proxy
 const DEFAULT_URL = "http://localhost:4318/v1/traces";
 
 function stripURL(url: string) {
@@ -31,11 +33,13 @@ export class SchemaExporer {
         try {
           debug("Sending schema");
 
+          const body: PostSchema["body"] = {
+            schema: this.schemaString,
+          };
+
           const response = await fetch(stripURL(this.url) + "/v1/schema", {
             method: "POST",
-            body: JSON.stringify({
-              schema: this.schemaString,
-            }),
+            body: JSON.stringify(body),
             headers: {
               "Content-Type": "application/json",
             },
@@ -51,6 +55,8 @@ export class SchemaExporer {
         } finally {
           counter++;
 
+          // Lets try to push the schema 1000 times on app bootup then give up
+          // maybe this needs rethinking @danstarns
           if (counter === 1000) {
             clearInterval(interval);
           }

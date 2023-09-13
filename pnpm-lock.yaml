@@ -153,6 +153,9 @@ importers:
       '@graphql-debugger/queue':
         specifier: workspace:^
         version: link:../queue
+      '@graphql-debugger/schemas':
+        specifier: workspace:^
+        version: link:../schemas
       '@graphql-debugger/time':
         specifier: workspace:^
         version: link:../time
@@ -168,13 +171,13 @@ importers:
       express:
         specifier: 4.18.2
         version: 4.18.2
-      zod:
-        specifier: 3.22.2
-        version: 3.22.2
     devDependencies:
       '@faker-js/faker':
         specifier: 8.0.2
         version: 8.0.2
+      '@graphql-debugger/types':
+        specifier: workspace:^
+        version: link:../types
       '@types/express':
         specifier: 4.17.17
         version: 4.17.17
@@ -233,6 +236,9 @@ importers:
       '@graphql-codegen/typescript-resolvers':
         specifier: 4.0.1
         version: 4.0.1(graphql@16.8.0)
+      '@graphql-debugger/types':
+        specifier: workspace:^
+        version: link:../types
       '@opentelemetry/otlp-transformer':
         specifier: 0.41.2
         version: 0.41.2(@opentelemetry/api@1.4.1)
@@ -246,6 +252,15 @@ importers:
         specifier: 1.15.0
         version: 1.15.0
 
+  packages/schemas:
+    dependencies:
+      '@graphql-debugger/time':
+        specifier: workspace:^
+        version: link:../time
+      zod:
+        specifier: 3.22.2
+        version: 3.22.2
+
   packages/time:
     dependencies:
       moment:
@@ -254,6 +269,9 @@ importers:
 
   packages/trace-schema:
     dependencies:
+      '@graphql-debugger/types':
+        specifier: workspace:^
+        version: link:../types
       '@graphql-debugger/utils':
         specifier: workspace:^
         version: link:../utils
@@ -298,6 +316,12 @@ importers:
         specifier: 2.6.4
         version: 2.6.4
 
+  packages/types:
+    devDependencies:
+      '@graphql-debugger/schemas':
+        specifier: workspace:^
+        version: link:../schemas
+
   packages/ui:
     dependencies:
       '@fontsource/roboto':
@@ -319,6 +343,9 @@ importers:
         specifier: 6.7.0
         version: 6.7.0(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
+      '@graphql-debugger/types':
+        specifier: workspace:^
+        version: link:../types
       '@types/react':
         specifier: ^18.2.0
         version: 18.2.21

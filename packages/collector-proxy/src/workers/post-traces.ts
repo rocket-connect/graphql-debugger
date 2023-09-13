@@ -1,4 +1,4 @@
-import { PostTraces } from "../schemas/post-traces";
+import type { PostTraces } from "@graphql-debugger/types";
 import { prisma } from "@graphql-debugger/data-access";
 import { graphql } from "@graphql-debugger/utils";
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";

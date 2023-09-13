@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import { AnyZodObject } from "zod";
+import { z } from "@graphql-debugger/schemas";
 import { debug } from "./debug";
 
-export function validateRequest(schema: AnyZodObject) {
+export function validateRequest(schema: z.AnyZodObject) {
   return async (req: Request, res: Response, next: NextFunction) => {
     debug(`Request ${req.method} ${req.url}`);
 

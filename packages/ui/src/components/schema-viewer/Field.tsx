@@ -1,7 +1,7 @@
 import { graphql } from "@graphql-debugger/utils";
 import { useEffect, useState } from "react";
 import { aggregateSpans } from "../../api/aggregate-spans";
-import { AggregateSpansResponse } from "../../graphql-types";
+import type { graphql as tGraphql } from "@graphql-debugger/types";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Stats } from "./Stats";
 
@@ -33,9 +33,8 @@ export function Field({
   const navigate = useNavigate();
   const name = field.name.value;
   const type = extractTypeName(field.type);
-  const [aggregate, setAggregate] = useState<AggregateSpansResponse | null>(
-    null,
-  );
+  const [aggregate, setAggregate] =
+    useState<tGraphql.AggregateSpansResponse | null>(null);
 
   const processedType = Array.from(type).map((char, index) => {
     if (["!", "[", "]"].includes(char)) {

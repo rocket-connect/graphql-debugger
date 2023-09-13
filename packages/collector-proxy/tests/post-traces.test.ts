@@ -2,7 +2,7 @@ import { request } from "./utils";
 import { prisma } from "@graphql-debugger/data-access";
 import util from "util";
 import { describe, beforeEach, test, expect } from "@jest/globals";
-import { PostTraces } from "../src/schemas/post-traces";
+import { PostTraces } from "@graphql-debugger/types";
 
 const sleep = util.promisify(setTimeout);
 

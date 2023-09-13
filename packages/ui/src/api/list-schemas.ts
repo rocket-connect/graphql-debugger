@@ -1,4 +1,4 @@
-import { Query, Schema, ListSchemasWhere } from "../graphql-types";
+import { graphql } from "@graphql-debugger/types";
 import { api } from "./api";
 
 const ListSchemasQuery = /* GraphQL */ `
@@ -17,8 +17,10 @@ const ListSchemasQuery = /* GraphQL */ `
 
 export async function listSchemas({
   where,
-}: { where?: ListSchemasWhere } = {}): Promise<Schema[]> {
-  const { data, errors } = await api<{ listSchemas: Query["listSchemas"] }>({
+}: { where?: graphql.ListSchemasWhere } = {}): Promise<graphql.Schema[]> {
+  const { data, errors } = await api<{
+    listSchemas: graphql.Query["listSchemas"];
+  }>({
     query: ListSchemasQuery,
     variables: {
       where,
@@ -32,7 +34,7 @@ export async function listSchemas({
   return data.listSchemas.schemas;
 }
 
-export async function getSchema(id: string): Promise<Schema> {
+export async function getSchema(id: string): Promise<graphql.Schema> {
   const schemas = await listSchemas({
     where: {
       id,

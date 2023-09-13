@@ -5,7 +5,7 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import { Schema, Trace } from "../graphql-types";
+import { graphql } from "@graphql-debugger/types";
 import { getSchema } from "../api/list-schemas";
 import { listTraceGroups } from "../api/list-trace-groups";
 import { TraceViewer } from "../components/trace-viewer/TraceViewer";
@@ -20,8 +20,8 @@ import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import { IDS } from "../testing";
 
 export function Schema() {
-  const [schema, setSchema] = useState<Schema>();
-  const [trace, setTrace] = useState<Trace>();
+  const [schema, setSchema] = useState<graphql.Schema>();
+  const [trace, setTrace] = useState<graphql.Trace>();
   const params = useParams();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
