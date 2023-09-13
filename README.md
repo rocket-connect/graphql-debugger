@@ -9,6 +9,15 @@
 [![Test](https://github.com/rocket-connect/graphql-debugger/actions/workflows/test.yml/badge.svg?branch=main&event=push)](https://github.com/rocket-connect/graphql-debugger/actions/workflows/test.yml) [![npm version](https://badge.fury.io/js/graphql-debugger.svg)](https://badge.fury.io/js/graphql-debugger) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <img src="./docs/screenshot.png" width="100%" alt="GraphQL Debugger">
+
+</div>
+
+## Watch the talk
+
+<div align="center" style="text-align: center;">
+
+[![Watch the video](https://img.youtube.com/vi/EpC6xmw2a6Y/default.jpg)](https://youtu.be/EpC6xmw2a6Y)
+
 </div>
 
 ## About
