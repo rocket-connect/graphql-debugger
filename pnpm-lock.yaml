@@ -342,8 +342,8 @@ importers:
         specifier: ^16.0.0 || ^17.0.0
         version: 16.0.0
       node-fetch:
-        specifier: '2'
-        version: 2.0.0
+        specifier: 2.7.0
+        version: 2.7.0
     devDependencies:
       '@types/node-fetch':
         specifier: 2.6.4
@@ -8485,11 +8485,6 @@ packages:
       lower-case: 2.0.2
       tslib: 2.6.2
     dev: true
-
-  /node-fetch@2.0.0:
-    resolution: {integrity: sha512-bici2HCWFnAghTYMcy12WPxrEwJ5qK7GQJOTwTfyEZjyL99ECWxbYQfabZ2U1zrHMKkOBE97Z9iHIuKQfCMdzQ==}
-    engines: {node: 4.x || >=6.0.0}
-    dev: false
 
   /node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
