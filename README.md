@@ -15,8 +15,9 @@
 ## Watch the talk!
 
 <div align="center" style="text-align: center; width: 250px; margin: 0 auto;">
-
-![https://youtu.be/EpC6xmw2a6Y](https://github.com/rocket-connect/graphql-debugger/assets/35999252/a031136d-09ce-42f2-a749-df1b9ddbe17b)
+  <a href="https://youtu.be/EpC6xmw2a6Y">
+    <img src="https://github.com/rocket-connect/graphql-debugger/assets/35999252/a031136d-09ce-42f2-a749-df1b9ddbe17b" width="50%" alt="Talk">
+  </a>
 
 <p>
   <a href="https://youtu.be/EpC6xmw2a6Y">https://youtu.be/EpC6xmw2a6Y</a>
