@@ -5,13 +5,7 @@ import {
   ReadableSpan,
   SpanStatusCode,
 } from "@graphql-debugger/opentelemetry";
-import {
-  graphql,
-  print,
-  parse,
-  printSchema,
-  lexicographicSortSchema,
-} from "@graphql-debugger/utils";
+import { graphql, print, parse, printSchema, lexicographicSortSchema } from "graphql";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { traceDirective, GraphQLOTELContext } from "../src";
 import { AttributeName } from "../src/trace-directive";

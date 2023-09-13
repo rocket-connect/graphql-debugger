@@ -1,8 +1,8 @@
 import type { PostTraces } from "@graphql-debugger/types";
 import { prisma } from "@graphql-debugger/data-access";
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
-import { AttributeName } from "@graphql-debugger/trace-schema";
-import { print, parse } from "@graphql-debugger/utils";
+import { AttributeNames } from "@graphql-debugger/opentelemetry";
+import { print, parse } from "graphql";
 import { debug } from "../debug";
 
 export async function postTracesWorker(data: PostTraces["body"]) {
@@ -89,11 +89,11 @@ export async function postTracesWorker(data: PostTraces["body"]) {
         const attributes = JSON.parse(span.attributes);
         let traceGroupId = "";
         let schemaHash = "";
-        if (!span.parentSpanId && attributes[AttributeName.SCHEMA_HASH]) {
-          schemaHash = attributes[AttributeName.SCHEMA_HASH];
+        if (!span.parentSpanId && attributes[AttributeNames.SCHEMA_HASH]) {
+          schemaHash = attributes[AttributeNames.SCHEMA_HASH];
         }
 
-        const document = attributes[AttributeName.DOCUMENT];
+        const document = attributes[AttributeNames.DOCUMENT];
         let graphqlDocument: string | undefined;
         if (!span.parentSpanId && document) {
           try {
@@ -106,7 +106,7 @@ export async function postTracesWorker(data: PostTraces["body"]) {
           }
         }
 
-        const variables = attributes[AttributeName.OPERATION_ARGS];
+        const variables = attributes[AttributeNames.OPERATION_ARGS];
         let graphqlVariables: string | undefined;
         if (!span.parentSpanId && variables) {
           try {
@@ -117,7 +117,7 @@ export async function postTracesWorker(data: PostTraces["body"]) {
           }
         }
 
-        const result = attributes[AttributeName.OPERATION_RESULT];
+        const result = attributes[AttributeNames.OPERATION_RESULT];
         let graphqlResult: string | undefined;
         if (!span.parentSpanId && result) {
           try {
@@ -130,7 +130,7 @@ export async function postTracesWorker(data: PostTraces["body"]) {
           }
         }
 
-        const context = attributes[AttributeName.OPERATION_CONTEXT];
+        const context = attributes[AttributeNames.OPERATION_CONTEXT];
         let graphqlContext: string | undefined;
         if (!span.parentSpanId && context) {
           try {

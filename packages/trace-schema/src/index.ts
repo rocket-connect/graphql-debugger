@@ -10,9 +10,10 @@ import {
   FieldDefinitionNode,
   Kind,
   print,
-  getResolversFromSchema,
-  makeExecutableSchema,
-} from "@graphql-debugger/utils";
+} from "graphql";
+
+import { getResolversFromSchema } from "@graphql-tools/utils";
+import { makeExecutableSchema } from "@graphql-tools/schema";
 
 export interface TraceSchemaInput {
   schema: GraphQLSchema;
@@ -76,4 +77,4 @@ export function traceSchema({
   return tracedSchema;
 }
 
-export * from "graphql-otel";
+export * from "@graphql-debugger/trace-directive";

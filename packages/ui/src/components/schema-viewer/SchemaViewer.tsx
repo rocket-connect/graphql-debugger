@@ -1,8 +1,4 @@
-import {
-  parse,
-  ObjectTypeDefinitionNode,
-  FieldDefinitionNode,
-} from "@graphql-debugger/utils";
+import { parse, ObjectTypeDefinitionNode, FieldDefinitionNode } from "graphql";
 import { Type } from "./Type";
 
 export function SchemaViewer({

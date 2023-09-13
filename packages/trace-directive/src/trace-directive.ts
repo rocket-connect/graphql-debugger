@@ -1,32 +1,14 @@
+import { safeJson } from "@graphql-debugger/utils";
+import { defaultFieldResolver, GraphQLSchema, print } from "graphql";
+import { mapSchema, MapperKind, getDirective } from "@graphql-tools/utils";
 import {
-  safeJson,
-  defaultFieldResolver,
-  GraphQLSchema,
-  print,
-  mapSchema,
-  MapperKind,
-  getDirective,
-} from "@graphql-debugger/utils";
-import {
+  AttributeNames,
   Context,
   context as otelContext,
   Span,
 } from "@graphql-debugger/opentelemetry";
 import { GraphQLOTELContext } from "./context";
 import { runInSpan } from "./run-in-span";
-
-// Matching spec https://opentelemetry.io/docs/specs/otel/trace/semantic_conventions/instrumentation/graphql/
-export enum AttributeName {
-  OPERATION_NAME = "graphql.operation.name",
-  OPERATION_TYPE = "graphql.operation.type",
-
-  DOCUMENT = "graphql.document",
-  SCHEMA_HASH = "graphql.schema.hash", // Non-Spec attribute
-  OPERATION_ARGS = "graphql.operation.args", // Non-Spec attribute
-  OPERATION_CONTEXT = "graphql.operation.context", // Non-Spec attribute
-  OPERATION_RESULT = "graphql.operation.result", // Non-Spec attribute
-  OPERATION_RETURN_TYPE = "graphql.operation.returnType", // Non-Spec attribute
-}
 
 export function traceDirective(directiveName = "trace") {
   return {
@@ -104,23 +86,23 @@ export function traceDirective(directiveName = "trace") {
                   tracer: internalCtx.tracer,
                   parentSpan,
                   attributes: {
-                    [AttributeName.OPERATION_NAME]: info.fieldName,
-                    [AttributeName.OPERATION_TYPE]:
+                    [AttributeNames.OPERATION_NAME]: info.fieldName,
+                    [AttributeNames.OPERATION_TYPE]:
                       info.operation.operation.toLowerCase(),
                     ...(isRoot
                       ? {
-                          [AttributeName.DOCUMENT]: print(info.operation),
+                          [AttributeNames.DOCUMENT]: print(info.operation),
                         }
                       : {}),
-                    [AttributeName.SCHEMA_HASH]: internalCtx.schemaHash,
-                    [AttributeName.OPERATION_RETURN_TYPE]:
+                    [AttributeNames.SCHEMA_HASH]: internalCtx.schemaHash,
+                    [AttributeNames.OPERATION_RETURN_TYPE]:
                       info.returnType.toString(),
                     ...(internalCtx.includeVariables && isRoot
-                      ? { [AttributeName.OPERATION_ARGS]: operationArgs }
+                      ? { [AttributeNames.OPERATION_ARGS]: operationArgs }
                       : {}),
                     ...(internalCtx.includeContext && isRoot
                       ? {
-                          [AttributeName.OPERATION_CONTEXT]:
+                          [AttributeNames.OPERATION_CONTEXT]:
                             safeJson(attributeContext),
                         }
                       : {}),
@@ -141,10 +123,13 @@ export function traceDirective(directiveName = "trace") {
                       typeof result === "string" ||
                       typeof result === "boolean"
                     ) {
-                      span.setAttribute(AttributeName.OPERATION_RESULT, result);
+                      span.setAttribute(
+                        AttributeNames.OPERATION_RESULT,
+                        result,
+                      );
                     } else if (typeof result === "object") {
                       span.setAttribute(
-                        AttributeName.OPERATION_RESULT,
+                        AttributeNames.OPERATION_RESULT,
                         safeJson(result || {}),
                       );
                     }

@@ -1,4 +1,4 @@
-import { graphql } from "@graphql-debugger/utils";
+import { FieldDefinitionNode } from "graphql";
 import { useEffect, useState } from "react";
 import { aggregateSpans } from "../../api/aggregate-spans";
 import type { graphql as tGraphql } from "@graphql-debugger/types";
@@ -24,7 +24,7 @@ export function Field({
   parentName,
   schemaId,
 }: {
-  field: graphql.FieldDefinitionNode;
+  field: FieldDefinitionNode;
   parentName: string;
   schemaId: string;
 }) {

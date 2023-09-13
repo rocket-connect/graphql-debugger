@@ -1,4 +1,4 @@
-import { hashSchema, GraphQLSchema } from "@graphql-debugger/utils";
+import { hashSchema } from "@graphql-debugger/utils";
 import {
   Context,
   Tracer,
@@ -7,6 +7,7 @@ import {
   context,
 } from "@graphql-debugger/opentelemetry";
 import { runInSpan } from "./run-in-span";
+import { GraphQLSchema } from "graphql";
 
 export interface GraphQLOTELContextOptions {
   /* If true will add the context in the span attributes */

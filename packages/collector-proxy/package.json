@@ -16,6 +16,9 @@
     "build": "tsc",
     "test": "NODE_ENV=test jest"
   },
+  "peerDependencies": {
+    "graphql": "^16.0.0 || ^17.0.0"
+  },
   "dependencies": {
     "@graphql-debugger/time": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
@@ -23,6 +26,9 @@
     "@graphql-debugger/trace-schema": "workspace:^",
     "@graphql-debugger/queue": "workspace:^",
     "@graphql-debugger/schemas": "workspace:^",
+    "@graphql-debugger/opentelemetry": "workspace:^",
+    "@graphql-tools/schema": "10.0.0",
+    "@graphql-tools/utils": "10.0.6",
     "express": "4.18.2"
   },
   "devDependencies": {

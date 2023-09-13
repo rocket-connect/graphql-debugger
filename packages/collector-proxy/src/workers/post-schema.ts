@@ -1,7 +1,8 @@
 import type { PostSchema } from "@graphql-debugger/types";
-import { hashSchema, print, parse } from "@graphql-debugger/utils";
+import { hashSchema } from "@graphql-debugger/utils";
 import { prisma } from "@graphql-debugger/data-access";
 import { debug } from "../debug";
+import { print, parse } from "graphql";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 
 export async function postSchemaWorker(data: PostSchema["body"]) {

@@ -1,9 +1,11 @@
 import { request } from "./utils";
 import { prisma } from "@graphql-debugger/data-access";
 import { describe, beforeEach, test, expect } from "@jest/globals";
-import { hashSchema, print, parse } from "@graphql-debugger/utils";
-import { faker } from "@faker-js/faker";
+import { hashSchema } from "@graphql-debugger/utils";
+import { print, parse } from "graphql";
 import { makeExecutableSchema } from "@graphql-tools/schema";
+
+import { faker } from "@faker-js/faker";
 
 describe("POST /v1/schema", () => {
   beforeEach(async () => {

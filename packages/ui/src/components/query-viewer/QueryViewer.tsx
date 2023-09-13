@@ -1,4 +1,4 @@
-import { parse, DocumentNode, Kind } from "@graphql-debugger/utils";
+import { parse, DocumentNode, Kind } from "graphql";
 import { Type } from "./Type";
 import { Selection } from "./Selection";
 import { IDS } from "../../testing";

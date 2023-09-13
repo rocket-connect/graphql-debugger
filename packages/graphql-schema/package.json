@@ -16,14 +16,20 @@
     "build": "tsc && npm run generate-types",
     "generate-types": "ts-node ./src/generate && graphql-codegen --config ./src/codegen.ts"
   },
+  "peerDependencies": {
+    "graphql": "^16.0.0 || ^17.0.0"
+  },
   "dependencies": {
     "@graphql-debugger/time": "workspace:^",
     "@graphql-debugger/trace-schema": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
-    "@graphql-debugger/data-access": "workspace:^"
+    "@graphql-debugger/data-access": "workspace:^",
+    "@graphql-debugger/types": "workspace:^",
+    "@pothos/core": "3.35.0",
+    "dataloader": "2.2.2",
+    "graphql-yoga": "4.0.4"
   },
   "devDependencies": {
-    "@graphql-debugger/types": "workspace:^",
     "@graphql-codegen/cli": "5.0.0",
     "@graphql-codegen/client-preset": "4.1.0",
     "@graphql-codegen/typescript": "4.0.1",

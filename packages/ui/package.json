@@ -18,6 +18,9 @@
     "url": "git+https://github.com/rocket-connect/graphql-debugger.git"
   },
   "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
+  "peerDependencies": {
+    "graphql": "^16.0.0 || ^17.0.0"
+  },
   "dependencies": {
     "@fontsource/roboto": "5.0.8",
     "@graphql-debugger/time": "workspace:^",

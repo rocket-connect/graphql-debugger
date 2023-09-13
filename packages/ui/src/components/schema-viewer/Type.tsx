@@ -1,4 +1,4 @@
-import { FieldDefinitionNode } from "@graphql-debugger/utils";
+import { FieldDefinitionNode } from "graphql";
 import { Field } from "./Field";
 
 export function Type({

@@ -4,7 +4,7 @@ import {
   FieldNode,
   FragmentSpreadNode,
   InlineFragmentNode,
-} from "@graphql-debugger/utils";
+} from "graphql";
 import { Field } from "./Field";
 
 export function Selection({

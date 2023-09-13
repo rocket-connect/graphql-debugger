@@ -22,15 +22,10 @@
   },
   "dependencies": {
     "debug": "4.3.4",
-    "safe-json-stringify": "1.2.0",
-    "@graphql-tools/schema": "10.0.0",
-    "@graphql-tools/utils": "10.0.6",
-    "@pothos/core": "3.35.0",
-    "dataloader": "2.2.2",
-    "graphql-yoga": "4.0.4"
+    "safe-json-stringify": "1.2.0"
   },
   "devDependencies": {
     "@types/debug": "4.1.8",
-    "@types/safe-json-stringify": "^1.1.2"
+    "@types/safe-json-stringify": "1.1.2"
   }
 }

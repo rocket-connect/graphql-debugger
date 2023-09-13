@@ -3,7 +3,7 @@ import {
   GraphQLSchema,
   lexicographicSortSchema,
   printSchema,
-} from "@graphql-debugger/utils";
+} from "graphql";
 import { PostSchema } from "@graphql-debugger/types";
 import fetch from "node-fetch";
 import { debug } from "./debug";

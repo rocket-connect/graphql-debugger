@@ -6,13 +6,9 @@ import {
   traceSchema,
   GraphQLOTELContext,
 } from "@graphql-debugger/trace-schema";
-import {
-  hashSchema,
-  graphql,
-  print,
-  parse,
-  makeExecutableSchema,
-} from "@graphql-debugger/utils";
+import { hashSchema } from "@graphql-debugger/utils";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { graphql, print, parse } from "graphql";
 
 const sleep = util.promisify(setTimeout);
 

@@ -1,4 +1,4 @@
-import { ArgumentNode, Kind } from "@graphql-debugger/utils";
+import { ArgumentNode, Kind } from "graphql";
 
 export function Argument({
   value,
