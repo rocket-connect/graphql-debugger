@@ -1,4 +1,5 @@
-import { print, parse } from "graphql";
+import { parse, print } from "graphql";
+
 import { API_URL } from "../config";
 
 export async function api<D = unknown>({

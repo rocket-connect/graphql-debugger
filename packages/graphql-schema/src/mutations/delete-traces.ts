@@ -1,6 +1,8 @@
 import { prisma } from "@graphql-debugger/data-access";
-import { builder } from "../schema";
+
 import { ObjectRef } from "@pothos/core";
+
+import { builder } from "../schema";
 
 export type DeleteTracesWhere = {
   schemaId: string;

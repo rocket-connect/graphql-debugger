@@ -1,10 +1,12 @@
-import { Request, Response } from "express";
-import { debug } from "../debug";
-import { validateRequest } from "../validate-request";
 import { PostSchemaSchema } from "@graphql-debugger/schemas";
 import type { PostSchema } from "@graphql-debugger/types";
-import { postSchemaQueue } from "..";
+
 import { makeExecutableSchema } from "@graphql-tools/schema";
+import { Request, Response } from "express";
+
+import { postSchemaQueue } from "..";
+import { debug } from "../debug";
+import { validateRequest } from "../validate-request";
 
 async function postSchemaHandler(req: Request, res: Response) {
   debug("POST /v1/schema");

@@ -1,10 +1,11 @@
 import {
-  SelectionNode,
-  Kind,
   FieldNode,
   FragmentSpreadNode,
   InlineFragmentNode,
+  Kind,
+  SelectionNode,
 } from "graphql";
+
 import { Field } from "./Field";
 
 export function Selection({

@@ -1,8 +1,10 @@
-import type { PostTraces } from "@graphql-debugger/types";
 import { prisma } from "@graphql-debugger/data-access";
-import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import { AttributeNames } from "@graphql-debugger/opentelemetry";
-import { print, parse } from "graphql";
+import { UnixNanoTimeStamp } from "@graphql-debugger/time";
+import type { PostTraces } from "@graphql-debugger/types";
+
+import { parse, print } from "graphql";
+
 import { debug } from "../debug";
 
 export async function postTracesWorker(data: PostTraces["body"]) {

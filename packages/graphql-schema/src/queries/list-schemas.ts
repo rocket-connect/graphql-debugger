@@ -1,8 +1,10 @@
-import { ObjectRef } from "@pothos/core";
-import { SchemaObject } from "../objects/schema";
-import { builder } from "../schema";
 import { prisma } from "@graphql-debugger/data-access";
 import { Schema } from "@graphql-debugger/types";
+
+import { ObjectRef } from "@pothos/core";
+
+import { SchemaObject } from "../objects/schema";
+import { builder } from "../schema";
 
 export type ListSchemasWhere = {
   id?: string;

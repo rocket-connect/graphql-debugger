@@ -1,8 +1,10 @@
 import { traceSchema } from "@graphql-debugger/trace-schema";
+
 import SchemaBuilder from "@pothos/core";
-import { Objects } from "./objects";
-import { Context } from "./context";
+
 import { TRACE_SCHEMA } from "./config";
+import { Context } from "./context";
+import { Objects } from "./objects";
 
 export const builder = new SchemaBuilder<{
   Objects: Objects;

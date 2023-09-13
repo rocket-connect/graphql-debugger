@@ -1,7 +1,8 @@
-import DataLoader from "dataloader";
 import { prisma } from "@graphql-debugger/data-access";
-import { Span } from "@graphql-debugger/types";
 import { TimeStamp, UnixNanoTimeStamp } from "@graphql-debugger/time";
+import { Span } from "@graphql-debugger/types";
+
+import DataLoader from "dataloader";
 
 export function rootSpanLoader() {
   return new DataLoader(

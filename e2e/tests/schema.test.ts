@@ -1,14 +1,16 @@
-import { prisma } from "./prisma";
-import { getBrowser, getPage, Browser } from "./puppeteer";
-import { IDS } from "@graphql-debugger/ui/src/testing";
-import util from "util";
 import {
-  traceSchema,
   GraphQLOTELContext,
+  traceSchema,
 } from "@graphql-debugger/trace-schema";
+import { IDS } from "@graphql-debugger/ui/src/testing";
 import { hashSchema } from "@graphql-debugger/utils";
+
 import { makeExecutableSchema } from "@graphql-tools/schema";
-import { graphql, print, parse } from "graphql";
+import { graphql, parse, print } from "graphql";
+import util from "util";
+
+import { prisma } from "./prisma";
+import { Browser, getBrowser, getPage } from "./puppeteer";
 
 const sleep = util.promisify(setTimeout);
 

@@ -1,4 +1,5 @@
 import fastq from "fastq";
+
 import { debug } from "./debug";
 
 export enum QueueType {

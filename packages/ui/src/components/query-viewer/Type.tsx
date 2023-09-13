@@ -1,4 +1,4 @@
-import { TypeNode, Kind } from "graphql";
+import { Kind, TypeNode } from "graphql";
 
 export function Type({ type }: { type: TypeNode }) {
   if (type.kind === Kind.NAMED_TYPE) {

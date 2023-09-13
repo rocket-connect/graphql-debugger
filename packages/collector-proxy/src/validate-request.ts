@@ -1,5 +1,7 @@
-import { Request, Response, NextFunction } from "express";
 import { z } from "@graphql-debugger/schemas";
+
+import { NextFunction, Request, Response } from "express";
+
 import { debug } from "./debug";
 
 export function validateRequest(schema: z.AnyZodObject) {

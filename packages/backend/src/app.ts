@@ -1,9 +1,11 @@
-import { debug } from "./debug";
+import { collector } from "@graphql-debugger/collector-proxy";
+import { yoga } from "@graphql-debugger/graphql-schema";
+
+import cors from "cors";
 import express, { Express } from "express";
 import path from "path";
-import cors from "cors";
-import { yoga } from "@graphql-debugger/graphql-schema";
-import { collector } from "@graphql-debugger/collector-proxy";
+
+import { debug } from "./debug";
 
 export const backend: Express = express();
 backend.use(cors());

@@ -1,6 +1,7 @@
 import { HashRouter, Route, Routes } from "react-router-dom";
-import { Schemas } from "./Schemas";
+
 import { Schema } from "./Schema";
+import { Schemas } from "./Schemas";
 
 export function Router() {
   return (

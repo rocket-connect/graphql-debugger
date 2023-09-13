@@ -1,5 +1,6 @@
-import { getBrowser, getPage, Browser } from "./puppeteer";
 import { IDS } from "@graphql-debugger/ui/src/testing";
+
+import { Browser, getBrowser, getPage } from "./puppeteer";
 
 describe("index", () => {
   let browser: Browser;

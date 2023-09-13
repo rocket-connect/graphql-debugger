@@ -1,11 +1,13 @@
+import { UnixNanoTimeStamp } from "@graphql-debugger/time";
+import { graphql } from "@graphql-debugger/types";
+
 import { useEffect, useState } from "react";
-import { listTraceGroups } from "../../api/list-trace-groups";
 import { useParams } from "react-router-dom";
+
+import { listTraceGroups } from "../../api/list-trace-groups";
+import { IDS } from "../../testing";
 import { Span } from "./Span";
 import { createTreeData } from "./utils";
-import { graphql } from "@graphql-debugger/types";
-import { IDS } from "../../testing";
-import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 
 const TraceView = ({ spans }: { spans: graphql.Span[] }) => {
   const treeData = createTreeData(spans);

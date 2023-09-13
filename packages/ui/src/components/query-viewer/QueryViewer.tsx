@@ -1,7 +1,8 @@
-import { parse, DocumentNode, Kind } from "graphql";
-import { Type } from "./Type";
-import { Selection } from "./Selection";
+import { DocumentNode, Kind, parse } from "graphql";
+
 import { IDS } from "../../testing";
+import { Selection } from "./Selection";
+import { Type } from "./Type";
 
 export function QueryViewer({ doc, spanId }: { doc: string; spanId: string }) {
   const ast: DocumentNode = parse(doc);

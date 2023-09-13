@@ -1,8 +1,10 @@
+import type { graphql as tGraphql } from "@graphql-debugger/types";
+
 import { FieldDefinitionNode } from "graphql";
 import { useEffect, useState } from "react";
-import { aggregateSpans } from "../../api/aggregate-spans";
-import type { graphql as tGraphql } from "@graphql-debugger/types";
 import { useNavigate, useSearchParams } from "react-router-dom";
+
+import { aggregateSpans } from "../../api/aggregate-spans";
 import { Stats } from "./Stats";
 
 function extractTypeName(typeNode): string {

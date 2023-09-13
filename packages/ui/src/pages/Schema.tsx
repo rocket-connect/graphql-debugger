@@ -1,3 +1,6 @@
+import { UnixNanoTimeStamp } from "@graphql-debugger/time";
+import { graphql } from "@graphql-debugger/types";
+
 import { useCallback, useEffect, useState } from "react";
 import {
   Link,
@@ -5,19 +8,18 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import { graphql } from "@graphql-debugger/types";
+
+import { deleteTraces } from "../api/delete-traces";
 import { getSchema } from "../api/list-schemas";
 import { listTraceGroups } from "../api/list-trace-groups";
-import { TraceViewer } from "../components/trace-viewer/TraceViewer";
-import { SchemaViewer } from "../components/schema-viewer/SchemaViewer";
-import { logo } from "../utils/images";
-import { QueryViewer } from "../components/query-viewer/QueryViewer";
-import { JsonViewer } from "../components/json-viewer/JsonViewer";
-import { SideBar } from "../components/SideBar";
 import { SchemaTraces } from "../components/SchemaTraces";
-import { deleteTraces } from "../api/delete-traces";
-import { UnixNanoTimeStamp } from "@graphql-debugger/time";
+import { SideBar } from "../components/SideBar";
+import { JsonViewer } from "../components/json-viewer/JsonViewer";
+import { QueryViewer } from "../components/query-viewer/QueryViewer";
+import { SchemaViewer } from "../components/schema-viewer/SchemaViewer";
+import { TraceViewer } from "../components/trace-viewer/TraceViewer";
 import { IDS } from "../testing";
+import { logo } from "../utils/images";
 
 export function Schema() {
   const [schema, setSchema] = useState<graphql.Schema>();

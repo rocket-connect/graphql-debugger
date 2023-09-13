@@ -1,3 +1,3 @@
-import { z, SchemaSchema } from "@graphql-debugger/schemas";
+import { SchemaSchema, z } from "@graphql-debugger/schemas";
 
 export type Schema = z.infer<typeof SchemaSchema>;

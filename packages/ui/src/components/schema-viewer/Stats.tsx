@@ -1,5 +1,5 @@
-import { graphql } from "@graphql-debugger/types";
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
+import { graphql } from "@graphql-debugger/types";
 
 export function Stats({
   aggregate,

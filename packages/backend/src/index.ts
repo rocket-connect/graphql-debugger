@@ -1,11 +1,13 @@
-import { prisma } from "@graphql-debugger/data-access";
 import {
   postSchemaQueue,
   postTracesQueue,
 } from "@graphql-debugger/collector-proxy";
-import { debug } from "./debug";
-import * as app from "./app";
+import { prisma } from "@graphql-debugger/data-access";
+
 import http from "http";
+
+import * as app from "./app";
+import { debug } from "./debug";
 
 export async function start({
   backendPort,

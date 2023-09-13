@@ -1,6 +1,8 @@
-import { ObjectRef } from "@pothos/core";
-import { builder } from "../schema";
 import { Span } from "@graphql-debugger/types";
+
+import { ObjectRef } from "@pothos/core";
+
+import { builder } from "../schema";
 
 export const SpanObject: ObjectRef<Span> = builder.objectType("Span", {
   fields: (t) => ({

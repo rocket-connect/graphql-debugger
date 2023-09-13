@@ -1,11 +1,9 @@
 import { SetupOtelInput } from "@graphql-debugger/opentelemetry";
-import {
-  GraphQLSchema,
-  lexicographicSortSchema,
-  printSchema,
-} from "graphql";
 import { PostSchema } from "@graphql-debugger/types";
+
+import { GraphQLSchema, lexicographicSortSchema, printSchema } from "graphql";
 import fetch from "node-fetch";
+
 import { debug } from "./debug";
 
 // collector proxy

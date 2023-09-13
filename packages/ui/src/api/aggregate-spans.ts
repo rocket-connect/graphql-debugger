@@ -1,4 +1,5 @@
 import { graphql } from "@graphql-debugger/types";
+
 import { api } from "./api";
 
 const AggregateSpansQuery = /* GraphQL */ `

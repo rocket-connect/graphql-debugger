@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-process.env.DEBUG = process.env.DEBUG || `@graphql-debugger:*`;
+import * as backend from "@graphql-debugger/backend";
+
 import { debug } from "./debug";
 
-import * as backend from "@graphql-debugger/backend";
+process.env.DEBUG = process.env.DEBUG || `@graphql-debugger:*`;
 
 async function start() {
   try {
