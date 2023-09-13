@@ -14,11 +14,7 @@
 
 ## Watch the talk
 
-<div align="center" style="text-align: center;">
-
 [![Watch the video](https://img.youtube.com/vi/EpC6xmw2a6Y/default.jpg)](https://youtu.be/EpC6xmw2a6Y)
-
-</div>
 
 ## About
 
