@@ -15,6 +15,7 @@
     "@babel/preset-env": "7.22.15",
     "@babel/preset-typescript": "7.22.15",
     "@jest/globals": "29.6.4",
+    "@trivago/prettier-plugin-sort-imports": "^4.2.0",
     "@tsconfig/node18": "^18.2.0",
     "@types/jest": "29.5.4",
     "@types/node": "^18",

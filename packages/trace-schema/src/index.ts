@@ -1,19 +1,20 @@
-import { setupOtel, SetupOtelInput } from "@graphql-debugger/opentelemetry";
+import { SetupOtelInput, setupOtel } from "@graphql-debugger/opentelemetry";
 import { traceDirective } from "@graphql-debugger/trace-directive";
-import { debug } from "./debug";
-import { SchemaExporer } from "./schema-exporter";
+
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { getResolversFromSchema } from "@graphql-tools/utils";
 import {
-  visit,
-  parse,
-  printSchema,
-  GraphQLSchema,
   FieldDefinitionNode,
+  GraphQLSchema,
   Kind,
+  parse,
   print,
+  printSchema,
+  visit,
 } from "graphql";
 
-import { getResolversFromSchema } from "@graphql-tools/utils";
-import { makeExecutableSchema } from "@graphql-tools/schema";
+import { debug } from "./debug";
+import { SchemaExporer } from "./schema-exporter";
 
 export interface TraceSchemaInput {
   schema: GraphQLSchema;

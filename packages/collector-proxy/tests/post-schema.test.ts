@@ -1,11 +1,12 @@
-import { request } from "./utils";
 import { prisma } from "@graphql-debugger/data-access";
-import { describe, beforeEach, test, expect } from "@jest/globals";
 import { hashSchema } from "@graphql-debugger/utils";
-import { print, parse } from "graphql";
-import { makeExecutableSchema } from "@graphql-tools/schema";
 
 import { faker } from "@faker-js/faker";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { beforeEach, describe, expect, test } from "@jest/globals";
+import { parse, print } from "graphql";
+
+import { request } from "./utils";
 
 describe("POST /v1/schema", () => {
   beforeEach(async () => {

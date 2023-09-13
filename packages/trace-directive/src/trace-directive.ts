@@ -1,13 +1,15 @@
-import { safeJson } from "@graphql-debugger/utils";
-import { defaultFieldResolver, GraphQLSchema, print } from "graphql";
-import { mapSchema, MapperKind, getDirective } from "@graphql-tools/utils";
 import {
   AttributeNames,
   Context,
-  context as otelContext,
   Span,
+  context as otelContext,
   runInSpan,
 } from "@graphql-debugger/opentelemetry";
+import { safeJson } from "@graphql-debugger/utils";
+
+import { MapperKind, getDirective, mapSchema } from "@graphql-tools/utils";
+import { GraphQLSchema, defaultFieldResolver, print } from "graphql";
+
 import { GraphQLOTELContext } from "./context";
 
 export function traceDirective(directiveName = "trace") {

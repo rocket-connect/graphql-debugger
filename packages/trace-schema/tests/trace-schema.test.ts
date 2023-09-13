@@ -1,6 +1,7 @@
-import { traceSchema } from "../src";
-import { printSchemaWithDirectives } from "@graphql-tools/utils";
 import { makeExecutableSchema } from "@graphql-tools/schema";
+import { printSchemaWithDirectives } from "@graphql-tools/utils";
+
+import { traceSchema } from "../src";
 
 describe("tracedSchema", () => {
   test("should add trace directive to all fields in schema", () => {

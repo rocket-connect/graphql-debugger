@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { TraceSchema } from "./trace";
 
 export const SchemaSchema = z.object({

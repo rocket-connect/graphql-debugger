@@ -1,5 +1,5 @@
-import { GraphQLSchema, lexicographicSortSchema, printSchema } from "graphql";
 import crypto from "crypto";
+import { GraphQLSchema, lexicographicSortSchema, printSchema } from "graphql";
 
 export function hashSchema(schema: GraphQLSchema): string {
   const sorted = lexicographicSortSchema(schema);

@@ -1,8 +1,10 @@
 import { prisma } from "@graphql-debugger/data-access";
+import { Schema } from "@graphql-debugger/types";
+
 import { ObjectRef } from "@pothos/core";
+
 import { builder } from "../schema";
 import { TraceObject } from "./trace";
-import { Schema } from "@graphql-debugger/types";
 
 export const SchemaObject: ObjectRef<Schema> = builder.objectType("Schema", {
   fields: (t) => ({

@@ -1,11 +1,11 @@
-import { Span, RandomIdGenerator } from "@opentelemetry/sdk-trace-base";
 import {
-  Context,
-  Tracer,
-  SpanStatusCode,
-  SpanKind,
   Attributes,
+  Context,
+  SpanKind,
+  SpanStatusCode,
+  Tracer,
 } from "@opentelemetry/api";
+import { RandomIdGenerator, Span } from "@opentelemetry/sdk-trace-base";
 
 export type RunInChildSpanOptions = {
   name: string;

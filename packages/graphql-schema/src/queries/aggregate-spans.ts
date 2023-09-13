@@ -1,7 +1,9 @@
-import { ObjectRef } from "@pothos/core";
+import { Span as PrismaSpan, prisma } from "@graphql-debugger/data-access";
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
+
+import { ObjectRef } from "@pothos/core";
+
 import { builder } from "../schema";
-import { prisma, Span as PrismaSpan } from "@graphql-debugger/data-access";
 
 export type AggregateSpansWhere = {
   schemaId: string;

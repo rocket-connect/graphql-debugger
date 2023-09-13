@@ -1,4 +1,5 @@
 import supertest from "supertest";
+
 import { collector, postSchemaQueue, postTracesQueue } from "../src/index";
 
 export function request() {

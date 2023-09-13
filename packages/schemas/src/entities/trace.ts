@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { SpanSchema } from ".";
 
 export const TraceSchema = z.object({

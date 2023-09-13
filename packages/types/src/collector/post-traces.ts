@@ -1,3 +1,3 @@
-import { z, PostTracesSchema } from "@graphql-debugger/schemas";
+import { PostTracesSchema, z } from "@graphql-debugger/schemas";
 
 export type PostTraces = z.infer<typeof PostTracesSchema>;

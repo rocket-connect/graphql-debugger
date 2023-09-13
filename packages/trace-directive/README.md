@@ -83,12 +83,13 @@ Quickstart boilerplate.
 index.ts:
 
 ```ts
-import { makeExecutableSchema } from "@graphql-tools/schema";
 import {
-  traceDirective,
   GraphQLOTELContext,
   setupOtel,
+  traceDirective,
 } from "@graphql-debugger/trace-directive";
+
+import { makeExecutableSchema } from "@graphql-tools/schema";
 import { createServer } from "@graphql-yoga/node";
 import util from "util";
 

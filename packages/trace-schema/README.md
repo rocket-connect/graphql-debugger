@@ -17,12 +17,13 @@ Finally, it sets up the nessessary OpenTelemetry instrumentation packages and pr
 ## Usage
 
 ```ts
+import {
+  GraphQLOTELContext,
+  traceSchema,
+} from "@graphql-debugger/trace-schema";
+
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { createYoga } from "graphql-yoga";
-import {
-  traceSchema,
-  GraphQLOTELContext,
-} from "@graphql-debugger/trace-schema";
 
 // Common GraphQL schema
 const schema = makeExecutableSchema({

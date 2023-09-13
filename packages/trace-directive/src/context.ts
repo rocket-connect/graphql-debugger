@@ -1,12 +1,13 @@
-import { hashSchema } from "@graphql-debugger/utils";
 import {
   Context,
-  Tracer,
   Span,
-  trace,
+  Tracer,
   context,
   runInSpan,
+  trace,
 } from "@graphql-debugger/opentelemetry";
+import { hashSchema } from "@graphql-debugger/utils";
+
 import { GraphQLSchema } from "graphql";
 
 export interface GraphQLOTELContextOptions {

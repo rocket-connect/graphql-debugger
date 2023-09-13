@@ -1,8 +1,10 @@
-import { request } from "./utils";
 import { prisma } from "@graphql-debugger/data-access";
-import util from "util";
-import { describe, beforeEach, test, expect } from "@jest/globals";
 import { PostTraces } from "@graphql-debugger/types";
+
+import { beforeEach, describe, expect, test } from "@jest/globals";
+import util from "util";
+
+import { request } from "./utils";
 
 const sleep = util.promisify(setTimeout);
 

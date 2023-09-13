@@ -1,4 +1,5 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
+
 import { RenderTree } from "./utils";
 
 export function Span({

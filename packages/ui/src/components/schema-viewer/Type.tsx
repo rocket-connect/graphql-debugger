@@ -1,4 +1,5 @@
 import { FieldDefinitionNode } from "graphql";
+
 import { Field } from "./Field";
 
 export function Type({

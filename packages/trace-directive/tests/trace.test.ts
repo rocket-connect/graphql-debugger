@@ -1,21 +1,23 @@
 import {
-  setupOtel,
-  buildSpanTree,
+  AttributeNames,
   InMemorySpanExporter,
   ReadableSpan,
   SpanStatusCode,
-  AttributeNames,
+  buildSpanTree,
+  setupOtel,
 } from "@graphql-debugger/opentelemetry";
+
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import crypto from "crypto";
 import {
   graphql,
-  print,
-  parse,
-  printSchema,
   lexicographicSortSchema,
+  parse,
+  print,
+  printSchema,
 } from "graphql";
-import { makeExecutableSchema } from "@graphql-tools/schema";
-import { traceDirective, GraphQLOTELContext } from "../src";
-import crypto from "crypto";
+
+import { GraphQLOTELContext, traceDirective } from "../src";
 
 const inMemorySpanExporter = setupOtel({
   inMemory: true,

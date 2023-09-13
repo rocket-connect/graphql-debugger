@@ -5,8 +5,8 @@ import { OTLPExporterNodeConfigBase } from "@opentelemetry/otlp-exporter-base";
 import { Resource } from "@opentelemetry/resources";
 import {
   BasicTracerProvider,
-  SimpleSpanProcessor,
   InMemorySpanExporter,
+  SimpleSpanProcessor,
 } from "@opentelemetry/sdk-trace-base";
 import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
 

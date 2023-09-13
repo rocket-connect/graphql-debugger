@@ -1,10 +1,12 @@
 import {
-  start,
-  stop,
   BACKEND_PORT,
   COLLECTOR_PORT,
+  start,
+  stop,
 } from "@graphql-debugger/backend";
+
 import http from "http";
+
 import { debug } from "../src/debug";
 
 let server: {
