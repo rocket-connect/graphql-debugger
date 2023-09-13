@@ -2,12 +2,13 @@ import { prisma } from "./prisma";
 import { getBrowser, getPage, Browser } from "./puppeteer";
 import { IDS } from "@graphql-debugger/ui/src/testing";
 import util from "util";
-import { makeExecutableSchema } from "@graphql-tools/schema";
 import {
   traceSchema,
   GraphQLOTELContext,
 } from "@graphql-debugger/trace-schema";
-import { graphql, hashSchema } from "@graphql-debugger/utils";
+import { hashSchema } from "@graphql-debugger/utils";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { graphql, print, parse } from "graphql";
 
 const sleep = util.promisify(setTimeout);
 
@@ -83,13 +84,15 @@ describe("schema", () => {
 
     await page.waitForSelector(`#${IDS.SCHEMA}`);
     const dataValues = await page.$$eval(`#${IDS.SCHEMA}`, (divs) =>
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       divs.map((div) => div.dataset.schema),
     );
 
     expect(dataValues).toHaveLength(1);
     expect(dataValues[0]).toBe(schema.id);
 
-    const response = await graphql.graphql({
+    const response = await graphql({
       schema: tracedSchema,
       source: "{ users { id name } }",
       contextValue: {
@@ -126,9 +129,9 @@ describe("schema", () => {
     const rootSpan = trace.spans.find((span) => !span.parentSpanId);
     expect(rootSpan).toBeDefined();
     expect(rootSpan?.name).toEqual(`query users`);
-    expect(
-      graphql.print(graphql.parse(rootSpan?.graphqlDocument as string)),
-    ).toEqual(graphql.print(graphql.parse("{ users { id name } }")));
+    expect(print(parse(rootSpan?.graphqlDocument as string))).toEqual(
+      print(parse("{ users { id name } }")),
+    );
     expect(rootSpan?.graphqlResult).toBeDefined();
 
     const idSpan = trace.spans.find((span) => span.name === "User id");
@@ -152,6 +155,8 @@ describe("schema", () => {
     await page.waitForSelector(`#${IDS.JSON_VIEWER}`);
 
     const jsonValues = await page.$$eval(`#${IDS.JSON_VIEWER}`, (divs) =>
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       divs.map((div) => div.dataset.json),
     );
 

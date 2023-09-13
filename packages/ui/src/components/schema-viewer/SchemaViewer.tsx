@@ -1,4 +1,4 @@
-import { graphql } from "@graphql-debugger/utils";
+import { parse, ObjectTypeDefinitionNode, FieldDefinitionNode } from "graphql";
 import { Type } from "./Type";
 
 export function SchemaViewer({
@@ -8,11 +8,11 @@ export function SchemaViewer({
   schemaId: string;
   typeDefs: string;
 }) {
-  const parsed = graphql.parse(typeDefs);
+  const parsed = parse(typeDefs);
 
-  const queryDefs: graphql.ObjectTypeDefinitionNode[] = [];
-  const mutationDefs: graphql.ObjectTypeDefinitionNode[] = [];
-  const otherDefs: graphql.ObjectTypeDefinitionNode[] = [];
+  const queryDefs: ObjectTypeDefinitionNode[] = [];
+  const mutationDefs: ObjectTypeDefinitionNode[] = [];
+  const otherDefs: ObjectTypeDefinitionNode[] = [];
 
   parsed.definitions.forEach((def) => {
     if (def.kind === "ObjectTypeDefinition") {
@@ -47,7 +47,7 @@ export function SchemaViewer({
                   type={{
                     name,
                     kind,
-                    fields: def.fields as graphql.FieldDefinitionNode[],
+                    fields: def.fields as FieldDefinitionNode[],
                   }}
                 />
               </div>

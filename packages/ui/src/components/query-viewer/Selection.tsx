@@ -1,18 +1,24 @@
-import { graphql } from "@graphql-debugger/utils";
+import {
+  SelectionNode,
+  Kind,
+  FieldNode,
+  FragmentSpreadNode,
+  InlineFragmentNode,
+} from "graphql";
 import { Field } from "./Field";
 
 export function Selection({
   selection,
   index,
 }: {
-  selection: graphql.SelectionNode;
+  selection: SelectionNode;
   index: number;
 }) {
-  if (selection.kind === graphql.Kind.FIELD) {
+  if (selection.kind === Kind.FIELD) {
     return (
       <Field
         key={index}
-        field={selection as graphql.FieldNode}
+        field={selection as FieldNode}
         renderSelection={(selection, index) => (
           <Selection selection={selection} index={index} />
         )}
@@ -20,8 +26,8 @@ export function Selection({
     );
   }
 
-  if (selection.kind === graphql.Kind.FRAGMENT_SPREAD) {
-    const fragmentSpread = selection as graphql.FragmentSpreadNode;
+  if (selection.kind === Kind.FRAGMENT_SPREAD) {
+    const fragmentSpread = selection as FragmentSpreadNode;
 
     return (
       <div key={index} className="ml-1 p-1 text-graphiql-light">
@@ -33,8 +39,8 @@ export function Selection({
     );
   }
 
-  if (selection.kind === graphql.Kind.INLINE_FRAGMENT) {
-    const inlineFragment = selection as graphql.InlineFragmentNode;
+  if (selection.kind === Kind.INLINE_FRAGMENT) {
+    const inlineFragment = selection as InlineFragmentNode;
 
     return (
       <div key={index} className="ml-1 p-1 text-graphiql-light">

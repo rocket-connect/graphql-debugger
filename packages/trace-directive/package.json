@@ -1,5 +1,5 @@
 {
-  "name": "@graphql-debugger/trace-schema",
+  "name": "@graphql-debugger/trace-directive",
   "version": "0.0.0-alpha.47",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -21,14 +21,9 @@
   },
   "dependencies": {
     "@graphql-debugger/utils": "workspace:^",
-    "@graphql-debugger/types": "workspace:^",
     "@graphql-debugger/opentelemetry": "workspace:^",
-    "@graphql-debugger/trace-directive": "workspace:^",
     "@graphql-tools/schema": "10.0.0",
-    "@graphql-tools/utils": "10.0.6",
-    "node-fetch": "2"
+    "@graphql-tools/utils": "10.0.6"
   },
-  "devDependencies": {
-    "@types/node-fetch": "2.6.4"
-  }
+  "devDependencies": {}
 }

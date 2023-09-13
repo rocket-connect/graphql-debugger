@@ -1,8 +1,12 @@
-import { OTLPExporterNodeConfigBase } from "@opentelemetry/otlp-exporter-base";
-import { graphql } from "@graphql-debugger/utils";
+import { SetupOtelInput } from "@graphql-debugger/opentelemetry";
+import {
+  GraphQLSchema,
+  lexicographicSortSchema,
+  printSchema,
+} from "graphql";
+import { PostSchema } from "@graphql-debugger/types";
 import fetch from "node-fetch";
 import { debug } from "./debug";
-import { PostSchema } from "@graphql-debugger/types";
 
 // collector proxy
 const DEFAULT_URL = "http://localhost:4318/v1/traces";
@@ -12,17 +16,19 @@ function stripURL(url: string) {
 }
 
 export class SchemaExporer {
+  private schema: GraphQLSchema;
   private url: string;
   private schemaString: string;
 
   constructor(
-    public schema: graphql.GraphQLSchema,
-    public exporterConfig?: OTLPExporterNodeConfigBase,
+    schema: GraphQLSchema,
+    exporterConfig?: SetupOtelInput["exporterConfig"],
   ) {
+    this.schema = schema;
     this.url = exporterConfig?.url ?? DEFAULT_URL;
 
-    const sortedSchema = graphql.lexicographicSortSchema(this.schema);
-    this.schemaString = graphql.printSchema(sortedSchema);
+    const sortedSchema = lexicographicSortSchema(this.schema);
+    this.schemaString = printSchema(sortedSchema);
   }
 
   public start() {

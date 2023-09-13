@@ -1,8 +1,10 @@
 import { request } from "./utils";
 import { prisma } from "@graphql-debugger/data-access";
 import { describe, beforeEach, test, expect } from "@jest/globals";
-import { graphql, hashSchema } from "@graphql-debugger/utils";
+import { hashSchema } from "@graphql-debugger/utils";
+import { print, parse } from "graphql";
 import { makeExecutableSchema } from "@graphql-tools/schema";
+
 import { faker } from "@faker-js/faker";
 
 describe("POST /v1/schema", () => {
@@ -51,7 +53,7 @@ describe("POST /v1/schema", () => {
     await prisma.schema.create({
       data: {
         hash,
-        typeDefs: graphql.print(graphql.parse(schema)),
+        typeDefs: print(parse(schema)),
       },
     });
 
@@ -90,6 +92,6 @@ describe("POST /v1/schema", () => {
 
     expect(foundSchema).not.toBeNull();
 
-    expect(foundSchema?.typeDefs).toEqual(graphql.print(graphql.parse(schema)));
+    expect(foundSchema?.typeDefs).toEqual(print(parse(schema)));
   });
 });

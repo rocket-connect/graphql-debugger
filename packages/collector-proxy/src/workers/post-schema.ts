@@ -1,7 +1,8 @@
 import type { PostSchema } from "@graphql-debugger/types";
+import { hashSchema } from "@graphql-debugger/utils";
 import { prisma } from "@graphql-debugger/data-access";
-import { graphql, hashSchema } from "@graphql-debugger/utils";
 import { debug } from "../debug";
+import { print, parse } from "graphql";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 
 export async function postSchemaWorker(data: PostSchema["body"]) {
@@ -28,7 +29,7 @@ export async function postSchemaWorker(data: PostSchema["body"]) {
     await prisma.schema.create({
       data: {
         hash,
-        typeDefs: graphql.print(graphql.parse(data.schema)),
+        typeDefs: print(parse(data.schema)),
       },
     });
   } catch (error) {

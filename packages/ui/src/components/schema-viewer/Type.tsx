@@ -1,4 +1,4 @@
-import { graphql } from "@graphql-debugger/utils";
+import { FieldDefinitionNode } from "graphql";
 import { Field } from "./Field";
 
 export function Type({
@@ -9,7 +9,7 @@ export function Type({
   type: {
     name: string;
     kind: string;
-    fields: readonly graphql.FieldDefinitionNode[];
+    fields: readonly FieldDefinitionNode[];
   };
 }) {
   let kindKeyword = "";
