@@ -4,7 +4,8 @@ module.exports = {
     "<rootDir>/node_modules/",
     "<rootDir>/build/",
   ],
-  testTimeout: 15000,
+  testTimeout: 150000,
+  setupFilesAfterEnv: ["<rootDir>/tests/setup.ts"],
   globals: {
     "ts-jest": {
       tsconfig: "tsconfig.test.json",

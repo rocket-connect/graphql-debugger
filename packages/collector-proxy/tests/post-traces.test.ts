@@ -1,7 +1,7 @@
 import { prisma } from "@graphql-debugger/data-access";
 import { PostTraces } from "@graphql-debugger/types";
 
-import { beforeEach, describe, expect, test } from "@jest/globals";
+import { describe, expect, test } from "@jest/globals";
 import util from "util";
 
 import { request } from "./utils";
@@ -9,11 +9,6 @@ import { request } from "./utils";
 const sleep = util.promisify(setTimeout);
 
 describe("POST /v1/traces", () => {
-  beforeEach(async () => {
-    await prisma.span.deleteMany();
-    await prisma.traceGroup.deleteMany();
-  });
-
   test("should throw when no body is sent", async () => {
     const response = await request().post("/v1/traces").send({});
 

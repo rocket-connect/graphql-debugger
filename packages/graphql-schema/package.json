@@ -14,7 +14,7 @@
   "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
   "scripts": {
     "build": "tsc && npm run generate-types",
-    "test": "NODE_ENV=test jest",
+    "test": "NODE_ENV=test jest --runInBand",
     "generate-types": "ts-node ./src/generate && graphql-codegen --config ./src/codegen.ts"
   },
   "peerDependencies": {
