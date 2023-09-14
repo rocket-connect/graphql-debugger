@@ -34,6 +34,9 @@ export function Schema() {
   const startTimeUnixNano = UnixNanoTimeStamp.fromString(
     trace?.rootSpan?.startTimeUnixNano || "0",
   );
+  const endTimeUnixNano = UnixNanoTimeStamp.fromString(
+    trace?.rootSpan?.endTimeUnixNano || "0",
+  );
   const traceDurationUnixNano = UnixNanoTimeStamp.fromString(
     trace?.rootSpan?.durationNano || "0",
   );
@@ -264,6 +267,18 @@ export function Schema() {
                 <p className="text-graphiql-light text-xs py-3">
                   Breakdown of resolver execution time during the query.
                 </p>
+
+                <div className="flex flex-row justify-between gap-5 w-full text-graphiql-light">
+                  <p className="py-1 text-xs italic">
+                    {startTimeUnixNano.formatUnixNanoTimestamp()}
+                  </p>
+                  <div className="flex items-center w-full">
+                    <hr className="w-full" />
+                  </div>
+                  <p className="py-1 text-xs italic">
+                    {endTimeUnixNano.formatUnixNanoTimestamp()}
+                  </p>
+                </div>
 
                 <div className="overflow-scroll h-5/6">
                   {trace && <TraceViewer />}
