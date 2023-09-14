@@ -38,6 +38,8 @@ export function Schema() {
     trace?.rootSpan?.durationNano || "0",
   );
 
+  const traceDurationSIUnits = traceDurationUnixNano.toSIUnits();
+
   useEffect(() => {
     (async () => {
       try {
@@ -121,7 +123,9 @@ export function Schema() {
                     <p>{trace?.rootSpan?.name}</p>
                     <p>-</p>
                     <p className="text-xs my-auto">
-                      {traceDurationUnixNano.toMS().toFixed(2)} ms
+                      {`${traceDurationSIUnits.value.toFixed(2)} ${
+                        traceDurationSIUnits.unit
+                      }`}
                     </p>
                   </div>
                   <p className="py-1 text-xs text-graphiql-dark italic">
