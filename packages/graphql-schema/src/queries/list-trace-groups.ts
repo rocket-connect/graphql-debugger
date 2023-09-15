@@ -2,7 +2,7 @@ import { prisma } from "@graphql-debugger/data-access";
 import {
   ListTraceGroupsResponse,
   ListTraceGroupsWhere,
-} from "@graphql-debugger/types/build/graphql-types";
+} from "@graphql-debugger/types";
 
 import { InputRef, ObjectRef } from "@pothos/core";
 
