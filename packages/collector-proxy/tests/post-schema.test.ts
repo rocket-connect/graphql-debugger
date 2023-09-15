@@ -3,18 +3,12 @@ import { hashSchema } from "@graphql-debugger/utils";
 
 import { faker } from "@faker-js/faker";
 import { makeExecutableSchema } from "@graphql-tools/schema";
-import { beforeEach, describe, expect, test } from "@jest/globals";
+import { describe, expect, test } from "@jest/globals";
 import { parse, print } from "graphql";
 
 import { request } from "./utils";
 
 describe("POST /v1/schema", () => {
-  beforeEach(async () => {
-    await prisma.$transaction(async (tx) => {
-      await tx.schema.deleteMany();
-    });
-  });
-
   test("should throw when no body is sent", async () => {
     const response = await request().post("/v1/schema").send({});
 

@@ -1,35 +1,28 @@
-import { Span as PrismaSpan, prisma } from "@graphql-debugger/data-access";
-import { UnixNanoTimeStamp } from "@graphql-debugger/time";
+import { prisma } from "@graphql-debugger/data-access";
+import { TimeStamp, UnixNanoTimeStamp } from "@graphql-debugger/time";
+import {
+  AggregateSpansResponse,
+  AggregateSpansWhere,
+} from "@graphql-debugger/types";
 
-import { ObjectRef } from "@pothos/core";
+import { InputRef, ObjectRef } from "@pothos/core";
 
+import { SpanObject } from "../objects/span";
 import { builder } from "../schema";
 
-export type AggregateSpansWhere = {
-  schemaId: string;
-  name: string;
-};
-
-export type AggregateSpansResponse = {
-  spans: PrismaSpan[];
-  resolveCount: number;
-  errorCount: number;
-  averageDuration: number;
-  lastResolved: string;
-};
-
-export const AggregateSpansWhere = builder.inputType("AggregateSpansWhere", {
-  fields: (t) => ({
-    schemaId: t.string({
-      required: true,
+const AggregateSpansWhereInput: InputRef<AggregateSpansWhere> =
+  builder.inputType("AggregateSpansWhere", {
+    fields: (t) => ({
+      schemaId: t.string({
+        required: true,
+      }),
+      name: t.string({
+        required: true,
+      }),
     }),
-    name: t.string({
-      required: true,
-    }),
-  }),
-});
+  });
 
-export const AggregateSpansResponse: ObjectRef<AggregateSpansResponse> =
+const AggregateSpansResponseObject: ObjectRef<AggregateSpansResponse> =
   builder.objectType("AggregateSpansResponse", {
     fields: (t) => ({
       resolveCount: t.field({
@@ -51,7 +44,7 @@ export const AggregateSpansResponse: ObjectRef<AggregateSpansResponse> =
           }
 
           const durations = root.spans.map(
-            (s) => new UnixNanoTimeStamp(s.durationNano),
+            (s) => new UnixNanoTimeStamp(BigInt(s.durationNano)),
           );
 
           const average = UnixNanoTimeStamp.average(durations);
@@ -67,7 +60,7 @@ export const AggregateSpansResponse: ObjectRef<AggregateSpansResponse> =
           }
 
           const timestamps = root.spans.map(
-            (s) => new UnixNanoTimeStamp(s.endTimeUnixNano),
+            (s) => new UnixNanoTimeStamp(BigInt(s.endTimeUnixNano)),
           );
 
           const max = UnixNanoTimeStamp.latest(timestamps);
@@ -75,15 +68,19 @@ export const AggregateSpansResponse: ObjectRef<AggregateSpansResponse> =
           return max.toString();
         },
       }),
+      spans: t.field({
+        type: [SpanObject],
+        resolve: (root) => root.spans,
+      }),
     }),
   });
 
 builder.queryField("aggregateSpans", (t) =>
   t.field({
-    type: AggregateSpansResponse,
+    type: AggregateSpansResponseObject,
     args: {
       where: t.arg({
-        type: AggregateSpansWhere,
+        type: AggregateSpansWhereInput,
         required: true,
       }),
     },
@@ -100,9 +97,34 @@ builder.queryField("aggregateSpans", (t) =>
       return {
         resolveCount: 0,
         errorCount: 0,
-        averageDuration: 0,
+        averageDuration: "0",
         lastResolved: "0",
-        spans,
+        spans: spans.map((span) => {
+          return {
+            id: span.id,
+            spanId: span.spanId,
+            parentSpanId: span.parentSpanId as string,
+            traceId: span.traceId,
+            name: span.name as string,
+            kind: span.kind,
+            startTimeUnixNano: new UnixNanoTimeStamp(
+              span.startTimeUnixNano,
+            ).toString(),
+            endTimeUnixNano: new UnixNanoTimeStamp(
+              span.endTimeUnixNano,
+            ).toString(),
+            durationNano: new UnixNanoTimeStamp(span.durationNano).toString(),
+            graphqlDocument: span.graphqlDocument,
+            graphqlVariables: span.graphqlVariables,
+            graphqlResult: span.graphqlResult,
+            graphqlContext: span.graphqlContext,
+            timestamp: 0,
+            createdAt: new TimeStamp(span.createdAt).toString(),
+            updatedAt: new TimeStamp(span.updatedAt).toString(),
+            errorMessage: span.errorMessage,
+            errorStack: span.errorStack,
+          };
+        }),
       };
     },
   }),

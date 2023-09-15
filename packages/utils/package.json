@@ -15,7 +15,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node build/index.js",
-    "dev": "NODE_ENV=development ts-node ./src/index.ts"
+    "dev": "NODE_ENV=development ts-node ./src/index.ts",
+    "test": "echo \"No tests\""
   },
   "peerDependencies": {
     "graphql": "^16.0.0 || ^17.0.0"

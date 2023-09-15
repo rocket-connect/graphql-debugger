@@ -1,5 +1,6 @@
+import { clearDB } from "@graphql-debugger/data-access";
+
 import * as backend from "./backend";
-import { clearDB } from "./prisma";
 
 beforeAll(async () => {
   await backend.listen();

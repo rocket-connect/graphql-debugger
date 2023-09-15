@@ -14,7 +14,7 @@
   "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
   "scripts": {
     "build": "tsc",
-    "test": "NODE_ENV=test jest"
+    "test": "NODE_ENV=test jest --runInBand"
   },
   "peerDependencies": {
     "graphql": "^16.0.0 || ^17.0.0"
@@ -33,7 +33,6 @@
   },
   "devDependencies": {
     "@graphql-debugger/types": "workspace:^",
-    "@faker-js/faker": "8.0.2",
-    "@types/express": "4.17.17"
+    "@faker-js/faker": "8.0.2"
   }
 }

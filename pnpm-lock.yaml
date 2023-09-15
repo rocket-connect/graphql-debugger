@@ -26,6 +26,9 @@ importers:
       '@tsconfig/node18':
         specifier: ^18.2.0
         version: 18.2.0
+      '@types/express':
+        specifier: 4.17.17
+        version: 4.17.17
       '@types/jest':
         specifier: 29.5.4
         version: 29.5.4
@@ -190,18 +193,34 @@ importers:
       '@graphql-debugger/types':
         specifier: workspace:^
         version: link:../types
-      '@types/express':
-        specifier: 4.17.17
-        version: 4.17.17
 
   packages/data-access:
     dependencies:
+      '@graphql-debugger/utils':
+        specifier: workspace:^
+        version: link:../utils
       '@prisma/client':
         specifier: 5.2.0
         version: 5.2.0(prisma@5.2.0)
+      graphql:
+        specifier: ^16.0.0 || ^17.0.0
+        version: 16.0.0
       prisma:
         specifier: 5.2.0
         version: 5.2.0
+    devDependencies:
+      '@faker-js/faker':
+        specifier: 8.0.2
+        version: 8.0.2
+      '@graphql-tools/schema':
+        specifier: 10.0.0
+        version: 10.0.0(graphql@16.0.0)
+      '@graphql-tools/utils':
+        specifier: 10.0.6
+        version: 10.0.6(graphql@16.0.0)
+      gql-tag:
+        specifier: ^1.0.1
+        version: 1.0.1
 
   packages/graphql-debugger:
     dependencies:
@@ -214,9 +233,15 @@ importers:
 
   packages/graphql-schema:
     dependencies:
+      '@graphql-debugger/collector-proxy':
+        specifier: workspace:^
+        version: link:../collector-proxy
       '@graphql-debugger/data-access':
         specifier: workspace:^
         version: link:../data-access
+      '@graphql-debugger/schemas':
+        specifier: workspace:^
+        version: link:../schemas
       '@graphql-debugger/time':
         specifier: workspace:^
         version: link:../time
@@ -229,6 +254,12 @@ importers:
       '@graphql-debugger/utils':
         specifier: workspace:^
         version: link:../utils
+      '@graphql-tools/schema':
+        specifier: 10.0.0
+        version: 10.0.0(graphql@16.0.0)
+      '@graphql-tools/utils':
+        specifier: 10.0.6
+        version: 10.0.6(graphql@16.0.0)
       '@pothos/core':
         specifier: 3.35.0
         version: 3.35.0(graphql@16.0.0)
@@ -254,6 +285,12 @@ importers:
       '@graphql-codegen/typescript-resolvers':
         specifier: 4.0.1
         version: 4.0.1(graphql@16.0.0)
+      express:
+        specifier: 4.18.2
+        version: 4.18.2
+      gql-tag:
+        specifier: ^1.0.1
+        version: 1.0.1
 
   packages/opentelemetry:
     dependencies:
@@ -2480,7 +2517,7 @@ packages:
     dependencies:
       graphql: 16.0.0
       lodash.sortby: 4.7.0
-      tslib: 2.5.3
+      tslib: 2.6.2
     dev: true
 
   /@graphql-tools/executor-graphql-ws@1.1.0(graphql@16.0.0):
@@ -2673,7 +2710,7 @@ packages:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
     dependencies:
       graphql: 16.0.0
-      tslib: 2.5.3
+      tslib: 2.6.2
     dev: true
 
   /@graphql-tools/prisma-loader@8.0.1(@types/node@18.0.0)(graphql@16.0.0):
@@ -2718,7 +2755,7 @@ packages:
       '@ardatan/relay-compiler': 12.0.0(graphql@16.0.0)
       '@graphql-tools/utils': 10.0.6(graphql@16.0.0)
       graphql: 16.0.0
-      tslib: 2.5.3
+      tslib: 2.6.2
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -6842,6 +6879,10 @@ packages:
       get-intrinsic: 1.2.1
     dev: true
 
+  /gql-tag@1.0.1:
+    resolution: {integrity: sha512-eVxldTiOtJJ3ySNgYbfRwyIyDDMATJ/ykojlQng5ihX1V0Xpr4C7ZXSZuWo7tg+kf+GS8lzhlbZmKSDjbYGhyA==}
+    dev: true
+
   /graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
@@ -6898,7 +6939,7 @@ packages:
       graphql: ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
     dependencies:
       graphql: 16.0.0
-      tslib: 2.5.3
+      tslib: 2.6.2
     dev: true
 
   /graphql-ws@5.14.0(graphql@16.0.0):
