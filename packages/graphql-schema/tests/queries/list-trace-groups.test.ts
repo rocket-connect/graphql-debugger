@@ -86,6 +86,7 @@ describe("queries/list-trace-groups", () => {
       }),
     });
 
+    // Run the query twice to ensure we get two trace groups
     await Promise.all(
       [1, 2].map(async () => {
         const _response = await graphql({
