@@ -44,3 +44,17 @@ export async function createTestSchema() {
 
   return createdSchema;
 }
+
+export async function createTestTraceGroup() {
+  const testSchema = await createTestSchema();
+  const traceId = faker.string.alpha(8);
+
+  const createdTraceGroup = await prisma.traceGroup.create({
+    data: {
+      traceId,
+      schemaId: testSchema.id,
+    },
+  });
+
+  return createdTraceGroup;
+}

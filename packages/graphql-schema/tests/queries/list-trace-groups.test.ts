@@ -1,3 +1,4 @@
+import { createTestTraceGroup } from "@graphql-debugger/data-access";
 import { ListTraceGroupsResponseSchema } from "@graphql-debugger/schemas";
 import {
   GraphQLOTELContext,
@@ -57,37 +58,32 @@ describe("queries/list-trace-groups", () => {
       }
     `;
 
-    const typeDefs = gql`
-      type User {
-        id: ID!
-        name: String!
-      }
-
-      type Query {
-        users: [User]
-      }
-    `;
-
-    const resolvers = {
-      Query: {
-        users: () => {
-          return [
-            {
-              id: 1,
-              name: "John",
-            },
-          ];
-        },
-      },
-    };
-
-    const executableSchema = makeExecutableSchema({
-      typeDefs: typeDefs,
-      resolvers,
-    });
-
+    // Make a traced schema that points to the collector and run a query against it
     const tracedSchema = traceSchema({
-      schema: executableSchema,
+      schema: makeExecutableSchema({
+        typeDefs: gql`
+          type User {
+            id: ID!
+            name: String!
+          }
+
+          type Query {
+            users: [User]
+          }
+        `,
+        resolvers: {
+          Query: {
+            users: () => {
+              return [
+                {
+                  id: 1,
+                  name: "John",
+                },
+              ];
+            },
+          },
+        },
+      }),
     });
 
     await Promise.all(
@@ -132,5 +128,66 @@ describe("queries/list-trace-groups", () => {
     const parsed = ListTraceGroupsResponseSchema.parse(listTraceGroups);
 
     expect(parsed).toEqual(listTraceGroups);
+  });
+
+  test("should return a list of trace groups filtered by id", async () => {
+    const createdTraceGroup = await createTestTraceGroup();
+    await createTestTraceGroup(); // create another so we exclude it
+
+    const query = gql`
+      query ($where: ListTraceGroupsWhere) {
+        listTraceGroups(where: $where) {
+          traces {
+            id
+          }
+        }
+      }
+    `;
+
+    const response = await request()
+      .post("/graphql")
+      .send({ query, variables: { where: { id: createdTraceGroup.id } } })
+      .set("Accept", "application/json");
+
+    const body = await response.body;
+
+    const listTraceGroups = body.data
+      ?.listTraceGroups as ListTraceGroupsResponse;
+
+    expect(listTraceGroups.traces.length).toBe(1);
+
+    expect(listTraceGroups.traces[0].id).toBe(createdTraceGroup.id);
+  });
+
+  test("should return a list of trace groups filtered by schemaId", async () => {
+    const createdTraceGroup = await createTestTraceGroup();
+    await createTestTraceGroup(); // create another so we exclude it
+
+    const query = gql`
+      query ($where: ListTraceGroupsWhere) {
+        listTraceGroups(where: $where) {
+          traces {
+            id
+          }
+        }
+      }
+    `;
+
+    const response = await request()
+      .post("/graphql")
+      .send({
+        query,
+        variables: { where: { schemaId: createdTraceGroup.schemaId } },
+      })
+      .set("Accept", "application/json");
+
+    const body = await response.body;
+
+    const listTraceGroups = body.data
+      ?.listTraceGroups as ListTraceGroupsResponse;
+
+    expect(listTraceGroups.traces.length).toBe(1);
+
+    expect(listTraceGroups.traces[0].id).toBe(createdTraceGroup.id);
   });
 });
