@@ -10,7 +10,8 @@
   ],
   "scripts": {
     "build": "NODE_ENV=production webpack --config webpack.config.js",
-    "dev": "NODE_ENV=development webpack serve"
+    "dev": "NODE_ENV=development webpack serve",
+    "test": "echo \"No tests\""
   },
   "license": "MIT",
   "repository": {
