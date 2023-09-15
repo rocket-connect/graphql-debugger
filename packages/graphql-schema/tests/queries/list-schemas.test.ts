@@ -7,8 +7,8 @@ import gql from "gql-tag";
 import { request } from "../utils";
 
 const query = gql`
-  query {
-    listSchemas {
+  query ($where: ListSchemasWhere) {
+    listSchemas(where: $where) {
       schemas {
         id
         hash
@@ -42,6 +42,38 @@ describe("queries/list-schemas", () => {
         createdAt: expect.any(String),
       },
     ]);
+
+    listSchemas.schemas[0].traceGroups = [];
+
+    const parsed = ListSchemasResponseSchema.parse(listSchemas);
+
+    expect(parsed).toEqual(listSchemas);
+  });
+
+  test("should return a schema by id", async () => {
+    const createdSchema = await createTestSchema();
+    await createTestSchema(); // create another so we exclude it
+
+    const response = await request()
+      .post("/graphql")
+      .send({ query, variables: { where: { id: createdSchema.id } } })
+      .set("Accept", "application/json");
+
+    const body = await response.body;
+
+    const listSchemas = body.data?.listSchemas as ListSchemasResponse;
+
+    expect(listSchemas.schemas).toEqual([
+      {
+        id: createdSchema.id,
+        hash: createdSchema.hash,
+        name: createdSchema.name,
+        typeDefs: createdSchema.typeDefs,
+        createdAt: expect.any(String),
+      },
+    ]);
+
+    expect(listSchemas.schemas.length).toBe(1);
 
     listSchemas.schemas[0].traceGroups = [];
 
