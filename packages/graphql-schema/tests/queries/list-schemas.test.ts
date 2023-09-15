@@ -6,23 +6,23 @@ import gql from "gql-tag";
 
 import { request } from "../utils";
 
+const query = gql`
+  query {
+    listSchemas {
+      schemas {
+        id
+        hash
+        name
+        typeDefs
+        createdAt
+      }
+    }
+  }
+`;
+
 describe("queries/list-schemas", () => {
   test("should return a list of schemas", async () => {
     const createdSchema = await createTestSchema();
-
-    const query = gql`
-      query {
-        listSchemas {
-          schemas {
-            id
-            hash
-            name
-            typeDefs
-            createdAt
-          }
-        }
-      }
-    `;
 
     const response = await request()
       .post("/graphql")
