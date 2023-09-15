@@ -28,7 +28,7 @@ const query = gql`
 
 describe("queries/aggregate-spans", () => {
   test("should aggregate and return spans", async () => {
-    // Make a traced schema that points to the collector and run a query against it
+    // Make a traced schema that points to the collector
     const tracedSchema = traceSchema({
       schema: makeExecutableSchema({
         typeDefs: gql`
