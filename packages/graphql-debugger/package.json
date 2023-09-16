@@ -17,7 +17,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node build/index.js",
-    "dev": "NODE_ENV=development ts-node ./src/index.ts"
+    "dev": "cross-env NODE_ENV=development ts-node ./src/index.ts"
   },
   "dependencies": {
     "@graphql-debugger/backend": "workspace:^",
