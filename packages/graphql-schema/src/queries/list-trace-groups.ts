@@ -1,48 +1,44 @@
 import { prisma } from "@graphql-debugger/data-access";
-import { Trace, TraceObject } from "../objects/trace";
+import {
+  ListTraceGroupsResponse,
+  ListTraceGroupsWhere,
+} from "@graphql-debugger/types";
+
+import { InputRef, ObjectRef } from "@pothos/core";
+
+import { TraceObject } from "../objects/trace";
 import { builder } from "../schema";
 
-export type ListTraceGroupsResponse = {
-  traces: Trace[];
-};
-
-export type ListTraceGroupsWhere = {
-  id?: string;
-  schemaId?: string;
-  rootSpanName?: string;
-};
-
-export const ListTraceGroupsWhere = builder.inputType("ListTraceGroupsWhere", {
-  fields: (t) => ({
-    id: t.string({
-      required: false,
+const ListTraceGroupsWhereInput: InputRef<ListTraceGroupsWhere> =
+  builder.inputType("ListTraceGroupsWhere", {
+    fields: (t) => ({
+      id: t.string({
+        required: false,
+      }),
+      schemaId: t.string({
+        required: false,
+      }),
+      rootSpanName: t.string({
+        required: false,
+      }),
     }),
-    schemaId: t.string({
-      required: false,
-    }),
-    rootSpanName: t.string({
-      required: false,
-    }),
-  }),
-});
+  });
 
-export const ListTraceGroupsResponse = builder.objectType(
-  "ListTraceGroupsResponse",
-  {
+const ListTraceGroupsResponseObject: ObjectRef<ListTraceGroupsResponse> =
+  builder.objectType("ListTraceGroupsResponse", {
     fields: (t) => ({
       traces: t.expose("traces", {
         type: [TraceObject],
       }),
     }),
-  },
-);
+  });
 
 builder.queryField("listTraceGroups", (t) =>
   t.field({
-    type: ListTraceGroupsResponse,
+    type: ListTraceGroupsResponseObject,
     args: {
       where: t.arg({
-        type: ListTraceGroupsWhere,
+        type: ListTraceGroupsWhereInput,
         required: false,
       }),
     },

@@ -1,17 +1,13 @@
 import { prisma } from "@graphql-debugger/data-access";
-import { graphql } from "@graphql-debugger/utils";
+import { AttributeNames } from "@graphql-debugger/opentelemetry";
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
-import { AttributeName } from "@graphql-debugger/trace-schema";
-import fastq from "fastq";
-import { schema } from "./schema";
-import { z } from "zod";
+import type { PostTraces } from "@graphql-debugger/types";
+
+import { parse, print } from "graphql";
+
 import { debug } from "../debug";
 
-export type Data = z.infer<typeof schema>["body"];
-
-export const queue = fastq.promise<Data>(worker, 1);
-
-async function worker(data: Data) {
+export async function postTracesWorker(data: PostTraces["body"]) {
   debug("Worker started");
 
   try {
@@ -95,16 +91,16 @@ async function worker(data: Data) {
         const attributes = JSON.parse(span.attributes);
         let traceGroupId = "";
         let schemaHash = "";
-        if (!span.parentSpanId && attributes[AttributeName.SCHEMA_HASH]) {
-          schemaHash = attributes[AttributeName.SCHEMA_HASH];
+        if (!span.parentSpanId && attributes[AttributeNames.SCHEMA_HASH]) {
+          schemaHash = attributes[AttributeNames.SCHEMA_HASH];
         }
 
-        const document = attributes[AttributeName.DOCUMENT];
+        const document = attributes[AttributeNames.DOCUMENT];
         let graphqlDocument: string | undefined;
         if (!span.parentSpanId && document) {
           try {
-            const parsed = graphql.parse(document);
-            const printed = graphql.print(parsed);
+            const parsed = parse(document);
+            const printed = print(parsed);
             graphqlDocument = printed;
           } catch (error) {
             debug("Error parsing document", error);
@@ -112,7 +108,7 @@ async function worker(data: Data) {
           }
         }
 
-        const variables = attributes[AttributeName.OPERATION_ARGS];
+        const variables = attributes[AttributeNames.OPERATION_ARGS];
         let graphqlVariables: string | undefined;
         if (!span.parentSpanId && variables) {
           try {
@@ -123,7 +119,7 @@ async function worker(data: Data) {
           }
         }
 
-        const result = attributes[AttributeName.OPERATION_RESULT];
+        const result = attributes[AttributeNames.OPERATION_RESULT];
         let graphqlResult: string | undefined;
         if (!span.parentSpanId && result) {
           try {
@@ -136,7 +132,7 @@ async function worker(data: Data) {
           }
         }
 
-        const context = attributes[AttributeName.OPERATION_CONTEXT];
+        const context = attributes[AttributeNames.OPERATION_CONTEXT];
         let graphqlContext: string | undefined;
         if (!span.parentSpanId && context) {
           try {
@@ -222,5 +218,3 @@ async function worker(data: Data) {
     debug("Worker finished");
   }
 }
-
-export default queue;

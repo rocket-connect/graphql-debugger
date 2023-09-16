@@ -1,31 +1,39 @@
-import { setupOtel } from "./setup-otel";
-import type { OTLPExporterNodeConfigBase } from "@opentelemetry/otlp-exporter-base";
+import { SetupOtelInput, setupOtel } from "@graphql-debugger/opentelemetry";
+import { traceDirective } from "@graphql-debugger/trace-directive";
 
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { getResolversFromSchema } from "@graphql-tools/utils";
-import { graphql } from "@graphql-debugger/utils";
-import { traceDirective } from "graphql-otel";
+import {
+  FieldDefinitionNode,
+  GraphQLSchema,
+  Kind,
+  parse,
+  print,
+  printSchema,
+  visit,
+} from "graphql";
+
 import { debug } from "./debug";
 import { SchemaExporer } from "./schema-exporter";
 
 export interface TraceSchemaInput {
-  schema: graphql.GraphQLSchema;
-  exporterConfig?: OTLPExporterNodeConfigBase;
+  schema: GraphQLSchema;
+  exporterConfig?: SetupOtelInput["exporterConfig"];
 }
 
 export function traceSchema({
   schema,
   exporterConfig,
-}: TraceSchemaInput): graphql.GraphQLSchema {
+}: TraceSchemaInput): GraphQLSchema {
   debug("Tracing schema");
 
   setupOtel({ exporterConfig });
 
   const directive = traceDirective();
 
-  const ast = graphql.visit(graphql.parse(graphql.printSchema(schema)), {
+  const ast = visit(parse(printSchema(schema)), {
     FieldDefinition: {
-      enter(node: graphql.FieldDefinitionNode) {
+      enter(node: FieldDefinitionNode) {
         const existingTraceDirective = node.directives?.find(
           (directive) => directive.name.value === "trace",
         );
@@ -37,9 +45,9 @@ export function traceSchema({
         const newDirectives = [
           ...(node.directives ?? []),
           {
-            kind: graphql.Kind.DIRECTIVE,
+            kind: Kind.DIRECTIVE,
             name: {
-              kind: graphql.Kind.NAME,
+              kind: Kind.NAME,
               value: "trace",
             },
           },
@@ -57,7 +65,7 @@ export function traceSchema({
 
   const tracedSchema = directive.transformer(
     makeExecutableSchema({
-      typeDefs: [graphql.print(ast), directive.typeDefs],
+      typeDefs: [print(ast), directive.typeDefs],
       resolvers,
     }),
   );
@@ -70,4 +78,4 @@ export function traceSchema({
   return tracedSchema;
 }
 
-export * from "graphql-otel";
+export * from "@graphql-debugger/trace-directive";

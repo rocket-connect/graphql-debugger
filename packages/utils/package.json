@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/utils",
-  "version": "0.0.0-alpha.46",
+  "version": "0.0.0-alpha.48",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -15,15 +15,18 @@
   "scripts": {
     "build": "tsc",
     "start": "node build/index.js",
-    "dev": "cross-env NODE_ENV=development ts-node ./src/index.ts"
+    "dev": "cross-env NODE_ENV=development ts-node ./src/index.ts",
+    "test": "echo \"No tests\""
   },
   "peerDependencies": {
     "graphql": "^16.0.0 || ^17.0.0"
   },
   "dependencies": {
-    "debug": "4.3.4"
+    "debug": "4.3.4",
+    "safe-json-stringify": "1.2.0"
   },
   "devDependencies": {
-    "@types/debug": "4.1.8"
+    "@types/debug": "4.1.8",
+    "@types/safe-json-stringify": "1.1.2"
   }
 }

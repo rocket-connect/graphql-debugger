@@ -1,18 +1,22 @@
-import { useEffect, useState } from "react";
-import { listTraceGroups } from "../../api/list-trace-groups";
-import { useParams } from "react-router-dom";
-import { Span } from "./Span";
-import { createTreeData, ms } from "./utils";
-import { Span as TSpan, Trace } from "../../graphql-types";
-import { IDS } from "../../testing";
+import { UnixNanoTimeStamp } from "@graphql-debugger/time";
+import { graphql } from "@graphql-debugger/types";
 
-const TraceView = ({ spans }: { spans: TSpan[] }) => {
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
+import { listTraceGroups } from "../../api/list-trace-groups";
+import { IDS } from "../../testing";
+import { Span } from "./Span";
+import { createTreeData } from "./utils";
+
+const TraceView = ({ spans }: { spans: graphql.Span[] }) => {
   const treeData = createTreeData(spans);
-  const minTimestamp = Math.min(
-    ...spans.map((t) => Number(BigInt(t.startTimeUnixNano) / ms)),
+
+  const minTimestamp = UnixNanoTimeStamp.earliest(
+    spans.map((t) => UnixNanoTimeStamp.fromString(t.startTimeUnixNano)),
   );
-  const maxTimestamp = Math.max(
-    ...spans.map((t) => Number(BigInt(t.endTimeUnixNano) / ms)),
+  const maxTimestamp = UnixNanoTimeStamp.latest(
+    spans.map((t) => UnixNanoTimeStamp.fromString(t.endTimeUnixNano)),
   );
 
   return (
@@ -30,7 +34,7 @@ const TraceView = ({ spans }: { spans: TSpan[] }) => {
 };
 
 export function TraceViewer() {
-  const [traces, setTraces] = useState<Trace[]>([]);
+  const [traces, setTraces] = useState<graphql.Trace[]>([]);
   const params = useParams();
 
   useEffect(() => {

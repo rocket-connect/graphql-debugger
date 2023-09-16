@@ -1,10 +1,11 @@
-import { graphql } from "@graphql-debugger/utils";
-import { Type } from "./Type";
-import { Selection } from "./Selection";
+import { DocumentNode, Kind, parse } from "graphql";
+
 import { IDS } from "../../testing";
+import { Selection } from "./Selection";
+import { Type } from "./Type";
 
 export function QueryViewer({ doc, spanId }: { doc: string; spanId: string }) {
-  const ast: graphql.DocumentNode = graphql.parse(doc);
+  const ast: DocumentNode = parse(doc);
 
   return (
     <div
@@ -14,7 +15,7 @@ export function QueryViewer({ doc, spanId }: { doc: string; spanId: string }) {
     >
       <pre className="text-xs flex flex-col gap-5">
         {ast?.definitions.map((def, index) => {
-          if (def.kind === graphql.Kind.OPERATION_DEFINITION) {
+          if (def.kind === Kind.OPERATION_DEFINITION) {
             const kind = def.operation;
 
             const variableDefinitions = def.variableDefinitions

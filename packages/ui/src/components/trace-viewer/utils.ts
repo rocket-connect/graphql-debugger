@@ -1,12 +1,10 @@
-import { Span } from "src/graphql-types";
+import { graphql } from "@graphql-debugger/types";
 
-export type RenderTree = Omit<Span, "__typename"> & {
+export type RenderTree = Omit<graphql.Span, "__typename"> & {
   children: RenderTree[];
 };
 
-export const ms = BigInt(1000000);
-
-export const createTreeData = (spanArray: Span[]): RenderTree[] => {
+export const createTreeData = (spanArray: graphql.Span[]): RenderTree[] => {
   const treeData: RenderTree[] = [];
   const lookup: { [key: string]: RenderTree } = {};
 

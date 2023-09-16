@@ -1,13 +1,14 @@
-import { graphql } from "@graphql-debugger/utils";
+import { FieldNode, SelectionNode } from "graphql";
+
 import { Argument } from "./Argument";
 
 export function Field({
   field,
   renderSelection,
 }: {
-  field: graphql.FieldNode;
+  field: FieldNode;
   renderSelection: (
-    selection: graphql.SelectionNode,
+    selection: SelectionNode,
     index: number,
   ) => JSX.Element | null;
 }) {

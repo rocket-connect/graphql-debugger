@@ -1,0 +1,24 @@
+{
+  "name": "@graphql-debugger/types",
+  "version": "0.0.0-alpha.48",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rocket-connect/graphql-debugger.git"
+  },
+  "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"No tests\""
+  },
+  "peerDependencies": {},
+  "dependencies": {},
+  "devDependencies": {
+    "@graphql-debugger/schemas": "workspace:^"
+  }
+}

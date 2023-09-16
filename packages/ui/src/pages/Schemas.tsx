@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
-import { Schema } from "../graphql-types";
-import { listSchemas } from "../api/list-schemas";
-import { logo } from "../utils/images";
-import { IDS } from "../testing";
 import { TimeStamp } from "@graphql-debugger/time";
+import { graphql } from "@graphql-debugger/types";
+
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import { listSchemas } from "../api/list-schemas";
+import { IDS } from "../testing";
+import { logo } from "../utils/images";
+
 export function Schemas() {
-  const [schemas, setSchemas] = useState<Schema[]>([]);
+  const [schemas, setSchemas] = useState<graphql.Schema[]>([]);
 
   useEffect(() => {
     (async () => {

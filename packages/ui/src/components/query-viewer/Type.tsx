@@ -1,11 +1,11 @@
-import { graphql } from "@graphql-debugger/utils";
+import { Kind, TypeNode } from "graphql";
 
-export function Type({ type }: { type: graphql.TypeNode }) {
-  if (type.kind === graphql.Kind.NAMED_TYPE) {
+export function Type({ type }: { type: TypeNode }) {
+  if (type.kind === Kind.NAMED_TYPE) {
     return <span>{type.name.value}</span>;
   }
 
-  if (type.kind === graphql.Kind.LIST_TYPE) {
+  if (type.kind === Kind.LIST_TYPE) {
     return (
       <span>
         [<Type type={type.type} />]
@@ -13,7 +13,7 @@ export function Type({ type }: { type: graphql.TypeNode }) {
     );
   }
 
-  if (type.kind === graphql.Kind.NON_NULL_TYPE) {
+  if (type.kind === Kind.NON_NULL_TYPE) {
     return (
       <span>
         <Type type={type.type} />!

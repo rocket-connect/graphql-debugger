@@ -1,18 +1,14 @@
-import { z } from "zod";
-import { request } from "./utils";
-import { ExportTraceServiceRequestSchema } from "../src/collector/schema";
 import { prisma } from "@graphql-debugger/data-access";
+import { PostTraces } from "@graphql-debugger/types";
+
+import { describe, expect, test } from "@jest/globals";
 import util from "util";
-import { describe, beforeEach, test, expect } from "@jest/globals";
+
+import { request } from "./utils";
 
 const sleep = util.promisify(setTimeout);
 
 describe("POST /v1/traces", () => {
-  beforeEach(async () => {
-    await prisma.span.deleteMany();
-    await prisma.traceGroup.deleteMany();
-  });
-
   test("should throw when no body is sent", async () => {
     const response = await request().post("/v1/traces").send({});
 
@@ -20,24 +16,11 @@ describe("POST /v1/traces", () => {
 
     const body = await response.body;
 
-    expect(body.message).toMatchInlineSnapshot(`
-"[
-  {
-    "code": "invalid_type",
-    "expected": "array",
-    "received": "undefined",
-    "path": [
-      "body",
-      "resourceSpans"
-    ],
-    "message": "Required"
-  }
-]"
-`);
+    expect(body.message).toMatchSnapshot();
   });
 
   test("should throw span validation error when not sent correctly", async () => {
-    const payload: z.infer<typeof ExportTraceServiceRequestSchema> = {
+    const payload: PostTraces["body"] = {
       resourceSpans: [
         {
           scopeSpans: [
@@ -61,126 +44,11 @@ describe("POST /v1/traces", () => {
 
     const body = await response.body;
 
-    expect(body.message).toMatchInlineSnapshot(`
-"[
-  {
-    "code": "invalid_type",
-    "expected": "string",
-    "received": "undefined",
-    "path": [
-      "body",
-      "resourceSpans",
-      0,
-      "scopeSpans",
-      0,
-      "spans",
-      0,
-      "traceId"
-    ],
-    "message": "Required"
-  },
-  {
-    "code": "invalid_type",
-    "expected": "string",
-    "received": "undefined",
-    "path": [
-      "body",
-      "resourceSpans",
-      0,
-      "scopeSpans",
-      0,
-      "spans",
-      0,
-      "name"
-    ],
-    "message": "Required"
-  },
-  {
-    "code": "invalid_type",
-    "expected": "number",
-    "received": "undefined",
-    "path": [
-      "body",
-      "resourceSpans",
-      0,
-      "scopeSpans",
-      0,
-      "spans",
-      0,
-      "kind"
-    ],
-    "message": "Required"
-  },
-  {
-    "code": "invalid_type",
-    "expected": "number",
-    "received": "undefined",
-    "path": [
-      "body",
-      "resourceSpans",
-      0,
-      "scopeSpans",
-      0,
-      "spans",
-      0,
-      "startTimeUnixNano"
-    ],
-    "message": "Required"
-  },
-  {
-    "code": "invalid_type",
-    "expected": "number",
-    "received": "undefined",
-    "path": [
-      "body",
-      "resourceSpans",
-      0,
-      "scopeSpans",
-      0,
-      "spans",
-      0,
-      "endTimeUnixNano"
-    ],
-    "message": "Required"
-  },
-  {
-    "code": "invalid_type",
-    "expected": "array",
-    "received": "undefined",
-    "path": [
-      "body",
-      "resourceSpans",
-      0,
-      "scopeSpans",
-      0,
-      "spans",
-      0,
-      "attributes"
-    ],
-    "message": "Required"
-  },
-  {
-    "code": "invalid_type",
-    "expected": "object",
-    "received": "undefined",
-    "path": [
-      "body",
-      "resourceSpans",
-      0,
-      "scopeSpans",
-      0,
-      "spans",
-      0,
-      "status"
-    ],
-    "message": "Required"
-  }
-]"
-`);
+    expect(body.message).toMatchSnapshot();
   });
 
   test("should receive traces and map them correctly in the database", async () => {
-    const payload: z.infer<typeof ExportTraceServiceRequestSchema> = {
+    const payload: PostTraces["body"] = {
       resourceSpans: [
         {
           scopeSpans: [

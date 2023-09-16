@@ -1,10 +1,10 @@
-import { AggregateSpansResponse } from "../../graphql-types";
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
+import { graphql } from "@graphql-debugger/types";
 
 export function Stats({
   aggregate,
 }: {
-  aggregate: AggregateSpansResponse | null;
+  aggregate: graphql.AggregateSpansResponse | null;
 }) {
   const lastResolveUnixNano = UnixNanoTimeStamp.fromString(
     aggregate?.lastResolved || "0",
@@ -12,6 +12,8 @@ export function Stats({
   const averageDurationUnixNano = UnixNanoTimeStamp.fromString(
     aggregate?.averageDuration || "0",
   );
+
+  const hasResolved = lastResolveUnixNano.toString() !== "0";
 
   return (
     <div className="pl-2 text-xs font-light text-graphiql-light">
@@ -30,12 +32,16 @@ export function Stats({
           Average Duration:{" "}
           <span className="font-bold">{averageDurationUnixNano.toMS()} ms</span>
         </li>
-        <li>
-          Last Resolved:{" "}
-          <span className="font-bold">
-            {lastResolveUnixNano.toTimeStamp().moment.fromNow()}
-          </span>
-        </li>
+        {hasResolved ? (
+          <li>
+            Last Resolved:{" "}
+            <span className="font-bold">
+              {lastResolveUnixNano.formatUnixNanoTimestamp()}
+            </span>
+          </li>
+        ) : (
+          <></>
+        )}
       </ul>
     </div>
   );

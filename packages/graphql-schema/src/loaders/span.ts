@@ -1,7 +1,8 @@
-import DataLoader from "dataloader";
 import { prisma } from "@graphql-debugger/data-access";
-import { Span } from "../objects/span";
 import { TimeStamp, UnixNanoTimeStamp } from "@graphql-debugger/time";
+import { Span } from "@graphql-debugger/types";
+
+import DataLoader from "dataloader";
 
 export function rootSpanLoader() {
   return new DataLoader(
@@ -29,16 +30,20 @@ export function rootSpanLoader() {
           traceId: span.traceId,
           name: span.name as string,
           kind: span.kind,
-          startTimeUnixNano: new UnixNanoTimeStamp(span.startTimeUnixNano),
-          endTimeUnixNano: new UnixNanoTimeStamp(span.endTimeUnixNano),
-          durationNano: new UnixNanoTimeStamp(span.durationNano),
+          startTimeUnixNano: new UnixNanoTimeStamp(
+            span.startTimeUnixNano,
+          ).toString(),
+          endTimeUnixNano: new UnixNanoTimeStamp(
+            span.endTimeUnixNano,
+          ).toString(),
+          durationNano: new UnixNanoTimeStamp(span.durationNano).toString(),
           graphqlDocument: span.graphqlDocument,
           graphqlVariables: span.graphqlVariables,
           graphqlResult: span.graphqlResult,
           graphqlContext: span.graphqlContext,
           timestamp: 0,
-          createdAt: new TimeStamp(span.createdAt),
-          updatedAt: new TimeStamp(span.updatedAt),
+          createdAt: new TimeStamp(span.createdAt).toString(),
+          updatedAt: new TimeStamp(span.updatedAt).toString(),
           errorMessage: span.errorMessage,
           errorStack: span.errorStack,
         };
@@ -69,16 +74,20 @@ export function spanLoader() {
             traceId: span.traceId,
             name: span.name as string,
             kind: span.kind,
-            startTimeUnixNano: new UnixNanoTimeStamp(span.startTimeUnixNano),
-            endTimeUnixNano: new UnixNanoTimeStamp(span.endTimeUnixNano),
-            durationNano: new UnixNanoTimeStamp(span.durationNano),
+            startTimeUnixNano: new UnixNanoTimeStamp(
+              span.startTimeUnixNano,
+            ).toString(),
+            endTimeUnixNano: new UnixNanoTimeStamp(
+              span.endTimeUnixNano,
+            ).toString(),
+            durationNano: new UnixNanoTimeStamp(span.durationNano).toString(),
             graphqlDocument: span.graphqlDocument,
             graphqlVariables: span.graphqlVariables,
             graphqlResult: span.graphqlResult,
             graphqlContext: span.graphqlContext,
             timestamp: 0,
-            createdAt: new TimeStamp(span.createdAt),
-            updatedAt: new TimeStamp(span.updatedAt),
+            createdAt: new TimeStamp(span.createdAt).toString(),
+            updatedAt: new TimeStamp(span.updatedAt).toString(),
             errorMessage: span.errorMessage,
             errorStack: span.errorStack,
           };

@@ -1,5 +1,7 @@
 import { BACKEND_PORT } from "@graphql-debugger/backend";
+
 import puppeteer, { Browser, Page } from "puppeteer";
+
 export { Browser } from "puppeteer";
 
 let browser: Browser | null;

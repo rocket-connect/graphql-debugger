@@ -1,38 +1,40 @@
 import { prisma } from "@graphql-debugger/data-access";
+import {
+  DeleteTracesResponse,
+  DeleteTracesWhere,
+} from "@graphql-debugger/types";
+
+import { InputRef, ObjectRef } from "@pothos/core";
+
 import { builder } from "../schema";
 
-export type DeleteTracesWhere = {
-  schemaId: string;
-  rootSpanName?: string;
-};
-
-export type DeleteTracesResponse = {
-  success: boolean;
-};
-
-export const DeleteTracesWhere = builder.inputType("DeleteTracesWhere", {
-  fields: (t) => ({
-    schemaId: t.string({
-      required: true,
+const DeleteTracesWhereInput: InputRef<DeleteTracesWhere> = builder.inputType(
+  "DeleteTracesWhere",
+  {
+    fields: (t) => ({
+      schemaId: t.string({
+        required: true,
+      }),
+      rootSpanName: t.string({
+        required: false,
+      }),
     }),
-    rootSpanName: t.string({
-      required: false,
-    }),
-  }),
-});
+  },
+);
 
-export const DeleteTracesResponse = builder.objectType("DeleteTracesResponse", {
-  fields: (t) => ({
-    success: t.exposeBoolean("success"),
-  }),
-});
+const DeleteTracesResponseObject: ObjectRef<DeleteTracesResponse> =
+  builder.objectType("DeleteTracesResponse", {
+    fields: (t) => ({
+      success: t.exposeBoolean("success"),
+    }),
+  });
 
 builder.mutationField("deleteTraces", (t) =>
   t.field({
-    type: DeleteTracesResponse,
+    type: DeleteTracesResponseObject,
     args: {
       where: t.arg({
-        type: DeleteTracesWhere,
+        type: DeleteTracesWhereInput,
         required: true,
       }),
     },

@@ -1,20 +1,16 @@
 import {
-  ListTraceGroupsResponse,
-  ListTraceGroupsWhere,
-} from "../queries/list-trace-groups";
-import { Span } from "./span";
-import { Trace } from "./trace";
-import { Schema } from "./schema";
-import {
   AggregateSpansResponse,
   AggregateSpansWhere,
-  ListSchemasResponse,
-  ListSchemasWhere,
-} from "../queries";
-import {
   DeleteTracesResponse,
   DeleteTracesWhere,
-} from "../mutations/delete-traces";
+  ListSchemasResponse,
+  ListSchemasWhere,
+  ListTraceGroupsResponse,
+  ListTraceGroupsWhere,
+  Schema,
+  Span,
+  Trace,
+} from "@graphql-debugger/types";
 
 export interface Objects {
   Trace: Trace;

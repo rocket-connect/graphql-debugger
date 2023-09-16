@@ -1,4 +1,5 @@
-import { DeleteTracesWhere, Mutation } from "../graphql-types";
+import { graphql } from "@graphql-debugger/types";
+
 import { api } from "./api";
 
 const DeleteTracesQuery = /* GraphQL */ `
@@ -12,9 +13,11 @@ const DeleteTracesQuery = /* GraphQL */ `
 export async function deleteTraces({
   where,
 }: {
-  where?: DeleteTracesWhere;
+  where?: graphql.DeleteTracesWhere;
 } = {}): Promise<void> {
-  const { errors } = await api<{ deleteTraces: Mutation["deleteTraces"] }>({
+  const { errors } = await api<{
+    deleteTraces: graphql.Mutation["deleteTraces"];
+  }>({
     query: DeleteTracesQuery,
     variables: {
       where,

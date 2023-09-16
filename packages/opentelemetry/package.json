@@ -1,0 +1,29 @@
+{
+  "name": "@graphql-debugger/opentelemetry",
+  "version": "0.0.0-alpha.48",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rocket-connect/graphql-debugger.git"
+  },
+  "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"No tests\""
+  },
+  "dependencies": {
+    "@opentelemetry/api": "1.6.0",
+    "@opentelemetry/context-async-hooks": "1.15.2",
+    "@opentelemetry/exporter-trace-otlp-http": "0.41.2",
+    "@opentelemetry/resources": "1.15.2",
+    "@opentelemetry/sdk-trace-base": "1.17.0",
+    "@opentelemetry/semantic-conventions": "1.15.2",
+    "@opentelemetry/otlp-exporter-base": "0.43.0"
+  },
+  "devDependencies": {}
+}

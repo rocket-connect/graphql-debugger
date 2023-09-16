@@ -1,4 +1,5 @@
 import { GraphQLOTELContext } from "@graphql-debugger/trace-schema";
+
 import { rootSpanLoader, spanLoader } from "./loaders/span";
 
 export type Context = {

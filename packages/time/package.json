@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/time",
-  "version": "0.0.0-alpha.46",
+  "version": "0.0.0-alpha.48",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -14,6 +14,7 @@
   "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
   "scripts": {
     "build": "tsc",
+    "test": "jest",
     "start": "node build/index.js",
     "dev": "cross-env NODE_ENV=development ts-node ./src/index.ts"
   },

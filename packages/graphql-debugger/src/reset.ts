@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 import path from "path";
 
 const { execSync } = require("child_process");

@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/graphql-schema",
-  "version": "0.0.0-alpha.46",
+  "version": "0.0.0-alpha.48",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -14,14 +14,23 @@
   "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
   "scripts": {
     "build": "tsc && npm run generate-types",
+    "test": "NODE_ENV=test jest --runInBand",
     "generate-types": "ts-node ./src/generate && graphql-codegen --config ./src/codegen.ts"
   },
+  "peerDependencies": {
+    "graphql": "^16.0.0 || ^17.0.0"
+  },
   "dependencies": {
+    "@graphql-debugger/data-access": "workspace:^",
     "@graphql-debugger/time": "workspace:^",
     "@graphql-debugger/trace-schema": "workspace:^",
+    "@graphql-debugger/types": "workspace:^",
+    "@graphql-debugger/schemas": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
-    "@graphql-debugger/data-access": "workspace:^",
-    "@pothos/core": "3.33.0",
+    "@graphql-debugger/collector-proxy": "workspace:^",
+    "@graphql-tools/schema": "10.0.0",
+    "@graphql-tools/utils": "10.0.6",
+    "@pothos/core": "3.35.0",
     "dataloader": "2.2.2",
     "graphql-yoga": "4.0.4"
   },
@@ -30,6 +39,7 @@
     "@graphql-codegen/client-preset": "4.1.0",
     "@graphql-codegen/typescript": "4.0.1",
     "@graphql-codegen/typescript-resolvers": "4.0.1",
-    "@opentelemetry/otlp-transformer": "0.41.2"
+    "express": "4.18.2",
+    "gql-tag": "^1.0.1"
   }
 }

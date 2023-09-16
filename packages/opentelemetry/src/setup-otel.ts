@@ -5,20 +5,31 @@ import { OTLPExporterNodeConfigBase } from "@opentelemetry/otlp-exporter-base";
 import { Resource } from "@opentelemetry/resources";
 import {
   BasicTracerProvider,
+  InMemorySpanExporter,
   SimpleSpanProcessor,
 } from "@opentelemetry/sdk-trace-base";
 import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
 
-export function setupOtel({
-  exporterConfig,
-}: {
+export type SetupOtelInput = {
+  inMemory?: boolean;
   exporterConfig?: OTLPExporterNodeConfigBase;
-}) {
+};
+
+export function setupOtel({
+  inMemory,
+  exporterConfig,
+}: SetupOtelInput): OTLPTraceExporter | InMemorySpanExporter {
+  let exporter: OTLPTraceExporter | InMemorySpanExporter =
+    new OTLPTraceExporter();
+  if (inMemory) {
+    exporter = new InMemorySpanExporter();
+  } else {
+    exporter = new OTLPTraceExporter(exporterConfig);
+  }
+
   const contextManager = new AsyncHooksContextManager().enable();
 
   api.context.setGlobalContextManager(contextManager);
-
-  const otlpTraceExporter = new OTLPTraceExporter(exporterConfig);
 
   const provider = new BasicTracerProvider({
     resource: new Resource({
@@ -28,7 +39,11 @@ export function setupOtel({
     }),
   });
 
-  provider.addSpanProcessor(new SimpleSpanProcessor(otlpTraceExporter));
+  provider.addSpanProcessor(new SimpleSpanProcessor(exporter));
 
   provider.register();
+
+  return exporter;
 }
+
+export { OTLPTraceExporter, InMemorySpanExporter };

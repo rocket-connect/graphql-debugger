@@ -1,37 +1,38 @@
 import { prisma } from "@graphql-debugger/data-access";
-import { SchemaObject, Schema } from "../objects/schema";
+import { ListSchemasResponse, ListSchemasWhere } from "@graphql-debugger/types";
+
+import { InputRef, ObjectRef } from "@pothos/core";
+
+import { SchemaObject } from "../objects/schema";
 import { builder } from "../schema";
 
-export type ListSchemasWhere = {
-  id?: string;
-};
-
-export type ListSchemasResponse = {
-  schemas: Schema[];
-};
-
-export const ListSchemasWhere = builder.inputType("ListSchemasWhere", {
-  fields: (t) => ({
-    id: t.string({
-      required: false,
+const ListSchemasWhereInput: InputRef<ListSchemasWhere> = builder.inputType(
+  "ListSchemasWhere",
+  {
+    fields: (t) => ({
+      id: t.string({
+        required: false,
+      }),
     }),
-  }),
-});
+  },
+);
 
-export const ListSchemasResponse = builder.objectType("ListSchemasResponse", {
-  fields: (t) => ({
-    schemas: t.expose("schemas", {
-      type: [SchemaObject],
+const ListSchemasResponseObject: ObjectRef<ListSchemasResponse> =
+  builder.objectType("ListSchemasResponse", {
+    fields: (t) => ({
+      schemas: t.field({
+        type: [SchemaObject],
+        resolve: (root) => root.schemas,
+      }),
     }),
-  }),
-});
+  });
 
 builder.queryField("listSchemas", (t) =>
   t.field({
-    type: ListSchemasResponse,
+    type: ListSchemasResponseObject,
     args: {
       where: t.arg({
-        type: ListSchemasWhere,
+        type: ListSchemasWhereInput,
         required: false,
       }),
     },
@@ -52,7 +53,7 @@ builder.queryField("listSchemas", (t) =>
           hash: schema.hash,
           typeDefs: schema.typeDefs,
           traceGroups: [],
-          createdAt: schema.createdAt,
+          createdAt: schema.createdAt.toISOString(),
         })),
       };
     },
