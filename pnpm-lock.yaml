@@ -390,6 +390,10 @@ importers:
         version: 2.6.4
 
   packages/types:
+    dependencies:
+      graphql:
+        specifier: ^16.0.0 || ^17.0.0
+        version: 16.8.0
     devDependencies:
       '@graphql-debugger/schemas':
         specifier: workspace:^
@@ -6974,6 +6978,11 @@ packages:
   /graphql@16.0.0:
     resolution: {integrity: sha512-n9NxoRfwnpYBZB/WJ7L166gyrShuZ8qYgVaX8oxVyELcJfAwkvwPt6WlYIl90WRlzqDjaNWvLmNOSnKs5llZWQ==}
     engines: {node: ^12.22.0 || ^14.16.0 || >=16.0.0}
+
+  /graphql@16.8.0:
+    resolution: {integrity: sha512-0oKGaR+y3qcS5mCu1vb7KG+a89vjn06C7Ihq/dDl3jA+A8B3TKomvi3CiEcVLJQGalbu8F52LxkOym7U5sSfbg==}
+    engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
+    dev: false
 
   /handle-thing@2.0.1:
     resolution: {integrity: sha512-9Qn4yBxelxoh2Ow62nP+Ka/kMnOXRi8BXnRaUwezLNhqelnN49xKz4F/dPP8OYLxLxq6JDtZb2i9XznUQbNPTg==}
