@@ -57,9 +57,10 @@ export function SchemaTraces({ schemaId }: { schemaId: string }) {
     <div className="relative" id={IDS.SCHEMA_TRACES}>
       <table className="text-xs text-left w-full table-fixed">
         <colgroup>
-          <col className="w-1/3" />
-          <col className="w-1/3" />
-          <col className="w-1/3" />
+          <col className="w-1/4" />
+          <col className="w-1/4" />
+          <col className="w-1/4" />
+          <col className="w-1/4" />
         </colgroup>
         <thead className="text-xs text-graphiql-light">
           <tr>
@@ -70,7 +71,10 @@ export function SchemaTraces({ schemaId }: { schemaId: string }) {
               Duration
             </th>
             <th scope="col" className="px-6 py-3">
-              When
+              Start
+            </th>
+            <th scope="col" className="px-6 py-3">
+              End
             </th>
           </tr>
         </thead>
@@ -82,9 +86,14 @@ export function SchemaTraces({ schemaId }: { schemaId: string }) {
             const startTimeUnixNano = UnixNanoTimeStamp.fromString(
               rootSpan?.startTimeUnixNano || "0",
             );
+            const endTimeUnixNano = UnixNanoTimeStamp.fromString(
+              rootSpan?.endTimeUnixNano || "0",
+            );
             const durationUnixNano = UnixNanoTimeStamp.fromString(
               rootSpan?.durationNano || "0",
             );
+
+            const { value, unit } = durationUnixNano.toSIUnits();
 
             let traceClasses = "absolute h-3 ";
             if (isSelected) {
@@ -110,11 +119,12 @@ export function SchemaTraces({ schemaId }: { schemaId: string }) {
                 >
                   {rootSpan?.name}
                 </th>
-                <td className="px-6 py-4">
-                  {durationUnixNano.toMS().toFixed(2)} ms
-                </td>
+                <td className="px-6 py-4">{`${value.toFixed(2)} ${unit}`}</td>
                 <td className="px-6 py-4">
                   {startTimeUnixNano.formatUnixNanoTimestamp()}
+                </td>
+                <td className="px-6 py-4">
+                  {endTimeUnixNano.formatUnixNanoTimestamp()}
                 </td>
               </tr>
             );
