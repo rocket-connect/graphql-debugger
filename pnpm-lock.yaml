@@ -170,9 +170,6 @@ importers:
       '@graphql-debugger/ui':
         specifier: workspace:^
         version: link:../ui
-      '@graphql-debugger/utils':
-        specifier: workspace:^
-        version: link:../../packages/utils
       cors:
         specifier: 2.8.5
         version: 2.8.5
@@ -207,9 +204,6 @@ importers:
       '@graphql-debugger/trace-schema':
         specifier: workspace:^
         version: link:../../packages/trace-schema
-      '@graphql-debugger/utils':
-        specifier: workspace:^
-        version: link:../../packages/utils
       '@graphql-tools/schema':
         specifier: 10.0.0
         version: 10.0.0(graphql@16.0.0)
@@ -290,9 +284,6 @@ importers:
       '@fontsource/roboto':
         specifier: 5.0.8
         version: 5.0.8
-      '@graphql-debugger/utils':
-        specifier: workspace:^
-        version: link:../../packages/utils
       graphql:
         specifier: ^16.0.0 || ^17.0.0
         version: 16.0.0
@@ -324,9 +315,6 @@ importers:
       '@graphql-debugger/ui':
         specifier: workspace:^
         version: link:../apps/ui
-      '@graphql-debugger/utils':
-        specifier: workspace:^
-        version: link:../packages/utils
       '@graphql-tools/schema':
         specifier: 10.0.0
         version: 10.0.0(graphql@16.0.0)
@@ -373,9 +361,6 @@ importers:
       '@graphql-debugger/backend':
         specifier: workspace:^
         version: link:../../apps/backend
-      '@graphql-debugger/utils':
-        specifier: workspace:^
-        version: link:../utils
 
   packages/graphql-schema:
     dependencies:
@@ -471,9 +456,6 @@ importers:
 
   packages/queue:
     dependencies:
-      '@graphql-debugger/utils':
-        specifier: workspace:^
-        version: link:../utils
       fastq:
         specifier: 1.15.0
         version: 1.15.0

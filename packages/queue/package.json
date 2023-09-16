@@ -19,7 +19,6 @@
     "test": "echo \"No tests\""
   },
   "dependencies": {
-    "@graphql-debugger/utils": "workspace:^",
     "fastq": "1.15.0"
   },
   "devDependencies": {}

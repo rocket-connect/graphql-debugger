@@ -17,9 +17,10 @@
     "outDir": "build",
     "noEmit": false,
     "paths": {
-      "@graphql-debugger/time": ["../time"]
+      "@graphql-debugger/time": ["../time"],
+      "@graphql-debugger/utils": ["../utils"]
     }
   },
-  "references": [{ "path": "../time" }],
+  "references": [{ "path": "../time" }, { "path": "../utils" }],
   "include": ["src/**/*"]
 }

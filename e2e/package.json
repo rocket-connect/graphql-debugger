@@ -19,7 +19,6 @@
     "graphql": "^16.0.0 || ^17.0.0"
   },
   "dependencies": {
-    "@graphql-debugger/utils": "workspace:^",
     "@graphql-debugger/ui": "workspace:^",
     "@graphql-debugger/backend": "workspace:^",
     "@graphql-debugger/trace-schema": "workspace:^",

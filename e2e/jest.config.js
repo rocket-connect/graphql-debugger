@@ -1,3 +1,7 @@
+const { compilerOptions } = require("./tsconfig.json");
+const { pathsToModuleNameMapper } = require("ts-jest");
+
+/** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
   modulePathIgnorePatterns: [
     "<rootDir>/build/",
@@ -6,9 +10,10 @@ module.exports = {
   ],
   testTimeout: 150000,
   setupFilesAfterEnv: ["<rootDir>/tests/setup.ts"],
-  globals: {
-    "ts-jest": {
-      tsconfig: "tsconfig.test.json",
-    },
+  transform: {
+    "\\.ts$": ["ts-jest", { tsconfig: "tsconfig.test.json" }],
   },
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
+    prefix: __dirname,
+  }),
 };

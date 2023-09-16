@@ -2,12 +2,10 @@
   "extends": "@tsconfig/node18/tsconfig.json",
   "compilerOptions": {
     "target": "ES2020",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true,
     "outDir": "build",
+    "rootDir": "./src",
     "declarationMap": true,
-    "declaration": true
+    "declaration": true,
+    "composite": true
   }
 }
