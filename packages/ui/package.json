@@ -9,8 +9,8 @@
     "public"
   ],
   "scripts": {
-    "build": "NODE_ENV=production webpack --config webpack.config.js",
-    "dev": "NODE_ENV=development webpack serve",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
+    "dev": "cross-env NODE_ENV=development webpack serve",
     "test": "echo \"No tests\""
   },
   "license": "MIT",

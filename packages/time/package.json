@@ -16,7 +16,7 @@
     "build": "tsc",
     "test": "jest",
     "start": "node build/index.js",
-    "dev": "NODE_ENV=development ts-node ./src/index.ts"
+    "dev": "cross-env NODE_ENV=development ts-node ./src/index.ts"
   },
   "dependencies": {
     "moment": "2.29.4"
