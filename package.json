@@ -3,7 +3,7 @@
   "version": "0.0.0-alpha.48",
   "private": true,
   "scripts": {
-    "dev": "DEBUG=\"@graphql-debugger:*\" TRACE_SCHEMA=\"true\" turbo dev --filter \"graphql-debugger\"",
+    "dev": "cross-env DEBUG=\"@graphql-debugger:*\" TRACE_SCHEMA=\"true\" turbo dev --filter \"graphql-debugger\"",
     "build": "turbo build",
     "test:sequential": "pnpm recursive exec -- sh -c 'pnpm run test || true'",
     "test": "turbo test",
