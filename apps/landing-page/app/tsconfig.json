@@ -15,7 +15,11 @@
     "rootDir": "src",
     "baseUrl": ".",
     "outDir": "build",
-    "noEmit": false
+    "noEmit": false,
+    "paths": {
+      "@graphql-debugger/time": ["../time"]
+    }
   },
+  "references": [{ "path": "../time" }],
   "include": ["src/**/*"]
 }

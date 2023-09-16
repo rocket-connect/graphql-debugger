@@ -6,6 +6,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
 module.exports = {
   mode: "none",
@@ -14,6 +15,7 @@ module.exports = {
   target: "web",
   resolve: {
     extensions: [".ts", ".tsx", ".mjs", ".json", ".js"],
+    plugins: [new TsconfigPathsPlugin()],
   },
   ...(process.env.NODE_ENV === "production"
     ? {

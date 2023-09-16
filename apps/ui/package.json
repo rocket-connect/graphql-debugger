@@ -24,7 +24,6 @@
   },
   "dependencies": {
     "@fontsource/roboto": "5.0.8",
-    "@graphql-debugger/time": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
     "react": "18.2.0",
     "react-dom": "18.2.0",

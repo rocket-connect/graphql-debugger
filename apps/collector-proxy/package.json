@@ -20,7 +20,6 @@
     "graphql": "^16.0.0 || ^17.0.0"
   },
   "dependencies": {
-    "@graphql-debugger/time": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
     "@graphql-debugger/data-access": "workspace:^",
     "@graphql-debugger/trace-schema": "workspace:^",

@@ -204,9 +204,6 @@ importers:
       '@graphql-debugger/schemas':
         specifier: workspace:^
         version: link:../../packages/schemas
-      '@graphql-debugger/time':
-        specifier: workspace:^
-        version: link:../../packages/time
       '@graphql-debugger/trace-schema':
         specifier: workspace:^
         version: link:../../packages/trace-schema
@@ -293,9 +290,6 @@ importers:
       '@fontsource/roboto':
         specifier: 5.0.8
         version: 5.0.8
-      '@graphql-debugger/time':
-        specifier: workspace:^
-        version: link:../../packages/time
       '@graphql-debugger/utils':
         specifier: workspace:^
         version: link:../../packages/utils
@@ -486,9 +480,6 @@ importers:
 
   packages/schemas:
     dependencies:
-      '@graphql-debugger/time':
-        specifier: workspace:^
-        version: link:../time
       zod:
         specifier: 3.22.2
         version: 3.22.2
