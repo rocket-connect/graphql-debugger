@@ -213,7 +213,7 @@ describe("UnixNanoTimeStamp", () => {
         timeZone: "utc",
       });
 
-      const expectedFormat = "Sep 8, 2023 at 10:51:39 PM UTC";
+      const expectedFormat = "Sep 8, 2023 at 10:51:39.416 PM UTC";
 
       expect(formattedTimestamp).toContain(expectedFormat);
     });
