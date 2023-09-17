@@ -22,7 +22,6 @@
   "dependencies": {
     "@graphql-debugger/data-access": "workspace:^",
     "@graphql-debugger/trace-schema": "workspace:^",
-    "@graphql-debugger/opentelemetry": "workspace:^",
     "@graphql-tools/schema": "10.0.0",
     "@graphql-tools/utils": "10.0.6",
     "express": "4.18.2"

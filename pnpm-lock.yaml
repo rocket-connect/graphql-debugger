@@ -192,9 +192,6 @@ importers:
       '@graphql-debugger/data-access':
         specifier: workspace:^
         version: link:../../packages/data-access
-      '@graphql-debugger/opentelemetry':
-        specifier: workspace:^
-        version: link:../../packages/opentelemetry
       '@graphql-debugger/trace-schema':
         specifier: workspace:^
         version: link:../../packages/trace-schema

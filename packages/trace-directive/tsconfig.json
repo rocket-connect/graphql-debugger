@@ -5,13 +5,11 @@
     "outDir": "build",
     "declarationMap": true,
     "declaration": true,
-    "rootDir": "./src/",
     "baseUrl": ".",
     "paths": {
+      "@graphql-debugger/opentelemetry": ["../opentelemetry"],
       "@graphql-debugger/utils": ["../utils"]
     }
   },
-  "references": [{ "path": "../utils" }],
-  "exclude": ["tests/"],
-  "include": ["src/**/*"]
+  "references": [{ "path": "../opentelemetry" }, { "path": "../utils" }]
 }

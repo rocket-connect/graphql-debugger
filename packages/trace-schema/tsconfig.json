@@ -8,11 +8,16 @@
     "rootDir": "./src/",
     "baseUrl": ".",
     "paths": {
+      "@graphql-debugger/opentelemetry": ["../opentelemetry"],
       "@graphql-debugger/types": ["../types"],
       "@graphql-debugger/utils": ["../utils"]
     }
   },
-  "references": [{ "path": "../types" }, { "path": "../utils" }],
+  "references": [
+    { "path": "../opentelemetry" },
+    { "path": "../types" },
+    { "path": "../utils" }
+  ],
   "exclude": ["tests/"],
   "include": ["src/**/*"]
 }
