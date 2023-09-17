@@ -8,10 +8,11 @@
     "rootDir": "./src/",
     "baseUrl": ".",
     "paths": {
+      "@graphql-debugger/types": ["../types"],
       "@graphql-debugger/utils": ["../utils"]
     }
   },
-  "references": [{ "path": "../utils" }],
+  "references": [{ "path": "../types" }, { "path": "../utils" }],
   "exclude": ["tests/"],
   "include": ["src/**/*"]
 }

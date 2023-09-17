@@ -1,6 +1,6 @@
 import { prisma } from "@graphql-debugger/data-access";
 import { TimeStamp, UnixNanoTimeStamp } from "@graphql-debugger/time";
-import {
+import type {
   AggregateSpansResponse,
   AggregateSpansWhere,
 } from "@graphql-debugger/types";

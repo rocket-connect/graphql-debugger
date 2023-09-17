@@ -1,4 +1,4 @@
-import { Span } from "@graphql-debugger/types";
+import type { Span } from "@graphql-debugger/types";
 
 import { ObjectRef } from "@pothos/core";
 

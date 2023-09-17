@@ -1,5 +1,8 @@
 import { prisma } from "@graphql-debugger/data-access";
-import { ListSchemasResponse, ListSchemasWhere } from "@graphql-debugger/types";
+import type {
+  ListSchemasResponse,
+  ListSchemasWhere,
+} from "@graphql-debugger/types";
 
 import { InputRef, ObjectRef } from "@pothos/core";
 

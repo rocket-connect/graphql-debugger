@@ -1,6 +1,6 @@
 import { prisma } from "@graphql-debugger/data-access";
 import { TimeStamp, UnixNanoTimeStamp } from "@graphql-debugger/time";
-import { Span } from "@graphql-debugger/types";
+import type { Span } from "@graphql-debugger/types";
 
 import DataLoader from "dataloader";
 

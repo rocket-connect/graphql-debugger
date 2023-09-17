@@ -1,5 +1,5 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
-import { Span, Trace } from "@graphql-debugger/types";
+import type { Span, Trace } from "@graphql-debugger/types";
 
 import { ObjectRef } from "@pothos/core";
 

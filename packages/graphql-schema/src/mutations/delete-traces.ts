@@ -1,5 +1,5 @@
 import { prisma } from "@graphql-debugger/data-access";
-import {
+import type {
   DeleteTracesResponse,
   DeleteTracesWhere,
 } from "@graphql-debugger/types";

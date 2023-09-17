@@ -4,7 +4,7 @@ import {
   GraphQLOTELContext,
   traceSchema,
 } from "@graphql-debugger/trace-schema";
-import { ListTraceGroupsResponse } from "@graphql-debugger/types";
+import type { ListTraceGroupsResponse } from "@graphql-debugger/types";
 
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import gql from "gql-tag";

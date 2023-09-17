@@ -10,12 +10,14 @@
     "paths": {
       "@graphql-debugger/schemas": ["../schemas"],
       "@graphql-debugger/time": ["../time"],
+      "@graphql-debugger/types": ["../types"],
       "@graphql-debugger/utils": ["../utils"]
     }
   },
   "references": [
     { "path": "../schemas" },
     { "path": "../time" },
+    { "path": "../types" },
     { "path": "../utils" }
   ],
   "exclude": ["tests/"],

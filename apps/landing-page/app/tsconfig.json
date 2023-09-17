@@ -18,9 +18,14 @@
     "noEmit": false,
     "paths": {
       "@graphql-debugger/time": ["../time"],
+      "@graphql-debugger/types": ["../types"],
       "@graphql-debugger/utils": ["../utils"]
     }
   },
-  "references": [{ "path": "../time" }, { "path": "../utils" }],
+  "references": [
+    { "path": "../time" },
+    { "path": "../types" },
+    { "path": "../utils" }
+  ],
   "include": ["src/**/*"]
 }

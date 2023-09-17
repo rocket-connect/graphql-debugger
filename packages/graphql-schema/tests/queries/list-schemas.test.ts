@@ -1,6 +1,6 @@
 import { createTestSchema } from "@graphql-debugger/data-access";
 import { ListSchemasResponseSchema } from "@graphql-debugger/schemas";
-import { ListSchemasResponse } from "@graphql-debugger/types";
+import type { ListSchemasResponse } from "@graphql-debugger/types";
 
 import gql from "gql-tag";
 

@@ -10,7 +10,7 @@ module.exports = {
   ],
   setupFilesAfterEnv: ["<rootDir>/tests/setup.ts"],
   transform: {
-    "\\.ts$": ["ts-jest", { tsconfig: "tsconfig.test.json" }],
+    "\\.ts$": ["ts-jest"],
   },
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: __dirname,

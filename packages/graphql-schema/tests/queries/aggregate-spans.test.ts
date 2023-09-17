@@ -4,7 +4,7 @@ import {
   GraphQLOTELContext,
   traceSchema,
 } from "@graphql-debugger/trace-schema";
-import { AggregateSpansResponse } from "@graphql-debugger/types";
+import type { AggregateSpansResponse } from "@graphql-debugger/types";
 
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import gql from "gql-tag";

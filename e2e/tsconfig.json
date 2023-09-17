@@ -9,12 +9,14 @@
     "paths": {
       "@graphql-debugger/schemas": ["../packages/schemas"],
       "@graphql-debugger/time": ["../packages/time"],
+      "@graphql-debugger/types": ["../packages/types"],
       "@graphql-debugger/utils": ["../packages/utils"]
     }
   },
   "references": [
     { "path": "../packages/schemas" },
     { "path": "../packages/time" },
+    { "path": "../packages/types" },
     { "path": "../packages/utils" }
   ]
 }
