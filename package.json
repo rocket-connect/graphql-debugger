@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "cross-env DEBUG=\"@graphql-debugger:*\" TRACE_SCHEMA=\"true\" turbo dev --filter \"graphql-debugger\"",
     "build": "turbo build",
-    "test:sequential": "pnpm recursive exec -- sh -c 'pnpm run test || true'",
+    "test:sequential": "pnpm recursive exec -- sh -c 'pnpm run test || (echo \"Tests failed!\" && exit 1)'",
     "test": "turbo test",
     "clean": "find . -type d \\( -name \"node_modules\" -o -name \"build\" -o -name \".turbo\" \\) -exec rm -rf {} +",
     "lint": "eslint .",
