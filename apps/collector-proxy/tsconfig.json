@@ -5,9 +5,9 @@
     "outDir": "build",
     "declarationMap": true,
     "declaration": true,
-    "rootDir": "./src/",
     "baseUrl": ".",
     "paths": {
+      "@graphql-debugger/queue": ["../queue"],
       "@graphql-debugger/schemas": ["../schemas"],
       "@graphql-debugger/time": ["../time"],
       "@graphql-debugger/types": ["../types"],
@@ -15,11 +15,10 @@
     }
   },
   "references": [
+    { "path": "../queue" },
     { "path": "../schemas" },
     { "path": "../time" },
     { "path": "../types" },
     { "path": "../utils" }
-  ],
-  "exclude": ["tests/"],
-  "include": ["src/**/*"]
+  ]
 }

@@ -7,6 +7,7 @@
     "declaration": true,
     "baseUrl": ".",
     "paths": {
+      "@graphql-debugger/queue": ["../packages/queue"],
       "@graphql-debugger/schemas": ["../packages/schemas"],
       "@graphql-debugger/time": ["../packages/time"],
       "@graphql-debugger/types": ["../packages/types"],
@@ -14,6 +15,7 @@
     }
   },
   "references": [
+    { "path": "../packages/queue" },
     { "path": "../packages/schemas" },
     { "path": "../packages/time" },
     { "path": "../packages/types" },

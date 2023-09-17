@@ -3,8 +3,10 @@
   "compilerOptions": {
     "target": "ES2020",
     "outDir": "build",
+    "rootDir": "./src",
     "declarationMap": true,
     "declaration": true,
+    "composite": true,
     "baseUrl": ".",
     "paths": {
       "@graphql-debugger/utils": ["../utils"]
