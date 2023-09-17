@@ -13,7 +13,7 @@
   },
   "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -b",
     "test": "cross-env NODE_ENV=test jest"
   },
   "peerDependencies": {

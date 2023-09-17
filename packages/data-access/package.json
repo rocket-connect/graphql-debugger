@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -b",
     "postinstall": "npx prisma generate && npx prisma db push",
     "test": "echo \"No tests\""
   },

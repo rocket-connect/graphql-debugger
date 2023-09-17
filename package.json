@@ -7,7 +7,7 @@
     "build": "turbo build",
     "test:sequential": "pnpm recursive exec -- sh -c 'pnpm run test || (echo \"Tests failed!\" && exit 1)'",
     "test": "turbo test",
-    "clean": "find . -type d \\( -name \"node_modules\" -o -name \"build\" -o -name \".turbo\" \\) -exec rm -rf {} +",
+    "clean": "find . -type d \\( -name \"node_modules\" -o -name \"build\" -o -name \".turbo\" \\) -exec rm -rf {} + && find . -type f -name \"tsconfig.tsbuildinfo\" -delete",
     "lint": "eslint .",
     "format": "prettier --write ."
   },
