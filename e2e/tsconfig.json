@@ -7,6 +7,7 @@
     "declaration": true,
     "baseUrl": ".",
     "paths": {
+      "@graphql-debugger/opentelemetry": ["../packages/opentelemetry"],
       "@graphql-debugger/queue": ["../packages/queue"],
       "@graphql-debugger/schemas": ["../packages/schemas"],
       "@graphql-debugger/time": ["../packages/time"],
@@ -15,6 +16,7 @@
     }
   },
   "references": [
+    { "path": "../packages/opentelemetry" },
     { "path": "../packages/queue" },
     { "path": "../packages/schemas" },
     { "path": "../packages/time" },
