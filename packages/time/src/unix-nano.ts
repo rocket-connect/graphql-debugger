@@ -19,10 +19,6 @@ export class UnixNanoTimeStamp {
     this.input = input;
   }
 
-  public static newFn() {
-    return 1;
-  }
-
   public getBigInt(): bigint {
     return BigInt(this.input);
   }
