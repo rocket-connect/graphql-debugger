@@ -7,11 +7,13 @@
     "declaration": true,
     "baseUrl": ".",
     "paths": {
+      "@graphql-debugger/schemas": ["../packages/schemas"],
       "@graphql-debugger/time": ["../packages/time"],
       "@graphql-debugger/utils": ["../packages/utils"]
     }
   },
   "references": [
+    { "path": "../packages/schemas" },
     { "path": "../packages/time" },
     { "path": "../packages/utils" }
   ]

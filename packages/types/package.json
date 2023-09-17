@@ -18,8 +18,5 @@
   },
   "peerDependencies": {
     "graphql": "^16.0.0 || ^17.0.0"
-  },
-  "devDependencies": {
-    "@graphql-debugger/schemas": "workspace:^"
   }
 }
