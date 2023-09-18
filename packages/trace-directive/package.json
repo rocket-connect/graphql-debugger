@@ -22,6 +22,7 @@
   "dependencies": {
     "@graphql-debugger/utils": "workspace:^",
     "@graphql-debugger/opentelemetry": "workspace:^",
+    "@graphql-debugger/types": "workspace:^",
     "@graphql-tools/schema": "10.0.0",
     "@graphql-tools/utils": "10.0.6"
   },

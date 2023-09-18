@@ -1,7 +1,7 @@
 import { prisma } from "@graphql-debugger/data-access";
-import { AttributeNames } from "@graphql-debugger/opentelemetry";
+import { attributesToObject } from "@graphql-debugger/opentelemetry";
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
-import type { PostTraces } from "@graphql-debugger/types";
+import { AttributeNames, PostTraces } from "@graphql-debugger/types";
 
 import { parse, print } from "graphql";
 
@@ -16,24 +16,7 @@ export async function postTracesWorker(data: PostTraces["body"]) {
     const spans = (body.resourceSpans || []).flatMap((rS) => {
       const _spans = rS.scopeSpans.flatMap((sS) => {
         return (sS.spans || []).map((s) => {
-          const attributes = s.attributes.reduce((acc, val) => {
-            const value = val.value;
-            let realValue: any;
-
-            if (value.boolValue !== undefined) {
-              realValue = value.boolValue;
-            } else if (value.stringValue !== undefined) {
-              realValue = value.stringValue;
-            } else if (value.intValue !== undefined) {
-              realValue = value.intValue;
-            } else if (value.doubleValue !== undefined) {
-              realValue = value.doubleValue;
-            } else if (value.arrayValue !== undefined) {
-              realValue = value.arrayValue;
-            }
-
-            return { ...acc, [val.key]: realValue };
-          }, {}) as Record<string, any>;
+          const attributes = attributesToObject(s.attributes || []);
 
           const firstError = (s.events || []).find(
             (e) => e.name === "exception",
@@ -66,6 +49,7 @@ export async function postTracesWorker(data: PostTraces["body"]) {
           };
         });
       });
+
       return _spans;
     });
 
