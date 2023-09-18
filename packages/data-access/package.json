@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@graphql-debugger/utils": "workspace:^",
-    "prisma": "5.2.0",
+    "prisma": "5.3.1",
     "@prisma/client": "5.2.0"
   },
   "devDependencies": {
