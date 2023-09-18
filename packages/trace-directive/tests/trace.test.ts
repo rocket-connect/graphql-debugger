@@ -1,11 +1,11 @@
 import {
-  AttributeNames,
   InMemorySpanExporter,
   ReadableSpan,
   SpanStatusCode,
   buildSpanTree,
   setupOtel,
 } from "@graphql-debugger/opentelemetry";
+import { AttributeNames } from "@graphql-debugger/types";
 
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import crypto from "crypto";
