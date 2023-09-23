@@ -133,4 +133,3 @@ build
 dev.db
 
 schema.graphql
-graphql-types.ts

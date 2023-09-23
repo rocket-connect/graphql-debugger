@@ -1,5 +1,5 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
-import { graphql } from "@graphql-debugger/types";
+import { Schema, Trace } from "@graphql-debugger/types";
 
 import { useCallback, useEffect, useState } from "react";
 import {
@@ -22,8 +22,8 @@ import { IDS } from "../testing";
 import { logo } from "../utils/images";
 
 export function Schema() {
-  const [schema, setSchema] = useState<graphql.Schema>();
-  const [trace, setTrace] = useState<graphql.Trace>();
+  const [schema, setSchema] = useState<Schema>();
+  const [trace, setTrace] = useState<Trace>();
   const params = useParams();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
