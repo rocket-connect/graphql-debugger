@@ -27,9 +27,12 @@
     "@opentelemetry/resources": "1.15.2",
     "@opentelemetry/sdk-trace-base": "1.17.0",
     "@opentelemetry/semantic-conventions": "1.15.2",
-    "@opentelemetry/otlp-exporter-base": "0.43.0"
+    "@opentelemetry/otlp-exporter-base": "0.43.0",
+    "@graphql-tools/schema": "10.0.0",
+    "@graphql-tools/utils": "10.0.6"
   },
   "devDependencies": {
-    "@graphql-debugger/types": "workspace:^"
+    "@graphql-debugger/types": "workspace:^",
+    "@faker-js/faker": "8.0.2"
   }
 }
