@@ -14,7 +14,9 @@ export function attributesToObject(attributes: Attributes) {
     } else if (value.doubleValue !== undefined) {
       realValue = value.doubleValue;
     } else if (value.arrayValue !== undefined) {
-      realValue = value.arrayValue;
+      realValue = value.arrayValue.values.flatMap((v: any) =>
+        Object.values(attributesToObject([{ value: v, key: "arrayValue" }])),
+      );
     }
 
     return { ...acc, [val.key]: realValue };
