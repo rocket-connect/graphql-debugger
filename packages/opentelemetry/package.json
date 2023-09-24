@@ -20,7 +20,7 @@
     "graphql": "^16.0.0 || ^17.0.0"
   },
   "dependencies": {
-    "@graphql-debugger/types": "workspace:^",
+    "@graphql-debugger/utils": "workspace:^",
     "@opentelemetry/api": "1.6.0",
     "@opentelemetry/context-async-hooks": "1.15.2",
     "@opentelemetry/exporter-trace-otlp-http": "0.41.2",
@@ -29,5 +29,7 @@
     "@opentelemetry/semantic-conventions": "1.15.2",
     "@opentelemetry/otlp-exporter-base": "0.43.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@graphql-debugger/types": "workspace:^"
+  }
 }

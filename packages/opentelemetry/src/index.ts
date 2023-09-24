@@ -3,6 +3,8 @@ export * from "./build-span-tree";
 export * from "./run-in-span";
 export * from "./attributes-to-object";
 export * from "./extract-spans";
+export * from "./info-to-attributes";
+export * from "./info-to-span-name";
 
 export { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
 export {

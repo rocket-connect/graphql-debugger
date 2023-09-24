@@ -285,9 +285,9 @@ importers:
 
   packages/opentelemetry:
     dependencies:
-      '@graphql-debugger/types':
+      '@graphql-debugger/utils':
         specifier: workspace:^
-        version: link:../types
+        version: link:../utils
       '@opentelemetry/api':
         specifier: 1.6.0
         version: 1.6.0
@@ -312,6 +312,10 @@ importers:
       graphql:
         specifier: ^16.0.0 || ^17.0.0
         version: 16.0.0
+    devDependencies:
+      '@graphql-debugger/types':
+        specifier: workspace:^
+        version: link:../types
 
   packages/queue:
     dependencies:
