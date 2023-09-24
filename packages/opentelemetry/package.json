@@ -16,6 +16,9 @@
     "build": "tsc",
     "test": "echo \"No tests\""
   },
+  "peerDependencies": {
+    "graphql": "^16.0.0 || ^17.0.0"
+  },
   "dependencies": {
     "@graphql-debugger/types": "workspace:^",
     "@opentelemetry/api": "1.6.0",
