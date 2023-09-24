@@ -32,6 +32,7 @@ model Span {
   graphqlVariables  String?
   graphqlResult     String?
   graphqlContext    String?
+  graphqlSchemaHash String?
   errorMessage      String?
   errorStack        String?
   createdAt         DateTime    @default(now())
