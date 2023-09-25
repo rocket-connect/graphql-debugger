@@ -43,6 +43,13 @@ export function extractSpans({
               result: JSON.parse(result),
             });
           }
+
+          const context = attributes[AttributeNames.OPERATION_CONTEXT];
+          if (context) {
+            graphqlContext = JSON.stringify({
+              context: JSON.parse(context),
+            });
+          }
         }
 
         const firstError = (span.events || []).find(
