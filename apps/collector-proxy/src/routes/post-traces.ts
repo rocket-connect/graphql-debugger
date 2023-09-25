@@ -3,7 +3,7 @@ import type { PostTraces } from "@graphql-debugger/types";
 
 import { Request, Response } from "express";
 
-import { postTracesQueue } from "..";
+import { postTracesQueue } from "../../src";
 import { debug } from "../debug";
 import { validateRequest } from "../validate-request";
 

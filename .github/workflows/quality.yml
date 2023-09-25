@@ -9,15 +9,31 @@ on:
       - main
 
 jobs:
-  test:
+  test-e2e:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-project
       - name: Install puppeteer
         run: npm i -g puppeteer@21.1.1
-      - name: Run tests
-        run: pnpm test:sequential
+      - name: Run e2e tests
+        run: cd ./e2e && pnpm run test
+
+  test-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: Run backend tests
+        run: cd ./apps/backend && pnpm run test
+
+  test-collector:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: Run collector tests
+        run: cd ./apps/collector-proxy && pnpm run test
   lint:
     runs-on: ubuntu-latest
     steps:

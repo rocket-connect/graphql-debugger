@@ -7,6 +7,7 @@
     "build": "turbo build",
     "test:sequential": "pnpm recursive exec -- sh -c 'pnpm run test || (echo \"Tests failed!\" && exit 1)'",
     "test": "turbo test",
+    "test:apps": "pnpm --filter ./apps/** test",
     "clean": "find . -type d \\( -name \"node_modules\" -o -name \"build\" -o -name \".turbo\" \\) -exec rm -rf {} +",
     "lint": "eslint .",
     "format": "prettier --write ."
