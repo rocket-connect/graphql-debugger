@@ -27,7 +27,7 @@ jobs:
       - name: graphql-debugger/backend
         run: cd ./apps/backend && pnpm run test
 
-  test-collector:
+  test-collector-proxy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -35,7 +35,7 @@ jobs:
       - name: graphql-debugger/collector-proxy
         run: cd ./apps/collector-proxy && pnpm run test
 
-  graphql-schema:
+  test-graphql-schema:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -43,7 +43,7 @@ jobs:
       - name: graphql-debugger/graphql-schema
         run: cd ./packages/graphql-schema && pnpm run test
 
-  opentelemetry:
+  test-opentelemetry:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -51,7 +51,7 @@ jobs:
       - name: graphql-debugger/opentelemetry
         run: cd ./packages/opentelemetry && pnpm run test
 
-  time:
+  test-time:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -59,7 +59,7 @@ jobs:
       - name: graphql-debugger/time
         run: cd ./packages/time && pnpm run test
 
-  trace-directive:
+  test-trace-directive:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -67,14 +67,14 @@ jobs:
       - name: graphql-debugger/trace-directive
         run: cd ./packages/trace-directive && pnpm run test
 
-  trace-schema:
+  test-trace-schema:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-project
       - name: graphql-debugger/trace-schema
         run: cd ./packages/trace-schema && pnpm run test
-  utils:
+  test-utils:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
