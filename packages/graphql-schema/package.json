@@ -29,7 +29,7 @@
     "@graphql-debugger/collector-proxy": "workspace:^",
     "@graphql-tools/schema": "10.0.0",
     "@graphql-tools/utils": "10.0.6",
-    "@pothos/core": "3.35.0",
+    "@pothos/core": "3.37.0",
     "dataloader": "2.2.2",
     "graphql-yoga": "4.0.4"
   },
