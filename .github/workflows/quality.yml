@@ -16,7 +16,7 @@ jobs:
       - uses: ./.github/actions/setup-project
       - name: Install puppeteer
         run: npm i -g puppeteer@21.1.1
-      - name: Run e2e tests
+      - name: graphql-debugger/e2e
         run: cd ./e2e && pnpm run test
 
   test-backend:
@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-project
-      - name: Run backend tests
+      - name: graphql-debugger/backend
         run: cd ./apps/backend && pnpm run test
 
   test-collector:
@@ -32,7 +32,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-project
-      - name: Run collector tests
+      - name: graphql-debugger/collector-proxy
         run: cd ./apps/collector-proxy && pnpm run test
 
   graphql-schema:
@@ -40,7 +40,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-project
-      - name: Run collector tests
+      - name: graphql-debugger/graphql-schema
         run: cd ./packages/graphql-schema && pnpm run test
 
   opentelemetry:
@@ -48,7 +48,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-project
-      - name: Run collector tests
+      - name: graphql-debugger/opentelemetry
         run: cd ./packages/opentelemetry && pnpm run test
 
   time:
@@ -56,7 +56,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-project
-      - name: Run collector tests
+      - name: graphql-debugger/time
         run: cd ./packages/time && pnpm run test
 
   trace-directive:
@@ -64,7 +64,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-project
-      - name: Run collector tests
+      - name: graphql-debugger/trace-directive
         run: cd ./packages/trace-directive && pnpm run test
 
   trace-schema:
@@ -72,8 +72,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-project
-      - name: Run collector tests
+      - name: graphql-debugger/trace-schema
         run: cd ./packages/trace-schema && pnpm run test
+  utils:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: graphql-debugger/utils
+        run: cd ./packages/utils && pnpm run test
 
   lint:
     runs-on: ubuntu-latest
