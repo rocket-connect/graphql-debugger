@@ -34,6 +34,47 @@ jobs:
       - uses: ./.github/actions/setup-project
       - name: Run collector tests
         run: cd ./apps/collector-proxy && pnpm run test
+
+  graphql-schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: Run collector tests
+        run: cd ./packages/graphql-schema && pnpm run test
+
+  opentelemetry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: Run collector tests
+        run: cd ./packages/opentelemetry && pnpm run test
+
+  time:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: Run collector tests
+        run: cd ./packages/time && pnpm run test
+
+  trace-directive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: Run collector tests
+        run: cd ./packages/trace-directive && pnpm run test
+
+  trace-schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: Run collector tests
+        run: cd ./packages/trace-schema && pnpm run test
+
   lint:
     runs-on: ubuntu-latest
     steps:
