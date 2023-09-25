@@ -1,6 +1,6 @@
 <div align="center" style="text-align: center;">
 
-<img src="./app/ui/public/logo.svg" width="20%" alt="GraphQL Debugger">
+<img src="./apps/ui/public/logo.svg" width="20%" alt="GraphQL Debugger">
 
 <h1>GraphQL Debugger</h1>
 
