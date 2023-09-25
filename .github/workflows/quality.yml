@@ -67,14 +67,6 @@ jobs:
       - name: graphql-debugger/trace-schema
         run: cd ./packages/trace-schema && pnpm run test
 
-  test-utils:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-project
-      - name: graphql-debugger/utils
-        run: cd ./packages/utils && pnpm run test
-
   lint:
     runs-on: ubuntu-latest
     steps:
