@@ -4,7 +4,7 @@ import type { PostSchema } from "@graphql-debugger/types";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { Request, Response } from "express";
 
-import { postSchemaQueue } from "..";
+import { postSchemaQueue } from "../../src";
 import { debug } from "../debug";
 import { validateRequest } from "../validate-request";
 

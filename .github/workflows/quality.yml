@@ -9,15 +9,64 @@ on:
       - main
 
 jobs:
-  test:
+  test-e2e:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-project
       - name: Install puppeteer
         run: npm i -g puppeteer@21.1.1
-      - name: Run tests
-        run: pnpm test:sequential
+      - name: graphql-debugger/e2e
+        run: cd ./e2e && pnpm run test
+
+  test-collector-proxy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: graphql-debugger/collector-proxy
+        run: cd ./apps/collector-proxy && pnpm run test
+
+  test-graphql-schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: graphql-debugger/graphql-schema
+        run: cd ./packages/graphql-schema && pnpm run test
+
+  test-opentelemetry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: graphql-debugger/opentelemetry
+        run: cd ./packages/opentelemetry && pnpm run test
+
+  test-time:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: graphql-debugger/time
+        run: cd ./packages/time && pnpm run test
+
+  test-trace-directive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: graphql-debugger/trace-directive
+        run: cd ./packages/trace-directive && pnpm run test
+
+  test-trace-schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: graphql-debugger/trace-schema
+        run: cd ./packages/trace-schema && pnpm run test
+
   lint:
     runs-on: ubuntu-latest
     steps:
