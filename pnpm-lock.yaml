@@ -358,8 +358,8 @@ importers:
         specifier: 10.0.6
         version: 10.0.6(graphql@16.0.0)
       '@pothos/core':
-        specifier: 3.35.0
-        version: 3.35.0(graphql@16.0.0)
+        specifier: 3.37.0
+        version: 3.37.0(graphql@16.0.0)
       dataloader:
         specifier: 2.2.2
         version: 2.2.2
@@ -2691,8 +2691,8 @@ packages:
       tslib: 2.6.2
     dev: true
 
-  /@pothos/core@3.35.0(graphql@16.0.0):
-    resolution: {integrity: sha512-mSMmLkWsC76zHN93cTuwsA7fqLytcr9uNNjtiAEIDxAj46dgTb4bmfExgZIke1GQc8UKJ4GO2g0OM9TGuB3H/A==}
+  /@pothos/core@3.37.0(graphql@16.0.0):
+    resolution: {integrity: sha512-J9RHhjqmD0xdCkbuit5xIy1eQBwujkdxgn9ZtDjDQ3huuEIpp1oTIpKQqwwMMOVtyQK/dzQkQhYHU6FKNkgk8w==}
     peerDependencies:
       graphql: '>=15.1.0'
     dependencies:
