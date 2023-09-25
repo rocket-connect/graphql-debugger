@@ -1,5 +1,5 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
-import { graphql } from "@graphql-debugger/types";
+import { ListTraceGroupsWhere, Trace } from "@graphql-debugger/types";
 
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
@@ -11,15 +11,15 @@ export function SchemaTraces({ schemaId }: { schemaId: string }) {
   const navigate = useNavigate();
   const params = useParams();
   const [searchParams] = useSearchParams();
-  const [traces, setTraces] = useState<graphql.Trace[]>([]);
-  const [selectedTrace, setSelectedTrace] = useState<graphql.Trace | undefined>(
+  const [traces, setTraces] = useState<Trace[]>([]);
+  const [selectedTrace, setSelectedTrace] = useState<Trace | undefined>(
     undefined,
   );
 
   useEffect(() => {
     (async () => {
       try {
-        const where: graphql.ListTraceGroupsWhere = {
+        const where: ListTraceGroupsWhere = {
           schemaId,
         };
 

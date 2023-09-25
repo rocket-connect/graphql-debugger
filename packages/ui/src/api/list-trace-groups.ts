@@ -1,4 +1,8 @@
-import { graphql } from "@graphql-debugger/types";
+import {
+  ListTraceGroupsResponse,
+  ListTraceGroupsWhere,
+  Trace,
+} from "@graphql-debugger/types";
 
 import { api } from "./api";
 
@@ -48,12 +52,12 @@ export async function listTraceGroups({
   includeSpans = false,
   includeRootSpan = false,
 }: {
-  where?: graphql.ListTraceGroupsWhere;
+  where?: ListTraceGroupsWhere;
   includeSpans?: boolean;
   includeRootSpan?: boolean;
-} = {}): Promise<graphql.Trace[]> {
+} = {}): Promise<Trace[]> {
   const { data, errors } = await api<{
-    listTraceGroups: graphql.Query["listTraceGroups"];
+    listTraceGroups: ListTraceGroupsResponse;
   }>({
     query: ListTraceGroupsQuery,
     variables: {
@@ -71,7 +75,7 @@ export async function listTraceGroups({
   return data.listTraceGroups.traces;
 }
 
-export async function getTraceGroup(id: string): Promise<graphql.Trace> {
+export async function getTraceGroup(id: string): Promise<Trace> {
   const traceGroups = await listTraceGroups({
     where: {
       id,

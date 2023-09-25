@@ -1,4 +1,4 @@
-import type { graphql as tGraphql } from "@graphql-debugger/types";
+import type { AggregateSpansResponse } from "@graphql-debugger/types";
 
 import { FieldDefinitionNode } from "graphql";
 import { useEffect, useState } from "react";
@@ -35,8 +35,9 @@ export function Field({
   const navigate = useNavigate();
   const name = field.name.value;
   const type = extractTypeName(field.type);
-  const [aggregate, setAggregate] =
-    useState<tGraphql.AggregateSpansResponse | null>(null);
+  const [aggregate, setAggregate] = useState<AggregateSpansResponse | null>(
+    null,
+  );
 
   const processedType = Array.from(type).map((char, index) => {
     if (["!", "[", "]"].includes(char)) {

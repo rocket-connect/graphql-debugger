@@ -1,10 +1,10 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
-import { graphql } from "@graphql-debugger/types";
+import { AggregateSpansResponse } from "@graphql-debugger/types";
 
 export function Stats({
   aggregate,
 }: {
-  aggregate: graphql.AggregateSpansResponse | null;
+  aggregate: AggregateSpansResponse | null;
 }) {
   const lastResolveUnixNano = UnixNanoTimeStamp.fromString(
     aggregate?.lastResolved || "0",

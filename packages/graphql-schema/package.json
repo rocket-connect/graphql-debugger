@@ -13,9 +13,8 @@
   },
   "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
   "scripts": {
-    "build": "tsc && npm run generate-types",
-    "test": "NODE_ENV=test jest --runInBand",
-    "generate-types": "ts-node ./src/generate && graphql-codegen --config ./src/codegen.ts"
+    "build": "tsc",
+    "test": "NODE_ENV=test jest --runInBand"
   },
   "peerDependencies": {
     "graphql": "^16.0.0 || ^17.0.0"
@@ -35,10 +34,6 @@
     "graphql-yoga": "4.0.4"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "5.0.0",
-    "@graphql-codegen/client-preset": "4.1.0",
-    "@graphql-codegen/typescript": "4.0.1",
-    "@graphql-codegen/typescript-resolvers": "4.0.1",
     "express": "4.18.2",
     "gql-tag": "^1.0.1"
   }

@@ -1,14 +1,16 @@
 import {
-  AttributeNames,
   Context,
   Span,
+  infoToAttributes,
+  infoToSpanName,
   context as otelContext,
   runInSpan,
 } from "@graphql-debugger/opentelemetry";
+import { AttributeNames } from "@graphql-debugger/types";
 import { safeJson } from "@graphql-debugger/utils";
 
 import { MapperKind, getDirective, mapSchema } from "@graphql-tools/utils";
-import { GraphQLSchema, defaultFieldResolver, print } from "graphql";
+import { GraphQLSchema, defaultFieldResolver } from "graphql";
 
 import { GraphQLOTELContext } from "./context";
 
@@ -57,61 +59,31 @@ export function traceDirective(directiveName = "trace") {
                 info.parentType.name,
               );
 
-              let name = "";
-              if (isRoot) {
-                name = `${info.parentType.name.toLowerCase()} ${
-                  info.operation.name?.value || info.fieldName
-                }`;
-              } else {
-                name = `${info.parentType.name} ${fieldConfig.astNode?.name.value}`;
-              }
+              const spanName = infoToSpanName({ info });
 
-              const attributeContext = {
+              const _context = {
                 ...context,
                 GraphQLOTELContext: undefined,
               };
 
               if (internalCtx?.excludeKeysFromContext?.length) {
-                Object.keys(attributeContext).forEach((key) => {
+                Object.keys(_context).forEach((key) => {
                   if (internalCtx?.excludeKeysFromContext?.includes(key)) {
-                    delete attributeContext[key];
+                    delete _context[key];
                   }
                 });
               }
 
-              const operationArgs = safeJson(args || {});
-
-              const attributes = {
-                [AttributeNames.OPERATION_NAME]: info.fieldName,
-
-                [AttributeNames.OPERATION_TYPE]:
-                  info.operation.operation.toLowerCase(),
-                ...(isRoot
-                  ? {
-                      [AttributeNames.DOCUMENT]: print(info.operation),
-                    }
-                  : {}),
-
-                [AttributeNames.SCHEMA_HASH]: internalCtx.schemaHash,
-
-                [AttributeNames.OPERATION_RETURN_TYPE]:
-                  info.returnType.toString(),
-
-                ...(internalCtx.includeVariables && isRoot
-                  ? { [AttributeNames.OPERATION_ARGS]: operationArgs }
-                  : {}),
-
-                ...(internalCtx.includeContext && isRoot
-                  ? {
-                      [AttributeNames.OPERATION_CONTEXT]:
-                        safeJson(attributeContext),
-                    }
-                  : {}),
-              };
+              const attributes = infoToAttributes({
+                info,
+                args,
+                context: _context,
+                schemaHash: internalCtx.schemaHash,
+              });
 
               const result = await runInSpan(
                 {
-                  name,
+                  name: spanName,
                   context: traceCTX,
                   tracer: internalCtx.tracer,
                   parentSpan,

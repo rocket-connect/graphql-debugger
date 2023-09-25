@@ -1,5 +1,5 @@
 import { TimeStamp } from "@graphql-debugger/time";
-import { graphql } from "@graphql-debugger/types";
+import { Schema } from "@graphql-debugger/types";
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ import { IDS } from "../testing";
 import { logo } from "../utils/images";
 
 export function Schemas() {
-  const [schemas, setSchemas] = useState<graphql.Schema[]>([]);
+  const [schemas, setSchemas] = useState<Schema[]>([]);
 
   useEffect(() => {
     (async () => {
