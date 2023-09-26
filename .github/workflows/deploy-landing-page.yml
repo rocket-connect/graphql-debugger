@@ -1,0 +1,28 @@
+name: Deploy Landing Page
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-playground:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH and deploy node app
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            cd ./graphql-debugger.com
+            git reset --hard
+            git pull origin main
+            pnpm i
+            pnpm build
+            cd ./apps/landing-page/server
+            pm2 restart graphql-debugger.com
