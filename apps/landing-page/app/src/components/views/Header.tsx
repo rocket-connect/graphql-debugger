@@ -9,10 +9,10 @@ export function Header() {
         <nav>
           <div className="flex flex-wrap items-center justify-between mx-auto p-2">
             <a href="#" className="flex items-center">
-              <span className="w-12">
+              <span className="w-10">
                 <Logo />
               </span>
-              <span className="ml-5 self-center font-bold whitespace-nowrap text-graphiql-light text-2xl">
+              <span className="ml-5 self-center font-bold whitespace-nowrap text-graphiql-light text-lg">
                 GraphQL Debugger
               </span>
             </a>
@@ -21,7 +21,7 @@ export function Header() {
                 href="https://www.npmjs.com/search?q=graphql-debugger"
                 className="flex items-center"
               >
-                <span className="w-10">
+                <span className="w-8">
                   <img src={npmWhite} alt="npm" />
                 </span>
               </a>
@@ -29,7 +29,7 @@ export function Header() {
                 href="https://github.com/rocket-connect/graphql-debugger"
                 className="flex items-center"
               >
-                <span className="w-10">
+                <span className="w-8">
                   <img src={githubWhite} alt="github" />
                 </span>
               </a>

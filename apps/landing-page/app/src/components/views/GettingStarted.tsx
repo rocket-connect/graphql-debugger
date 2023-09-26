@@ -110,14 +110,14 @@ export function GettingStarted() {
                 <Tabs defaultValue="yoga.ts">
                   <div className="relative rounded-2xl bg-graphiql-dark">
                     <div className="px-4 pt-4">
-                      <TrafficLightsIcon className="h-2.5 w-auto stroke-zinc-500/30" />
+                      <TrafficLightsIcon className="h-2.5 w-auto" />
                       {tabs.map((tab) => (
                         <TabsContent
                           key={tab.name}
                           value={tab.name}
                           className="m-0"
                         >
-                          <div className="mt-4 lg:mt-6">
+                          <div className="mt-3">
                             <CodeBlock
                               code={tab.content}
                               language={tab.language as Language}
