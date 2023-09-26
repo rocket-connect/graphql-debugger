@@ -12,16 +12,34 @@ export function About() {
         <div className="flex flex-col gap-10 my-auto">
           <h2 className="text-4xl font-bold">About</h2>
           <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            Blanditiis, sit accusamus quia doloremque sunt corrupti quidem.
-            Quaerat debitis quos libero in accusamus eum cupiditate autem
-            accusantium, ut unde repellat praesentium.
+            GraphQL Debugger is a{" "}
+            <a className="text-link" href="https://opentelemetry.io/">
+              OpenTelemetry
+            </a>{" "}
+            collector with a user interface tailored for debugging GraphQL
+            servers. It is designed to be used during development to help you
+            identify errors, slow queries, and inconsistencies without having to
+            rely on outdated methods like logging.
           </p>
           <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            Blanditiis, sit accusamus quia doloremque sunt corrupti quidem.
-            Quaerat debitis quos libero in accusamus eum cupiditate autem
-            accusantium, ut unde repellat praesentium.
+            GraphQL Debugger is free to use, open source, and you can find the
+            source code on{" "}
+            <a
+              className="text-link"
+              href="https://github.com/rocket-connect/graphql-debugger"
+            >
+              GitHub
+            </a>
+            . You can get started by simply installing our plugin and then
+            running our CLI to initiate the user interface.
+          </p>
+
+          <p>
+            GraphQL Debugger is developed and maintained by{" "}
+            <a className="text-link" href="https://rocketconnect.co.uk/">
+              Rocket Connect
+            </a>
+            .
           </p>
         </div>
       </div>

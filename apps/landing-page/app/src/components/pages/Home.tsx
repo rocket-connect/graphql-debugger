@@ -25,11 +25,7 @@ export function Home() {
           </div>
 
           <div className="w-80 my-auto">
-            <img
-              className="rotate-12 hover:rotate-0 hover:cursor-pointer transition duration-500 ease-in-out transform"
-              src={npxGraphQLDebugger}
-              alt="npx graphql-debugger"
-            />
+            <img src={npxGraphQLDebugger} alt="npx graphql-debugger" />
           </div>
         </div>
       </Container>

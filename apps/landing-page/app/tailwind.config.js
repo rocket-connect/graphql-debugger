@@ -12,6 +12,7 @@ module.exports = {
         ["graphiql-pink"]: "#FF5794",
         ["graphiql-highlight"]: "#444D60",
         ["link"]: "#569AD6",
+        ["string"]: "#B66E4E",
       },
     },
   },

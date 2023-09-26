@@ -3,6 +3,7 @@ import { Language } from "prism-react-renderer";
 
 import { CodeBlock } from "../utils/CodeBlock";
 import { Container } from "../utils/Container";
+import { npxGraphQLDebugger } from "../utils/images";
 import { Tabs, TabsContent } from "../utils/tabs";
 
 const tabs = [
@@ -63,47 +64,42 @@ export function GettingStarted() {
           <div className="flex gap-10">
             <div className="flex flex-col gap-10 my-auto">
               <h2 className="text-4xl font-bold">Getting Started</h2>
-
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima
-                beatae repellat, in et perferendis nesciunt explicabo deleniti
-                debitis illum quae inventore nobis, dicta, nostrum quod atque
-                dignissimos dolores doloribus modi.
+                To begin using GraphQL Debugger, you'll need to follow two
+                steps: first, apply tracing to your GraphQL schema, and then
+                initiate the debugger.
               </p>
-
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Repellat harum incidunt reiciendis culpa consequatur in
-                repellendus ducimus iusto cum, commodi perspiciatis sunt facilis
-                illo laborum cumque earum non, suscipit laboriosam.
+                To apply tracing to your GraphQL Schema, you should use the{" "}
+                <span className="text-string">'traceSchema'</span> method
+                exported from the{" "}
+                <span className="text-string">
+                  '@graphql-debuggger/trace-schema'
+                </span>{" "}
+                <a
+                  className="text-link"
+                  href="https://www.npmjs.com/package/@graphql-debugger/trace-schema"
+                >
+                  npm package
+                </a>
+                . You can use this method to wrap each resolver and field in
+                your GraphQL Schema in an OpenTelemetry span. Each span is
+                propagated to the GraphQL Debugger Collector, where it is
+                ingested and then later presented to you in the UI.
               </p>
-
-              <ul className="list-disc">
-                <li>
-                  <a
-                    className="text-link underline font-bold"
-                    href="https://github.com/rocket-connect/graphql-debugger"
-                  >
-                    https://github.com/rocket-connect/graphql-debugger
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="text-link underline font-bold"
-                    href="https://github.com/rocket-connect/graphql-debugger"
-                  >
-                    https://github.com/rocket-connect/graphql-debugger
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="text-link underline font-bold"
-                    href="https://github.com/rocket-connect/graphql-debugger"
-                  >
-                    https://github.com/rocket-connect/graphql-debugger
-                  </a>
-                </li>
-              </ul>
+              <p>
+                Running the GraphQL Debugger Collector and user interface is as
+                simple as running one command{" "}
+                <span className="text-string">'npx graphql-debugger'</span> in
+                your terminal, and then from here you can navigate to{" "}
+                <a className="text-link" href="http://localhost:16686/">
+                  http://localhost:16686/
+                </a>{" "}
+                to start exploring your traces.
+              </p>
+              <div className="w-60 my-10 mx-auto">
+                <img src={npxGraphQLDebugger} alt="npx graphql-debugger" />
+              </div>
             </div>
             <div>
               <div style={{ width: 550 }}>
