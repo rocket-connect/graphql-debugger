@@ -17,3 +17,5 @@ export { default as typescripticon } from "../../../public/typescript-icon.svg";
 export { default as graphqlicon } from "../../../public/graphql-icon.svg";
 // @ts-ignore
 export { default as rocketIcon } from "../../../public/rocketconnect-icon.svg";
+// @ts-ignore
+export { default as npxGraphQLDebugger } from "../../../public/npx-graphql-debugger.svg";
