@@ -40,13 +40,12 @@ export function Supported() {
         <div className="flex flex-col lg:flex-row justify-between gap-10 py-5">
           {supported.map((item) => (
             <div className="flex flex-col justify-center align-center text-center gap-5">
-              <h3 className="font-bold text-xl">{item.name}</h3>
-              <div className="w-8 mx-auto">
+              <div className="w-12 mx-auto">
                 <a href={item.link}>
                   <img src={item.img} alt={item.name} />
                 </a>
               </div>
-              <p className="w-3/5 mx-auto text-xs">{item.content}</p>
+              <p className="w-3/5 mx-auto text-sm italic">{item.content}</p>
             </div>
           ))}
         </div>

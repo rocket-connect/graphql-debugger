@@ -62,7 +62,7 @@ export function GettingStarted() {
         <div className="py-20">
           <div className="flex gap-10">
             <div className="flex flex-col gap-10 my-auto">
-              <h2 className="text-5xl font-bold">Getting Started</h2>
+              <h2 className="text-4xl font-bold">Getting Started</h2>
 
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima

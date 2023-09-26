@@ -7,8 +7,8 @@ export function LearnMore() {
         <div className="bg-graphiql-medium rounded rounded-3xl p-3">
           <iframe
             className="rounded rounded-3xl"
-            width="500"
-            height="300"
+            width="400"
+            height="200"
             src={`https://www.youtube.com/embed/EpC6xmw2a6Y`}
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -18,7 +18,7 @@ export function LearnMore() {
         </div>
 
         <div className="flex flex-col gap-10 my-auto">
-          <h2 className="text-5xl font-bold">Learn More</h2>
+          <h2 className="text-4xl font-bold">Learn More</h2>
           <p>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quam
             voluptatem atque dicta, et aspernatur tempora! Rerum sint pariatur

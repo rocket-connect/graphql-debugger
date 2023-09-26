@@ -6,11 +6,11 @@ export function About() {
     <Container>
       <div className="flex py-20 gap-10">
         <div>
-          <img src={screenshot} alt="logo" />
+          <img width={1200} src={screenshot} alt="logo" />
         </div>
 
         <div className="flex flex-col gap-10 my-auto">
-          <h2 className="text-5xl font-bold">About</h2>
+          <h2 className="text-4xl font-bold">About</h2>
           <p>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit.
             Blanditiis, sit accusamus quia doloremque sunt corrupti quidem.
