@@ -266,6 +266,28 @@ importers:
         specifier: ^1.14.0
         version: 1.14.0
 
+  apps/landing-page/server:
+    dependencies:
+      '@graphql-debugger/landing-page-app':
+        specifier: workspace:^
+        version: link:../app
+      cors:
+        specifier: 2.8.5
+        version: 2.8.5
+      express:
+        specifier: 4.18.2
+        version: 4.18.2
+      express-static-gzip:
+        specifier: 2.1.7
+        version: 2.1.7
+    devDependencies:
+      '@types/cors':
+        specifier: 2.8.14
+        version: 2.8.14
+      '@types/express':
+        specifier: 4.17.17
+        version: 4.17.17
+
   apps/ui:
     dependencies:
       '@fontsource/roboto':
