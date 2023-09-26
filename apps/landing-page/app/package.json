@@ -1,5 +1,5 @@
 {
-  "name": "@graphql-debugger/ui",
+  "name": "@graphql-debugger/landing-page-app",
   "version": "0.0.0-alpha.48",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -19,19 +19,17 @@
     "url": "git+https://github.com/rocket-connect/graphql-debugger.git"
   },
   "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
-  "peerDependencies": {
-    "graphql": "^16.0.0 || ^17.0.0"
-  },
   "dependencies": {
     "@fontsource/roboto": "5.0.8",
-    "@graphql-debugger/time": "workspace:^",
-    "@graphql-debugger/utils": "workspace:^",
+    "@radix-ui/react-tabs": "^1.0.4",
+    "clsx": "^2.0.0",
+    "dedent": "^1.5.1",
+    "prism-react-renderer": "^2.0.6",
+    "prism-themes": "^1.9.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-router-dom": "6.7.0"
-  },
-  "devDependencies": {
-    "@graphql-debugger/types": "workspace:^"
+    "react-router-dom": "6.7.0",
+    "tailwind-merge": "^1.14.0"
   },
   "engines": {
     "node": ">=18",
