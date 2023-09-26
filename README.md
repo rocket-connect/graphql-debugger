@@ -6,7 +6,7 @@
 
 <p>Debug your GraphQL server locally.</p>
 
-[![Quality](https://github.com/rocket-connect/graphql-debugger/actions/workflows/quality.yml/badge.svg)](https://github.com/rocket-connect/graphql-debugger/actions/workflows/quality.yml) [![Release](https://github.com/rocket-connect/graphql-debugger/actions/workflows/release.yml/badge.svg)](https://github.com/rocket-connect/graphql-debugger/actions/workflows/release.yml) [![npm version](https://badge.fury.io/js/graphql-debugger.svg)](https://badge.fury.io/js/graphql-debugger) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![npm version](https://badge.fury.io/js/graphql-debugger.svg)](https://badge.fury.io/js/graphql-debugger) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <img src="./docs/screenshot.png" width="100%" alt="GraphQL Debugger">
 
