@@ -3,7 +3,7 @@ import { Language } from "prism-react-renderer";
 
 import { CodeBlock } from "../utils/CodeBlock";
 import { Container } from "../utils/Container";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../utils/tabs";
+import { Tabs, TabsContent } from "../utils/tabs";
 
 const tabs = [
   {
@@ -106,22 +106,11 @@ export function GettingStarted() {
               </ul>
             </div>
             <div>
-              <div style={{ width: 700 }}>
+              <div style={{ width: 550 }}>
                 <Tabs defaultValue="yoga.ts">
                   <div className="relative rounded-2xl bg-graphiql-dark">
                     <div className="px-4 pt-4">
                       <TrafficLightsIcon className="h-2.5 w-auto stroke-zinc-500/30" />
-                      <TabsList className="flex justify-start space-x-2 mt-4 p-0 text-xs">
-                        {tabs.map((tab) => (
-                          <TabsTrigger
-                            key={tab.name}
-                            value={tab.name}
-                            className="bg-graphiql-light text-graphiql-dark"
-                          >
-                            {tab.name}
-                          </TabsTrigger>
-                        ))}
-                      </TabsList>
                       {tabs.map((tab) => (
                         <TabsContent
                           key={tab.name}

@@ -7,8 +7,8 @@ export function LearnMore() {
         <div className="bg-graphiql-medium rounded rounded-3xl p-3">
           <iframe
             className="rounded rounded-3xl"
-            width="700"
-            height="400"
+            width="500"
+            height="300"
             src={`https://www.youtube.com/embed/EpC6xmw2a6Y`}
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
