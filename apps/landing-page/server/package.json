@@ -14,7 +14,8 @@
   "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
   "scripts": {
     "build": "tsc",
-    "test": "echo \"No tests\""
+    "test": "echo \"No tests\"",
+    "dev": "cross-env NODE_ENV=development ts-node ./src/index.ts"
   },
   "dependencies": {
     "@graphql-debugger/landing-page-app": "workspace:^",
