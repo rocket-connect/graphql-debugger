@@ -8,7 +8,8 @@
 
 [![npm version](https://badge.fury.io/js/graphql-debugger.svg)](https://badge.fury.io/js/graphql-debugger) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-<img src="./docs/screenshot.png" width="100%" alt="GraphQL Debugger">
+[![](./docs/screenshot.png)](https://youtu.be/EpC6xmw2a6Y](https://www.graphql-debugger.com/))
+
 
 </div>
 
