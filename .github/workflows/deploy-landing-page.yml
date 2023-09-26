@@ -19,7 +19,7 @@ jobs:
           script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
-            cd ./graphql-debugger.com
+            cd ./graphql-debugger
             git reset --hard
             git pull origin main
             pnpm i
