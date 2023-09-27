@@ -1,54 +1,60 @@
 import type { AggregateSpansResponse } from "@graphql-debugger/types";
 
-import { FieldDefinitionNode } from "graphql";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { aggregateSpans } from "../../api/aggregate-spans";
 import { Stats } from "./Stats";
+import type { FieldProps } from "./types";
+import  classNames  from 'classnames'
+import { extractTypeName } from "./utils";
 
-function extractTypeName(typeNode): string {
-  if (typeNode.kind === "NamedType") {
-    return typeNode.name.value;
-  }
-  if (typeNode.kind === "ListType") {
-    return `[${extractTypeName(typeNode.type)}]`;
-  }
-  if (typeNode.kind === "NonNullType") {
-    return `${extractTypeName(typeNode.type)}!`;
-  }
-
-  return "";
-}
-
-export function Field({
-  field,
-  parentName,
-  schemaId,
-}: {
-  field: FieldDefinitionNode;
-  parentName: string;
-  schemaId: string;
-}) {
-  const [searchParams] = useSearchParams();
-  const rootSpanName = searchParams.get("rootSpanName");
-  const navigate = useNavigate();
-  const name = field.name.value;
-  const type = extractTypeName(field.type);
-  const [aggregate, setAggregate] = useState<AggregateSpansResponse | null>(
-    null,
-  );
-
-  const processedType = Array.from(type).map((char, index) => {
+const processedType = (type: string) => {
+  return Array.from(type).map((char, index) => {
     if (["!", "[", "]"].includes(char)) {
       return (
-        <span key={index} className="text-white">
+        <span key={index} className="text-neutral-100">
           {char}
         </span>
       );
     }
     return char;
-  });
+  })}
+
+  const renderFieldName = (parentName: string, name: string) => {
+  const [searchParams] = useSearchParams();
+    const rootSpanName = searchParams.get("rootSpanName");
+    const navigate = useNavigate();
+    if (["query", "mutation"].includes(parentName)) {
+      const _rootSpanName = `${parentName} ${name}`;
+      return (
+        <span
+          className={classNames('text-md text-neutral-100 hover:cursor-pointer', {
+            ['font-medium decoration-graphiql-pink']: rootSpanName === _rootSpanName
+          })}
+          onClick={() => {
+            navigate(
+              `?${new URLSearchParams({
+                rootSpanName: _rootSpanName,
+              }).toString()}`,
+            );
+          }}
+        >
+          {name}:
+        </span>
+      );
+    } else {
+      return <span className="text-neutral-100">{name}:</span>;
+    }
+  };
+
+
+export function Field({ field, parentName, schemaId }: FieldProps) {
+  const name = field.name.value;
+  const type = extractTypeName(field.type);
+  const [aggregate, setAggregate] = useState<AggregateSpansResponse | null>(
+    null,
+  );
 
   useEffect(() => {
     (async () => {
@@ -67,39 +73,13 @@ export function Field({
     })();
   }, [name, schemaId, parentName]);
 
-  const renderFieldName = () => {
-    if (["query", "mutation"].includes(parentName)) {
-      const _rootSpanName = `${parentName} ${name}`;
-      return (
-        <span
-          className={`text-graphiql-light underline hover:cursor-pointer ${
-            rootSpanName === _rootSpanName
-              ? "font-bold decoration-graphiql-pink"
-              : ""
-          }`}
-          onClick={() => {
-            navigate(
-              `?${new URLSearchParams({
-                rootSpanName: _rootSpanName,
-              }).toString()}`,
-            );
-          }}
-        >
-          {name}:
-        </span>
-      );
-    } else {
-      return <span className="text-graphiql-light">{name}:</span>;
-    }
-  };
 
   return (
-    <li className="ml-2 p-2">
-      <div className="flex items-center">
-        {renderFieldName()}
-        <span className="text-graphql-otel-green ml-2">{processedType}</span>
+    <li className="ml-2 p-0.5 text-s">
+      <div className="flex items-center gap-2 text-s">
+        {renderFieldName(parentName, field.name.value)}
+        <span className="text-secondary-blue">{processedType(type)}</span>
       </div>
-
       {["query", "mutation"].includes(parentName) && (
         <div className="py-2">
           <Stats aggregate={aggregate} />

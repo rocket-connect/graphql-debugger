@@ -1,25 +1,8 @@
-import { FieldDefinitionNode } from "graphql";
-
 import { Field } from "./Field";
+import type { TypeProps } from "./types";
+import { kindKeywordMapper } from "./utils";
 
-export function Type({
-  schemaId,
-  type,
-}: {
-  schemaId: string;
-  type: {
-    name: string;
-    kind: string;
-    fields: readonly FieldDefinitionNode[];
-  };
-}) {
-  let kindKeyword = "";
-  if (type.kind === "ObjectTypeDefinition") {
-    kindKeyword = "type";
-  } else if (type.kind === "InputObjectTypeDefinition") {
-    return null;
-  }
-
+export function Type({ schemaId, type }: TypeProps) {
   let parentName = type.name;
   if (["Query", "Mutation"].includes(type.name)) {
     parentName = type.name.toLocaleLowerCase();
@@ -27,13 +10,13 @@ export function Type({
 
   return (
     <div className="flex flex-col">
-      <p>
-        <span className="text-graphiql-pink">{kindKeyword}</span>{" "}
-        <span className="text-graphql-otel-green">{type.name}</span>{" "}
-        <span className="text-graphiql-light">{`{`}</span>
+      <p className="flex gap-1">
+        <span className="text-primary">{kindKeywordMapper[type.kind]}</span>
+        <span className="text-secondary-purple">{type.name}</span>
+        <span className="text-neutral-100/70">{`{`}</span>
       </p>
-      <div className="border-l border-graphiql-border ml-2 pl-2 my-2">
-        <ul className="flex flex-col gap-2">
+      <div>
+        <ul className="flex flex-col">
           {type.fields.map((field, index) => (
             <Field
               schemaId={schemaId}
@@ -44,7 +27,7 @@ export function Type({
           ))}
         </ul>
       </div>
-      <span className="text-graphiql-light">{`}`}</span>
+      <span className="text-neutral-100/70">{`}`}</span>
     </div>
   );
 }
