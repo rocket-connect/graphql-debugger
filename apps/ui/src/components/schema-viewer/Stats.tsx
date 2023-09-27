@@ -1,6 +1,7 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 
 import type { StatsProps } from "./types";
+import { StatsDetails } from "./StatsDetails";
 
 export function Stats({ aggregate }: StatsProps) {
   const lastResolveUnixNano = UnixNanoTimeStamp.fromString(
@@ -13,33 +14,11 @@ export function Stats({ aggregate }: StatsProps) {
   const hasResolved = lastResolveUnixNano.toString() !== "0";
 
   return (
-    <div className="pl-2 text-xs">
-      <ul className="flex flex-col gap-1 text-neutral-100/80 ">
-        <li className="flex items-center gap-1">
-          Resolve Count:
-          <span className="font-bold">{aggregate?.resolveCount}</span>
-        </li>
-        <li className="flex items-center gap-1">
-          Error Count:
-          <span className="font-bold text-red-500">
-            {aggregate?.errorCount}
-          </span>
-        </li>
-        <li className="flex items-center gap-1">
-          Average Duration:
-          <span className="font-bold">{averageDurationUnixNano.toMS()} ms</span>
-        </li>
-        {hasResolved ? (
-          <li className="flex items-center gap-1">
-            Last Resolved:
-            <span className="font-bold">
-              {lastResolveUnixNano.formatUnixNanoTimestamp()}
-            </span>
-          </li>
-        ) : (
-          <></>
-        )}
-      </ul>
-    </div>
+      <div className="flex flex-col gap-1 text-neutral-100/80 pl-4 text-xs">
+        <StatsDetails statsType="Resolve Count" statsDetails={aggregate?.resolveCount} />
+        <StatsDetails statsType="Error Count" statsDetails={aggregate?.errorCount} />
+        <StatsDetails statsType="Average Duration" statsDetails={averageDurationUnixNano.toMS()} />
+        {hasResolved && <StatsDetails statsType="Last Resolved" statsDetails={lastResolveUnixNano.formatUnixNanoTimestamp()}/>}
+      </div>
   );
 }
