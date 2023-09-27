@@ -1,9 +1,9 @@
 import { Router } from "./pages/Router";
 
-export function App() {
+export const App = () => {
   return (
     <div className="bg-graphiql-dark">
       <Router />
     </div>
   );
-}
+};
