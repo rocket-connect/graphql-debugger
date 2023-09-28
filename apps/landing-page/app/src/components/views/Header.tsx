@@ -12,7 +12,7 @@ export function Header() {
               <span className="w-10">
                 <Logo />
               </span>
-              <span className="ml-5 self-center font-bold whitespace-nowrap text-graphiql-light text-lg">
+              <span className="ml-5 self-center font-bold whitespace-nowrap text-graphiql-light text-xs md:text-lg">
                 GraphQL Debugger
               </span>
             </a>
