@@ -7,7 +7,7 @@ import {
 import { Type } from "../schema-viewer/Type";
 import type { SchemaViewerProps } from "./types";
 
-export function SchemaViewer({ schemaId, typeDefs }: SchemaViewerProps) {
+export const SchemaViewer = ({ schemaId, typeDefs }: SchemaViewerProps) => {
   const parsed = parse(typeDefs ?? "");
 
   const queryDefs: ObjectTypeDefinitionNode[] = [];
@@ -66,4 +66,4 @@ export function SchemaViewer({ schemaId, typeDefs }: SchemaViewerProps) {
       </div>
     </div>
   );
-}
+};

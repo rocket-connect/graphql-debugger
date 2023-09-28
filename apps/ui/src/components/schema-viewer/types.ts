@@ -1,6 +1,6 @@
 import type { AggregateSpansResponse } from "@graphql-debugger/types";
 
-import type { FieldDefinitionNode } from "graphql";
+import type { FieldDefinitionNode, TypeNode } from "graphql";
 
 export interface TypeProps {
   schemaId: string;
@@ -26,7 +26,17 @@ export interface FieldProps {
   schemaId: string;
 }
 
-export interface StatsDetailsProps { 
-    statsType: "Resolve Count" | "Error Count" | "Average Duration" | "Last Resolved";
-    statsDetails?: number | string
+export interface StatsDetailsProps {
+  statsType:
+    | "Resolve Count"
+    | "Error Count"
+    | "Average Duration"
+    | "Last Resolved";
+  statsDetails?: number | string;
+}
+
+export interface FieldNameProps {
+  parentName: string;
+  name: string;
+  type: string;
 }
