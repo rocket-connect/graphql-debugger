@@ -102,7 +102,7 @@ export function GettingStarted() {
               </div>
             </div>
             <div className="my-auto">
-              <div className="mx-auto w-5/6 my-auto">
+              <div className="mx-auto w-full md:w-5/6 my-auto">
                 <Tabs defaultValue="yoga.ts">
                   <div className="relative rounded-2xl bg-graphiql-dark">
                     <div className="px-4 pt-4">
