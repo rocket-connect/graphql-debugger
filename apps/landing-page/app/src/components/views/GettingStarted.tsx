@@ -60,8 +60,8 @@ export function GettingStarted() {
   return (
     <div className="bg-graphiql-medium text-graphiql-light">
       <Container>
-        <div className="py-20">
-          <div className="flex gap-10">
+        <div className="py-20 lg:w-5/6 lg:mx-auto gap-10">
+          <div className="flex flex-col xl:flex-row gap-10">
             <div className="flex flex-col gap-10 my-auto">
               <h2 className="text-4xl font-bold">Getting Started</h2>
               <p>
@@ -101,8 +101,8 @@ export function GettingStarted() {
                 <img src={npxGraphQLDebugger} alt="npx graphql-debugger" />
               </div>
             </div>
-            <div>
-              <div style={{ width: 550 }}>
+            <div className="my-auto">
+              <div className="mx-auto w-5/6 my-auto">
                 <Tabs defaultValue="yoga.ts">
                   <div className="relative rounded-2xl bg-graphiql-dark">
                     <div className="px-4 pt-4">

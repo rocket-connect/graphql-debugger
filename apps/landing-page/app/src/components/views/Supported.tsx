@@ -37,7 +37,7 @@ export function Supported() {
   return (
     <div className="bg-graphiql-light text-graphiql-medium py-5">
       <Container>
-        <div className="flex flex-col lg:flex-row justify-between gap-10">
+        <div className="flex flex-col md:flex-row justify-between gap-10">
           {supported.map((item) => (
             <div className="flex flex-col justify-center align-center text-center gap-5">
               <div className="w-12 mx-auto">

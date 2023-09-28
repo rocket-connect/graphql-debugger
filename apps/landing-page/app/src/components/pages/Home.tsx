@@ -5,7 +5,7 @@ export function Home() {
   return (
     <div className="bg-graphiql-medium text-graphiql-light py-10">
       <Container>
-        <div className="flex flex-col md:flex-row gap-20 align-center justify-center py-20 w-5/6 mx-auto">
+        <div className="flex flex-col md:flex-row gap-20 align-center justify-center py-20 w-full lg:w-5/6 lg:mx-auto">
           <div className="flex flex-col gap-20">
             <h1 className="flex flex-col text-left font-bold text-center md:text-left mx-auto md:m-0 text-4xl xl:text-6xl">
               <span>Debug your GraphQL</span>
