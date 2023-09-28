@@ -13,14 +13,13 @@
   },
   "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -b",
     "test": "cross-env NODE_ENV=test jest --runInBand"
   },
   "peerDependencies": {
     "graphql": "^16.0.0 || ^17.0.0"
   },
   "dependencies": {
-    "@graphql-debugger/utils": "workspace:^",
     "@opentelemetry/api": "1.6.0",
     "@opentelemetry/context-async-hooks": "1.15.2",
     "@opentelemetry/exporter-trace-otlp-http": "0.41.2",
@@ -32,7 +31,6 @@
     "@graphql-tools/utils": "10.0.6"
   },
   "devDependencies": {
-    "@graphql-debugger/types": "workspace:^",
     "@faker-js/faker": "8.0.2"
   }
 }

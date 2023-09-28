@@ -17,15 +17,15 @@
     "outDir": "build",
     "noEmit": false,
     "paths": {
-      "@graphql-debugger/time": ["../time"],
-      "@graphql-debugger/types": ["../types"],
-      "@graphql-debugger/utils": ["../utils"]
+      "@graphql-debugger/time": ["../../../packages/time"],
+      "@graphql-debugger/types": ["../../../packages/types"],
+      "@graphql-debugger/utils": ["../../../packages/utils"]
     }
   },
   "references": [
-    { "path": "../time" },
-    { "path": "../types" },
-    { "path": "../utils" }
+    { "path": "../../../packages/time" },
+    { "path": "../../../packages/types" },
+    { "path": "../../../packages/utils" }
   ],
   "include": ["src/**/*"]
 }

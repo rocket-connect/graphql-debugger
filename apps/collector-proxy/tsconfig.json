@@ -7,20 +7,20 @@
     "declaration": true,
     "baseUrl": ".",
     "paths": {
-      "@graphql-debugger/opentelemetry": ["../opentelemetry"],
-      "@graphql-debugger/queue": ["../queue"],
-      "@graphql-debugger/schemas": ["../schemas"],
-      "@graphql-debugger/time": ["../time"],
-      "@graphql-debugger/types": ["../types"],
-      "@graphql-debugger/utils": ["../utils"]
+      "@graphql-debugger/opentelemetry": ["../../packages/opentelemetry"],
+      "@graphql-debugger/queue": ["../../packages/queue"],
+      "@graphql-debugger/schemas": ["../../packages/schemas"],
+      "@graphql-debugger/time": ["../../packages/time"],
+      "@graphql-debugger/types": ["../../packages/types"],
+      "@graphql-debugger/utils": ["../../packages/utils"]
     }
   },
   "references": [
-    { "path": "../opentelemetry" },
-    { "path": "../queue" },
-    { "path": "../schemas" },
-    { "path": "../time" },
-    { "path": "../types" },
-    { "path": "../utils" }
+    { "path": "../../packages/opentelemetry" },
+    { "path": "../../packages/queue" },
+    { "path": "../../packages/schemas" },
+    { "path": "../../packages/time" },
+    { "path": "../../packages/types" },
+    { "path": "../../packages/utils" }
   ]
 }

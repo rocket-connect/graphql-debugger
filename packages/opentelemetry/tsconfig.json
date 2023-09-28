@@ -6,8 +6,13 @@
     "rootDir": "./src/",
     "declarationMap": true,
     "declaration": true,
-    "composite": true
+    "composite": true,
+    "paths": {
+      "@graphql-debugger/types": ["../types"],
+      "@graphql-debugger/utils": ["../utils"]
+    }
   },
+  "references": [{ "path": "../types" }, { "path": "../utils" }],
   "exclude": ["tests/"],
   "include": ["src/**/*"]
 }

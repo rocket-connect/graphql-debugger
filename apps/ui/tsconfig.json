@@ -15,7 +15,15 @@
     "rootDir": "src",
     "baseUrl": ".",
     "outDir": "build",
-    "noEmit": false
+    "noEmit": false,
+    "paths": {
+      "@graphql-debugger/time": ["../../packages/time"],
+      "@graphql-debugger/types": ["../../packages/types"]
+    }
   },
+  "references": [
+    { "path": "../../packages/time" },
+    { "path": "../../packages/types" }
+  ],
   "include": ["src/**/*"]
 }

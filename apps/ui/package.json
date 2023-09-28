@@ -28,11 +28,11 @@
     "react-dom": "18.2.0",
     "react-router-dom": "6.7.0"
   },
-  "devDependencies": {
-    "@graphql-debugger/types": "workspace:^"
-  },
   "engines": {
     "node": ">=18",
     "pnpm": ">=8"
+  },
+  "devDependencies": {
+    "tsconfig-paths-webpack-plugin": "^4.1.0"
   }
 }

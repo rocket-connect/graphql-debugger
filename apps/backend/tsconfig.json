@@ -7,8 +7,8 @@
     "declaration": true,
     "baseUrl": ".",
     "paths": {
-      "@graphql-debugger/utils": ["../utils"]
+      "@graphql-debugger/utils": ["../../packages/utils"]
     }
   },
-  "references": [{ "path": "../utils" }]
+  "references": [{ "path": "../../packages/utils" }]
 }
