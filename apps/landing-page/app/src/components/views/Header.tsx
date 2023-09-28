@@ -7,7 +7,7 @@ export function Header() {
     <div className="bg-graphiql-dark w-full py-2">
       <Container>
         <nav>
-          <div className="flex flex-wrap items-center justify-between mx-auto p-2">
+          <div className="flex flex-wrap items-center justify-between mx-auto py-2">
             <a href="#" className="flex items-center">
               <span className="w-10">
                 <Logo />
