@@ -26,7 +26,7 @@ async function start() {
 
     const message2 = `Debugger Online http://localhost:${BACKEND_PORT}`;
     console.log(message2);
-    
+
     debug(`Debugger Online http://localhost:${BACKEND_PORT}`);
   } catch (error) {
     debug("Failed to connect to start app", error);
