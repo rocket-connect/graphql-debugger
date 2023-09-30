@@ -17,6 +17,16 @@ async function start() {
       backendPort: BACKEND_PORT,
     });
 
+    const message1 = `
+      Thanks for downloading GraphQL Debugger!
+      You can use GraphQL Debugger to debug your GraphQL server locally.
+      Visit https://www.graphql-debugger.com for more info.
+    `;
+    console.log(message1);
+
+    const message2 = `Debugger Online http://localhost:${BACKEND_PORT}`;
+    console.log(message2);
+
     debug(`Debugger Online http://localhost:${BACKEND_PORT}`);
   } catch (error) {
     debug("Failed to connect to start app", error);
