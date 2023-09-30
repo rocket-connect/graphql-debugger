@@ -639,4 +639,64 @@ describe("@trace directive", () => {
 
     expect(result).toEqual(hash.digest("hex"));
   });
+
+  // https://github.com/rocket-connect/graphql-debugger/issues/66
+  test("should append graphql bottom values to trace attribute", async () => {
+    const typeDefs = `
+      type Query {
+        hello: String! @trace
+      }
+    `;
+
+    const resolvers = {
+      Query: {
+        hello: () => "world",
+      },
+    };
+
+    const trace = traceDirective();
+
+    let schema = makeExecutableSchema({
+      typeDefs: [typeDefs, trace.typeDefs],
+      resolvers,
+    });
+
+    schema = trace.transformer(schema);
+
+    const query = `
+      query {
+        hello
+      }
+    `;
+
+    const { errors } = await graphql({
+      schema,
+      source: query,
+      contextValue: {
+        GraphQLOTELContext: new GraphQLOTELContext({
+          includeVariables: true,
+          includeResult: true,
+          includeContext: true,
+        }),
+      },
+    });
+
+    expect(errors).toBeUndefined();
+
+    const spans = inMemorySpanExporter.getFinishedSpans();
+    const rootSpan = spans.find((span) => !span.parentSpanId) as ReadableSpan;
+    const spanTree = buildSpanTree({ span: rootSpan, children: [] }, spans);
+
+    expect(spanTree.span.name).toEqual("query hello");
+    expect(spanTree.span.attributes[AttributeNames.DOCUMENT]).toMatch(
+      print(parse(query)),
+    );
+
+    const result = spanTree.span.attributes[AttributeNames.OPERATION_RESULT];
+    expect(result).toEqual(
+      JSON.stringify({
+        result: "world",
+      }),
+    );
+  });
 });
