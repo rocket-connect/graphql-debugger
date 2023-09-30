@@ -3,8 +3,8 @@ import type { PostTraces } from "@graphql-debugger/types";
 
 import { Request, Response } from "express";
 
-import { postTracesQueue } from "../../src";
 import { debug } from "../debug";
+import { postTracesQueue } from "../index";
 import { validateRequest } from "../validate-request";
 
 async function postTracesHandler(req: Request, res: Response) {
