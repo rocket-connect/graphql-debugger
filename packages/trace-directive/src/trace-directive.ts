@@ -106,7 +106,9 @@ export function traceDirective(directiveName = "trace") {
                     ) {
                       span.setAttribute(
                         AttributeNames.OPERATION_RESULT,
-                        result,
+                        JSON.stringify({
+                          result: result,
+                        }),
                       );
                     } else if (typeof result === "object") {
                       span.setAttribute(
