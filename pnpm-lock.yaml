@@ -348,31 +348,30 @@ importers:
 
   packages/data-access:
     dependencies:
-      '@graphql-debugger/utils':
-        specifier: workspace:^
-        version: link:../utils
-      '@prisma/client':
-        specifier: 5.2.0
-        version: 5.2.0(prisma@5.3.1)
-      graphql:
-        specifier: ^16.0.0 || ^17.0.0
-        version: 16.0.0
-      prisma:
-        specifier: 5.3.1
-        version: 5.3.1
-    devDependencies:
       '@faker-js/faker':
         specifier: 8.0.2
         version: 8.0.2
+      '@graphql-debugger/utils':
+        specifier: workspace:^
+        version: link:../utils
       '@graphql-tools/schema':
         specifier: 10.0.0
         version: 10.0.0(graphql@16.0.0)
       '@graphql-tools/utils':
         specifier: 10.0.6
         version: 10.0.6(graphql@16.0.0)
+      '@prisma/client':
+        specifier: 5.2.0
+        version: 5.2.0(prisma@5.3.1)
       gql-tag:
         specifier: ^1.0.1
         version: 1.0.1
+      graphql:
+        specifier: ^16.0.0 || ^17.0.0
+        version: 16.0.0
+      prisma:
+        specifier: 5.3.1
+        version: 5.3.1
 
   packages/graphql-debugger:
     dependencies:
@@ -2158,7 +2157,6 @@ packages:
   /@faker-js/faker@8.0.2:
     resolution: {integrity: sha512-Uo3pGspElQW91PCvKSIAXoEgAUlRnH29sX2/p89kg7sP1m2PzCufHINd0FhTXQf6DYGiUlVncdSPa2F9wxed2A==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
-    dev: true
 
   /@fontsource/roboto@5.0.8:
     resolution: {integrity: sha512-XxPltXs5R31D6UZeLIV1td3wTXU3jzd3f2DLsXI8tytMGBkIsGcc9sIyiupRtA8y73HAhuSCeweOoBqf6DbWCA==}
@@ -2187,6 +2185,7 @@ packages:
       '@graphql-tools/utils': 10.0.6(graphql@16.0.0)
       graphql: 16.0.0
       tslib: 2.6.2
+    dev: false
 
   /@graphql-tools/schema@10.0.0(graphql@16.0.0):
     resolution: {integrity: sha512-kf3qOXMFcMs2f/S8Y3A8fm/2w+GaHAkfr3Gnhh2LOug/JgpY/ywgFVxO3jOeSpSEdoYcDKLcXVjMigNbY4AdQg==}
@@ -2199,6 +2198,7 @@ packages:
       graphql: 16.0.0
       tslib: 2.6.2
       value-or-promise: 1.0.12
+    dev: false
 
   /@graphql-tools/utils@10.0.6(graphql@16.0.0):
     resolution: {integrity: sha512-hZMjl/BbX10iagovakgf3IiqArx8TPsotq5pwBld37uIX1JiZoSbgbCIFol7u55bh32o6cfDEiiJgfAD5fbeyQ==}
@@ -2210,6 +2210,7 @@ packages:
       dset: 3.1.2
       graphql: 16.0.0
       tslib: 2.6.2
+    dev: false
 
   /@graphql-typed-document-node/core@3.2.0(graphql@16.0.0):
     resolution: {integrity: sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ==}
@@ -2217,6 +2218,7 @@ packages:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
     dependencies:
       graphql: 16.0.0
+    dev: false
 
   /@graphql-yoga/logger@1.0.0:
     resolution: {integrity: sha512-JYoxwnPggH2BfO+dWlWZkDeFhyFZqaTRGLvFhy+Pjp2UxitEW6nDrw+pEDw/K9tJwMjIFMmTT9VfTqrnESmBHg==}
@@ -5207,6 +5209,7 @@ packages:
   /dset@3.1.2:
     resolution: {integrity: sha512-g/M9sqy3oHe477Ar4voQxWtaPIFw1jTdKZuomOjhCcBx9nHUNn0pu6NopuFFrTh/TRZIKEj+76vLWFu9BNKk+Q==}
     engines: {node: '>=4'}
+    dev: false
 
   /ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
@@ -6222,7 +6225,6 @@ packages:
 
   /gql-tag@1.0.1:
     resolution: {integrity: sha512-eVxldTiOtJJ3ySNgYbfRwyIyDDMATJ/ykojlQng5ihX1V0Xpr4C7ZXSZuWo7tg+kf+GS8lzhlbZmKSDjbYGhyA==}
-    dev: true
 
   /graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
@@ -6254,6 +6256,7 @@ packages:
   /graphql@16.0.0:
     resolution: {integrity: sha512-n9NxoRfwnpYBZB/WJ7L166gyrShuZ8qYgVaX8oxVyELcJfAwkvwPt6WlYIl90WRlzqDjaNWvLmNOSnKs5llZWQ==}
     engines: {node: ^12.22.0 || ^14.16.0 || >=16.0.0}
+    dev: false
 
   /handle-thing@2.0.1:
     resolution: {integrity: sha512-9Qn4yBxelxoh2Ow62nP+Ka/kMnOXRi8BXnRaUwezLNhqelnN49xKz4F/dPP8OYLxLxq6JDtZb2i9XznUQbNPTg==}
@@ -9787,6 +9790,7 @@ packages:
   /value-or-promise@1.0.12:
     resolution: {integrity: sha512-Z6Uz+TYwEqE7ZN50gwn+1LCVo9ZVrpxRPOhOLnncYkY1ZzOYtrX8Fwf/rFktZ8R5mJms6EZf5TqNOMeZmnPq9Q==}
     engines: {node: '>=12'}
+    dev: false
 
   /vary@1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
