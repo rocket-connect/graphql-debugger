@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/monorepo",
-  "version": "0.0.0-alpha.51",
+  "version": "0.0.0-alpha.52",
   "private": true,
   "scripts": {
     "dev": "cross-env DEBUG=\"@graphql-debugger:*\" TRACE_SCHEMA=\"true\" turbo dev --filter \"graphql-debugger\"",
