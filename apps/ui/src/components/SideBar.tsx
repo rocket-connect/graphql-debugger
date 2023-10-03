@@ -7,11 +7,7 @@ export const SideBar = ({
 }: SideBarProps) => {
   return (
     <div className="flex flex-col items-center gap-8 border-r-2 border-neutral-100/15 p-4 h-screen">
-      <button
-        onClick={() => {
-          handleToggleSchema();
-        }}
-      >
+      <button onClick={() => handleToggleSchema()}>
         {displaySchema ? <DocsActive size={24} /> : <Docs size={24} />}
       </button>
       <History size={24} />

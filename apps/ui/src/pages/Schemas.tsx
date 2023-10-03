@@ -1,7 +1,6 @@
 import { TimeStamp } from "@graphql-debugger/time";
-import { Schema } from "@graphql-debugger/types";
 
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
 import { listSchemas } from "../api/list-schemas";
@@ -9,22 +8,10 @@ import { IDS } from "../testing";
 import { logo } from "../utils/images";
 
 export function Schemas() {
-  const [schemas, setSchemas] = useState<Schema[]>([]);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const _schemas = await listSchemas();
-
-        if (!_schemas.length) return;
-
-        setSchemas(_schemas);
-      } catch (error) {
-        console.error(error);
-        setSchemas([]);
-      }
-    })();
-  }, []);
+  const { data: schemas } = useQuery(
+    ["schemas", "list"],
+    async () => await listSchemas(),
+  );
 
   return (
     <div className="flex h-screen justify-center items-center text-graphiql-light">
