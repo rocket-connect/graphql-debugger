@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/opentelemetry",
-  "version": "0.0.0-alpha.48",
+  "version": "0.0.0-alpha.52",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -22,11 +22,11 @@
   "dependencies": {
     "@graphql-debugger/utils": "workspace:^",
     "@opentelemetry/api": "1.6.0",
-    "@opentelemetry/context-async-hooks": "1.15.2",
-    "@opentelemetry/exporter-trace-otlp-http": "0.41.2",
-    "@opentelemetry/resources": "1.15.2",
+    "@opentelemetry/context-async-hooks": "1.17.0",
+    "@opentelemetry/exporter-trace-otlp-http": "0.43.0",
+    "@opentelemetry/resources": "1.17.0",
     "@opentelemetry/sdk-trace-base": "1.17.0",
-    "@opentelemetry/semantic-conventions": "1.15.2",
+    "@opentelemetry/semantic-conventions": "1.17.0",
     "@opentelemetry/otlp-exporter-base": "0.43.0",
     "@graphql-tools/schema": "10.0.0",
     "@graphql-tools/utils": "10.0.6"

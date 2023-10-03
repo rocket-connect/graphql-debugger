@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/data-access",
-  "version": "0.0.0-alpha.48",
+  "version": "0.0.0-alpha.52",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -24,9 +24,7 @@
   "dependencies": {
     "@graphql-debugger/utils": "workspace:^",
     "prisma": "5.3.1",
-    "@prisma/client": "5.2.0"
-  },
-  "devDependencies": {
+    "@prisma/client": "5.2.0",
     "@faker-js/faker": "8.0.2",
     "gql-tag": "^1.0.1",
     "@graphql-tools/schema": "10.0.0",

@@ -198,12 +198,8 @@ describe("extractSpans", () => {
         graphqlSchemaHash: schemaHash,
         graphqlDocument: document,
         graphqlVariables: variables,
-        graphqlResult: JSON.stringify({
-          result: JSON.parse(result),
-        }),
-        graphqlContext: JSON.stringify({
-          context: JSON.parse(context),
-        }),
+        graphqlResult: result,
+        graphqlContext: context,
         errorMessage: undefined,
         errorStack: undefined,
       },

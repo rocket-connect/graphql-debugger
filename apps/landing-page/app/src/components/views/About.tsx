@@ -4,12 +4,16 @@ import { screenshot } from "../utils/images";
 export function About() {
   return (
     <Container>
-      <div className="flex py-20 gap-10">
-        <div>
-          <img width={1200} src={screenshot} alt="logo" />
+      <div className="flex flex-col xl:flex-row justify-start py-20 gap-20 w-full xl:w-5/6 lg:mx-auto">
+        <div className="my-auto w-full mx-auto">
+          <img
+            className="md:mx-auto md:my-0 md:w-5/6"
+            src={screenshot}
+            alt="logo"
+          />
         </div>
 
-        <div className="flex flex-col gap-10 my-auto">
+        <div className="flex flex-col gap-10">
           <h2 className="text-4xl font-bold">About</h2>
           <p>
             GraphQL Debugger is a{" "}

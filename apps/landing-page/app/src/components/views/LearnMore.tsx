@@ -4,12 +4,10 @@ export function LearnMore() {
   return (
     <div className="bg-graphiql-light text-graphiql-dark">
       <Container>
-        <div className="flex gap-20 py-20">
-          <div className="bg-graphiql-medium rounded rounded-3xl p-3">
+        <div className="flex flex-col xl:flex-row gap-20 py-20 w-full lg:w-5/6 lg:mx-auto">
+          <div className="bg-graphiql-medium w-full md:w-5/6 h-64 rounded rounded-3xl p-3 mt-auto mx-auto">
             <iframe
-              className="rounded rounded-3xl"
-              width="550"
-              height="300"
+              className="rounded rounded-3xl w-full h-full"
               src={`https://www.youtube.com/embed/EpC6xmw2a6Y`}
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

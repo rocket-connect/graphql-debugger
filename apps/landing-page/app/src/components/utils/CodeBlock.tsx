@@ -9,7 +9,7 @@ interface CodeBlockProps {
 
 export function CodeBlock({ code, language }: CodeBlockProps) {
   return (
-    <div className="flex items-start px-1 text-sm">
+    <div className="flex items-start px-1 text-xs">
       <div
         aria-hidden="true"
         className="select-none border-r border-zinc-300/5 pr-4 font-mono text-zinc-600"

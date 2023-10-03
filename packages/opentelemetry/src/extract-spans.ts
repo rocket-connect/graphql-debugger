@@ -3,6 +3,7 @@ import { AttributeNames, ResourceSpans } from "@graphql-debugger/types";
 import { parse, print } from "graphql";
 
 import { attributesToObject } from "./attributes-to-object";
+import { debug } from "./debug";
 
 export function extractSpans({
   resourceSpans,
@@ -27,28 +28,40 @@ export function extractSpans({
         if (!span.parentSpanId) {
           const document = attributes[AttributeNames.DOCUMENT];
           if (document) {
-            const parsed = parse(document);
-            const printed = print(parsed);
-            graphqlDocument = printed;
+            try {
+              const parsed = parse(document);
+              const printed = print(parsed);
+              graphqlDocument = printed;
+            } catch (error) {
+              debug("Error parsing document", error);
+            }
           }
 
           const variables = attributes[AttributeNames.OPERATION_ARGS];
           if (variables) {
-            graphqlVariables = JSON.stringify(JSON.parse(variables));
+            try {
+              graphqlVariables = JSON.stringify(JSON.parse(variables));
+            } catch (error) {
+              debug("Error parsing variables", error);
+            }
           }
 
           const result = attributes[AttributeNames.OPERATION_RESULT];
           if (result) {
-            graphqlResult = JSON.stringify({
-              result: JSON.parse(result),
-            });
+            try {
+              graphqlResult = JSON.stringify(JSON.parse(result));
+            } catch (error) {
+              debug("Error parsing result", error);
+            }
           }
 
           const context = attributes[AttributeNames.OPERATION_CONTEXT];
           if (context) {
-            graphqlContext = JSON.stringify({
-              context: JSON.parse(context),
-            });
+            try {
+              graphqlContext = JSON.stringify(JSON.parse(context));
+            } catch (error) {
+              debug("Error parsing context", error);
+            }
           }
         }
 
