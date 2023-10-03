@@ -4,7 +4,7 @@ import {
   Schema,
 } from "@graphql-debugger/types";
 
-import { api } from "./api";
+import { executeGraphQLRequest } from "./executeGraphQLRequest";
 
 const ListSchemasQuery = /* GraphQL */ `
   query ($where: ListSchemasWhere) {
@@ -23,7 +23,7 @@ const ListSchemasQuery = /* GraphQL */ `
 export async function listSchemas({
   where,
 }: { where?: ListSchemasWhere } = {}): Promise<Schema[]> {
-  const { data, errors } = await api<{
+  const { data, errors } = await executeGraphQLRequest<{
     listSchemas: ListSchemasResponse;
   }>({
     query: ListSchemasQuery,
@@ -46,7 +46,7 @@ export async function getSchema(id: string): Promise<Schema> {
     },
   });
 
-  const schema = schemas.find((s) => s.id === id);
+  const schema = schemas.find((schema) => schema.id === id);
 
   if (!schema) {
     throw new Error(`Schema with id ${id} not found`);
