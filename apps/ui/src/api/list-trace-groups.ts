@@ -1,4 +1,4 @@
-import { ListTraceGroupsWhere, Trace } from "@graphql-debugger/types";
+import { Trace } from "@graphql-debugger/types";
 
 import { executeGraphQLRequest } from "./executeGraphQLRequest";
 import type {

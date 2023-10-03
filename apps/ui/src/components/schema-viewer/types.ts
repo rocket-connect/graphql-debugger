@@ -1,6 +1,6 @@
 import type { AggregateSpansResponse } from "@graphql-debugger/types";
 
-import type { FieldDefinitionNode, TypeNode } from "graphql";
+import type { FieldDefinitionNode } from "graphql";
 
 export interface TypeProps {
   schemaId: string;
