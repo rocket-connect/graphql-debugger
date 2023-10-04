@@ -17,7 +17,7 @@ export interface SchemaViewerProps {
 }
 
 export interface StatsProps {
-  aggregate: AggregateSpansResponse | null;
+  aggregate?: AggregateSpansResponse;
 }
 
 export interface FieldProps {
