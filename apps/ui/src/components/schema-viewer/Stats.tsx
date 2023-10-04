@@ -1,9 +1,9 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 
-import type { StatsProps } from "./types";
 import { StatsDetails } from "./StatsDetails";
+import type { StatsProps } from "./types";
 
-export function Stats({ aggregate }: StatsProps) {
+export const Stats = ({ aggregate }: StatsProps) => {
   const lastResolveUnixNano = UnixNanoTimeStamp.fromString(
     aggregate?.lastResolved || "0",
   );
@@ -14,11 +14,25 @@ export function Stats({ aggregate }: StatsProps) {
   const hasResolved = lastResolveUnixNano.toString() !== "0";
 
   return (
-      <div className="flex flex-col gap-1 text-neutral-100/80 pl-4 text-xs">
-        <StatsDetails statsType="Resolve Count" statsDetails={aggregate?.resolveCount} />
-        <StatsDetails statsType="Error Count" statsDetails={aggregate?.errorCount} />
-        <StatsDetails statsType="Average Duration" statsDetails={averageDurationUnixNano.toMS()} />
-        {hasResolved && <StatsDetails statsType="Last Resolved" statsDetails={lastResolveUnixNano.formatUnixNanoTimestamp()}/>}
-      </div>
+    <div className="flex flex-col gap-1 text-neutral-100/80 pl-4 text-xs">
+      <StatsDetails
+        statsType="Resolve Count"
+        statsDetails={aggregate?.resolveCount}
+      />
+      <StatsDetails
+        statsType="Error Count"
+        statsDetails={aggregate?.errorCount}
+      />
+      <StatsDetails
+        statsType="Average Duration"
+        statsDetails={averageDurationUnixNano.toMS()}
+      />
+      {hasResolved && (
+        <StatsDetails
+          statsType="Last Resolved"
+          statsDetails={lastResolveUnixNano.formatUnixNanoTimestamp()}
+        />
+      )}
+    </div>
   );
-}
+};

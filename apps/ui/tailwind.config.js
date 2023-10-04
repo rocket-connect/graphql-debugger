@@ -3,6 +3,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        ["neutral"]: "hsla(var(--neutral) / <alpha-value>)",
         ["primary"]: "#d60690",
         ["secondary-purple"]: "#6e6acf",
         ["secondary-blue"]: "#007eea",

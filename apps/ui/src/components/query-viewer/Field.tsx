@@ -30,7 +30,7 @@ export function Field({
   );
 
   return (
-    <div className="text-graphiql-light pl-2">
+    <div className="text-neutral-100 pl-2">
       <span>{name}</span>
       {args && args.length > 0 && <span className="ml-1">{"("}</span>}
       {args && args.length > 0 && <div className="ml-3">{args}</div>}

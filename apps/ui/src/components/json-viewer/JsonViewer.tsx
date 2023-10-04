@@ -12,7 +12,7 @@ export function JsonViewer({ json }: { json: string }) {
     <div
       id={IDS.JSON_VIEWER}
       data-json={json}
-      className="flex-1 overflow-y-auto text-graphiql-light"
+      className="flex-1 text-neutral-100"
     >
       <pre className="text-xs flex flex-col gap-5">
         <JsonValue value={data} />
