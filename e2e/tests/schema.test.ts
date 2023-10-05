@@ -76,10 +76,8 @@ describe("schema", () => {
       },
     });
 
-    await sleep(1000);
-
     await page.reload();
-    await page.waitForNetworkIdle();
+    await sleep(1000);
 
     await page.waitForSelector(`[data-schemaid*="${schema?.id}"]`);
     await page.click(`[data-schemaid*="${schema?.id}"]`);
@@ -107,9 +105,11 @@ describe("schema", () => {
     });
     expect(response.errors).toBeUndefined();
 
+    // Wait for the trace to be saved by the collector
     await sleep(5000);
+
     await page.reload();
-    await page.waitForNetworkIdle();
+    await sleep(1000);
 
     await page.waitForSelector(`#${IDS.SCHEMA}`);
     await page.waitForSelector(`#${IDS.SCHEMA_TRACES}`);
@@ -164,7 +164,6 @@ describe("schema", () => {
 
     expect(jsonValues[0]).toEqual(rootSpan?.graphqlResult);
 
-    await sleep(1000);
     await page.close();
   });
 });
