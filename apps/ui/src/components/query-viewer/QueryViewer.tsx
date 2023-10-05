@@ -56,6 +56,7 @@ export function QueryViewer({ doc, spanId }: { doc: string; spanId: string }) {
                         <Selection
                           selection={selection}
                           index={selectionIndex}
+                          key={selectionIndex}
                         />
                       ),
                     )}

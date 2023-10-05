@@ -14,7 +14,6 @@ export const TraceHeader = ({ trace }: { trace?: Trace }) => {
   );
   const traceDurationSIUnits = traceDurationUnixNano.toSIUnits();
 
-  console.log("trace", trace);
   return (
     <div className="flex items-center justify-between gap-2">
       <div className="shadow-md py-2 px-4 bg-white-100 rounded-xl">
