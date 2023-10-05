@@ -16,7 +16,7 @@ export const TraceHeader = ({ trace }: { trace?: Trace }) => {
 
   return (
     <div className="flex items-center justify-between gap-2">
-      <div className="shadow-md py-2 px-4 bg-white-100 rounded-xl">
+      <div className="py-2 px-4 bg-white-100 rounded-xl">
         {trace?.rootSpan?.name?.length === undefined ? (
           <p className="text-center text-neutral-100  font-semibold">
             No rootSpanName found!

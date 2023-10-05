@@ -10,7 +10,7 @@ export const ListSchema = ({ schemas }: { schemas?: Schema[] }) => {
   return (
     <div
       id={IDS.SCHEMAS}
-      className="mx-auto  rounded-lg shadow-xl shadow-gray-300 w-1/2 flex flex-col gap-6"
+      className="mx-auto rounded-lg w-1/2 flex flex-col gap-6 border-2 border-graphiql-light"
     >
       <div className="flex flex-row justify-between gap-3 p-3">
         <div className="flex flex-col gap-3">
@@ -59,10 +59,7 @@ export const ListSchema = ({ schemas }: { schemas?: Schema[] }) => {
                   key={schema.id}
                   className="text-neutral-500 overflow-wrap break-words"
                 >
-                  <th
-                    scope="row"
-                    className={`px-6 py-4 font-medium whitespace-nowrap`}
-                  >
+                  <th scope="row" className={`px-6 py-4 whitespace-nowrap`}>
                     <Link
                       data-schemaId={schema.id}
                       to={`/schema/${schema.id}`}
