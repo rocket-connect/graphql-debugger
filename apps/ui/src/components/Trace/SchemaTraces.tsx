@@ -100,12 +100,12 @@ export const SchemaTraces = () => {
                     <tr
                       data-spanid={rootSpan?.id}
                       key={trace.id}
-                      className="border-b border-graphiql-border  text-neutral-100"
+                      className="border-b-2 border-graphiql-neutral/10 text-neutral-100"
                       onClick={() => handleSelectTrace(trace)}
                     >
                       <th
                         className={classNames(
-                          `px-6 py-4 whitespace-nowrap text-left font-medium `,
+                          `px-6 py-4 whitespace-nowrap text-left font-medium`,
                         )}
                         role="button"
                       >
