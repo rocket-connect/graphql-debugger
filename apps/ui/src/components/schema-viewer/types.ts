@@ -24,6 +24,7 @@ export interface FieldProps {
   field: FieldDefinitionNode;
   parentName: string;
   schemaId: string;
+  isLastField?: boolean;
 }
 
 export interface StatsDetailsProps {

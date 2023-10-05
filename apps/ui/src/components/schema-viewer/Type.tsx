@@ -9,7 +9,7 @@ export const Type = ({ schemaId, type }: TypeProps) => {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col text-sm">
       <p className="flex gap-1">
         <span className="text-primary">{kindKeywordMapper[type.kind]}</span>
         <span className="text-secondary-purple">{type.name}</span>
@@ -23,6 +23,7 @@ export const Type = ({ schemaId, type }: TypeProps) => {
               parentName={parentName}
               key={index}
               field={field}
+              isLastField={index === type.fields.length - 1}
             />
           ))}
         </ul>
