@@ -31,7 +31,7 @@ export function Selection({
     const fragmentSpread = selection as FragmentSpreadNode;
 
     return (
-      <div key={index} className="ml-1 p-1 text-neutral-100t">
+      <div key={index} className="ml-1 p-1 text-neutral-100">
         ...
         <span className="text-graphql-otel-green">
           {fragmentSpread.name.value}
