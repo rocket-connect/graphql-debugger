@@ -10,7 +10,7 @@ export const ListSchema = ({ schemas }: { schemas?: Schema[] }) => {
   return (
     <div
       id={IDS.SCHEMAS}
-      className="mx-auto rounded-lg w-1/2 flex flex-col gap-6 border-2 border-graphiql-light"
+      className="mx-auto rounded-2xl w-1/2 flex flex-col gap-6 border-2 border-graphiql-light"
     >
       <div className="flex flex-row justify-between gap-3 p-3">
         <div className="flex flex-col gap-3">

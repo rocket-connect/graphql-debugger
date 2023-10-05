@@ -47,7 +47,7 @@ export function Span({
             {Number(value).toFixed(2)} {unit}
           </span>
         </p>
-        <div className={`absolute h-2 bg-neutral/30 rounded-md w-full`}></div>
+        <div className={`absolute h-2 bg-neutral/30 rounded-2xl w-full`}></div>
         <div className={spanClasses} style={{ width, left: offset }}></div>
       </div>
 

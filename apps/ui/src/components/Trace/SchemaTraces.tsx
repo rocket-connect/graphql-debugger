@@ -56,7 +56,7 @@ export const SchemaTraces = () => {
   ]);
 
   return (
-    <div className="bg-white-100 flex-grow rounded-3xl divide-y-2 divide-neutral/10">
+    <div className="bg-white-100 flex-grow rounded-2xl divide-y-2 divide-neutral/10">
       <div className="flex items-center p-5 justify-between">
         <div className="flex flex-col">
           <p className="text-md font-bold text-neutral-100">Traces</p>
