@@ -22,7 +22,7 @@ export const Trace = () => {
   });
 
   return (
-    <div className="flex flex-col gap-4 bg-neutral/5 shadow-lg p-2 rounded-xl w-full h-full mx-4">
+    <div className="flex flex-col gap-4 bg-neutral/5 p-5 rounded-3xl w-full h-full mx-4">
       <TraceHeader trace={trace} />
       <div className="flex flex-grow gap-4  h-96 items-center ">
         <Editor trace={trace} />
