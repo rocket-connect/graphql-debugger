@@ -30,7 +30,7 @@ export const Schema = () => {
       {displaySchema && schema && (
         <SchemaViewer typeDefs={schema?.typeDefs} schemaId={schema?.id} />
       )}
-      <Trace schemaId={schema?.id} />
+      <Trace />
     </div>
   );
 };
