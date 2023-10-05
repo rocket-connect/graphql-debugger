@@ -65,31 +65,6 @@ export const ListSchema = ({ schemas }: { schemas?: Schema[] }) => {
                   >
                     <Link
                       data-schemaId={schema.id}
-                      to={`/test/${schema.id}`}
-                      className="text-neutral-500 underline "
-                    >
-                      {schema?.name || "Unknown"}
-                    </Link>
-                  </th>
-                  <td className="px-6 py-4">{schema.hash}</td>
-                  <td className="px-6 py-4">
-                    {new TimeStamp(new Date(schema.createdAt)).moment.fromNow()}
-                  </td>
-                </tr>
-              );
-            })}
-            {schemas?.map((schema) => {
-              return (
-                <tr
-                  key={schema.id}
-                  className="text-neutral-500 overflow-wrap break-words"
-                >
-                  <th
-                    scope="row"
-                    className={`px-6 py-4 font-medium whitespace-nowrap`}
-                  >
-                    <Link
-                      data-schemaId={schema.id}
                       to={`/schema/${schema.id}`}
                       className="text-neutral-500 underline "
                     >

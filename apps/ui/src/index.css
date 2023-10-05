@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .custom-scrollbar {
-  @apply [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:bg-white-100 [&::-webkit-scrollbar-corner]:bg-white-100;
+  @apply [&::-webkit-scrollbar]:w-0;
 }
 
 @layer base {

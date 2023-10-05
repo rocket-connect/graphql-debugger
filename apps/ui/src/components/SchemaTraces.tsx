@@ -110,12 +110,12 @@ export function SchemaTraces({ schemaId }: { schemaId: string }) {
               <tr
                 data-spanid={rootSpan?.id}
                 key={trace.id}
-                className="border-b border-graphiql-border text-graphiql-light"
+                className="border-b border-graphiql-border  text-graphiql-light"
                 onClick={() => setSelectedTrace(trace)}
               >
                 <th
                   scope="row"
-                  className={`px-6 py-4 font-medium whitespace-nowrap ${traceClasses}`}
+                  className={`px-6 py-4 rounded-md font-medium whitespace-nowrap ${traceClasses}`}
                 >
                   {rootSpan?.name}
                 </th>

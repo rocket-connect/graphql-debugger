@@ -37,11 +37,11 @@ export const SchemaTraces = () => {
 
   useEffect(() => {
     if (!params.traceId && traces?.length) {
-      navigate(`/test/${params.schemaId}/trace/${traces[0].id}`);
+      navigate(`/schema/${params.schemaId}/trace/${traces[0].id}`);
     }
     if (selectedTrace) {
       navigate(
-        `/test/${
+        `/schema/${
           params.schemaId
         }/trace/${selectedTrace?.id}?${searchParams.toString()}`,
       );
