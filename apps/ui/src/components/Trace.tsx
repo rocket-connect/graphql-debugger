@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { listTraceGroups } from "../api/list-trace-groups";
 import { Editor } from "./Trace/Editor";
 import { TraceHeader } from "./Trace/TraceHeader";
 import { TraceStats } from "./Trace/TraceStats";
 
-export const Trace = ({ schemaId }: { schemaId?: string }) => {
+export const Trace = () => {
   const params = useParams();
 
   const { data: trace } = useQuery({

@@ -1,5 +1,5 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
-import { ListTraceGroupsWhere, Trace } from "@graphql-debugger/types";
+import { Trace } from "@graphql-debugger/types";
 
 import { useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
@@ -46,7 +46,14 @@ export const SchemaTraces = () => {
         }/trace/${selectedTrace?.id}?${searchParams.toString()}`,
       );
     }
-  }, [selectedTrace, traces, navigate, searchParams, params.schemaId]);
+  }, [
+    selectedTrace,
+    traces,
+    navigate,
+    searchParams,
+    params.schemaId,
+    params.traceId,
+  ]);
 
   return (
     <div className="bg-white-100 flex-grow rounded-3xl shadow-xl divide-y-2 divide-neutral/10">
