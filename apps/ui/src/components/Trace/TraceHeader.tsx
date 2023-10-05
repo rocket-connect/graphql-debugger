@@ -36,7 +36,9 @@ export const TraceHeader = ({ trace }: { trace?: Trace }) => {
       <Link to="/">
         <div className="flex flex-row gap-2 py-1">
           <img className="w-10 my-auto" src={logo}></img>
-          <p className="my-auto text-large">GraphQL Debugger</p>
+          <p className="my-auto text-xl text-neutral-100 font-bold">
+            GraphQL Debugger
+          </p>
         </div>
       </Link>
     </div>
