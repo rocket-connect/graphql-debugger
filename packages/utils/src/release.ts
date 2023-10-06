@@ -21,7 +21,8 @@ function releaseNewVersion() {
   execSync("pnpm i");
   execSync("pnpm format");
   execSync("git add .");
-  execSync(`git commit -m ${version}`);
+  execSync(`git commit -m "${version}"`);
+  execSync(`git tag ${version}`);
 }
 
 if (!version) {
