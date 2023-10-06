@@ -211,9 +211,25 @@ describe("UnixNanoTimeStamp", () => {
 
       const formattedTimestamp = unixNanoTimeStamp.formatUnixNanoTimestamp({
         timeZone: "utc",
+        includeTimeZoneString: true,
       });
 
-      const expectedFormat = "Sep 8, 2023 at 10:51:39.416 PM UTC";
+      const expectedFormat = "Sep 8, 2023 at 22:51:39.416 UTC";
+
+      expect(formattedTimestamp).toContain(expectedFormat);
+    });
+
+    it("should format the UnixNanoTimeStamp as expected without timezone or AM PM", () => {
+      const unixNanoTimeStamp = UnixNanoTimeStamp.fromString(
+        "1694213499416000000",
+      );
+
+      const formattedTimestamp = unixNanoTimeStamp.formatUnixNanoTimestamp({
+        timeZone: "utc",
+        includeTimeZoneString: false,
+      });
+
+      const expectedFormat = "Sep 8, 2023 at 22:51:39.416";
 
       expect(formattedTimestamp).toContain(expectedFormat);
     });

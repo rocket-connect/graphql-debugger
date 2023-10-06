@@ -4,8 +4,8 @@ import type { Span as TSpan, Trace } from "@graphql-debugger/types";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { listTraceGroups } from "../../api/list-trace-groups";
-import { IDS } from "../../testing";
+import { listTraceGroups } from "../../../api/list-trace-groups";
+import { IDS } from "../../../testing";
 import { Span } from "./Span";
 import { createTreeData } from "./utils";
 
@@ -20,7 +20,7 @@ const TraceView = ({ spans }: { spans: TSpan[] }) => {
   );
 
   return (
-    <div className="text-white flex flex-col">
+    <div className="text-neutral-100 flex flex-col">
       {treeData.map((treeItem) => (
         <Span
           key={treeItem.spanId}
@@ -61,7 +61,10 @@ export function TraceViewer() {
   }
 
   return (
-    <div id={IDS.TRACE_VIEWER}>
+    <div
+      id={IDS.TRACE_VIEWER}
+      className="basis-1/2 overflow-y-scroll custom-scrollbar"
+    >
       {traces?.length && <TraceView spans={traces[0]?.spans || []} />}
     </div>
   );

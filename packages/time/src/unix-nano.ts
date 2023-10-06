@@ -104,7 +104,10 @@ export class UnixNanoTimeStamp {
     return new TimeStamp(date);
   }
 
-  public formatUnixNanoTimestamp({ timeZone }: { timeZone?: "utc" } = {}) {
+  public formatUnixNanoTimestamp({
+    timeZone,
+    includeTimeZoneString = false,
+  }: { timeZone?: "utc"; includeTimeZoneString?: boolean } = {}) {
     const milliseconds = Number(this.getBigInt()) / 1e6;
     const date = new Date(milliseconds);
 
@@ -120,11 +123,18 @@ export class UnixNanoTimeStamp {
       minute: "2-digit",
       second: "2-digit",
       fractionalSecondDigits: 3,
-      timeZoneName: "short",
+      ...(includeTimeZoneString && { timeZoneName: "short" }),
       timeZone,
+      hour12: false, // Force 24-hour format
     });
 
-    return `${formattedDate} at ${formattedTime}`;
+    let result = `${formattedDate} at ${formattedTime}`;
+    if (!includeTimeZoneString) {
+      result = result.replace(/\s[APM]{2}$/, ""); // Remove AM or PM
+      result = result.replace(/^\s+|\s+$/g, "");
+    }
+
+    return result;
   }
 
   public static duration(

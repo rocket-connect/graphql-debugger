@@ -47,11 +47,11 @@ export function Span({
             {Number(value).toFixed(2)} {unit}
           </span>
         </p>
-        <div className={`absolute h-2 bg-graphiql-border w-full`}></div>
+        <div className={`absolute h-2 bg-neutral/30 rounded-2xl w-full`}></div>
         <div className={spanClasses} style={{ width, left: offset }}></div>
       </div>
 
-      <div className="text-white flex flex-col p-0 m-0">
+      <div className="text-neutral-100 flex flex-col p-0 m-0">
         {Array.isArray(data.children)
           ? data.children.map((child) => (
               <Span

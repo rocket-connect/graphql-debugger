@@ -13,7 +13,7 @@
   "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
   "scripts": {
     "build": "tsc",
-    "test": "jest --runInBand"
+    "test": "cd ../apps/ui && pnpm run build && cd ../../e2e && cross-env NODE_ENV=test jest --runInBand"
   },
   "peerDependencies": {
     "graphql": "^16.0.0 || ^17.0.0"

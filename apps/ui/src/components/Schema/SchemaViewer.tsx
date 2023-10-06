@@ -1,15 +1,15 @@
-import { FieldDefinitionNode, ObjectTypeDefinitionNode, parse } from "graphql";
+import {
+  type FieldDefinitionNode,
+  type ObjectTypeDefinitionNode,
+  parse,
+} from "graphql";
 
+import { IDS } from "../../testing";
 import { Type } from "./Type";
+import type { SchemaViewerProps } from "./types";
 
-export function SchemaViewer({
-  schemaId,
-  typeDefs,
-}: {
-  schemaId: string;
-  typeDefs: string;
-}) {
-  const parsed = parse(typeDefs);
+export const SchemaViewer = ({ schemaId, typeDefs }: SchemaViewerProps) => {
+  const parsed = parse(typeDefs ?? "");
 
   const queryDefs: ObjectTypeDefinitionNode[] = [];
   const mutationDefs: ObjectTypeDefinitionNode[] = [];
@@ -30,8 +30,19 @@ export function SchemaViewer({
   const sortedDefs = [...queryDefs, ...mutationDefs, ...otherDefs];
 
   return (
-    <div className="flex-1 overflow-y-auto">
-      <pre className="text-xs flex flex-col gap-5">
+    <div
+      className="h-screen flex flex-col items-start"
+      id={IDS.SCHEMA}
+      data-schema={schemaId}
+    >
+      <div className="pt-2">
+        <h2 className="text-neutral-100 font-bold">Schema</h2>
+        <p className="text-neutral-100 py-2 text-xs">
+          Your GraphQL Schema with analytics on each field.
+        </p>
+      </div>
+
+      <div className="h-screen overflow-y-scroll custom-scrollbar py-2">
         {sortedDefs.map((def, index) => {
           if (
             def.kind === "ObjectTypeDefinition" ||
@@ -41,9 +52,9 @@ export function SchemaViewer({
             const kind = def.kind;
 
             return (
-              <div className="flex flex-col" key={def.name.value}>
+              <div key={def.name.value} className="mb-4">
                 <Type
-                  schemaId={schemaId}
+                  schemaId={schemaId ?? ""}
                   key={index}
                   type={{
                     name,
@@ -57,7 +68,7 @@ export function SchemaViewer({
 
           return null;
         })}
-      </pre>
+      </div>
     </div>
   );
-}
+};

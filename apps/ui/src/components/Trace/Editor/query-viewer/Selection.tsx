@@ -6,7 +6,7 @@ import {
   SelectionNode,
 } from "graphql";
 
-import { Field } from "./Field";
+import { QueryField } from "./QueryField";
 
 export function Selection({
   selection,
@@ -17,7 +17,7 @@ export function Selection({
 }) {
   if (selection.kind === Kind.FIELD) {
     return (
-      <Field
+      <QueryField
         key={index}
         field={selection as FieldNode}
         renderSelection={(selection, index) => (
@@ -31,7 +31,7 @@ export function Selection({
     const fragmentSpread = selection as FragmentSpreadNode;
 
     return (
-      <div key={index} className="ml-1 p-1 text-graphiql-light">
+      <div key={index} className="ml-1 p-1 text-neutral-100">
         ...
         <span className="text-graphql-otel-green">
           {fragmentSpread.name.value}
@@ -44,7 +44,7 @@ export function Selection({
     const inlineFragment = selection as InlineFragmentNode;
 
     return (
-      <div key={index} className="ml-1 p-1 text-graphiql-light">
+      <div key={index} className="ml-1 p-1 text-neutral-100">
         {"... on "}
         {inlineFragment.typeCondition?.name.value}
         <ul className="flex flex-col gap-1">

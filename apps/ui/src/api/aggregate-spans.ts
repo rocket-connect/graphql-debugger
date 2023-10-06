@@ -3,7 +3,7 @@ import {
   AggregateSpansWhere,
 } from "@graphql-debugger/types";
 
-import { api } from "./api";
+import { executeGraphQLRequest } from "./executeGraphQLRequest";
 
 const AggregateSpansQuery = /* GraphQL */ `
   query ($where: AggregateSpansWhere!) {
@@ -21,7 +21,7 @@ export async function aggregateSpans({
 }: {
   where: AggregateSpansWhere;
 }): Promise<AggregateSpansResponse> {
-  const { data, errors } = await api<{
+  const { data, errors } = await executeGraphQLRequest<{
     aggregateSpans: AggregateSpansResponse;
   }>({
     query: AggregateSpansQuery,

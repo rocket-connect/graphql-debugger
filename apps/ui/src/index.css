@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.custom-scrollbar {
+  @apply [&::-webkit-scrollbar]:w-0;
+}
+
+@layer base {
+  :root {
+    --neutral: 219 28% 32%;
+  }
+}

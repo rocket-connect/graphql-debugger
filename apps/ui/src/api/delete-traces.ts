@@ -3,7 +3,7 @@ import {
   DeleteTracesWhere,
 } from "@graphql-debugger/types";
 
-import { api } from "./api";
+import { executeGraphQLRequest } from "./executeGraphQLRequest";
 
 const DeleteTracesQuery = /* GraphQL */ `
   mutation ($where: DeleteTracesWhere!) {
@@ -18,7 +18,7 @@ export async function deleteTraces({
 }: {
   where?: DeleteTracesWhere;
 } = {}): Promise<void> {
-  const { errors } = await api<{
+  const { errors } = await executeGraphQLRequest<{
     deleteTraces: DeleteTracesResponse;
   }>({
     query: DeleteTracesQuery,

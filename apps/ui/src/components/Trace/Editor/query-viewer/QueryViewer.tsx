@@ -1,8 +1,8 @@
 import { DocumentNode, Kind, parse } from "graphql";
 
-import { IDS } from "../../testing";
+import { IDS } from "../../../../testing";
+import { QueryType } from "./QueryType";
 import { Selection } from "./Selection";
-import { Type } from "./Type";
 
 export function QueryViewer({ doc, spanId }: { doc: string; spanId: string }) {
   const ast: DocumentNode = parse(doc);
@@ -11,7 +11,7 @@ export function QueryViewer({ doc, spanId }: { doc: string; spanId: string }) {
     <div
       id={IDS.QUERY_VIEWER}
       data-query-view-spanid={spanId}
-      className="flex-1 overflow-y-auto"
+      className="flex-1 "
     >
       <pre className="text-xs flex flex-col gap-5">
         {ast?.definitions.map((def, index) => {
@@ -22,10 +22,9 @@ export function QueryViewer({ doc, spanId }: { doc: string; spanId: string }) {
               ? def.variableDefinitions.map((varDef) => (
                   <div key={varDef.variable.name.value}>
                     <span className="text-graphql-otel-green">
-                      {" "}
                       ${varDef.variable.name.value}
                     </span>
-                    : <Type type={varDef.type} />
+                    : <QueryType type={varDef.type} />
                   </div>
                 ))
               : null;
@@ -33,10 +32,10 @@ export function QueryViewer({ doc, spanId }: { doc: string; spanId: string }) {
             return (
               <div key={index} className="flex flex-col">
                 <div className="flex items-center">
-                  <span className="text-graphiql-light">
+                  <span className="text-text-neutral-100">
                     <span className="text-graphiql-pink">{kind}</span>
                     {variableDefinitions?.length ? (
-                      <span>
+                      <span className="text-neutral-100">
                         {" "}
                         {"("}
                         <div className="flex flex-col ml-3">
@@ -57,13 +56,14 @@ export function QueryViewer({ doc, spanId }: { doc: string; spanId: string }) {
                         <Selection
                           selection={selection}
                           index={selectionIndex}
+                          key={selectionIndex}
                         />
                       ),
                     )}
                   </ul>
                 </div>
 
-                <span className="text-graphiql-light">{" }"}</span>
+                <span className="text-neutral-100">{" }"}</span>
               </div>
             );
           }
