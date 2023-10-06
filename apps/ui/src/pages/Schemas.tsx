@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { listSchemas } from "../api/list-schemas";
-import { ListSchema } from "../components/SchemaOverview/ListSchema";
-import { NoSchema } from "../components/SchemaOverview/NoSchema";
+import { ListSchema, NoSchema } from "../components";
 
 export function Schemas() {
   const { data: schemas } = useQuery({

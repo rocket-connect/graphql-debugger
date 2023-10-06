@@ -6,7 +6,7 @@ import {
   SelectionNode,
 } from "graphql";
 
-import { Field } from "./Field";
+import { QueryField } from "./QueryField";
 
 export function Selection({
   selection,
@@ -17,7 +17,7 @@ export function Selection({
 }) {
   if (selection.kind === Kind.FIELD) {
     return (
-      <Field
+      <QueryField
         key={index}
         field={selection as FieldNode}
         renderSelection={(selection, index) => (

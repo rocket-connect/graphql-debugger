@@ -1,8 +1,8 @@
 import { DocumentNode, Kind, parse } from "graphql";
 
 import { IDS } from "../../../../testing";
+import { QueryType } from "./QueryType";
 import { Selection } from "./Selection";
-import { Type } from "./Type";
 
 export function QueryViewer({ doc, spanId }: { doc: string; spanId: string }) {
   const ast: DocumentNode = parse(doc);
@@ -24,7 +24,7 @@ export function QueryViewer({ doc, spanId }: { doc: string; spanId: string }) {
                     <span className="text-graphql-otel-green">
                       ${varDef.variable.name.value}
                     </span>
-                    : <Type type={varDef.type} />
+                    : <QueryType type={varDef.type} />
                   </div>
                 ))
               : null;

@@ -1,5 +1,5 @@
 export * from "./Argument";
-export * from "./Field";
+export * from "./QueryField";
 export * from "./QueryViewer";
 export * from "./Selection";
-export * from "./Type";
+export * from "./QueryType";

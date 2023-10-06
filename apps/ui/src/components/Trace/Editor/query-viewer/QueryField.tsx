@@ -2,7 +2,7 @@ import { FieldNode, SelectionNode } from "graphql";
 
 import { Argument } from "./Argument";
 
-export function Field({
+export function QueryField({
   field,
   renderSelection,
 }: {
