@@ -14,7 +14,7 @@ $ VERSION=0.0.0-alpha.53 START_PATH=. pnpm run release
 
 This will change all the packages to the new version and will create a commit and tag with the changes.
 
-> Note that the release command will not modify the monorepo `^workspace` version in the `package.json` files. It will only change the version of the packages. **Changes to the workspace settings are done in the pipelines and are not part of the release process.**
+> Note that the release command will not modify the monorepo `^workspace` version in the `package.json` files. It will only change the version of the packages. **Changes to the workspace settings are done in the pipelines and are not part of this release.**
 
 After the release command is finished, it is wize to check the changes and make sure that everything is as expected.
 
