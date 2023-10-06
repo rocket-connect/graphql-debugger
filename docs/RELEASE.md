@@ -9,7 +9,7 @@ To release a new version of the packages make sure that you are on the `main` br
 Then, you can bump all the packages to the new version:
 
 ```bash
-VERSION=1.0.0 START_PATH=. pnpm run release
+VERSION=0.0.0-alpha.53 START_PATH=. pnpm run release
 ```
 
 This will change all the packages to the new version and will create a commit and tag with the changes.
