@@ -1,4 +1,4 @@
-import { IDS } from "../../testing";
+import { IDS } from "../../../../testing";
 import { JsonValue } from "./JsonValue";
 
 export function JsonViewer({ json }: { json: string }) {

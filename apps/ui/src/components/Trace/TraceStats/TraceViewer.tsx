@@ -4,8 +4,8 @@ import type { Span as TSpan, Trace } from "@graphql-debugger/types";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { listTraceGroups } from "../../api/list-trace-groups";
-import { IDS } from "../../testing";
+import { listTraceGroups } from "../../../api/list-trace-groups";
+import { IDS } from "../../../testing";
 import { Span } from "./Span";
 import { createTreeData } from "./utils";
 

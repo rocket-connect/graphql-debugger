@@ -1,6 +1,6 @@
 import { DocumentNode, Kind, parse } from "graphql";
 
-import { IDS } from "../../testing";
+import { IDS } from "../../../../testing";
 import { Selection } from "./Selection";
 import { Type } from "./Type";
 

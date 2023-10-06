@@ -1,5 +1,5 @@
-import { TraceViewer } from "../trace-viewer/TraceViewer";
 import { SchemaTraces } from "./SchemaTraces";
+import { TraceViewer } from "./TraceViewer";
 
 export const TraceStats = () => {
   return (

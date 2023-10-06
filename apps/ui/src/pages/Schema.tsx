@@ -4,8 +4,8 @@ import { useParams } from "react-router-dom";
 
 import { listSchemas } from "../../src/api/list-schemas";
 import { SideBar } from "../components";
+import { SchemaViewer } from "../components/Schema/SchemaViewer";
 import { Trace } from "../components/Trace";
-import { SchemaViewer } from "../components/schema-viewer/SchemaViewer";
 
 export const Schema = () => {
   const [displaySchema, setDisplaySchema] = useState(true);

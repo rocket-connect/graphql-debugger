@@ -3,7 +3,7 @@ import type { Trace } from "@graphql-debugger/types";
 
 import { Link } from "react-router-dom";
 
-import { logo } from "../../utils/images";
+import { logo } from "../../../utils/images";
 
 export const TraceHeader = ({ trace }: { trace?: Trace }) => {
   const startTimeUnixNano = UnixNanoTimeStamp.fromString(

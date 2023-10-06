@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 
-import { listTraceGroups } from "../api/list-trace-groups";
-import { Editor } from "./Trace/Editor";
-import { TraceHeader } from "./Trace/TraceHeader";
-import { TraceStats } from "./Trace/TraceStats";
+import { listTraceGroups } from "../../api/list-trace-groups";
+import { Editor } from "./Editor/Editor";
+import { TraceHeader } from "./TraceStats/TraceHeader";
+import { TraceStats } from "./TraceStats/TraceStats";
 
 export const Trace = () => {
   const params = useParams();

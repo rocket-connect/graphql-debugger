@@ -3,8 +3,8 @@ import { Trace } from "@graphql-debugger/types";
 import classNames from "classnames";
 import { useState } from "react";
 
-import { DownArrow, UpArrow } from "../../icons";
-import { JsonViewer } from "../json-viewer/JsonViewer";
+import { DownArrow, UpArrow } from "../../../icons";
+import { JsonViewer } from "./json-viewer/JsonViewer";
 import { jsonMapper, metaMapper, variablesHeader } from "./utils";
 
 export const Variables = ({ trace }: { trace?: Trace }) => {

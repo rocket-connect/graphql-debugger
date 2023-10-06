@@ -1,6 +1,6 @@
 import { Trace } from "@graphql-debugger/types";
 
-import { QueryViewer } from "../query-viewer/QueryViewer";
+import { QueryViewer } from "./query-viewer/QueryViewer";
 
 export const Query = ({ trace }: { trace?: Trace }) => {
   return (

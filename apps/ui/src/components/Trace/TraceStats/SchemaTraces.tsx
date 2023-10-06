@@ -6,7 +6,7 @@ import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
-import { listTraceGroups } from "../../api/list-trace-groups";
+import { listTraceGroups } from "../../../api/list-trace-groups";
 
 export const SchemaTraces = () => {
   const navigate = useNavigate();
@@ -64,7 +64,6 @@ export const SchemaTraces = () => {
         </div>
         <div className="flex items-center underline gap-2 text-sm">
           <p role="button">Refresh filters</p>
-          <p role="button">Delete traces</p>
         </div>
       </div>
       <div className="p-5">

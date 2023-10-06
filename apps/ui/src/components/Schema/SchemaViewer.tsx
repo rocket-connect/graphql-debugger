@@ -4,7 +4,7 @@ import {
   parse,
 } from "graphql";
 
-import { Type } from "../schema-viewer/Type";
+import { Type } from "./Type";
 import type { SchemaViewerProps } from "./types";
 
 export const SchemaViewer = ({ schemaId, typeDefs }: SchemaViewerProps) => {
