@@ -30,7 +30,7 @@ export const Variables = ({ trace }: { trace?: Trace }) => {
   );
 
   return (
-    <div className="flex p-4 flex-col justify-between">
+    <div className="flex p-4 flex-col justify-between text-neutral-100">
       <div className="flex items-center justify-between">
         <div className="flex gap-2 items-center">
           {variablesHeader.map((variable) => (
