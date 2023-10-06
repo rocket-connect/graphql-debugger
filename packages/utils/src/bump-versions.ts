@@ -1,6 +1,10 @@
 import fs from "fs";
 import path from "path";
 
+const version = process.env.VERSION;
+const startPath = process.env.START_PATH;
+const shouldIgnoreWorkspace = process.env.IGNORE_WORKSPACE;
+
 function updatePackageJsonVersion(filePath: string, version: string) {
   const content = fs.readFileSync(filePath, "utf-8");
   const json = JSON.parse(content);
@@ -9,7 +13,10 @@ function updatePackageJsonVersion(filePath: string, version: string) {
   const updatedContent = JSON.stringify(
     json,
     function (key, value) {
-      if (key === "version" || String(value).includes("workspace:^")) {
+      if (
+        key === "version" ||
+        (String(value).includes("workspace:^") && !shouldIgnoreWorkspace)
+      ) {
         return version;
       }
 
@@ -36,9 +43,6 @@ export function searchAndReplace(rootDir: string, version: string) {
     }
   }
 }
-
-const version = process.env.VERSION;
-const startPath = process.env.START_PATH;
 
 if (!version) {
   console.error("Please set the VERSION environment variable.");
