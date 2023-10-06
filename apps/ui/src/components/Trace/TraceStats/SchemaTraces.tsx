@@ -109,7 +109,7 @@ export const SchemaTraces = () => {
                     <tr
                       data-spanid={rootSpan?.id}
                       key={trace.id}
-                      className="border-b-2 border-graphiql-neutral/10 text-neutral-100"
+                      className={`border-b-2 border-graphiql-neutral/10 text-neutral-100 hover:cursor-pointer`}
                       onClick={() => handleSelectTrace(trace)}
                     >
                       <th
