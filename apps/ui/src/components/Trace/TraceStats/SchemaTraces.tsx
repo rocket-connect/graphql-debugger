@@ -63,7 +63,12 @@ export const SchemaTraces = () => {
           <p className=" text-sm">List of the latest GraphQL queries.</p>
         </div>
         <div className="flex items-center underline gap-2 text-sm">
-          <p role="button">Refresh filters</p>
+          <p
+            role="button"
+            onClick={() => navigate(`/schema/${params.schemaId}`)}
+          >
+            Refresh filters
+          </p>
         </div>
       </div>
       <div className="p-5">
