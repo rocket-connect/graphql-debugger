@@ -22,11 +22,13 @@ export const TraceHeader = ({ trace }: { trace?: Trace }) => {
             No rootSpanName found!
           </p>
         ) : (
-          <div className="text-center text-neutral-100 ">
-            <p className="font-semibold">{`${trace?.rootSpan
-              ?.name} - ${traceDurationSIUnits.value.toFixed(2)} ${
-              traceDurationSIUnits.unit
-            } `}</p>
+          <div className="text-neutral-100">
+            <p className="font-semibold text-sm">
+              <span className="underline">{trace?.rootSpan?.name}</span>
+              {` - ${traceDurationSIUnits.value.toFixed(2)} ${
+                traceDurationSIUnits.unit
+              } `}
+            </p>
             <p className="text-xs italic">
               {startTimeUnixNano.formatUnixNanoTimestamp()}
             </p>
