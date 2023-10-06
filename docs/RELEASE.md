@@ -74,4 +74,6 @@ Finally, push the changes to GitHub:
 $ git push && git push --tags
 ```
 
-This will trigger a release pipeline on GitHub Actions that will publish the packages to npm.
+This will trigger a release pipeline on GitHub Actions that will publish the packages to npm. You can find the pipeline that will be triggered here:
+
+- https://github.com/rocket-connect/graphql-debugger/blob/main/.github/workflows/release.yml
