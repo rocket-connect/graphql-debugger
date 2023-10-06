@@ -22,6 +22,28 @@ You can do that by running:
 
 ```bash
 $ git log --name-status HEAD^..HEAD
+
+(HEAD -> main, tag: 0.0.0-alpha.53)
+
+M       apps/backend/package.json
+M       apps/collector-proxy/package.json
+M       apps/landing-page/app/package.json
+M       apps/landing-page/server/package.json
+M       apps/ui/package.json
+M       e2e/package.json
+M       packages/data-access/package.json
+M       packages/graphql-debugger/package.json
+M       packages/graphql-schema/package.json
+M       packages/opentelemetry/package.json
+M       packages/queue/package.json
+M       packages/schemas/package.json
+M       packages/time/package.json
+M       packages/trace-directive/package.json
+M       packages/trace-schema/package.json
+M       packages/types/package.json
+M       packages/utils/package.json
+M       pnpm-lock.yaml
+(END)
 ```
 
 This will output the contents of the last commit. Make sure that the changes are as expected(only package versions should be changed).
