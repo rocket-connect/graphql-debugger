@@ -69,7 +69,7 @@ export const Variables = ({ trace }: { trace?: Trace }) => {
             ["h-96"]: displayVariables,
           })}
         >
-          <p className="text-xs">{metaMapper[selectedMeta]}</p>
+          <p className="text-xs mb-2">{metaMapper[selectedMeta]}</p>
           <div className="overflow-scroll custom-scrollbar h-full">
             <JsonViewer
               id={selectedMeta === "result" ? IDS.JSON_VIEWER : ""}
