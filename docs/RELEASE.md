@@ -2,6 +2,15 @@
 
 This monorepo contains several packages and apps and most of them are deployed to npm. This document describes the process of releasing a new version of Debugger.
 
+## Rules
+
+- Dont publish a package from your local machine.
+- Never change a version of a debugger package manually.
+- Dont change the `^workspace` version in a `package.json` file.
+- All packages should have the same version.
+- Check the changes before pushing them to GitHub.
+- Manually check the deployed packages on npm after the release.
+
 ## Releasing a new version
 
 To release a new version of the packages make sure that you are on the `main` branch and that you have the latest changes.
