@@ -91,6 +91,7 @@ export const SchemaTraces = () => {
               </thead>
               <tbody>
                 {traces?.map((trace) => {
+                  const isSelected = params.traceId === trace.id;
                   const rootSpan = trace.rootSpan;
                   const startTimeUnixNano = UnixNanoTimeStamp.fromString(
                     rootSpan?.startTimeUnixNano || "0",
@@ -113,7 +114,9 @@ export const SchemaTraces = () => {
                     >
                       <th
                         className={classNames(
-                          `px-6 py-4 whitespace-nowrap text-left font-medium`,
+                          `px-6 py-4 whitespace-nowrap text-left font-medium ${
+                            isSelected ? "underline" : "font-bold"
+                          }`,
                         )}
                         role="button"
                       >
