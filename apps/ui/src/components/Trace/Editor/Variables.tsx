@@ -4,12 +4,13 @@ import classNames from "classnames";
 import { useState } from "react";
 
 import { DownArrow, UpArrow } from "../../../icons";
+import { IDS } from "../../../testing";
 import { JsonViewer } from "./json-viewer/JsonViewer";
 import { jsonMapper, metaMapper, variablesHeader } from "./utils";
 
 export const Variables = ({ trace }: { trace?: Trace }) => {
   const [selectedMeta, setSelectedMeta] = useState<string>("variables");
-  const [displayVariables, setDisplayVariables] = useState(false);
+  const [displayVariables, setDisplayVariables] = useState(true);
 
   const handleMetaClick = (event: HTMLDivElement) => {
     setSelectedMeta(event.innerHTML.toLowerCase());
@@ -38,6 +39,11 @@ export const Variables = ({ trace }: { trace?: Trace }) => {
               onClick={(event) =>
                 handleMetaClick(event.target as HTMLDivElement)
               }
+              {...(variable === "Result"
+                ? {
+                    id: IDS.RESULT_BUTTON,
+                  }
+                : {})}
               className={classNames("text-neutral-100 ", {
                 ["font-semibold"]: selectedMeta === variable.toLowerCase(),
               })}
@@ -66,6 +72,7 @@ export const Variables = ({ trace }: { trace?: Trace }) => {
           <p className="text-xs">{metaMapper[selectedMeta]}</p>
           <div className="overflow-scroll custom-scrollbar h-full">
             <JsonViewer
+              id={selectedMeta === "result" ? IDS.JSON_VIEWER : ""}
               json={
                 selectedMeta === "errors"
                   ? errorsJson

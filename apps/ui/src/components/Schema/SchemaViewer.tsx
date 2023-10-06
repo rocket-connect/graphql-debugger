@@ -4,6 +4,7 @@ import {
   parse,
 } from "graphql";
 
+import { IDS } from "../../testing";
 import { Type } from "./Type";
 import type { SchemaViewerProps } from "./types";
 
@@ -29,7 +30,11 @@ export const SchemaViewer = ({ schemaId, typeDefs }: SchemaViewerProps) => {
   const sortedDefs = [...queryDefs, ...mutationDefs, ...otherDefs];
 
   return (
-    <div className="h-screen flex flex-col items-start">
+    <div
+      className="h-screen flex flex-col items-start"
+      id={IDS.SCHEMA}
+      data-schema={schemaId}
+    >
       <div className="pt-2">
         <h2 className="text-neutral-100 font-bold">Schema</h2>
         <p className="text-neutral-100 py-2 text-xs">
