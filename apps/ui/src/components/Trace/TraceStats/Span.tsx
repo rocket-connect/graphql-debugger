@@ -73,9 +73,11 @@ export function Span({
                     {
                       ...data,
                       children: undefined,
+                      errorMessage: undefined,
+                      errorStack: undefined,
                       ...(data.attributes
                         ? { attributes: JSON.parse(data.attributes) }
-                        : {}),
+                        : { attributes: undefined }),
                     },
                     null,
                     2,
