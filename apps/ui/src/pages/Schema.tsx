@@ -1,17 +1,30 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { listSchemas } from "../../src/api/list-schemas";
+import { DEFAULT_SLEEP_TIME, sleep } from "..//utils/sleep";
 import { SchemaViewer, SideBar, Trace } from "../components";
+import { Spinner } from "../components/utils/Spinner";
 
 export const Schema = () => {
+  const navigate = useNavigate();
   const [displaySchema, setDisplaySchema] = useState(true);
   const params = useParams();
 
-  const { data: schema } = useQuery({
+  const { data: schema, isLoading } = useQuery({
     queryKey: ["singleSchema"],
-    queryFn: async () => await listSchemas(),
+    queryFn: async () => {
+      const schemas = await listSchemas({
+        where: {
+          id: params.schemaId,
+        },
+      });
+
+      await sleep(DEFAULT_SLEEP_TIME);
+
+      return schemas;
+    },
     select: (data) => {
       return data.find(({ id }) => id === params.schemaId);
     },
@@ -20,16 +33,32 @@ export const Schema = () => {
 
   const handleToggleSchema = () => setDisplaySchema((value) => !value);
 
+  useEffect(() => {
+    if (!isLoading) {
+      if (!schema) {
+        navigate("/schemas");
+      }
+    }
+  }, [isLoading, schema, navigate]);
+
   return (
     <div className="h-screen flex-shrink-0 flex items-center gap-8 py-4 bg-white-100 overflow-hidden">
       <SideBar
         handleToggleSchema={handleToggleSchema}
         displaySchema={displaySchema}
       />
-      {displaySchema && schema && (
-        <SchemaViewer typeDefs={schema?.typeDefs} schemaId={schema?.id} />
+      {isLoading ? (
+        <div className="flex justify-center align-center w-3/6 mx-auto">
+          <Spinner size={"10"} />
+        </div>
+      ) : (
+        <>
+          {displaySchema && schema && (
+            <SchemaViewer typeDefs={schema?.typeDefs} schemaId={schema?.id} />
+          )}
+          <Trace />
+        </>
       )}
-      <Trace />
     </div>
   );
 };

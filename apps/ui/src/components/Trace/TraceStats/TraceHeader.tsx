@@ -5,7 +5,12 @@ import { Link } from "react-router-dom";
 
 import { logo } from "../../../utils/images";
 
-export const TraceHeader = ({ trace }: { trace?: Trace }) => {
+export const TraceHeader = ({
+  trace,
+}: {
+  trace?: Trace;
+  isLoading?: boolean;
+}) => {
   const startTimeUnixNano = UnixNanoTimeStamp.fromString(
     trace?.rootSpan?.startTimeUnixNano || "0",
   );
@@ -15,25 +20,19 @@ export const TraceHeader = ({ trace }: { trace?: Trace }) => {
   const traceDurationSIUnits = traceDurationUnixNano.toSIUnits();
 
   return (
-    <div className="flex items-center justify-between gap-2">
+    <div className="flex items-center justify-between gap-2 text-sm">
       <div className="py-2 px-4 bg-white-100 rounded-2xl">
-        {trace?.rootSpan?.name?.length === undefined ? (
-          <p className="text-center text-neutral-100  font-semibold">
-            No rootSpanName found!
+        <div className="text-neutral-100">
+          <p className="font-semibold">
+            <span className="underline">{trace?.rootSpan?.name}</span>
+            {` - ${traceDurationSIUnits.value.toFixed(2)} ${
+              traceDurationSIUnits.unit
+            } `}
           </p>
-        ) : (
-          <div className="text-neutral-100">
-            <p className="font-semibold text-sm">
-              <span className="underline">{trace?.rootSpan?.name}</span>
-              {` - ${traceDurationSIUnits.value.toFixed(2)} ${
-                traceDurationSIUnits.unit
-              } `}
-            </p>
-            <p className="text-xs italic">
-              {startTimeUnixNano.formatUnixNanoTimestamp()}
-            </p>
-          </div>
-        )}
+          <p className="text-xs italic">
+            {startTimeUnixNano.formatUnixNanoTimestamp()}
+          </p>
+        </div>
       </div>
       <Link to="/">
         <div className="flex flex-row gap-2 py-1">

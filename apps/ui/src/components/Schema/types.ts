@@ -1,5 +1,3 @@
-import type { AggregateSpansResponse } from "@graphql-debugger/types";
-
 import type { FieldDefinitionNode } from "graphql";
 
 export interface TypeProps {
@@ -17,7 +15,8 @@ export interface SchemaViewerProps {
 }
 
 export interface StatsProps {
-  aggregate?: AggregateSpansResponse;
+  field: FieldDefinitionNode;
+  parentName: string;
 }
 
 export interface FieldProps {
@@ -34,6 +33,7 @@ export interface StatsDetailsProps {
     | "Average Duration"
     | "Last Resolved";
   statsDetails?: number | string;
+  isLoading?: boolean;
 }
 
 export interface FieldNameProps {
