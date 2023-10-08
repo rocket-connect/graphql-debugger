@@ -1,9 +1,27 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
+
+import { aggregateSpans } from "../../api/aggregate-spans";
 import { StatsDetails } from "./StatsDetails";
 import type { StatsProps } from "./types";
 
-export const Stats = ({ aggregate }: StatsProps) => {
+export const Stats = ({ field, parentName }: StatsProps) => {
+  const params = useParams<{ schemaId: string }>();
+  const name = field.name.value;
+
+  const { data: aggregate } = useQuery({
+    queryKey: ["aggregateSpans", name, params.schemaId, parentName],
+    queryFn: async () =>
+      await aggregateSpans({
+        where: {
+          name: `${parentName} ${name}`,
+          schemaId: params.schemaId as string,
+        },
+      }),
+  });
+
   const lastResolveUnixNano = UnixNanoTimeStamp.fromString(
     aggregate?.lastResolved || "0",
   );
