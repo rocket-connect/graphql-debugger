@@ -9,6 +9,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { listTraceGroups } from "../../../api/list-trace-groups";
 import { Spinner } from "../../../components/utils/Spinner";
 import { IDS } from "../../../testing";
+import { DEFAULT_SLEEP_TIME, sleep } from "../../../utils/sleep";
 
 export const SchemaTraces = () => {
   const navigate = useNavigate();
@@ -28,6 +29,8 @@ export const SchemaTraces = () => {
         },
         includeRootSpan: true,
       });
+
+      await sleep(DEFAULT_SLEEP_TIME);
 
       return _traces;
     },
@@ -83,7 +86,7 @@ export const SchemaTraces = () => {
       <div className="p-5">
         <div className="h-96 overflow-y-scroll custom-scrollbar w-full">
           {isLoading ? (
-            <div className="flex align-center justify-center mx-aut mt-20">
+            <div className="flex align-center justify-center mx-auto mt-20">
               <Spinner />
             </div>
           ) : (

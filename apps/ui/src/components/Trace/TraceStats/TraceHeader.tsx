@@ -3,12 +3,10 @@ import type { Trace } from "@graphql-debugger/types";
 
 import { Link } from "react-router-dom";
 
-import { Spinner } from "../../../components/utils/Spinner";
 import { logo } from "../../../utils/images";
 
 export const TraceHeader = ({
   trace,
-  isLoading = true,
 }: {
   trace?: Trace;
   isLoading?: boolean;
@@ -22,34 +20,19 @@ export const TraceHeader = ({
   const traceDurationSIUnits = traceDurationUnixNano.toSIUnits();
 
   return (
-    <div className="flex items-center justify-between gap-2">
+    <div className="flex items-center justify-between gap-2 text-sm">
       <div className="py-2 px-4 bg-white-100 rounded-2xl">
-        {isLoading ? (
-          <div className="flex">
-            <Spinner size={8} />
-            <p className="my-auto text-neutral-100 font-bold ml-3">Loading</p>
-          </div>
-        ) : (
-          <>
-            {trace?.rootSpan?.name?.length === undefined ? (
-              <p className="text-center text-neutral-100 font-semibold">
-                No rootSpanName found!
-              </p>
-            ) : (
-              <div className="text-neutral-100">
-                <p className="font-semibold text-sm">
-                  <span className="underline">{trace?.rootSpan?.name}</span>
-                  {` - ${traceDurationSIUnits.value.toFixed(2)} ${
-                    traceDurationSIUnits.unit
-                  } `}
-                </p>
-                <p className="text-xs italic">
-                  {startTimeUnixNano.formatUnixNanoTimestamp()}
-                </p>
-              </div>
-            )}
-          </>
-        )}
+        <div className="text-neutral-100">
+          <p className="font-semibold">
+            <span className="underline">{trace?.rootSpan?.name}</span>
+            {` - ${traceDurationSIUnits.value.toFixed(2)} ${
+              traceDurationSIUnits.unit
+            } `}
+          </p>
+          <p className="text-xs italic">
+            {startTimeUnixNano.formatUnixNanoTimestamp()}
+          </p>
+        </div>
       </div>
       <Link to="/">
         <div className="flex flex-row gap-2 py-1">

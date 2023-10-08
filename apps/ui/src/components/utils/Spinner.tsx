@@ -1,4 +1,4 @@
-export function Spinner({ size = 8 }: { size?: number }) {
+export function Spinner({ size = "10" }: { size?: string }) {
   return (
     <svg
       aria-hidden="true"

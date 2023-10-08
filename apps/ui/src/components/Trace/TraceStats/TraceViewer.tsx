@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { listTraceGroups } from "../../../api/list-trace-groups";
 import { Spinner } from "../../../components/utils/Spinner";
 import { IDS } from "../../../testing";
+import { DEFAULT_SLEEP_TIME, sleep } from "../../../utils/sleep";
 import { Span } from "./Span";
 import { createTreeData } from "./utils";
 
@@ -51,6 +52,9 @@ export function TraceViewer() {
             },
             includeSpans: true,
           });
+
+          await sleep(DEFAULT_SLEEP_TIME);
+
           setTraces(_traces);
         }
       } catch (error) {
