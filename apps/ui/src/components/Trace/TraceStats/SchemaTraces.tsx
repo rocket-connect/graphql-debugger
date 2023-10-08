@@ -28,7 +28,7 @@ export const SchemaTraces = () => {
         includeRootSpan: true,
       });
 
-      return _traces.filter((trace) => trace.rootSpan?.name?.length ?? 0 > 0);
+      return _traces;
     },
   });
 
@@ -38,7 +38,11 @@ export const SchemaTraces = () => {
 
   useEffect(() => {
     if (!params.traceId && traces?.length) {
-      navigate(`/schema/${params.schemaId}/trace/${traces[0].id}`);
+      navigate(
+        `/schema/${params.schemaId}/trace/${
+          traces[0].id
+        }?${searchParams.toString()}`,
+      );
     }
     if (selectedTrace) {
       navigate(

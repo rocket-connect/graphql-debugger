@@ -1,24 +1,26 @@
 import classNames from "classnames";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useCallback } from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import { FieldNameProps } from "./types";
 import { processedType } from "./utils";
 
 export const FieldName = ({ name, parentName, type }: FieldNameProps) => {
+  const params = useParams<{ schemaId: string }>();
   const [searchParams] = useSearchParams();
   const rootSpanName = searchParams.get("rootSpanName");
   const navigate = useNavigate();
 
   const fieldQueryName = `${parentName} ${name}`;
 
-  const handleNavigate = () => {
+  const handleNavigate = useCallback(() => {
     if (!["query", "mutation"].includes(parentName)) return;
     navigate(
-      `?${new URLSearchParams({
+      `/schema/${params.schemaId}?${new URLSearchParams({
         rootSpanName: fieldQueryName,
       }).toString()}`,
     );
-  };
+  }, [parentName, fieldQueryName, navigate, params.schemaId]);
 
   return (
     <div className="flex items-center gap-2 text-s">
