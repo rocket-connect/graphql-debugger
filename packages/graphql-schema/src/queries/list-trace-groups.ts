@@ -43,28 +43,50 @@ builder.queryField("listTraceGroups", (t) =>
       }),
     },
     resolve: async (root, args) => {
-      const where = {
-        ...(args.where?.id ? { id: args.where.id } : {}),
-        ...(args.where?.schemaId ? { schemaId: args.where.schemaId } : {}),
-        ...(args.where?.rootSpanName
-          ? {
-              spans: {
-                some: {
-                  parentSpanId: null,
-                  name: {
-                    equals: args.where?.rootSpanName,
-                  },
-                },
+      const whereConditions = [];
+
+      if (args.where?.id) {
+        whereConditions.push({ id: args.where.id });
+      }
+
+      if (args.where?.schemaId) {
+        whereConditions.push({ schemaId: args.where.schemaId });
+      }
+
+      if (args.where?.rootSpanName) {
+        whereConditions.push({
+          spans: {
+            some: {
+              parentSpanId: null,
+              name: {
+                equals: args.where.rootSpanName,
               },
-            }
-          : {}),
+            },
+          },
+        });
+      }
+
+      // whereConditions.push({
+      //   spans: {
+      //     none: {
+      //       parentSpanId: null,
+      //       isForeign: true,
+      //     },
+      //   },
+      // });
+
+      const where = {
+        AND: whereConditions,
       };
 
+      console.log("where", where);
       const traces = await prisma.traceGroup.findMany({
         orderBy: { createdAt: "desc" },
         where,
         take: 20,
       });
+
+      console.log("traces", traces);
 
       return {
         traces: traces.map((trace) => {

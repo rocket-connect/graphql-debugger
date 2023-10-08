@@ -22,6 +22,7 @@ export function extractSpans({
         if (!isForeignSpan) {
           // console.log(JSON.stringify(span, null, 2));
         }
+
         const attributes = attributesToObject(span.attributes || []);
 
         const graphqlSchemaHash = attributes[AttributeNames.SCHEMA_HASH] as
