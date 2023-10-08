@@ -1,5 +1,6 @@
 import { prisma } from "@graphql-debugger/data-access";
 import { Queue, QueueType } from "@graphql-debugger/queue";
+import { ForeignTraces } from "@graphql-debugger/types";
 
 import express, { Express } from "express";
 import http from "http";
@@ -7,6 +8,7 @@ import http from "http";
 import { debug } from "./debug";
 import { postSchema } from "./routes/post-schema";
 import { postTraces } from "./routes/post-traces";
+import { foreignTracesWorker } from "./workers/foreign-traces";
 import { postSchemaWorker } from "./workers/post-schema";
 import { postTracesWorker } from "./workers/post-traces";
 
@@ -23,6 +25,12 @@ app.post("/v1/schema", postSchema);
 export const postSchemaQueue = new Queue({
   type: QueueType.InMemory,
   worker: postSchemaWorker,
+});
+
+export const foreignTraces: Queue<ForeignTraces> = new Queue({
+  type: QueueType.InMemory,
+  worker: (data: ForeignTraces) =>
+    foreignTracesWorker(data, (d) => foreignTraces.add(d)),
 });
 
 export async function start({ port }: { port: string }) {

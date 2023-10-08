@@ -8,7 +8,7 @@ import { parse, print } from "graphql";
 import { debug } from "../debug";
 
 export async function postSchemaWorker(data: PostSchema["body"]) {
-  debug("Worker started");
+  debug("postSchemaWorker started");
 
   try {
     const executableSchema = makeExecutableSchema({
@@ -35,8 +35,8 @@ export async function postSchemaWorker(data: PostSchema["body"]) {
       },
     });
   } catch (error) {
-    debug("Error posting schema", error);
+    debug("postSchemaWorker Error: ", error);
   } finally {
-    debug("Worker finished");
+    debug("postSchemaWorker finished");
   }
 }

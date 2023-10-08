@@ -1,4 +1,8 @@
-import { AttributeNames, ResourceSpans } from "@graphql-debugger/types";
+import {
+  AttributeNames,
+  ExtractedSpan,
+  ResourceSpans,
+} from "@graphql-debugger/types";
 
 import { parse, print } from "graphql";
 
@@ -10,7 +14,7 @@ export function extractSpans({
   resourceSpans,
 }: {
   resourceSpans: ResourceSpans[];
-}) {
+}): ExtractedSpan[] {
   const spans = resourceSpans.flatMap((resourceSpan) => {
     return resourceSpan.scopeSpans.flatMap((scopeSpan) => {
       let isForeignSpan = true;
@@ -19,10 +23,6 @@ export function extractSpans({
       }
 
       return (scopeSpan.spans || []).map((span) => {
-        if (!isForeignSpan) {
-          // console.log(JSON.stringify(span, null, 2));
-        }
-
         const attributes = attributesToObject(span.attributes || []);
 
         const graphqlSchemaHash = attributes[AttributeNames.SCHEMA_HASH] as
