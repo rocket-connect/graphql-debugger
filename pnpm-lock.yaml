@@ -390,6 +390,9 @@ importers:
       '@graphql-debugger/backend':
         specifier: workspace:^
         version: link:../../apps/backend
+      '@graphql-debugger/collector-proxy':
+        specifier: workspace:^
+        version: link:../../apps/collector-proxy
       '@graphql-debugger/utils':
         specifier: workspace:^
         version: link:../utils
