@@ -36,6 +36,7 @@ const ListTraceGroupsQuery = /* GraphQL */ `
     name
     kind
     isForeign
+    attributes
     errorMessage
     errorStack
     endTimeUnixNano

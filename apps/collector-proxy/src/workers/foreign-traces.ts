@@ -80,6 +80,7 @@ export async function foreignTracesWorker(
             graphqlResult: span.graphqlResult,
             graphqlContext: span.graphqlContext,
             isForeign: span.isForeign,
+            attributes: span.attributes,
           },
         });
       }),

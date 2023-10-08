@@ -75,6 +75,22 @@ export function extractSpans({
           }
         }
 
+        const remainingAttributes = Object.entries(attributes).reduce(
+          (acc, [key, value]) => {
+            if (
+              key !== AttributeNames.SCHEMA_HASH &&
+              key !== AttributeNames.DOCUMENT &&
+              key !== AttributeNames.OPERATION_ARGS &&
+              key !== AttributeNames.OPERATION_RESULT &&
+              key !== AttributeNames.OPERATION_CONTEXT
+            ) {
+              acc[key] = value;
+            }
+            return acc;
+          },
+          {} as Record<string, string>,
+        );
+
         const firstError = (span.events || []).find(
           (e) => e.name === "exception",
         );
@@ -105,6 +121,7 @@ export function extractSpans({
           graphqlContext,
           errorMessage,
           errorStack,
+          attributes: JSON.stringify(remainingAttributes),
         };
       });
     });

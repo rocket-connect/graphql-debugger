@@ -13,6 +13,7 @@ export const SpanObject: ObjectRef<Span> = builder.objectType("Span", {
     name: t.exposeString("name"),
     kind: t.exposeString("kind"),
     isForeign: t.exposeBoolean("isForeign"),
+    attributes: t.exposeString("attributes", { nullable: true }),
     durationNano: t.exposeString("durationNano"),
     startTimeUnixNano: t.exposeString("startTimeUnixNano"),
     endTimeUnixNano: t.exposeString("endTimeUnixNano"),

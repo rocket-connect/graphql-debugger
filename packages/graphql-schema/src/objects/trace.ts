@@ -97,6 +97,7 @@ export const TraceObject: ObjectRef<Trace> = builder.objectType("Trace", {
                 errorMessage: span.errorMessage,
                 errorStack: span.errorStack,
                 isForeign: span.isForeign,
+                attributes: span.attributes as string,
               },
             ];
           }

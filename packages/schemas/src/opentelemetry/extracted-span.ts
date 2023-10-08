@@ -9,6 +9,7 @@ export const ExtractedSpanSchema = z.object({
   startTimeUnixNano: z.number(),
   endTimeUnixNano: z.number(),
   isForeign: z.boolean(),
+  attributes: z.string().optional(),
   graphqlSchemaHash: z.string().optional(),
   graphqlDocument: z.string().optional(),
   graphqlVariables: z.string().optional(),

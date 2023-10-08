@@ -47,6 +47,7 @@ export function rootSpanLoader() {
           errorMessage: span.errorMessage,
           errorStack: span.errorStack,
           isForeign: span.isForeign,
+          attributes: span.attributes as string,
         };
       });
     },
@@ -92,6 +93,7 @@ export function spanLoader() {
             errorMessage: span.errorMessage,
             errorStack: span.errorStack,
             isForeign: span.isForeign,
+            attributes: span.attributes as string,
           };
         });
       });
