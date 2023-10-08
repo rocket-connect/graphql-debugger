@@ -11,3 +11,13 @@
     --neutral: 219 28% 32%;
   }
 }
+
+.bg-green-stripy {
+  background-image: repeating-linear-gradient(
+    45deg,
+    #2f8525,
+    #2f8525 10px,
+    #b8beca 10px,
+    #b8beca 20px
+  );
+}

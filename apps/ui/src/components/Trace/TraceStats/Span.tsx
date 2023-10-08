@@ -28,7 +28,11 @@ export function Span({
   if (data.errorMessage) {
     spanClasses += " bg-red-500";
   } else {
-    spanClasses += " bg-graphql-otel-green";
+    if (data.isForeign) {
+      spanClasses += " bg-green-stripy";
+    } else {
+      spanClasses += " bg-graphql-otel-green";
+    }
   }
 
   return (
@@ -38,14 +42,21 @@ export function Span({
     >
       <div className="py-4">
         <p
-          className={`${
+          className={`tracking-widest ${
             data.errorMessage || data.errorStack ? "text-red-500" : {}
           } py-1`}
         >
-          {data.name}{" "}
+          <span className="font-bold">{data.name}</span>
+          {" - "}
           <span className="font-light">
             {Number(value).toFixed(2)} {unit}
           </span>
+          {data.isForeign && (
+            <span className="text-neutral-300 text-xs italic">
+              {" "}
+              - (unknown)
+            </span>
+          )}
         </p>
         <div className={`absolute h-2 bg-neutral/30 rounded-2xl w-full`}></div>
         <div className={spanClasses} style={{ width, left: offset }}></div>

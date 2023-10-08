@@ -35,6 +35,7 @@ const ListTraceGroupsQuery = /* GraphQL */ `
     parentSpanId
     name
     kind
+    isForeign
     errorMessage
     errorStack
     endTimeUnixNano

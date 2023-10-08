@@ -10,6 +10,7 @@ export const SpanSchema = z.object({
   durationNano: z.string(),
   startTimeUnixNano: z.string(),
   endTimeUnixNano: z.string(),
+  isForeign: z.boolean(),
   errorMessage: z.string().optional().nullable(),
   errorStack: z.string().optional().nullable(),
   graphqlDocument: z.string().optional().nullable(),

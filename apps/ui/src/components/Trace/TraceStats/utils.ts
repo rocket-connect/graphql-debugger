@@ -37,6 +37,7 @@ export const createTreeData = (spanArray: Span[]): RenderTree[] => {
       updatedAt: span.updatedAt,
       errorMessage: span.errorMessage,
       errorStack: span.errorStack,
+      isForeign: span.isForeign,
     };
   });
 
