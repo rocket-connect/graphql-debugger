@@ -33,6 +33,7 @@ export interface StatsDetailsProps {
     | "Average Duration"
     | "Last Resolved";
   statsDetails?: number | string;
+  isLoading?: boolean;
 }
 
 export interface FieldNameProps {

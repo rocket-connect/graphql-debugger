@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import { listTraceGroups } from "../../../api/list-trace-groups";
+import { Spinner } from "../../../components/utils/Spinner";
 import { IDS } from "../../../testing";
 
 export const SchemaTraces = () => {
@@ -17,7 +18,7 @@ export const SchemaTraces = () => {
     undefined,
   );
 
-  const { data: traces } = useQuery({
+  const { data: traces, isLoading } = useQuery({
     queryKey: ["traces", params.schemaId, searchParams.get("rootSpanName")],
     queryFn: async () => {
       const _traces = await listTraceGroups({
@@ -80,68 +81,78 @@ export const SchemaTraces = () => {
         </div>
       </div>
       <div className="p-5">
-        {traces?.length === 0 ? (
-          <div className="font-bold text-neutral-100 flex items-center justify-center">
-            No traces found
-          </div>
-        ) : (
-          <div className="h-96 overflow-y-scroll custom-scrollbar w-full">
-            <table className="w-full text-xs">
-              <thead>
-                <th>Name</th>
-                <th>Duration</th>
-                <th>Start</th>
-                <th>End</th>
-              </thead>
-              <tbody>
-                {traces?.map((trace) => {
-                  const isSelected = params.traceId === trace.id;
-                  const rootSpan = trace.rootSpan;
-                  const startTimeUnixNano = UnixNanoTimeStamp.fromString(
-                    rootSpan?.startTimeUnixNano || "0",
-                  );
-                  const endTimeUnixNano = UnixNanoTimeStamp.fromString(
-                    rootSpan?.endTimeUnixNano || "0",
-                  );
-                  const durationUnixNano = UnixNanoTimeStamp.fromString(
-                    rootSpan?.durationNano || "0",
-                  );
+        <div className="h-96 overflow-y-scroll custom-scrollbar w-full">
+          {isLoading ? (
+            <div className="flex align-center justify-center mx-aut mt-20">
+              <Spinner />
+            </div>
+          ) : (
+            <>
+              <table className="w-full text-xs">
+                <thead>
+                  <th>Name</th>
+                  <th>Duration</th>
+                  <th>Start</th>
+                  <th>End</th>
+                </thead>
+                <tbody>
+                  {traces?.length === 0 ? (
+                    <div className="font-bold text-neutral-200 flex items-center justify-center text-center mx-auto">
+                      No traces found
+                    </div>
+                  ) : (
+                    <>
+                      {traces?.map((trace) => {
+                        const isSelected = params.traceId === trace.id;
+                        const rootSpan = trace.rootSpan;
+                        const startTimeUnixNano = UnixNanoTimeStamp.fromString(
+                          rootSpan?.startTimeUnixNano || "0",
+                        );
+                        const endTimeUnixNano = UnixNanoTimeStamp.fromString(
+                          rootSpan?.endTimeUnixNano || "0",
+                        );
+                        const durationUnixNano = UnixNanoTimeStamp.fromString(
+                          rootSpan?.durationNano || "0",
+                        );
 
-                  const { value, unit } = durationUnixNano.toSIUnits();
+                        const { value, unit } = durationUnixNano.toSIUnits();
 
-                  return (
-                    <tr
-                      data-spanid={rootSpan?.id}
-                      key={trace.id}
-                      className={`border-b-2 border-graphiql-neutral/10 text-neutral-100 hover:cursor-pointer`}
-                      onClick={() => handleSelectTrace(trace)}
-                    >
-                      <th
-                        className={classNames(
-                          `px-6 py-4 whitespace-nowrap text-left font-medium ${
-                            isSelected ? "underline" : "font-bold"
-                          }`,
-                        )}
-                        role="button"
-                      >
-                        {rootSpan?.name}
-                      </th>
-                      <td className="px-6 py-4">{`${value.toFixed(
-                        2,
-                      )} ${unit}`}</td>
-                      <td className="px-6 py-4">
-                        {startTimeUnixNano.formatUnixNanoTimestamp()}
-                      </td>
-                      <td className="px-6 py-4">
-                        {endTimeUnixNano.formatUnixNanoTimestamp()}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        )}
+                        return (
+                          <tr
+                            data-spanid={rootSpan?.id}
+                            key={trace.id}
+                            className={`border-b-2 border-graphiql-neutral/10 text-neutral-100 hover:cursor-pointer`}
+                            onClick={() => handleSelectTrace(trace)}
+                          >
+                            <th
+                              className={classNames(
+                                `px-6 py-4 whitespace-nowrap text-left font-medium ${
+                                  isSelected ? "underline" : "font-bold"
+                                }`,
+                              )}
+                              role="button"
+                            >
+                              {rootSpan?.name}
+                            </th>
+                            <td className="px-6 py-4">{`${value.toFixed(
+                              2,
+                            )} ${unit}`}</td>
+                            <td className="px-6 py-4">
+                              {startTimeUnixNano.formatUnixNanoTimestamp()}
+                            </td>
+                            <td className="px-6 py-4">
+                              {endTimeUnixNano.formatUnixNanoTimestamp()}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </>
+                  )}
+                </tbody>
+              </table>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

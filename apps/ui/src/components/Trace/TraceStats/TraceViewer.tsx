@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { listTraceGroups } from "../../../api/list-trace-groups";
+import { Spinner } from "../../../components/utils/Spinner";
 import { IDS } from "../../../testing";
 import { Span } from "./Span";
 import { createTreeData } from "./utils";
@@ -36,11 +37,14 @@ const TraceView = ({ spans }: { spans: TSpan[] }) => {
 export function TraceViewer() {
   const [traces, setTraces] = useState<Trace[]>([]);
   const params = useParams();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
       try {
         if (params.traceId) {
+          setIsLoading(true);
+
           const _traces = await listTraceGroups({
             where: {
               id: params.traceId,
@@ -52,20 +56,33 @@ export function TraceViewer() {
       } catch (error) {
         console.error(error);
         setTraces([]);
+      } finally {
+        setIsLoading(false);
       }
     })();
   }, [params.traceId]);
-
-  if (!traces?.length) {
-    return <div></div>;
-  }
 
   return (
     <div
       id={IDS.TRACE_VIEWER}
       className="basis-1/2 overflow-y-scroll custom-scrollbar"
     >
-      {traces?.length && <TraceView spans={traces[0]?.spans || []} />}
+      {isLoading ? (
+        <div className="flex justify-center align-center mx-auto mt-20">
+          <Spinner />
+        </div>
+      ) : (
+        <>
+          {" "}
+          {traces?.length ? (
+            <TraceView spans={traces[0]?.spans || []} />
+          ) : (
+            <div className="mx-auto text-center text-neutral-100 font-bold">
+              No Trace Found
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 }

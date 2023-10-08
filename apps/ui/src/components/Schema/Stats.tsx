@@ -11,7 +11,7 @@ export const Stats = ({ field, parentName }: StatsProps) => {
   const params = useParams<{ schemaId: string }>();
   const name = field.name.value;
 
-  const { data: aggregate } = useQuery({
+  const { data: aggregate, isLoading } = useQuery({
     queryKey: ["aggregateSpans", name, params.schemaId, parentName],
     queryFn: async () =>
       await aggregateSpans({
@@ -34,19 +34,23 @@ export const Stats = ({ field, parentName }: StatsProps) => {
   return (
     <div className="flex flex-col gap-1 text-neutral-100/80 pl-4 text-xs">
       <StatsDetails
+        isLoading={isLoading}
         statsType="Resolve Count"
         statsDetails={aggregate?.resolveCount}
       />
       <StatsDetails
+        isLoading={isLoading}
         statsType="Error Count"
         statsDetails={aggregate?.errorCount}
       />
       <StatsDetails
+        isLoading={isLoading}
         statsType="Average Duration"
         statsDetails={averageDurationUnixNano.toMS()}
       />
       {hasResolved && (
         <StatsDetails
+          isLoading={isLoading}
           statsType="Last Resolved"
           statsDetails={lastResolveUnixNano.formatUnixNanoTimestamp()}
         />

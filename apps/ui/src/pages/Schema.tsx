@@ -4,12 +4,13 @@ import { useParams } from "react-router-dom";
 
 import { listSchemas } from "../../src/api/list-schemas";
 import { SchemaViewer, SideBar, Trace } from "../components";
+import { Spinner } from "../components/utils/Spinner";
 
 export const Schema = () => {
   const [displaySchema, setDisplaySchema] = useState(true);
   const params = useParams();
 
-  const { data: schema } = useQuery({
+  const { data: schema, isLoading } = useQuery({
     queryKey: ["singleSchema"],
     queryFn: async () => await listSchemas(),
     select: (data) => {
@@ -28,7 +29,13 @@ export const Schema = () => {
       {displaySchema && schema && (
         <SchemaViewer typeDefs={schema?.typeDefs} schemaId={schema?.id} />
       )}
-      <Trace />
+      {isLoading ? (
+        <div className="flex justify-center align-center w-3/6 mx-auto">
+          <Spinner size={10} />
+        </div>
+      ) : (
+        <Trace />
+      )}
     </div>
   );
 };
