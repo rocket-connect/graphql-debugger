@@ -10,7 +10,8 @@
     "test": "turbo test",
     "clean": "find . -type d \\( -name \"node_modules\" -o -name \"build\" -o -name \".turbo\" \\) -exec rm -rf {} +",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "reset-db": "cd ./packages/data-access && npx prisma migrate reset --force"
   },
   "devDependencies": {
     "@babel/core": "7.22.20",

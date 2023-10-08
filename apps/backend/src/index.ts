@@ -1,52 +1,23 @@
-import {
-  postSchemaQueue,
-  postTracesQueue,
-} from "@graphql-debugger/collector-proxy";
-import { prisma } from "@graphql-debugger/data-access";
-
 import http from "http";
 
-import * as app from "./app";
+import { app } from "./app";
 import { debug } from "./debug";
 
-export async function start({
-  backendPort,
-  collectorPort,
-}: {
-  backendPort: string;
-  collectorPort: string;
-}) {
+export async function start({ port }: { port: string }) {
   try {
-    debug("Starting application");
-
-    await prisma.$connect();
-
-    await postSchemaQueue.start();
-    await postTracesQueue.start();
-
-    const { backend, collector } = await app.start({
-      backendPort,
-      collectorPort,
-    });
+    const server = await app.listen(port);
 
     debug("Application started");
 
-    return { backend, collector };
+    return server;
   } catch (error) {
     debug("Application failed to start", error);
     throw error;
   }
 }
 
-export async function stop({
-  backend,
-  collector,
-}: {
-  backend: http.Server;
-  collector: http.Server;
-}) {
-  await backend.close();
-  await collector.close();
+export async function stop({ server }: { server: http.Server }) {
+  await server.close();
 }
 
 export * from "./app";

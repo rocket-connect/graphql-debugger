@@ -19,6 +19,7 @@ export const Trace = () => {
         includeRootSpan: true,
       }),
     select: (data) => data[0],
+    networkMode: "always",
   });
 
   return (

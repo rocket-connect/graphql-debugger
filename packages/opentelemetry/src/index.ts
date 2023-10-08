@@ -5,6 +5,7 @@ export * from "./attributes-to-object";
 export * from "./extract-spans";
 export * from "./info-to-attributes";
 export * from "./info-to-span-name";
+export * from "./tracer";
 
 export { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
 export {
@@ -22,3 +23,5 @@ export {
   SpanKind,
   Attributes,
 } from "@opentelemetry/api";
+
+export { InstrumentationOption } from "@opentelemetry/instrumentation";

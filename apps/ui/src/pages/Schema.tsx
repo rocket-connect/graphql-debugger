@@ -15,6 +15,7 @@ export const Schema = () => {
     select: (data) => {
       return data.find(({ id }) => id === params.schemaId);
     },
+    networkMode: "always",
   });
 
   const handleToggleSchema = () => setDisplaySchema((value) => !value);

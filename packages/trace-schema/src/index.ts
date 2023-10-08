@@ -19,15 +19,17 @@ import { SchemaExporer } from "./schema-exporter";
 export interface TraceSchemaInput {
   schema: GraphQLSchema;
   exporterConfig?: SetupOtelInput["exporterConfig"];
+  instrumentations?: SetupOtelInput["instrumentations"];
 }
 
 export function traceSchema({
   schema,
   exporterConfig,
+  instrumentations,
 }: TraceSchemaInput): GraphQLSchema {
   debug("Tracing schema");
 
-  setupOtel({ exporterConfig });
+  setupOtel({ exporterConfig, instrumentations });
 
   const directive = traceDirective();
 

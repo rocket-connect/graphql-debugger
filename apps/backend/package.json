@@ -14,10 +14,10 @@
   "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
   "scripts": {
     "build": "tsc",
-    "test": "echo \"No tests\""
+    "test": "echo \"No tests\"",
+    "dev": "cross-env DEBUG=\"@graphql-debugger:*\" TRACE_SCHEMA=true TRACE_PRISMA=true ts-node ./src/main.ts"
   },
   "dependencies": {
-    "@graphql-debugger/collector-proxy": "workspace:^",
     "@graphql-debugger/graphql-schema": "workspace:^",
     "@graphql-debugger/data-access": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",

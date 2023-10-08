@@ -4,6 +4,7 @@ import { parse, print } from "graphql";
 
 import { attributesToObject } from "./attributes-to-object";
 import { debug } from "./debug";
+import { TRACER_NAME } from "./tracer";
 
 export function extractSpans({
   resourceSpans,
@@ -12,7 +13,15 @@ export function extractSpans({
 }) {
   const spans = resourceSpans.flatMap((resourceSpan) => {
     return resourceSpan.scopeSpans.flatMap((scopeSpan) => {
+      let isForeignSpan = true;
+      if (scopeSpan.scope?.name === TRACER_NAME) {
+        isForeignSpan = false;
+      }
+
       return (scopeSpan.spans || []).map((span) => {
+        if (!isForeignSpan) {
+          // console.log(JSON.stringify(span, null, 2));
+        }
         const attributes = attributesToObject(span.attributes || []);
 
         const graphqlSchemaHash = attributes[AttributeNames.SCHEMA_HASH] as
@@ -87,6 +96,7 @@ export function extractSpans({
           kind: span.kind,
           startTimeUnixNano: span.startTimeUnixNano,
           endTimeUnixNano: span.endTimeUnixNano,
+          isForeign: isForeignSpan,
           graphqlSchemaHash,
           graphqlDocument,
           graphqlVariables,

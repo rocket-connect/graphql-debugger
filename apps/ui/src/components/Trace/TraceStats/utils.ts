@@ -35,5 +35,7 @@ export const createTreeData = (spanArray: Span[]): RenderTree[] => {
     }
   });
 
-  return treeData;
+  return treeData.sort((a, b) => {
+    return Number(BigInt(a.startTimeUnixNano) - BigInt(b.startTimeUnixNano));
+  });
 };

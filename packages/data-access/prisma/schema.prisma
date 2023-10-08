@@ -1,6 +1,7 @@
 generator client {
-  provider = "prisma-client-js"
-  output   = "../node_modules/.prisma/client"
+  provider        = "prisma-client-js"
+  output          = "../node_modules/.prisma/client"
+  previewFeatures = ["tracing"]
 }
 
 datasource db {
@@ -28,6 +29,7 @@ model Span {
   startTimeUnixNano BigInt
   endTimeUnixNano   BigInt
   durationNano      BigInt
+  isForeign         Boolean?
   graphqlDocument   String?
   graphqlVariables  String?
   graphqlResult     String?

@@ -21,14 +21,25 @@ const TraceView = ({ spans }: { spans: TSpan[] }) => {
 
   return (
     <div className="text-neutral-100 flex flex-col">
-      {treeData.map((treeItem) => (
-        <Span
-          key={treeItem.spanId}
-          data={treeItem}
-          minTimestamp={minTimestamp}
-          maxTimestamp={maxTimestamp}
-        />
-      ))}
+      {treeData
+        .sort((a, b) => {
+          const aStart = UnixNanoTimeStamp.fromString(a.startTimeUnixNano)
+            .toTimeStamp()
+            .toString();
+          const bStart = UnixNanoTimeStamp.fromString(b.startTimeUnixNano)
+            .toTimeStamp()
+            .toString();
+
+          return new Date(aStart).getTime() - new Date(bStart).getTime();
+        })
+        .map((treeItem) => (
+          <Span
+            key={treeItem.spanId}
+            data={treeItem}
+            minTimestamp={minTimestamp}
+            maxTimestamp={maxTimestamp}
+          />
+        ))}
     </div>
   );
 };

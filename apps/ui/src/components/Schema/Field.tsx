@@ -1,4 +1,7 @@
+import { AggregateSpansResponse } from "@graphql-debugger/types";
+
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 
 import { aggregateSpans } from "../../api/aggregate-spans";
 import { FieldName } from "./FieldName";
@@ -14,17 +17,27 @@ export const Field = ({
 }: FieldProps) => {
   const name = field.name.value;
   const type = extractTypeName(field.type);
+  const [aggregate, setAggregate] = useState<AggregateSpansResponse>();
 
-  const { data: aggregate } = useQuery({
-    queryKey: ["aggregateSpans", name, schemaId, parentName],
-    queryFn: async () =>
-      await aggregateSpans({
-        where: {
-          name: `${parentName} ${name}`,
-          schemaId,
-        },
-      }),
-  });
+  useEffect(() => {
+    (async () => {
+      try {
+        console.log("aggregate", aggregate);
+
+        const r = await aggregateSpans({
+          where: {
+            name: `${parentName} ${name}`,
+            schemaId,
+          },
+        });
+
+        console.log("r", r);
+        setAggregate(r);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, []);
 
   const shouldDisplayStats = ["query", "mutation"].includes(parentName);
 

@@ -11,26 +11,30 @@ import { IDS } from "../../../testing";
 
 export const SchemaTraces = () => {
   const navigate = useNavigate();
+  const [traces, setTraces] = useState<Trace[]>([]);
   const params = useParams();
   const [searchParams] = useSearchParams();
   const [selectedTrace, setSelectedTrace] = useState<Trace | undefined>(
     undefined,
   );
 
-  const { data: traces } = useQuery({
-    queryKey: ["traces", params.schemaId, searchParams.get("rootSpanName")],
-    queryFn: async () => {
-      const _traces = await listTraceGroups({
-        where: {
-          schemaId: params.schemaId,
-          rootSpanName: searchParams.get("rootSpanName"),
-        },
-        includeRootSpan: true,
-      });
+  useEffect(() => {
+    (async () => {
+      try {
+        const _traces = await listTraceGroups({
+          where: {
+            schemaId: params.schemaId,
+            rootSpanName: searchParams.get("rootSpanName"),
+          },
+          includeRootSpan: true,
+        });
 
-      return _traces.filter((trace) => trace.rootSpan?.name?.length ?? 0 > 0);
-    },
-  });
+        setTraces(_traces);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, [params.schemaId, searchParams.get("rootSpanName")]);
 
   const handleSelectTrace = (trace: Trace) => {
     setSelectedTrace(trace);

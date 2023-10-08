@@ -1,6 +1,10 @@
 import * as api from "@opentelemetry/api";
 import { AsyncHooksContextManager } from "@opentelemetry/context-async-hooks";
 import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
+import {
+  InstrumentationOption,
+  registerInstrumentations,
+} from "@opentelemetry/instrumentation";
 import { OTLPExporterNodeConfigBase } from "@opentelemetry/otlp-exporter-base";
 import { Resource } from "@opentelemetry/resources";
 import {
@@ -13,11 +17,13 @@ import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions"
 export type SetupOtelInput = {
   inMemory?: boolean;
   exporterConfig?: OTLPExporterNodeConfigBase;
+  instrumentations?: InstrumentationOption[];
 };
 
 export function setupOtel({
   inMemory,
   exporterConfig,
+  instrumentations,
 }: SetupOtelInput): OTLPTraceExporter | InMemorySpanExporter {
   let exporter: OTLPTraceExporter | InMemorySpanExporter =
     new OTLPTraceExporter();
@@ -40,6 +46,12 @@ export function setupOtel({
   });
 
   provider.addSpanProcessor(new SimpleSpanProcessor(exporter));
+
+  if (instrumentations) {
+    registerInstrumentations({
+      instrumentations,
+    });
+  }
 
   provider.register();
 
