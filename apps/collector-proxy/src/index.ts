@@ -1,4 +1,3 @@
-import { prisma } from "@graphql-debugger/data-access";
 import { Queue, QueueType } from "@graphql-debugger/queue";
 import { ForeignTraces } from "@graphql-debugger/types";
 
@@ -36,8 +35,6 @@ export const foreignTraces: Queue<ForeignTraces> = new Queue({
 export async function start({ port }: { port: string }) {
   try {
     debug("Starting");
-
-    await prisma.$connect();
 
     const server = await app.listen(port);
 

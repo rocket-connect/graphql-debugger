@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@graphql-debugger/backend": "workspace:^",
+    "@graphql-debugger/collector-proxy": "workspace:^",
     "@graphql-debugger/utils": "workspace:^"
   }
 }

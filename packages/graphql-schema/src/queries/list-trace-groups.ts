@@ -66,27 +66,15 @@ builder.queryField("listTraceGroups", (t) =>
         });
       }
 
-      // whereConditions.push({
-      //   spans: {
-      //     none: {
-      //       parentSpanId: null,
-      //       isForeign: true,
-      //     },
-      //   },
-      // });
-
       const where = {
         AND: whereConditions,
       };
 
-      console.log("where", where);
       const traces = await prisma.traceGroup.findMany({
         orderBy: { createdAt: "desc" },
         where,
         take: 20,
       });
-
-      console.log("traces", traces);
 
       return {
         traces: traces.map((trace) => {

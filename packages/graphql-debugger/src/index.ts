@@ -1,8 +1,11 @@
-import { spawn } from "child_process";
+import { SpawnOptionsWithoutStdio, spawn } from "child_process";
 import path from "path";
 
-function createChildProcess(file: string): Promise<void> {
-  const child = spawn("node", [file]);
+function createChildProcess(
+  file: string,
+  options?: SpawnOptionsWithoutStdio,
+): Promise<void> {
+  const child = spawn("node", [file], options);
 
   child.stdout.pipe(process.stdout);
   child.stderr.pipe(process.stderr);
@@ -24,6 +27,7 @@ async function main() {
       createChildProcess(
         path.join(
           __dirname,
+          "../",
           "node_modules",
           "@graphql-debugger",
           "backend",
@@ -34,12 +38,19 @@ async function main() {
       createChildProcess(
         path.join(
           __dirname,
+          "../",
           "node_modules",
           "@graphql-debugger",
           "collector-proxy",
           "build",
           "main.js",
         ),
+        {
+          env: {
+            ...process.env,
+            TRACE_PRISMA: undefined,
+          },
+        },
       ),
     ];
 
