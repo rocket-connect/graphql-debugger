@@ -3,8 +3,8 @@ import {
   Span,
   Tracer,
   context,
+  getTracer,
   runInSpan,
-  trace,
 } from "@graphql-debugger/opentelemetry";
 import { hashSchema } from "@graphql-debugger/utils";
 
@@ -37,7 +37,7 @@ export class GraphQLOTELContext {
     this.includeVariables = options.includeVariables;
     this.excludeKeysFromContext = options.excludeKeysFromContext;
     this.includeResult = options.includeResult;
-    this.tracer = trace.getTracer("graphql-otel");
+    this.tracer = getTracer();
   }
 
   setContext(ctx: Context) {

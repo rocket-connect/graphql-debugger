@@ -14,7 +14,8 @@
   "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
   "scripts": {
     "build": "tsc",
-    "test": "cross-env NODE_ENV=test jest --runInBand"
+    "test": "cross-env NODE_ENV=test jest --runInBand",
+    "dev": "cross-env DEBUG=\"@graphql-debugger:*\" ts-node ./src/main.ts"
   },
   "peerDependencies": {
     "graphql": "^16.0.0 || ^17.0.0"
@@ -29,7 +30,8 @@
     "@graphql-debugger/opentelemetry": "workspace:^",
     "@graphql-tools/schema": "10.0.0",
     "@graphql-tools/utils": "10.0.6",
-    "express": "4.18.2"
+    "express": "4.18.2",
+    "cors": "2.8.5"
   },
   "devDependencies": {
     "@graphql-debugger/types": "workspace:^",

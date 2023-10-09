@@ -46,6 +46,8 @@ export function rootSpanLoader() {
           updatedAt: new TimeStamp(span.updatedAt).toString(),
           errorMessage: span.errorMessage,
           errorStack: span.errorStack,
+          isForeign: span.isForeign,
+          attributes: span.attributes as string,
         };
       });
     },
@@ -90,6 +92,8 @@ export function spanLoader() {
             updatedAt: new TimeStamp(span.updatedAt).toString(),
             errorMessage: span.errorMessage,
             errorStack: span.errorStack,
+            isForeign: span.isForeign,
+            attributes: span.attributes as string,
           };
         });
       });

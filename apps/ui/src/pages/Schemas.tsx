@@ -7,6 +7,7 @@ export function Schemas() {
   const { data: schemas } = useQuery({
     queryKey: ["schemas"],
     queryFn: async () => await listSchemas(),
+    networkMode: "always",
   });
 
   return (

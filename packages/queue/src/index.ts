@@ -1,7 +1,5 @@
 import fastq from "fastq";
 
-import { debug } from "./debug";
-
 export enum QueueType {
   InMemory = "in-memory",
 }
@@ -26,18 +24,10 @@ export class Queue<Data> {
   }
 
   async start() {
-    debug(`Queue Starting`);
-
     await this.queue.length();
-
-    debug(`Queue Started`);
   }
 
   public async add(data: Data) {
-    debug(`Queue Adding`);
-
     await this.queue.push(data);
-
-    debug(`Queue Added`);
   }
 }

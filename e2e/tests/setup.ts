@@ -9,6 +9,9 @@ beforeAll(async () => {
 beforeEach(async () => {
   await clearDB();
 });
+afterEach(async () => {
+  await clearDB();
+});
 
 afterAll(async () => {
   await backend.close();

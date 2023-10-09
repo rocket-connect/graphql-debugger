@@ -123,6 +123,8 @@ builder.queryField("aggregateSpans", (t) =>
             updatedAt: new TimeStamp(span.updatedAt).toString(),
             errorMessage: span.errorMessage,
             errorStack: span.errorStack,
+            isForeign: span.isForeign,
+            attributes: span.attributes as string,
           };
         }),
       };

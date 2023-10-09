@@ -3,14 +3,15 @@
   "version": "0.0.0-alpha.53",
   "private": true,
   "scripts": {
-    "dev": "cross-env DEBUG=\"@graphql-debugger:*\" TRACE_SCHEMA=\"true\" turbo dev --filter \"graphql-debugger\"",
+    "dev": "cross-env DEBUG=\"@graphql-debugger:*\" TRACE_SCHEMA=\"true\" TRACE_PRISMA=\"true\" turbo dev --filter \"graphql-debugger\"",
     "build": "turbo build",
     "release": "cross-env DEBUG=\"@graphql-debugger:*\" node ./packages/utils/build/release.js",
     "test:sequential": "pnpm recursive exec -- sh -c 'pnpm run test || (echo \"Tests failed!\" && exit 1)'",
     "test": "turbo test",
     "clean": "find . -type d \\( -name \"node_modules\" -o -name \"build\" -o -name \".turbo\" \\) -exec rm -rf {} +",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "reset-db": "cd ./packages/data-access && npx prisma migrate reset --force"
   },
   "devDependencies": {
     "@babel/core": "7.22.20",

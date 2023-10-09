@@ -25,6 +25,7 @@ export const Trace = () => {
       return trace;
     },
     select: (data) => data[0],
+    networkMode: "always",
   });
 
   return (

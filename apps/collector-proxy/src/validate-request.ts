@@ -2,12 +2,8 @@ import { z } from "@graphql-debugger/schemas";
 
 import { NextFunction, Request, Response } from "express";
 
-import { debug } from "./debug";
-
 export function validateRequest(schema: z.AnyZodObject) {
   return async (req: Request, res: Response, next: NextFunction) => {
-    debug(`Request ${req.method} ${req.url}`);
-
     try {
       for (const key in req.body) {
         if (["body", "headers"].includes(key)) {

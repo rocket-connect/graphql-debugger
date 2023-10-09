@@ -1,17 +1,27 @@
-import { AttributeNames, ResourceSpans } from "@graphql-debugger/types";
+import {
+  AttributeNames,
+  ExtractedSpan,
+  ResourceSpans,
+} from "@graphql-debugger/types";
 
 import { parse, print } from "graphql";
 
 import { attributesToObject } from "./attributes-to-object";
 import { debug } from "./debug";
+import { TRACER_NAME } from "./tracer";
 
 export function extractSpans({
   resourceSpans,
 }: {
   resourceSpans: ResourceSpans[];
-}) {
+}): ExtractedSpan[] {
   const spans = resourceSpans.flatMap((resourceSpan) => {
     return resourceSpan.scopeSpans.flatMap((scopeSpan) => {
+      let isForeignSpan = true;
+      if (scopeSpan.scope?.name === TRACER_NAME) {
+        isForeignSpan = false;
+      }
+
       return (scopeSpan.spans || []).map((span) => {
         const attributes = attributesToObject(span.attributes || []);
 
@@ -65,6 +75,22 @@ export function extractSpans({
           }
         }
 
+        const remainingAttributes = Object.entries(attributes).reduce(
+          (acc, [key, value]) => {
+            if (
+              key !== AttributeNames.SCHEMA_HASH &&
+              key !== AttributeNames.DOCUMENT &&
+              key !== AttributeNames.OPERATION_ARGS &&
+              key !== AttributeNames.OPERATION_RESULT &&
+              key !== AttributeNames.OPERATION_CONTEXT
+            ) {
+              acc[key] = value;
+            }
+            return acc;
+          },
+          {} as Record<string, string>,
+        );
+
         const firstError = (span.events || []).find(
           (e) => e.name === "exception",
         );
@@ -87,6 +113,10 @@ export function extractSpans({
           kind: span.kind,
           startTimeUnixNano: span.startTimeUnixNano,
           endTimeUnixNano: span.endTimeUnixNano,
+          isForeign: isForeignSpan,
+          ...(isForeignSpan
+            ? { attributes: JSON.stringify(remainingAttributes) }
+            : {}),
           graphqlSchemaHash,
           graphqlDocument,
           graphqlVariables,

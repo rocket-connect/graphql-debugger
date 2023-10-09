@@ -1,5 +1,7 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 
+import { useModal } from "../../../context/ModalContext";
+import { JsonViewer } from "../Editor";
 import { RenderTree } from "./utils";
 
 export function Span({
@@ -11,6 +13,8 @@ export function Span({
   minTimestamp: UnixNanoTimeStamp;
   maxTimestamp: UnixNanoTimeStamp;
 }) {
+  const { openModal } = useModal();
+
   const durationNano = UnixNanoTimeStamp.fromString(data.durationNano);
   const startTimeUnixNano = UnixNanoTimeStamp.fromString(
     data.startTimeUnixNano,
@@ -28,25 +32,64 @@ export function Span({
   if (data.errorMessage) {
     spanClasses += " bg-red-500";
   } else {
-    spanClasses += " bg-graphql-otel-green";
+    if (data.isForeign) {
+      spanClasses += " bg-green-stripy";
+    } else {
+      spanClasses += " bg-graphql-otel-green";
+    }
   }
+
+  const displyInfo = (
+    <p
+      className={`tracking-widest ${
+        data.errorMessage || data.errorStack ? "text-red-500" : {}
+      } py-1`}
+    >
+      <span className="font-bold">{data.name}</span>
+      {" - "}
+      <span className="font-light">
+        {Number(value).toFixed(2)} {unit}
+      </span>
+      {data.isForeign && (
+        <span className="text-neutral-300 text-xs italic"> - (unknown)</span>
+      )}
+    </p>
+  );
 
   return (
     <div
       data-trace-view-spanid={data.id}
-      className="relative overflow-hidden flex flex-col gap-1 text-xs"
+      className="relative overflow-hidden flex flex-col gap-1 text-xs "
     >
-      <div className="py-4">
-        <p
-          className={`${
-            data.errorMessage || data.errorStack ? "text-red-500" : {}
-          } py-1`}
-        >
-          {data.name}{" "}
-          <span className="font-light">
-            {Number(value).toFixed(2)} {unit}
-          </span>
-        </p>
+      <div
+        className="py-4 hover:cursor-pointer"
+        onClick={() =>
+          openModal(
+            <div className="flex flex-col gap-5 text-neutral-300 h-96 w-96 divide-y-2 divide-neutral/10">
+              {displyInfo}
+              <div className="pt-5 overflow-scroll">
+                <JsonViewer
+                  json={JSON.stringify(
+                    {
+                      ...data,
+                      children: undefined,
+                      errorMessage: undefined,
+                      errorStack: undefined,
+                      ...(data.attributes
+                        ? { attributes: JSON.parse(data.attributes) }
+                        : { attributes: undefined }),
+                    },
+                    null,
+                    2,
+                  )}
+                  id="span-json"
+                />
+              </div>
+            </div>,
+          )
+        }
+      >
+        {displyInfo}
         <div className={`absolute h-2 bg-neutral/30 rounded-2xl w-full`}></div>
         <div className={spanClasses} style={{ width, left: offset }}></div>
       </div>

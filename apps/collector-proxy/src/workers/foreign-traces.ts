@@ -1,34 +1,27 @@
 import { prisma } from "@graphql-debugger/data-access";
-import { extractSpans } from "@graphql-debugger/opentelemetry";
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
-import { PostTraces } from "@graphql-debugger/types";
+import type { ForeignTraces } from "@graphql-debugger/types";
 
 import { debug } from "../debug";
-import { foreignTracesQueue } from "../index";
 
-export async function postTracesWorker(data: PostTraces["body"]) {
-  debug("postTracesWorker started");
+export async function foreignTracesWorker(
+  data: ForeignTraces,
+  retry: (data: ForeignTraces) => void,
+) {
+  debug("foreignTracesWorker started");
 
   try {
-    const spans = extractSpans({
-      resourceSpans: data.resourceSpans,
-    });
-
+    const spans = data.extractedSpans;
     const spanIds = spans.map((s) => s.spanId);
     const traceIds = spans.map((s) => s.traceId);
-    const schemaHashes = spans
-      .map((s) => s.graphqlSchemaHash)
-      .filter(Boolean) as string[];
 
-    const [existingSpans, traceGroups, schemas] = await Promise.all([
+    const [existingSpans, traceGroups] = await Promise.all([
       prisma.span.findMany({ where: { spanId: { in: spanIds } } }),
       prisma.traceGroup.findMany({ where: { traceId: { in: traceIds } } }),
-      prisma.schema.findMany({ where: { hash: { in: schemaHashes } } }),
     ]);
 
     const spansToBeCreated = spans.filter(
-      (s) =>
-        !existingSpans.find((eS) => eS.spanId === s.spanId) && !s.isForeign,
+      (s) => !existingSpans.find((eS) => eS.spanId === s.spanId),
     );
 
     await Promise.all(
@@ -42,40 +35,23 @@ export async function postTracesWorker(data: PostTraces["body"]) {
           traceGroupId = foundTraceGroup?.id;
         } else {
           try {
-            if (!span.isForeign) {
-              const createdTraceGroup = await prisma.traceGroup.create({
-                data: {
-                  traceId: span.traceId,
-                },
-              });
-              traceGroupId = createdTraceGroup.id;
-              if (span.graphqlSchemaHash) {
-                const schema = schemas.find(
-                  (s) => s.hash === span.graphqlSchemaHash,
-                );
-                if (schema) {
-                  await prisma.traceGroup.update({
-                    where: {
-                      id: traceGroupId,
-                    },
-                    data: {
-                      schemaId: schema.id,
-                    },
-                  });
-                }
-              }
-            }
-          } catch (error) {
             const foundTraceGroup = await prisma.traceGroup.findFirst({
               where: {
                 traceId: span.traceId,
               },
             });
             if (!foundTraceGroup) {
-              debug("Error creating trace group", error);
-              throw error;
+              debug("Error creating trace group");
+              throw new Error("Trace group not found");
             }
             traceGroupId = foundTraceGroup.id;
+          } catch (error) {
+            if (data.retryCount < 3) {
+              data.retryCount = data.retryCount + 1;
+              retry(data);
+            }
+
+            return;
           }
         }
 
@@ -96,8 +72,6 @@ export async function postTracesWorker(data: PostTraces["body"]) {
             endTimeUnixNano: endTimeUnixNano.toStorage(),
             durationNano: durationNano.toStorage(),
             traceId: span.traceId,
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
             traceGroupId,
             errorMessage: span.errorMessage,
             errorStack: span.errorStack,
@@ -105,24 +79,15 @@ export async function postTracesWorker(data: PostTraces["body"]) {
             graphqlVariables: span.graphqlVariables,
             graphqlResult: span.graphqlResult,
             graphqlContext: span.graphqlContext,
-            graphqlSchemaHash: span.graphqlSchemaHash,
             isForeign: span.isForeign,
+            attributes: span.attributes,
           },
         });
       }),
     );
-
-    const foreignSpans = spans.filter((s) => s.isForeign);
-    if (foreignSpans.length) {
-      foreignTracesQueue.add({
-        extractedSpans: foreignSpans,
-        retryCount: 1,
-      });
-    }
   } catch (error) {
-    const e = error as Error;
-    debug("postTracesWorker Error: ", e);
+    debug("foreignTracesWorker Error: ", error);
   } finally {
-    debug("postTracesWorker finished");
+    debug("foreignTracesWorker finished");
   }
 }

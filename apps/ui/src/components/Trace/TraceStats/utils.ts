@@ -4,6 +4,19 @@ export type RenderTree = Omit<Span, "__typename"> & {
   children: RenderTree[];
 };
 
+const sortSpansByStartTime = (a: RenderTree, b: RenderTree): number => {
+  return Number(BigInt(a.startTimeUnixNano) - BigInt(b.startTimeUnixNano));
+};
+
+const sortTreeDataRecursively = (tree: RenderTree[]): RenderTree[] => {
+  for (const span of tree) {
+    if (span.children.length > 0) {
+      span.children = sortTreeDataRecursively(span.children);
+    }
+  }
+  return tree.sort(sortSpansByStartTime);
+};
+
 export const createTreeData = (spanArray: Span[]): RenderTree[] => {
   const treeData: RenderTree[] = [];
   const lookup: { [key: string]: RenderTree } = {};
@@ -24,6 +37,8 @@ export const createTreeData = (spanArray: Span[]): RenderTree[] => {
       updatedAt: span.updatedAt,
       errorMessage: span.errorMessage,
       errorStack: span.errorStack,
+      isForeign: span.isForeign,
+      attributes: span.attributes as string,
     };
   });
 
@@ -35,5 +50,5 @@ export const createTreeData = (spanArray: Span[]): RenderTree[] => {
     }
   });
 
-  return treeData;
+  return sortTreeDataRecursively(treeData);
 };

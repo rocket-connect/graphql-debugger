@@ -1,37 +1,83 @@
-#!/usr/bin/env node
-import * as backend from "@graphql-debugger/backend";
+import { SpawnOptionsWithoutStdio, spawn } from "child_process";
+import path from "path";
 
-import { debug } from "./debug";
+function createChildProcess(
+  file: string,
+  options?: SpawnOptionsWithoutStdio,
+): Promise<void> {
+  const child = spawn("node", [file], options);
 
-process.env.DEBUG = process.env.DEBUG || `@graphql-debugger:*`;
+  child.stdout.pipe(process.stdout);
+  child.stderr.pipe(process.stderr);
 
-async function start() {
-  try {
-    debug("Starting debugger");
-
-    const COLLECTOR_PORT = backend.COLLECTOR_PORT;
-    const BACKEND_PORT = backend.BACKEND_PORT;
-
-    await backend.start({
-      collectorPort: COLLECTOR_PORT,
-      backendPort: BACKEND_PORT,
+  return new Promise((resolve, reject) => {
+    child.on("exit", (code) => {
+      if (code !== 0) {
+        reject(new Error(`${file} process exited with code ${code}`));
+      } else {
+        resolve();
+      }
     });
+  });
+}
 
-    const message1 = `
-      Thanks for downloading GraphQL Debugger!
-      You can use GraphQL Debugger to debug your GraphQL server locally.
-      Visit https://www.graphql-debugger.com for more info.
-    `;
-    console.log(message1);
+async function main() {
+  try {
+    const childProcesses = [
+      createChildProcess(
+        path.join(
+          __dirname,
+          "../",
+          "node_modules",
+          "@graphql-debugger",
+          "backend",
+          "build",
+          "main.js",
+        ),
+      ),
+      createChildProcess(
+        path.join(
+          __dirname,
+          "../",
+          "node_modules",
+          "@graphql-debugger",
+          "collector-proxy",
+          "build",
+          "main.js",
+        ),
+        {
+          env: {
+            ...process.env,
+            TRACE_PRISMA: undefined,
+          },
+        },
+      ),
+    ];
 
-    const message2 = `Debugger Online http://localhost:${BACKEND_PORT}`;
-    console.log(message2);
-
-    debug(`Debugger Online http://localhost:${BACKEND_PORT}`);
+    await Promise.all(childProcesses);
   } catch (error) {
-    debug("Failed to connect to start app", error);
-    throw error;
+    console.error(error);
+    process.exit(1);
   }
 }
 
-start();
+main()
+  .then(() => {
+    console.log("All child processes completed successfully.");
+  })
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
+
+process.on("exit", () => {
+  process.kill(-process.pid, "SIGTERM");
+});
+process.on("SIGINT", () => {
+  process.kill(-process.pid, "SIGINT");
+  process.exit();
+});
+process.on("SIGTERM", () => {
+  process.kill(-process.pid, "SIGTERM");
+  process.exit();
+});

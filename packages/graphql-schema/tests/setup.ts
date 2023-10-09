@@ -1,5 +1,5 @@
 import {
-  collector,
+  app as collector,
   postSchemaQueue,
   postTracesQueue,
 } from "@graphql-debugger/collector-proxy";
