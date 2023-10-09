@@ -16,7 +16,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node build/index.js",
-    "test": "echo \"No tests\""
+    "test": "echo \"No tests\"",
+    "dev": "DEBUG=\"@graphql-debugger:*\" COLLECTOR_PATH=\"../node_modules/@graphql-debugger/collector-proxy/build/main.js\" BACKEND_PATH=\"../node_modules/@graphql-debugger/backend/build/main.js\" node ./build/index.js"
   },
   "dependencies": {
     "@graphql-debugger/backend": "workspace:^",
