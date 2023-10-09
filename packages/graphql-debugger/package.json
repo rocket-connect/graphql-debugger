@@ -1,6 +1,6 @@
 {
   "name": "graphql-debugger",
-  "version": "0.0.0-alpha.56",
+  "version": "0.0.0-alpha.57",
   "bin": {
     "graphql-debugger": "./build/index.js"
   },
