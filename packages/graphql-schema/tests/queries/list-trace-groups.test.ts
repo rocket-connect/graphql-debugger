@@ -55,6 +55,7 @@ describe("queries/list-trace-groups", () => {
         graphqlContext
         createdAt
         updatedAt
+        isForeign
       }
     `;
 

@@ -4,7 +4,7 @@ import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import { PostTraces } from "@graphql-debugger/types";
 
 import { debug } from "../debug";
-import { foreignTraces } from "../index";
+import { foreignTracesQueue } from "../index";
 
 export async function postTracesWorker(data: PostTraces["body"]) {
   debug("postTracesWorker started");
@@ -113,7 +113,7 @@ export async function postTracesWorker(data: PostTraces["body"]) {
 
     const foreignSpans = spans.filter((s) => s.isForeign);
     if (foreignSpans.length) {
-      foreignTraces.add({
+      foreignTracesQueue.add({
         extractedSpans: foreignSpans,
         retryCount: 1,
       });

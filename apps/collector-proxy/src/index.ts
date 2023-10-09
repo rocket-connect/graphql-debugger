@@ -26,10 +26,10 @@ export const postSchemaQueue = new Queue({
   worker: postSchemaWorker,
 });
 
-export const foreignTraces: Queue<ForeignTraces> = new Queue({
+export const foreignTracesQueue: Queue<ForeignTraces> = new Queue({
   type: QueueType.InMemory,
   worker: (data: ForeignTraces) =>
-    foreignTracesWorker(data, (d) => foreignTraces.add(d)),
+    foreignTracesWorker(data, (d) => foreignTracesQueue.add(d)),
 });
 
 export async function start({ port }: { port: string }) {
