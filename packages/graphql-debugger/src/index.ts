@@ -54,7 +54,11 @@ function createChildProcess(
 async function main() {
   try {
     const childProcesses = [
-      createChildProcess(COLLECTOR_PATH),
+      createChildProcess(COLLECTOR_PATH, {
+        env: {
+          ...process.env,
+        },
+      }),
       createChildProcess(BACKEND_PATH, {
         env: {
           ...process.env,
