@@ -3,7 +3,7 @@
   "version": "0.0.0-alpha.54",
   "private": true,
   "scripts": {
-    "dev": "cross-env DEBUG=\"@graphql-debugger:*\" TRACE_SCHEMA=\"true\" TRACE_PRISMA=\"true\" turbo dev --filter \"graphql-debugger\"",
+    "dev": "cross-env DEBUG=\"@graphql-debugger:*\" turbo dev --filter '!@graphql-debugger/landing-page-app' --filter '!@graphql-debugger/landing-page-server' --concurrency=18",
     "build": "turbo build",
     "release": "cross-env DEBUG=\"@graphql-debugger:*\" node ./packages/utils/build/release.js",
     "test:sequential": "pnpm recursive exec -- sh -c 'pnpm run test || (echo \"Tests failed!\" && exit 1)'",

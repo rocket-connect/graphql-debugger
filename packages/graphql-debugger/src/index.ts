@@ -29,7 +29,7 @@ async function main() {
         path.join(
           __dirname,
           "../",
-          "node_modules",
+          "../",
           "@graphql-debugger",
           "backend",
           "build",
@@ -40,7 +40,7 @@ async function main() {
         path.join(
           __dirname,
           "../",
-          "node_modules",
+          "../",
           "@graphql-debugger",
           "collector-proxy",
           "build",

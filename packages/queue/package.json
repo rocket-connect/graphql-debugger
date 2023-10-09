@@ -15,7 +15,6 @@
   "scripts": {
     "build": "tsc",
     "start": "node build/index.js",
-    "dev": "NODE_ENV=development ts-node ./src/index.ts",
     "test": "echo \"No tests\""
   },
   "dependencies": {

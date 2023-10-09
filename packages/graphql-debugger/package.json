@@ -16,7 +16,6 @@
   "scripts": {
     "build": "tsc",
     "start": "node build/index.js",
-    "dev": "cross-env NODE_ENV=development ts-node ./src/index.ts",
     "test": "echo \"No tests\""
   },
   "dependencies": {
