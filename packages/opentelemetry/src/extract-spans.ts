@@ -114,6 +114,9 @@ export function extractSpans({
           startTimeUnixNano: span.startTimeUnixNano,
           endTimeUnixNano: span.endTimeUnixNano,
           isForeign: isForeignSpan,
+          ...(isForeignSpan
+            ? { attributes: JSON.stringify(remainingAttributes) }
+            : {}),
           graphqlSchemaHash,
           graphqlDocument,
           graphqlVariables,
@@ -121,7 +124,6 @@ export function extractSpans({
           graphqlContext,
           errorMessage,
           errorStack,
-          attributes: JSON.stringify(remainingAttributes),
         };
       });
     });
