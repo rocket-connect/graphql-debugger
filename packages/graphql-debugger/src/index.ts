@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { SpawnOptionsWithoutStdio, spawn } from "child_process";
 import path from "path";
 
