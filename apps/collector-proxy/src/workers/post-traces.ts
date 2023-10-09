@@ -105,6 +105,7 @@ export async function postTracesWorker(data: PostTraces["body"]) {
             graphqlVariables: span.graphqlVariables,
             graphqlResult: span.graphqlResult,
             graphqlContext: span.graphqlContext,
+            graphqlSchemaHash: span.graphqlSchemaHash,
             isForeign: span.isForeign,
           },
         });

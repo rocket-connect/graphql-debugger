@@ -1,7 +1,14 @@
 import { prisma } from "@graphql-debugger/data-access";
-import { PostTraces } from "@graphql-debugger/types";
+import { TRACER_NAME } from "@graphql-debugger/opentelemetry";
+import {
+  AttributeNames,
+  PostTraces,
+  ResourceSpans,
+} from "@graphql-debugger/types";
 
+import { faker } from "@faker-js/faker";
 import { describe, expect, test } from "@jest/globals";
+import { parse, print } from "graphql";
 import util from "util";
 
 import { request } from "./utils";
@@ -20,11 +27,16 @@ describe("POST /v1/traces", () => {
   });
 
   test("should throw span validation error when not sent correctly", async () => {
+    const knownScope: ResourceSpans["scopeSpans"][0]["scope"] = {
+      name: TRACER_NAME,
+    };
+
     const payload: PostTraces["body"] = {
       resourceSpans: [
         {
           scopeSpans: [
             {
+              scope: knownScope,
               spans: [
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore - testing the validation error on a span
@@ -48,11 +60,34 @@ describe("POST /v1/traces", () => {
   });
 
   test("should receive traces and map them correctly in the database", async () => {
+    const knownScope: ResourceSpans["scopeSpans"][0]["scope"] = {
+      name: TRACER_NAME,
+    };
+
+    const schemaHash = faker.string.alpha(6);
+
+    const document = /* GraphQL */ `
+      query {
+        users {
+          name
+          age
+          posts {
+            title
+            content
+            comments {
+              content
+            }
+          }
+        }
+      }
+    `;
+
     const payload: PostTraces["body"] = {
       resourceSpans: [
         {
           scopeSpans: [
             {
+              scope: knownScope,
               spans: [
                 {
                   spanId: "2a5f8b696abf9858",
@@ -62,38 +97,31 @@ describe("POST /v1/traces", () => {
                   kind: 0,
                   attributes: [
                     {
-                      key: "graphql.operation.name",
+                      key: AttributeNames.OPERATION_NAME,
                       value: {
                         stringValue: "users",
                       },
                     },
                     {
-                      key: "graphql.operation.type",
+                      key: AttributeNames.OPERATION_TYPE,
                       value: {
                         stringValue: "query",
                       },
                     },
                     {
-                      key: "graphql.document",
+                      key: AttributeNames.DOCUMENT,
                       value: {
-                        stringValue:
-                          "{\n" +
-                          "  users {\n" +
-                          "    name\n" +
-                          "    age\n" +
-                          "    posts {\n" +
-                          "      title\n" +
-                          "      content\n" +
-                          "      comments {\n" +
-                          "        content\n" +
-                          "      }\n" +
-                          "    }\n" +
-                          "  }\n" +
-                          "}",
+                        stringValue: document,
                       },
                     },
                     {
-                      key: "graphql.operation.returnType",
+                      key: AttributeNames.SCHEMA_HASH,
+                      value: {
+                        stringValue: schemaHash,
+                      },
+                    },
+                    {
+                      key: AttributeNames.OPERATION_RETURN_TYPE,
                       value: {
                         stringValue: "[User]",
                       },
@@ -116,7 +144,6 @@ describe("POST /v1/traces", () => {
                   parentSpanId: "2a5f8b696abf9858",
                   name: "User name",
                   kind: 0,
-                  attributes: [],
                   droppedAttributesCount: 0,
                   startTimeUnixNano: 1692991857440000,
                   endTimeUnixNano: 1692991857452000,
@@ -127,6 +154,14 @@ describe("POST /v1/traces", () => {
                   status: {
                     code: 0,
                   },
+                  attributes: [
+                    {
+                      key: AttributeNames.SCHEMA_HASH,
+                      value: {
+                        stringValue: schemaHash,
+                      },
+                    },
+                  ],
                 },
                 {
                   spanId: "443fd2e5e4f00845",
@@ -134,7 +169,14 @@ describe("POST /v1/traces", () => {
                   parentSpanId: "2a5f8b696abf9858",
                   name: "User age",
                   kind: 0,
-                  attributes: [],
+                  attributes: [
+                    {
+                      key: AttributeNames.SCHEMA_HASH,
+                      value: {
+                        stringValue: schemaHash,
+                      },
+                    },
+                  ],
                   droppedAttributesCount: 0,
                   startTimeUnixNano: 1692991857440000,
                   endTimeUnixNano: 1692991857442000,
@@ -152,7 +194,14 @@ describe("POST /v1/traces", () => {
                   parentSpanId: "2a5f8b696abf9858",
                   name: "User posts",
                   kind: 0,
-                  attributes: [],
+                  attributes: [
+                    {
+                      key: AttributeNames.SCHEMA_HASH,
+                      value: {
+                        stringValue: schemaHash,
+                      },
+                    },
+                  ],
                   droppedAttributesCount: 0,
                   startTimeUnixNano: 1692991857441000,
                   endTimeUnixNano: 1692991869442000,
@@ -170,7 +219,14 @@ describe("POST /v1/traces", () => {
                   parentSpanId: "c96662d3273a7415",
                   name: "Posts title",
                   kind: 0,
-                  attributes: [],
+                  attributes: [
+                    {
+                      key: AttributeNames.SCHEMA_HASH,
+                      value: {
+                        stringValue: schemaHash,
+                      },
+                    },
+                  ],
                   droppedAttributesCount: 0,
                   startTimeUnixNano: 1692991859445000,
                   endTimeUnixNano: 1692991859446000,
@@ -188,7 +244,14 @@ describe("POST /v1/traces", () => {
                   parentSpanId: "c96662d3273a7415",
                   name: "Posts content",
                   kind: 0,
-                  attributes: [],
+                  attributes: [
+                    {
+                      key: AttributeNames.SCHEMA_HASH,
+                      value: {
+                        stringValue: schemaHash,
+                      },
+                    },
+                  ],
                   droppedAttributesCount: 0,
                   startTimeUnixNano: 1692991859445000,
                   endTimeUnixNano: 1692991859447000,
@@ -206,7 +269,14 @@ describe("POST /v1/traces", () => {
                   parentSpanId: "c96662d3273a7415",
                   name: "Posts comments",
                   kind: 0,
-                  attributes: [],
+                  attributes: [
+                    {
+                      key: AttributeNames.SCHEMA_HASH,
+                      value: {
+                        stringValue: schemaHash,
+                      },
+                    },
+                  ],
                   droppedAttributesCount: 0,
                   startTimeUnixNano: 1692991859445000,
                   endTimeUnixNano: 1692991862447000,
@@ -224,7 +294,14 @@ describe("POST /v1/traces", () => {
                   parentSpanId: "3877c153fa0d43d6",
                   name: "Comment content",
                   kind: 0,
-                  attributes: [],
+                  attributes: [
+                    {
+                      key: AttributeNames.SCHEMA_HASH,
+                      value: {
+                        stringValue: schemaHash,
+                      },
+                    },
+                  ],
                   droppedAttributesCount: 0,
                   startTimeUnixNano: 1692991862457000,
                   endTimeUnixNano: 1692991862458000,
@@ -259,5 +336,17 @@ describe("POST /v1/traces", () => {
     });
 
     expect(traceGroup).toBeDefined();
+    expect(traceGroup?.spans.length).toEqual(8);
+    traceGroup?.spans.forEach((span) => {
+      expect(span.isForeign).toEqual(false);
+      expect(span.graphqlSchemaHash).toEqual(schemaHash);
+    });
+
+    const rootSpan = traceGroup?.spans.find(
+      (span) => span.parentSpanId === null,
+    );
+    expect(rootSpan).toBeDefined();
+    expect(rootSpan?.name).toEqual("query users");
+    expect(rootSpan?.graphqlDocument).toEqual(print(parse(document)));
   });
 });
