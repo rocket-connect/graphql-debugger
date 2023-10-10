@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 
-import { listTraceGroups } from "../../api/list-trace-groups";
+import { client } from "../../client";
 import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
 import { Editor } from "./Editor/Editor";
 import { SchemaTraces, TraceViewer } from "./TraceStats";
@@ -13,7 +13,7 @@ export const Trace = () => {
   const { data: trace, isLoading } = useQuery({
     queryKey: ["singleTrace", params.traceId],
     queryFn: async () => {
-      const trace = await listTraceGroups({
+      const trace = await client.trace.findMany({
         where: {
           id: params.traceId,
         },

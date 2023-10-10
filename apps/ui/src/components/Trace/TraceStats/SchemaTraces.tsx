@@ -6,7 +6,7 @@ import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
-import { listTraceGroups } from "../../../api/list-trace-groups";
+import { client } from "../../../client";
 import { Spinner } from "../../../components/utils/Spinner";
 import { IDS } from "../../../testing";
 import { DEFAULT_SLEEP_TIME, sleep } from "../../../utils/sleep";
@@ -22,7 +22,7 @@ export const SchemaTraces = () => {
   const { data: traces, isLoading } = useQuery({
     queryKey: ["traces", params.schemaId, searchParams.get("rootSpanName")],
     queryFn: async () => {
-      const _traces = await listTraceGroups({
+      const _traces = await client.trace.findMany({
         where: {
           schemaId: params.schemaId,
           rootSpanName: searchParams.get("rootSpanName"),

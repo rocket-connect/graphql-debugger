@@ -1,4 +1,6 @@
 import { Schema } from "./entities/Schema";
+import { Span } from "./entities/Span";
+import { Trace } from "./entities/Trace";
 import { ClientOptions } from "./types";
 
 export const DEFAULT_BACKEND_URL = "http://localhost:16686";
@@ -18,5 +20,13 @@ export class DebuggerClient {
 
   get schema() {
     return new Schema(this.clientOptions);
+  }
+
+  get trace() {
+    return new Trace(this.clientOptions);
+  }
+
+  get span() {
+    return new Span(this.clientOptions);
   }
 }
