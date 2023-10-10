@@ -26,7 +26,7 @@ describe("tracedSchema", () => {
       resolvers,
     });
 
-    const tracedSchema = traceSchema({ schema });
+    const tracedSchema = traceSchema({ schema, shouldExportSchema: false });
 
     const outputTypedefs = printSchemaWithDirectives(tracedSchema);
 
