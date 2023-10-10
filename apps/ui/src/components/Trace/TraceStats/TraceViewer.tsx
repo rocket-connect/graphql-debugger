@@ -4,7 +4,7 @@ import type { Span as TSpan, Trace } from "@graphql-debugger/types";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { listTraceGroups } from "../../../api/list-trace-groups";
+import { client } from "../../../client";
 import { Spinner } from "../../../components/utils/Spinner";
 import { IDS } from "../../../testing";
 import { DEFAULT_SLEEP_TIME, sleep } from "../../../utils/sleep";
@@ -46,7 +46,7 @@ export function TraceViewer() {
         if (params.traceId) {
           setIsLoading(true);
 
-          const _traces = await listTraceGroups({
+          const _traces = await client.trace.findMany({
             where: {
               id: params.traceId,
             },

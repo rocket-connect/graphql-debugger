@@ -3,7 +3,7 @@ import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 
-import { aggregateSpans } from "../../api/aggregate-spans";
+import { client } from "../../client";
 import { StatsDetails } from "./StatsDetails";
 import type { StatsProps } from "./types";
 
@@ -14,7 +14,7 @@ export const Stats = ({ field, parentName }: StatsProps) => {
   const { data: aggregate, isLoading } = useQuery({
     queryKey: ["aggregateSpans", name, params.schemaId, parentName],
     queryFn: async () =>
-      await aggregateSpans({
+      await client.span.aggregate({
         where: {
           name: `${parentName} ${name}`,
           schemaId: params.schemaId as string,

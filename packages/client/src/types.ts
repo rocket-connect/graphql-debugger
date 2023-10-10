@@ -5,12 +5,18 @@ import type {
 
 import { type Source } from "graphql";
 
+export interface ClientOptions {
+  backendUrl?: string;
+  collectorUrl?: string;
+}
+
 export interface GraphQLRequest<Variables> {
+  url: string;
   query: string | Source;
   variables?: Variables;
 }
 
-export interface GraphQLResponse<Data> extends Response {
+export interface GraphQLResponse<Data> {
   data: Data;
   errors: any[];
 }

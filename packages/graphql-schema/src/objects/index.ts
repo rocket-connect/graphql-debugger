@@ -1,8 +1,6 @@
 import {
   AggregateSpansResponse,
   AggregateSpansWhere,
-  DeleteTracesResponse,
-  DeleteTracesWhere,
   ListSchemasResponse,
   ListSchemasWhere,
   ListTraceGroupsResponse,
@@ -22,6 +20,4 @@ export interface Objects {
   ListTraceGroupsResponse: ListTraceGroupsResponse;
   AggregateSpansWhere: AggregateSpansWhere;
   AggregateSpansResponse: AggregateSpansResponse;
-  DeleteTracesWhere: DeleteTracesWhere;
-  DeleteTracesResponse: DeleteTracesResponse;
 }

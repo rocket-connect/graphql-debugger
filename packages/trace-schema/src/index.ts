@@ -20,12 +20,14 @@ export interface TraceSchemaInput {
   schema: GraphQLSchema;
   exporterConfig?: SetupOtelInput["exporterConfig"];
   instrumentations?: SetupOtelInput["instrumentations"];
+  shouldExportSchema?: boolean;
 }
 
 export function traceSchema({
   schema,
   exporterConfig,
   instrumentations,
+  shouldExportSchema = true,
 }: TraceSchemaInput): GraphQLSchema {
   debug("Tracing schema");
 
@@ -72,8 +74,10 @@ export function traceSchema({
     }),
   );
 
-  const schemaExporer = new SchemaExporer(tracedSchema, exporterConfig);
-  schemaExporer.start();
+  if (shouldExportSchema) {
+    const schemaExporer = new SchemaExporer(tracedSchema, exporterConfig);
+    schemaExporer.start();
+  }
 
   debug("Traced schema");
 

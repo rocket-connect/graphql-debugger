@@ -35,6 +35,6 @@
   },
   "devDependencies": {
     "express": "4.18.2",
-    "gql-tag": "^1.0.1"
+    "gql-tag": "1.0.1"
   }
 }

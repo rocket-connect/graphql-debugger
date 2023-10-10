@@ -1,12 +1,11 @@
+import { DebuggerClient } from "@graphql-debugger/client";
 import { SetupOtelInput } from "@graphql-debugger/opentelemetry";
 import { PostSchema } from "@graphql-debugger/types";
 
 import { GraphQLSchema, lexicographicSortSchema, printSchema } from "graphql";
-import fetch from "node-fetch";
 
 import { debug } from "./debug";
 
-// collector proxy
 const DEFAULT_URL = "http://localhost:4318/v1/traces";
 
 function stripURL(url: string) {
@@ -17,6 +16,7 @@ export class SchemaExporer {
   private schema: GraphQLSchema;
   private url: string;
   private schemaString: string;
+  private client: DebuggerClient;
 
   constructor(
     schema: GraphQLSchema,
@@ -27,6 +27,10 @@ export class SchemaExporer {
 
     const sortedSchema = lexicographicSortSchema(this.schema);
     this.schemaString = printSchema(sortedSchema);
+
+    this.client = new DebuggerClient({
+      collectorUrl: stripURL(this.url),
+    });
   }
 
   public start() {
@@ -41,27 +45,20 @@ export class SchemaExporer {
             schema: this.schemaString,
           };
 
-          const response = await fetch(stripURL(this.url) + "/v1/schema", {
-            method: "POST",
-            body: JSON.stringify(body),
-            headers: {
-              "Content-Type": "application/json",
-            },
+          const response = await this.client.schema.createOne({
+            data: body,
           });
 
-          if (response.ok && response.status === 200) {
+          if (response) {
+            debug("Schema sent");
             clearInterval(interval);
           }
         } catch (error) {
-          clearInterval(interval);
-
           debug("Error sending schema", error);
+          debug("Retrying in 1 second");
         } finally {
           counter++;
-
-          // Lets try to push the schema 1000 times on app bootup then give up
-          // maybe this needs rethinking @danstarns
-          if (counter === 1000) {
+          if (counter === 100) {
             clearInterval(interval);
           }
         }

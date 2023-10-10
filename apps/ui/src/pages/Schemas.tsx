@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { listSchemas } from "../api/list-schemas";
+import { client } from "../client";
 import { ListSchema, NoSchema } from "../components";
 
 export function Schemas() {
   const { data: schemas } = useQuery({
     queryKey: ["schemas"],
-    queryFn: async () => await listSchemas(),
+    queryFn: async () => await client.schema.findMany(),
     networkMode: "always",
   });
 
