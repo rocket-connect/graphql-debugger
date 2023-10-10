@@ -1,6 +1,6 @@
+import axios from "axios";
 import { parse, print } from "graphql";
 
-import { API_URL } from "../config";
 import type {
   GraphQLRequest,
   GraphQLResponse,
@@ -10,19 +10,22 @@ import type {
 export const executeGraphQLRequest = async <Data, Variables = unknown>({
   query,
   variables,
+  url,
 }: GraphQLRequest<Variables>): Promise<GraphQLResponseData<Data>> => {
   const validQuery = print(parse(query));
 
-  const response = await fetch(`${API_URL}/graphql`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
+  const repsonse = await axios.post(
+    `${url}/graphql`,
+    {
       query: validQuery,
       ...(variables && { variables }),
-    }),
-  });
+    },
+    {
+      headers: { "Content-Type": "application/json" },
+    },
+  );
 
-  const { data, errors }: GraphQLResponse<Data> = await response.json();
+  const { data, errors }: GraphQLResponse<Data> = repsonse.data;
 
   return { data: data, errors: errors || [] };
 };

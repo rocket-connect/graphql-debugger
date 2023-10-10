@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { listSchemas } from "../../src/api/list-schemas";
+import { client } from "../client";
 import { SchemaViewer, SideBar, Trace } from "../components";
 import { Modal } from "../components/utils/Modal";
 import { Spinner } from "../components/utils/Spinner";
@@ -18,7 +18,7 @@ export const Schema = () => {
   const { data: schema, isLoading } = useQuery({
     queryKey: ["singleSchema"],
     queryFn: async () => {
-      const schemas = await listSchemas({
+      const schemas = await client.schema.findMany({
         where: {
           id: params.schemaId,
         },
