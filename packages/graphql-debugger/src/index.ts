@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 import { BACKEND_PORT } from "@graphql-debugger/backend";
+import { COLLECTOR_PORT } from "@graphql-debugger/collector-proxy";
 
 import { SpawnOptionsWithoutStdio, spawn } from "child_process";
 import path from "path";
+
+const { name, version } = require("../package.json");
 
 const COLLECTOR_PATH = process.env.COLLECTOR_PATH
   ? path.join(__dirname, process.env.COLLECTOR_PATH)
@@ -71,7 +74,10 @@ async function main() {
       "Thanks for downloading GraphQL Debugger!",
       "You can use GraphQL Debugger to debug your GraphQL server locally.",
       "Visit https://www.graphql-debugger.com for more info.",
-      `Debugger Online http://localhost:${BACKEND_PORT}`,
+      `You are using '${name}@${version}'.`,
+      `Collector Online, send traces to http://localhost:${COLLECTOR_PORT}/v1/traces.`,
+      `Debugger Online, visit http://localhost:${BACKEND_PORT} to view traces.`,
+      ``,
     ];
 
     console.log(
