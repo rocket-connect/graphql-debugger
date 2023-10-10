@@ -25,7 +25,7 @@
     "safe-json-stringify": "1.2.0"
   },
   "devDependencies": {
-    "@types/debug": "4.1.8",
+    "@types/debug": "4.1.9",
     "@types/safe-json-stringify": "1.1.2"
   }
 }
