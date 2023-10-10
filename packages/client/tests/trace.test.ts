@@ -6,9 +6,9 @@ import { prisma } from "./utils/prisma";
 
 const sleep = util.promisify(setTimeout);
 
-describe("DebuggerClient.span", () => {
-  describe("aggregate", () => {
-    test("should aggregate spans", async () => {
+describe("DebuggerClient.trace", () => {
+  describe("findMany", () => {
+    test("should list trace groups", async () => {
       const client = new DebuggerClient();
 
       await simulateTrace();
@@ -20,17 +20,22 @@ describe("DebuggerClient.span", () => {
       });
       expect(schema).toBeDefined();
 
-      const response = await client.span.aggregate({
+      const response = await client.trace.findMany({
         where: {
-          name: "query posts",
           schemaId: schema?.id as string,
+          rootSpanName: "query posts",
         },
+        includeSpans: true,
+        includeRootSpan: true,
       });
 
-      expect(response.resolveCount).toEqual(2);
-      expect(response.errorCount).toEqual(0);
-      expect(response.averageDuration).toBeDefined();
-      expect(response.lastResolved).toBeDefined();
+      expect(response).toHaveLength(2);
+
+      const [traceGroup1, traceGroup2] = response;
+      expect(traceGroup1.spans).toHaveLength(2);
+      expect(traceGroup2.spans).toHaveLength(2);
+      expect(traceGroup1.rootSpan?.name).toEqual("query posts");
+      expect(traceGroup2.rootSpan?.name).toEqual("query posts");
     });
   });
 });
