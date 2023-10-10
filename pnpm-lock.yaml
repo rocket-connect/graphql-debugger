@@ -364,7 +364,7 @@ importers:
         specifier: workspace:^
         version: link:../utils
       axios:
-        specifier: ^1.5.1
+        specifier: 1.5.1
         version: 1.5.1
       graphql:
         specifier: ^16.0.0 || ^17.0.0
@@ -468,7 +468,7 @@ importers:
         specifier: 4.18.2
         version: 4.18.2
       gql-tag:
-        specifier: ^1.0.1
+        specifier: 1.0.1
         version: 1.0.1
 
   packages/opentelemetry:
