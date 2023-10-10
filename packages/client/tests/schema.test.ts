@@ -1,9 +1,12 @@
 import { hashSchema } from "@graphql-debugger/utils";
 
 import { makeExecutableSchema } from "@graphql-tools/schema";
+import util from "util";
 
 import { DebuggerClient } from "../src/client";
 import { prisma } from "./utils/prisma";
+
+const sleep = util.promisify(setTimeout);
 
 describe("DebuggerClient.schema", () => {
   describe("createOne", () => {
@@ -21,10 +24,11 @@ describe("DebuggerClient.schema", () => {
       });
 
       const hash = hashSchema(exeSchema);
-      const respnse = await client.schema.createOne({
+      const response = await client.schema.createOne({
         data: { schema: typeDefs },
       });
-      expect(respnse).toEqual(true);
+      expect(response).toEqual(true);
+      await sleep(1000); // wait for collector to ingest
 
       const schema = await prisma.schema.findFirst({
         where: { hash },
