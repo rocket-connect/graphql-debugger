@@ -15,15 +15,18 @@
   "scripts": {
     "build": "tsc",
     "start": "node build/index.js",
-    "test": "jest"
+    "test": "jest --runInBand"
   },
   "peerDependencies": {
     "graphql": "^16.0.0 || ^17.0.0"
   },
   "dependencies": {
+    "@graphql-debugger/utils": "workspace:^",
     "axios": "^1.5.1"
   },
   "devDependencies": {
-    "@graphql-debugger/types": "workspace:^"
+    "@graphql-debugger/types": "workspace:^",
+    "@graphql-tools/schema": "10.0.0",
+    "@graphql-tools/utils": "10.0.6"
   }
 }
