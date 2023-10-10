@@ -51,6 +51,7 @@ export class SchemaExporer {
 
           if (response) {
             debug("Schema sent");
+            clearInterval(interval);
           }
         } catch (error) {
           debug("Error sending schema", error);
