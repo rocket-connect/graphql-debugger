@@ -4,7 +4,7 @@ import { faker } from "@faker-js/faker";
 import { parse, print } from "graphql";
 
 import { extractSpans } from "../src/extract-spans";
-import { TRACER_NAME } from "../src/tracer";
+import { TRACER_NAME, TRACER_VERSION } from "../src/tracer";
 
 describe("extractSpans", () => {
   test("should extract data from spans", () => {
@@ -45,6 +45,7 @@ describe("extractSpans", () => {
 
     const knownScope: ResourceSpans["scopeSpans"][0]["scope"] = {
       name: TRACER_NAME,
+      version: TRACER_VERSION,
     };
 
     const resourceSpans: ResourceSpans[] = [
@@ -262,6 +263,7 @@ describe("extractSpans", () => {
 
     const knownScope: ResourceSpans["scopeSpans"][0]["scope"] = {
       name: TRACER_NAME,
+      version: TRACER_VERSION,
     };
 
     const foreignScope: ResourceSpans["scopeSpans"][0]["scope"] = {

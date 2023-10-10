@@ -6,13 +6,12 @@ import {
   registerInstrumentations,
 } from "@opentelemetry/instrumentation";
 import { OTLPExporterNodeConfigBase } from "@opentelemetry/otlp-exporter-base";
-import { Resource } from "@opentelemetry/resources";
 import {
-  BasicTracerProvider,
   InMemorySpanExporter,
   SimpleSpanProcessor,
 } from "@opentelemetry/sdk-trace-base";
-import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
+
+import { provider } from "./provider";
 
 export type SetupOtelInput = {
   inMemory?: boolean;
@@ -36,14 +35,6 @@ export function setupOtel({
   const contextManager = new AsyncHooksContextManager().enable();
 
   api.context.setGlobalContextManager(contextManager);
-
-  const provider = new BasicTracerProvider({
-    resource: new Resource({
-      [SemanticResourceAttributes.SERVICE_NAME]:
-        "@graphql-debugger/traced-schema",
-      [SemanticResourceAttributes.SERVICE_VERSION]: "1.0.0",
-    }),
-  });
 
   provider.addSpanProcessor(new SimpleSpanProcessor(exporter));
 
