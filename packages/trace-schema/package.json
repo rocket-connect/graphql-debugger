@@ -20,15 +20,13 @@
     "graphql": "^16.0.0 || ^17.0.0"
   },
   "dependencies": {
+    "@graphql-debugger/client": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
     "@graphql-debugger/types": "workspace:^",
     "@graphql-debugger/opentelemetry": "workspace:^",
     "@graphql-debugger/trace-directive": "workspace:^",
     "@graphql-tools/schema": "10.0.0",
-    "@graphql-tools/utils": "10.0.6",
-    "node-fetch": "2.7.0"
+    "@graphql-tools/utils": "10.0.6"
   },
-  "devDependencies": {
-    "@types/node-fetch": "2.6.4"
-  }
+  "devDependencies": {}
 }

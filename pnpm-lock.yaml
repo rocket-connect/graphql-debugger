@@ -555,6 +555,9 @@ importers:
 
   packages/trace-schema:
     dependencies:
+      '@graphql-debugger/client':
+        specifier: workspace:^
+        version: link:../client
       '@graphql-debugger/opentelemetry':
         specifier: workspace:^
         version: link:../opentelemetry
@@ -576,13 +579,6 @@ importers:
       graphql:
         specifier: ^16.0.0 || ^17.0.0
         version: 16.0.0
-      node-fetch:
-        specifier: 2.7.0
-        version: 2.7.0
-    devDependencies:
-      '@types/node-fetch':
-        specifier: 2.6.4
-        version: 2.6.4
 
   packages/types:
     dependencies:
@@ -3325,13 +3321,6 @@ packages:
     resolution: {integrity: sha512-xPSg0jm4mqgEkNhowKgZFBNtwoEwF6gJ4Dhww+GFpm3IgtNseHQZ5IqdNwnquZEoANxyDAKDRAdVo4Z72VvD/g==}
     dev: true
 
-  /@types/node-fetch@2.6.4:
-    resolution: {integrity: sha512-1ZX9fcN4Rvkvgv4E6PAY5WXUFWFcRWxZa3EW83UjycOB9ljJCedb2CupIP4RZMEwF/M3eTcCihbBRgwtGbg5Rg==}
-    dependencies:
-      '@types/node': 20.8.4
-      form-data: 3.0.1
-    dev: true
-
   /@types/node@20.0.0:
     resolution: {integrity: sha512-cD2uPTDnQQCVpmRefonO98/PPijuOnnEy5oytWJFPY1N9aJCz2wJ5kSGWO+zJoed2cY2JxQh6yBuUq4vIn61hw==}
     dev: true
@@ -6024,15 +6013,6 @@ packages:
     resolution: {integrity: sha512-jqYfLp7mo9vIyQf8ykW2v7A+2N4QjeCeI5+Dz9XraiO1ign81wjiH7Fb9vSOWvQfNtmSa4H2RoQTrrXivdUZmw==}
     dependencies:
       is-callable: 1.2.7
-    dev: true
-
-  /form-data@3.0.1:
-    resolution: {integrity: sha512-RHkBKtLWUVwd7SqRIvCZMEvAMoGUp0XU+seQiZejj0COz3RI3hWP4sCv3gZWWLjJTd7rGwcsF5eKZGii0r/hbg==}
-    engines: {node: '>= 6'}
-    dependencies:
-      asynckit: 0.4.0
-      combined-stream: 1.0.8
-      mime-types: 2.1.35
     dev: true
 
   /form-data@4.0.0:

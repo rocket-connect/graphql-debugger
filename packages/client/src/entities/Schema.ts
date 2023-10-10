@@ -1,8 +1,11 @@
 import {
   ListSchemasResponse,
   ListSchemasWhere,
+  PostSchema,
   Schema as TSchema,
 } from "@graphql-debugger/types";
+
+import axios from "axios";
 
 import { ClientOptions } from "../types";
 import { executeGraphQLRequest } from "../utils";
@@ -12,6 +15,22 @@ export class Schema {
 
   constructor(clientOptions: ClientOptions) {
     this.clientOptions = clientOptions;
+  }
+
+  public async createOne({ data }: { data: PostSchema["body"] }) {
+    const repsonse = await axios.post(
+      `${this.clientOptions.collectorUrl}/v1/schema`,
+      data,
+      {
+        headers: { "Content-Type": "application/json" },
+      },
+    );
+
+    if (repsonse.status !== 200) {
+      throw new Error("Failed to create schema");
+    }
+
+    return true;
   }
 
   public async findMany({ where }: { where?: ListSchemasWhere } = {}): Promise<
