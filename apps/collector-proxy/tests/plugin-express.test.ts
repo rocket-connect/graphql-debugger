@@ -11,18 +11,15 @@ import { describe, expect, test } from "@jest/globals";
 import { parse, print } from "graphql";
 import util from "util";
 
+import { HttpServerAttributeNames } from "../../../plugins/express/src/attributes";
 import { request } from "./utils";
 
 const sleep = util.promisify(setTimeout);
 
-describe("foreign traces", () => {
-  test("should receive foreign traces and map them correctly in the database", async () => {
+describe("plugin express", () => {
+  test("should receive and store a express trace", async () => {
     const knownScope: ResourceSpans["scopeSpans"][0]["scope"] = {
       name: TRACER_NAME,
-    };
-
-    const foreignScope: ResourceSpans["scopeSpans"][0]["scope"] = {
-      name: "prisma",
     };
 
     const schemaHash = faker.string.alpha(6);
@@ -35,6 +32,50 @@ describe("foreign traces", () => {
       }
     `;
 
+    const expressScopeSpan: ResourceSpans["scopeSpans"][0] = {
+      scope: knownScope,
+      spans: [
+        {
+          spanId: "1",
+          traceId: "1",
+          parentSpanId: undefined, // In this case the express plugin is the root span
+          name: "HTTP POST /graphql",
+          kind: 1,
+          startTimeUnixNano: 3,
+          endTimeUnixNano: 4,
+          attributes: [
+            {
+              key: HttpServerAttributeNames.HTTP_ROUTE,
+              value: {
+                stringValue: "/graphql",
+              },
+            },
+            {
+              key: HttpServerAttributeNames.CLIENT_ADDRESS,
+              value: {
+                stringValue: "123",
+              },
+            },
+            {
+              key: HttpServerAttributeNames.CLIENT_PORT,
+              value: {
+                stringValue: "123",
+              },
+            },
+            {
+              key: HttpServerAttributeNames.URL_PATH,
+              value: {
+                stringValue: "/graphql",
+              },
+            },
+          ],
+          status: {
+            code: 0,
+          },
+        },
+      ],
+    };
+
     const payload: PostTraces["body"] = {
       resourceSpans: [
         {
@@ -43,9 +84,9 @@ describe("foreign traces", () => {
               scope: knownScope,
               spans: [
                 {
-                  spanId: "1",
+                  spanId: "2",
                   traceId: "1",
-                  parentSpanId: undefined,
+                  parentSpanId: "1",
                   name: "query users",
                   kind: 0,
                   attributes: [
@@ -98,9 +139,9 @@ describe("foreign traces", () => {
                   },
                 },
                 {
-                  spanId: "2",
+                  spanId: "3",
                   traceId: "1",
-                  parentSpanId: "1",
+                  parentSpanId: "2",
                   name: "User name",
                   kind: 0,
                   droppedAttributesCount: 0,
@@ -124,107 +165,44 @@ describe("foreign traces", () => {
                 },
               ],
             },
-            {
-              scope: foreignScope,
-              spans: [
-                {
-                  spanId: "3",
-                  traceId: "1",
-                  parentSpanId: "1",
-                  name: "prisma:client:operation",
-                  kind: 1,
-                  startTimeUnixNano: 3,
-                  endTimeUnixNano: 4,
-                  attributes: [
-                    {
-                      key: "method",
-                      value: {
-                        stringValue: "findMany",
-                      },
-                    },
-                    {
-                      key: "model",
-                      value: {
-                        stringValue: "User",
-                      },
-                    },
-                    {
-                      key: "name",
-                      value: {
-                        stringValue: "User.findMany",
-                      },
-                    },
-                  ],
-                  status: {
-                    code: 0,
-                  },
-                },
-                {
-                  spanId: "4",
-                  traceId: "1",
-                  parentSpanId: "3",
-                  name: "prisma:engine:db_query",
-                  kind: 1,
-                  startTimeUnixNano: 5,
-                  endTimeUnixNano: 6,
-                  attributes: [
-                    {
-                      key: "db.statement",
-                      value: {
-                        stringValue: "SELECT * FROM User",
-                      },
-                    },
-                  ],
-                  status: {
-                    code: 0,
-                  },
-                },
-              ],
-            },
+            expressScopeSpan,
           ],
         },
       ],
     };
 
     const response = await request().post("/v1/traces").send(payload);
-
     expect(response.status).toBe(200);
 
     await sleep(2000); // backoff the writes using sqlite
 
     const traceGroup = await prisma.traceGroup.findFirst({
       where: {
-        traceId: payload.resourceSpans[0].scopeSpans[0].spans[0].traceId,
+        traceId: expressScopeSpan.spans[0].traceId,
       },
       select: {
         spans: true,
       },
     });
-
     expect(traceGroup).toBeDefined();
-    expect(traceGroup?.spans.length).toEqual(4);
+    expect(traceGroup?.spans.length).toEqual(3);
 
     const rootSpan = traceGroup?.spans.find((span) => span.isGraphQLRootSpan);
     expect(rootSpan).toBeDefined();
     expect(rootSpan?.name).toEqual("query users");
     expect(rootSpan?.graphqlDocument).toEqual(print(parse(document)));
 
-    const foreignSpans = traceGroup?.spans.filter(
-      (span) => span.isForeign === true,
+    const nameSpan = traceGroup?.spans.find(
+      (span) => span.name === "User name",
     );
-    expect(foreignSpans?.length).toEqual(2);
+    expect(nameSpan).toBeDefined();
 
-    const prismaClientSpan = foreignSpans?.find(
-      (span) => span.name === "prisma:client:operation",
+    const expressSpan = traceGroup?.spans.find(
+      (span) => span.name === "HTTP POST /graphql",
     );
-    expect(prismaClientSpan).toBeDefined();
-
-    const prismaEngineSpan = foreignSpans?.find(
-      (span) => span.name === "prisma:engine:db_query",
-    );
-    expect(prismaEngineSpan).toBeDefined();
-    expect(prismaEngineSpan?.attributes).toEqual(
-      '{"db.statement":"SELECT * FROM User"}',
+    expect(expressSpan).toBeDefined();
+    expect(expressSpan?.attributes).toEqual(
+      '{"http.route":"/graphql","client.address":"123","client.port":"123","url.path":"/graphql"}',
     );
   });
 });

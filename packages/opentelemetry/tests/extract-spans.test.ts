@@ -109,6 +109,12 @@ describe("extractSpans", () => {
                       stringValue: result,
                     },
                   },
+                  {
+                    key: AttributeNames.OPERATION_ROOT,
+                    value: {
+                      boolValue: true,
+                    },
+                  },
                 ],
                 droppedAttributesCount: 0,
                 startTimeUnixNano: 1,
@@ -210,6 +216,12 @@ describe("extractSpans", () => {
         errorMessage: undefined,
         errorStack: undefined,
         isForeign: false,
+        attributes: {
+          [AttributeNames.OPERATION_NAME]: "users",
+          [AttributeNames.OPERATION_RETURN_TYPE]: "[User]",
+          [AttributeNames.OPERATION_TYPE]: "query",
+          [AttributeNames.OPERATION_ROOT]: true,
+        },
       },
       {
         spanId: "2",
@@ -227,6 +239,7 @@ describe("extractSpans", () => {
         errorMessage: undefined,
         errorStack: undefined,
         isForeign: false,
+        attributes: {},
       },
       {
         spanId: "3",
@@ -244,6 +257,7 @@ describe("extractSpans", () => {
         errorMessage: error.message,
         errorStack: undefined,
         isForeign: false,
+        attributes: {},
       },
     ]);
   });
@@ -311,6 +325,12 @@ describe("extractSpans", () => {
                     key: AttributeNames.OPERATION_RETURN_TYPE,
                     value: {
                       stringValue: "[User]",
+                    },
+                  },
+                  {
+                    key: AttributeNames.OPERATION_ROOT,
+                    value: {
+                      boolValue: true,
                     },
                   },
                 ],
@@ -422,6 +442,12 @@ describe("extractSpans", () => {
         graphqlContext: undefined,
         graphqlResult: undefined,
         graphqlVariables: undefined,
+        attributes: {
+          [AttributeNames.OPERATION_NAME]: "users",
+          [AttributeNames.OPERATION_RETURN_TYPE]: "[User]",
+          [AttributeNames.OPERATION_TYPE]: "query",
+          [AttributeNames.OPERATION_ROOT]: true,
+        },
       },
       {
         spanId: "4",
@@ -439,6 +465,7 @@ describe("extractSpans", () => {
         graphqlDocument: undefined,
         graphqlResult: undefined,
         graphqlVariables: undefined,
+        attributes: {},
       },
       {
         spanId: "2",
@@ -449,8 +476,11 @@ describe("extractSpans", () => {
         startTimeUnixNano: 3,
         endTimeUnixNano: 4,
         isForeign: true,
-        attributes:
-          '{"method":"findMany","model":"User","name":"User.findMany"}',
+        attributes: {
+          method: "findMany",
+          model: "User",
+          name: "User.findMany",
+        },
         errorMessage: undefined,
         errorStack: undefined,
         graphqlContext: undefined,
@@ -468,7 +498,7 @@ describe("extractSpans", () => {
         startTimeUnixNano: 5,
         endTimeUnixNano: 6,
         isForeign: true,
-        attributes: '{"db.statement":"SELECT * FROM User"}',
+        attributes: { "db.statement": "SELECT * FROM User" },
         errorMessage: undefined,
         errorStack: undefined,
         graphqlContext: undefined,

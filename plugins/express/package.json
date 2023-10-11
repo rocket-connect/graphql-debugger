@@ -1,0 +1,27 @@
+{
+  "name": "@graphql-debugger/plugin-express",
+  "version": "0.0.0-alpha.59",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rocket-connect/graphql-debugger.git"
+  },
+  "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/index.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@graphql-debugger/opentelemetry": "workspace:^",
+    "express": "4.18.2"
+  },
+  "devDependencies": {
+    "supertest": "6.3.3"
+  }
+}

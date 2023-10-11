@@ -12,7 +12,7 @@ export function rootSpanLoader() {
           traceGroupId: {
             in: traceIds as string[],
           },
-          parentSpanId: null,
+          isGraphQLRootSpan: true,
         },
       });
 
