@@ -35,7 +35,7 @@ export function extractSpans({
         let errorMessage: string | undefined;
         let errorStack: string | undefined;
 
-        if (attributes[AttributeNames.OPERATION_ROOT]) {
+        if (attributes[AttributeNames.OPERATION_ROOT] === true) {
           const document = attributes[AttributeNames.DOCUMENT];
           if (document) {
             try {
