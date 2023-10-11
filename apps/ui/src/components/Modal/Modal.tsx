@@ -1,10 +1,15 @@
 import classNames from "classnames";
-import { ReactElement, cloneElement, useContext } from "react";
+import {
+  ReactElement,
+  cloneElement,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
 import { createPortal } from "react-dom";
 
 import { ModalContext } from "./ModalContext";
 import { OpenModalProps, WindowModalProps } from "./types";
-import { useOutsideClick } from "./useOutsideClick";
 
 export const OpenModal = ({
   children,
@@ -22,7 +27,19 @@ export const ModalWindow = ({
   title,
 }: WindowModalProps): ReactElement | null => {
   const context = useContext(ModalContext);
-  const ref = useOutsideClick(() => context?.close());
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        context?.close();
+      }
+    };
+
+    document.addEventListener("click", handleClick, true);
+
+    return () => document.removeEventListener("click", handleClick, true);
+  }, [context?.close]);
 
   if (name !== context?.openName) return null;
 
