@@ -27,6 +27,7 @@ export function infoToAttributes({
     [AttributeNames.SCHEMA_HASH]: schemaHash,
     ...(isRoot
       ? {
+          [AttributeNames.OPERATION_ROOT]: true,
           [AttributeNames.DOCUMENT]: print(info.operation),
           ...(args ? { [AttributeNames.OPERATION_ARGS]: operationArgs } : {}),
           ...(context

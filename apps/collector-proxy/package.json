@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/collector-proxy",
-  "version": "0.0.0-alpha.59",
+  "version": "0.0.0-alpha.60",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -15,7 +15,7 @@
   "scripts": {
     "build": "tsc",
     "test": "cross-env NODE_ENV=test jest --runInBand",
-    "dev": "cross-env DEBUG=\"@graphql-debugger:*\" TRACE_SCHEMA=\"true\" ts-node ./src/main.ts"
+    "dev": "cross-env TRACE_SCHEMA=\"true\" ts-node ./src/main.ts"
   },
   "peerDependencies": {
     "graphql": "^16.0.0 || ^17.0.0"

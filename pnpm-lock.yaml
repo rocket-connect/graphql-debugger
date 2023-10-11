@@ -163,6 +163,9 @@ importers:
       "@graphql-debugger/graphql-schema":
         specifier: workspace:^
         version: link:../../packages/graphql-schema
+      "@graphql-debugger/plugin-express":
+        specifier: workspace:^
+        version: link:../../plugins/express
       "@graphql-debugger/ui":
         specifier: workspace:^
         version: link:../ui
@@ -616,6 +619,19 @@ importers:
       "@types/safe-json-stringify":
         specifier: 1.1.2
         version: 1.1.2
+
+  plugins/express:
+    dependencies:
+      "@graphql-debugger/opentelemetry":
+        specifier: workspace:^
+        version: link:../../packages/opentelemetry
+      express:
+        specifier: 4.18.2
+        version: 4.18.2
+    devDependencies:
+      supertest:
+        specifier: 6.3.3
+        version: 6.3.3
 
 packages:
   /@aashutoshrathi/word-wrap@1.2.6:

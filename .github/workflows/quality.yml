@@ -75,6 +75,14 @@ jobs:
       - name: graphql-debugger/trace-client
         run: cd ./packages/client && pnpm run test
 
+  test-plugin-express:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: graphql-debugger/plugin-express
+        run: cd ./plugins/express && pnpm run test
+
   lint:
     runs-on: ubuntu-latest
     steps:

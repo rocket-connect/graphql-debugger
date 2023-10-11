@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/backend",
-  "version": "0.0.0-alpha.59",
+  "version": "0.0.0-alpha.60",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -15,13 +15,14 @@
   "scripts": {
     "build": "tsc",
     "test": "echo \"No tests\"",
-    "dev": "cross-env DEBUG=\"@graphql-debugger:*\" TRACE_SCHEMA=true TRACE_PRISMA=true ts-node ./src/main.ts"
+    "dev": "cross-env TRACE_SCHEMA=true TRACE_PRISMA=true TRACE_EXPRESS=true ts-node ./src/main.ts"
   },
   "dependencies": {
     "@graphql-debugger/graphql-schema": "workspace:^",
     "@graphql-debugger/data-access": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
     "@graphql-debugger/ui": "workspace:^",
+    "@graphql-debugger/plugin-express": "workspace:^",
     "cors": "2.8.5",
     "express": "4.18.2",
     "express-static-gzip": "2.1.7"

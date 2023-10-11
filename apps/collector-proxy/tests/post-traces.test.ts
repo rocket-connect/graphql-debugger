@@ -126,6 +126,12 @@ describe("POST /v1/traces", () => {
                         stringValue: "[User]",
                       },
                     },
+                    {
+                      key: AttributeNames.OPERATION_ROOT,
+                      value: {
+                        boolValue: true,
+                      },
+                    },
                   ],
                   droppedAttributesCount: 0,
                   startTimeUnixNano: 1692991856402000,
@@ -342,9 +348,7 @@ describe("POST /v1/traces", () => {
       expect(span.graphqlSchemaHash).toEqual(schemaHash);
     });
 
-    const rootSpan = traceGroup?.spans.find(
-      (span) => span.parentSpanId === null,
-    );
+    const rootSpan = traceGroup?.spans.find((span) => span.isGraphQLRootSpan);
     expect(rootSpan).toBeDefined();
     expect(rootSpan?.name).toEqual("query users");
     expect(rootSpan?.graphqlDocument).toEqual(print(parse(document)));
