@@ -1,6 +1,6 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 
-import { useModal } from "../../../context/ModalContext";
+import { Modal, ModalWindow, OpenModal } from "../../../components/Modal";
 import { JsonViewer } from "../Editor";
 import { RenderTree } from "./utils";
 
@@ -13,8 +13,6 @@ export function Span({
   minTimestamp: UnixNanoTimeStamp;
   maxTimestamp: UnixNanoTimeStamp;
 }) {
-  const { openModal } = useModal();
-
   const durationNano = UnixNanoTimeStamp.fromString(data.durationNano);
   const startTimeUnixNano = UnixNanoTimeStamp.fromString(
     data.startTimeUnixNano,
@@ -57,55 +55,59 @@ export function Span({
   );
 
   return (
-    <div
-      data-trace-view-spanid={data.id}
-      className="relative overflow-hidden flex flex-col gap-1 text-xs "
-    >
+    <>
       <div
-        className="py-4 hover:cursor-pointer"
-        onClick={() =>
-          openModal(
-            <div className="flex flex-col gap-5 text-neutral-300 h-96 w-96 divide-y-2 divide-neutral/10">
-              {displyInfo}
-              <div className="pt-5 overflow-scroll">
-                <JsonViewer
-                  json={JSON.stringify(
-                    {
-                      ...data,
-                      children: undefined,
-                      errorMessage: undefined,
-                      errorStack: undefined,
-                      ...(data.attributes
-                        ? { attributes: JSON.parse(data.attributes) }
-                        : { attributes: undefined }),
-                    },
-                    null,
-                    2,
-                  )}
-                  id="span-json"
-                />
-              </div>
-            </div>,
-          )
-        }
+        data-trace-view-spanid={data.id}
+        className="relative overflow-hidden flex flex-col gap-1 text-xs "
       >
-        {displyInfo}
-        <div className={`absolute h-2 bg-neutral/30 rounded-2xl w-full`}></div>
-        <div className={spanClasses} style={{ width, left: offset }}></div>
-      </div>
-
-      <div className="text-neutral-100 flex flex-col p-0 m-0">
-        {Array.isArray(data.children)
-          ? data.children.map((child) => (
-              <Span
-                key={child.id}
-                data={child}
-                minTimestamp={minTimestamp}
-                maxTimestamp={maxTimestamp}
+        <Modal>
+          <OpenModal opens="single-trace">
+            <div className="py-4 hover:cursor-pointer">
+              {displyInfo}
+              <div
+                className={`absolute h-2 bg-neutral/30 rounded-2xl w-full`}
+              ></div>
+              <div
+                className={spanClasses}
+                style={{ width, left: offset }}
+              ></div>
+            </div>
+          </OpenModal>
+          <ModalWindow name="single-trace" type="small" title={displyInfo}>
+            <div className="flex flex-col gap-5 text-neutral-300 text-md divide-y-2 divide-neutral/10">
+              <JsonViewer
+                json={JSON.stringify(
+                  {
+                    ...data,
+                    children: undefined,
+                    errorMessage: undefined,
+                    errorStack: undefined,
+                    ...(data.attributes
+                      ? { attributes: JSON.parse(data.attributes) }
+                      : { attributes: undefined }),
+                  },
+                  null,
+                  2,
+                )}
+                id="span-json"
               />
-            ))
-          : null}
+            </div>
+          </ModalWindow>
+        </Modal>
+
+        <div className="text-neutral-100 flex flex-col p-0 m-0">
+          {Array.isArray(data.children)
+            ? data.children.map((child) => (
+                <Span
+                  key={child.id}
+                  data={child}
+                  minTimestamp={minTimestamp}
+                  maxTimestamp={maxTimestamp}
+                />
+              ))
+            : null}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
