@@ -8,6 +8,7 @@ import { client } from "../../../client";
 import { Spinner } from "../../../components/utils/Spinner";
 import { IDS } from "../../../testing";
 import { DEFAULT_SLEEP_TIME, sleep } from "../../../utils/sleep";
+import { Modal, ModalWindow, OpenModal } from "../../Modal";
 import { Span } from "./Span";
 import { createTreeData } from "./utils";
 
@@ -67,26 +68,49 @@ export function TraceViewer() {
   }, [params.traceId]);
 
   return (
-    <div
-      id={IDS.TRACE_VIEWER}
-      className="basis-1/2 overflow-y-scroll custom-scrollbar"
-    >
-      {isLoading ? (
-        <div className="flex justify-center align-center mx-auto mt-20">
-          <Spinner />
-        </div>
-      ) : (
-        <>
-          {" "}
-          {traces?.length ? (
-            <TraceView spans={traces[0]?.spans || []} />
-          ) : (
-            <div className="mx-auto text-center text-neutral-100 font-bold">
-              No Trace Found
-            </div>
-          )}
-        </>
-      )}
-    </div>
+    <>
+      <div
+        id={IDS.TRACE_VIEWER}
+        className="basis-1/2 overflow-y-scroll custom-scrollbar"
+      >
+        <Modal>
+          <OpenModal opens="full-screen-trace">
+            <button className="flex items-end">Expand trace</button>
+          </OpenModal>
+          <ModalWindow
+            name="full-screen-trace"
+            type="full-screen"
+            title="Expanded traces"
+          >
+            {traces?.length ? (
+              <div>
+                <TraceView spans={traces[0]?.spans || []} />
+              </div>
+            ) : (
+              <div className="mx-auto text-center text-neutral-100 font-bold">
+                No Trace Found
+              </div>
+            )}
+          </ModalWindow>
+        </Modal>
+
+        {isLoading ? (
+          <div className="flex justify-center align-center mx-auto mt-20">
+            <Spinner />
+          </div>
+        ) : (
+          <>
+            {" "}
+            {traces?.length ? (
+              <TraceView spans={traces[0]?.spans || []} />
+            ) : (
+              <div className="mx-auto text-center text-neutral-100 font-bold">
+                No Trace Found
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </>
   );
 }

@@ -4,13 +4,10 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { client } from "../client";
 import { SchemaViewer, SideBar, Trace } from "../components";
-import { Modal } from "../components/utils/Modal";
 import { Spinner } from "../components/utils/Spinner";
-import { useModal } from "../context/ModalContext";
 import { DEFAULT_SLEEP_TIME, sleep } from "../utils/sleep";
 
 export const Schema = () => {
-  const { isModalOpen } = useModal();
   const navigate = useNavigate();
   const [displaySchema, setDisplaySchema] = useState(true);
   const params = useParams();
@@ -62,7 +59,6 @@ export const Schema = () => {
           <Trace />
         </>
       )}
-      {isModalOpen && <Modal />}
     </div>
   );
 };
