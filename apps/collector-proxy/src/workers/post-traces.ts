@@ -1,7 +1,11 @@
 import { prisma } from "@graphql-debugger/data-access";
 import { extractSpans } from "@graphql-debugger/opentelemetry";
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
-import { PostTraces } from "@graphql-debugger/types";
+import {
+  AttributeNames,
+  ExtractedSpan,
+  PostTraces,
+} from "@graphql-debugger/types";
 
 import { debug } from "../debug";
 import { foreignTracesQueue } from "../index";
@@ -26,9 +30,25 @@ export async function postTracesWorker(data: PostTraces["body"]) {
       prisma.schema.findMany({ where: { hash: { in: schemaHashes } } }),
     ]);
 
+    const isExistingSpan = (span: ExtractedSpan) => {
+      return existingSpans.find((eS) => eS.spanId === span.spanId);
+    };
+
+    const isForeignSpan = (span: ExtractedSpan) => {
+      return !isExistingSpan(span) && span.isForeign;
+    };
+
+    const isPluginSpan = (span: ExtractedSpan) => {
+      return (
+        !isExistingSpan(span) &&
+        !isForeignSpan(span) &&
+        !span.parentSpanId &&
+        !span.attributes?.[AttributeNames.OPERATION_ROOT]
+      );
+    };
+
     const spansToBeCreated = spans.filter(
-      (s) =>
-        !existingSpans.find((eS) => eS.spanId === s.spanId) && !s.isForeign,
+      (s) => !isExistingSpan(s) && !isForeignSpan(s) && !isPluginSpan(s),
     );
 
     await Promise.all(
@@ -42,27 +62,26 @@ export async function postTracesWorker(data: PostTraces["body"]) {
           traceGroupId = foundTraceGroup?.id;
         } else {
           try {
-            if (!span.isForeign) {
-              const createdTraceGroup = await prisma.traceGroup.create({
-                data: {
-                  traceId: span.traceId,
-                },
-              });
-              traceGroupId = createdTraceGroup.id;
-              if (span.graphqlSchemaHash) {
-                const schema = schemas.find(
-                  (s) => s.hash === span.graphqlSchemaHash,
-                );
-                if (schema) {
-                  await prisma.traceGroup.update({
-                    where: {
-                      id: traceGroupId,
-                    },
-                    data: {
-                      schemaId: schema.id,
-                    },
-                  });
-                }
+            const createdTraceGroup = await prisma.traceGroup.create({
+              data: {
+                traceId: span.traceId,
+              },
+            });
+            traceGroupId = createdTraceGroup.id;
+
+            if (span.graphqlSchemaHash) {
+              const schema = schemas.find(
+                (s) => s.hash === span.graphqlSchemaHash,
+              );
+              if (schema) {
+                await prisma.traceGroup.update({
+                  where: {
+                    id: traceGroupId,
+                  },
+                  data: {
+                    schemaId: schema.id,
+                  },
+                });
               }
             }
           } catch (error) {
@@ -96,8 +115,6 @@ export async function postTracesWorker(data: PostTraces["body"]) {
             endTimeUnixNano: endTimeUnixNano.toStorage(),
             durationNano: durationNano.toStorage(),
             traceId: span.traceId,
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
             traceGroupId,
             errorMessage: span.errorMessage,
             errorStack: span.errorStack,
@@ -107,16 +124,27 @@ export async function postTracesWorker(data: PostTraces["body"]) {
             graphqlContext: span.graphqlContext,
             graphqlSchemaHash: span.graphqlSchemaHash,
             isForeign: span.isForeign,
+            isGraphQLRootSpan: Boolean(
+              span.attributes?.[AttributeNames.OPERATION_ROOT],
+            ),
           },
         });
       }),
     );
 
-    const foreignSpans = spans.filter((s) => s.isForeign);
+    const foreignSpans = spans.filter(isForeignSpan);
     if (foreignSpans.length) {
       foreignTracesQueue.add({
         extractedSpans: foreignSpans,
-        retryCount: 1,
+        attempt: 1,
+      });
+    }
+
+    const pluginSpans = spans.filter(isPluginSpan);
+    if (pluginSpans.length) {
+      foreignTracesQueue.add({
+        extractedSpans: pluginSpans,
+        attempt: 1,
       });
     }
   } catch (error) {

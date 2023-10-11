@@ -57,7 +57,7 @@ builder.queryField("listTraceGroups", (t) =>
         whereConditions.push({
           spans: {
             some: {
-              parentSpanId: null,
+              isGraphQLRootSpan: true,
               name: {
                 equals: args.where.rootSpanName,
               },

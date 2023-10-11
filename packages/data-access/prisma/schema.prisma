@@ -30,6 +30,7 @@ model Span {
   endTimeUnixNano   BigInt
   durationNano      BigInt
   isForeign         Boolean     @default(true)
+  isGraphQLRootSpan Boolean     @default(false)
   graphqlDocument   String?
   graphqlVariables  String?
   graphqlResult     String?

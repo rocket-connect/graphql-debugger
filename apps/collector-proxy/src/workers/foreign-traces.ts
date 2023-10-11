@@ -46,9 +46,9 @@ export async function foreignTracesWorker(
             }
             traceGroupId = foundTraceGroup.id;
           } catch (error) {
-            if (data.retryCount < 3) {
-              data.retryCount = data.retryCount + 1;
-              retry(data);
+            if (data.attempt < 10) {
+              data.attempt = data.attempt + 1;
+              setTimeout(() => retry(data), 1000);
             }
 
             return;
@@ -80,7 +80,7 @@ export async function foreignTracesWorker(
             graphqlResult: span.graphqlResult,
             graphqlContext: span.graphqlContext,
             isForeign: span.isForeign,
-            attributes: span.attributes,
+            attributes: JSON.stringify(span.attributes),
           },
         });
       }),

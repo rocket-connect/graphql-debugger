@@ -35,7 +35,7 @@ export function extractSpans({
         let errorMessage: string | undefined;
         let errorStack: string | undefined;
 
-        if (!span.parentSpanId) {
+        if (attributes[AttributeNames.OPERATION_ROOT]) {
           const document = attributes[AttributeNames.DOCUMENT];
           if (document) {
             try {
@@ -114,9 +114,7 @@ export function extractSpans({
           startTimeUnixNano: span.startTimeUnixNano,
           endTimeUnixNano: span.endTimeUnixNano,
           isForeign: isForeignSpan,
-          ...(isForeignSpan
-            ? { attributes: JSON.stringify(remainingAttributes) }
-            : {}),
+          attributes: remainingAttributes,
           graphqlSchemaHash,
           graphqlDocument,
           graphqlVariables,
