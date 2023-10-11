@@ -6,10 +6,13 @@ import { ModalContext } from "./ModalContext";
 import { OpenModalProps, WindowModalProps } from "./types";
 import { useOutsideClick } from "./useOutsideClick";
 
-export const OpenModal = ({ children, opens }: OpenModalProps): JSX.Element => {
+export const OpenModal = ({
+  children,
+  opens: modalName,
+}: OpenModalProps): JSX.Element => {
   const context = useContext(ModalContext);
 
-  return cloneElement(children, { onClick: () => context?.open(opens) });
+  return cloneElement(children, { onClick: () => context?.open(modalName) });
 };
 
 export const ModalWindow = ({
@@ -24,7 +27,7 @@ export const ModalWindow = ({
   if (name !== context?.openName) return null;
 
   return createPortal(
-    <>
+    <div>
       <div className="fixed top-0 left-0 w-full h-full bg-black opacity-50"></div>
       <div
         ref={ref}
@@ -45,11 +48,11 @@ export const ModalWindow = ({
         <>
           <h2 className="text-bold text-xl mb-3">{title}</h2>
           <div className="h-full w-full overflow-scroll custom-scrollbar">
-            {cloneElement(children, { onCloseModal: close })}
+            {children}
           </div>
         </>
       </div>
-    </>,
+    </div>,
     document.body,
   );
 };

@@ -73,14 +73,22 @@ export function TraceViewer() {
         id={IDS.TRACE_VIEWER}
         className="basis-1/2 overflow-y-scroll custom-scrollbar"
       >
-        <Modal>
+        <Modal key="trace-full-screen">
           <OpenModal opens="full-screen-trace">
-            <button className="flex items-end">Expand trace</button>
+            <button className="flex items-end text-neutral-100 font-semibold">
+              Expand trace
+            </button>
           </OpenModal>
           <ModalWindow
             name="full-screen-trace"
             type="full-screen"
-            title="Expanded traces"
+            title={
+              <div className="text-neutral-100">
+                <p className="font-semibold">
+                  <span>{traces[0]?.spans[0].name}</span>
+                </p>
+              </div>
+            }
           >
             {traces?.length ? (
               <div>
