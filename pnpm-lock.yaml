@@ -629,6 +629,10 @@ importers:
       express:
         specifier: 4.18.2
         version: 4.18.2
+    devDependencies:
+      supertest:
+        specifier: 6.3.3
+        version: 6.3.3
 
 packages:
 

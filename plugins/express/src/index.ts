@@ -40,6 +40,8 @@ export function graphqlDebugger({
             [HttpServerAttributeNames.SERVER_ADDRESS]: req.hostname,
             [HttpServerAttributeNames.SERVER_SOCKET_ADDRESS]:
               req.socket.localAddress,
+            [HttpServerAttributeNames.SERVER_SOCKET_PORT]:
+              req.socket.localPort?.toString(),
             [HttpServerAttributeNames.URL_PATH]: req.path,
             [HttpServerAttributeNames.URL_QUERY]: JSON.stringify(req.query),
           };
