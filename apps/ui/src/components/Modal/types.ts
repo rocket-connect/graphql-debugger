@@ -15,5 +15,5 @@ export interface WindowModalProps {
   children: ReactElement;
   name: string;
   type: "full-screen" | "small";
-  title: string;
+  title: string | JSX.Element;
 }

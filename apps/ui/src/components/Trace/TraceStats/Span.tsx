@@ -74,25 +74,23 @@ export function Span({
             </div>
           </OpenModal>
           <ModalWindow name="single-trace" type="small" title={displyInfo}>
-            <div className="flex flex-col gap-5 text-neutral-300 divide-y-2 divide-neutral/10">
-              <div className="pt-5 overflow-scroll">
-                <JsonViewer
-                  json={JSON.stringify(
-                    {
-                      ...data,
-                      children: undefined,
-                      errorMessage: undefined,
-                      errorStack: undefined,
-                      ...(data.attributes
-                        ? { attributes: JSON.parse(data.attributes) }
-                        : { attributes: undefined }),
-                    },
-                    null,
-                    2,
-                  )}
-                  id="span-json"
-                />
-              </div>
+            <div className="flex flex-col gap-5 text-neutral-300 text-md divide-y-2 divide-neutral/10">
+              <JsonViewer
+                json={JSON.stringify(
+                  {
+                    ...data,
+                    children: undefined,
+                    errorMessage: undefined,
+                    errorStack: undefined,
+                    ...(data.attributes
+                      ? { attributes: JSON.parse(data.attributes) }
+                      : { attributes: undefined }),
+                  },
+                  null,
+                  2,
+                )}
+                id="span-json"
+              />
             </div>
           </ModalWindow>
         </Modal>
