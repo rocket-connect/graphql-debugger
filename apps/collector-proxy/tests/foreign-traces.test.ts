@@ -79,6 +79,12 @@ describe("foreign traces", () => {
                         stringValue: "[User]",
                       },
                     },
+                    {
+                      key: AttributeNames.OPERATION_ROOT,
+                      value: {
+                        boolValue: true,
+                      },
+                    },
                   ],
                   droppedAttributesCount: 0,
                   startTimeUnixNano: 1,
@@ -198,9 +204,7 @@ describe("foreign traces", () => {
     expect(traceGroup).toBeDefined();
     expect(traceGroup?.spans.length).toEqual(4);
 
-    const rootSpan = traceGroup?.spans.find(
-      (span) => span.parentSpanId === null,
-    );
+    const rootSpan = traceGroup?.spans.find((span) => span.isGraphQLRootSpan);
     expect(rootSpan).toBeDefined();
     expect(rootSpan?.name).toEqual("query users");
     expect(rootSpan?.graphqlDocument).toEqual(print(parse(document)));
