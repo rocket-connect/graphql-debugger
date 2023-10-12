@@ -78,12 +78,7 @@ const yoga = createYoga({
   schema: tracedSchema,
   context: (req) => {
     return {
-      // Include variables, result and context in traces
-      GraphQLOTELContext: new GraphQLOTELContext({
-        includeVariables: true,
-        includeResult: true,
-        includeContext: true,
-      }),
+      GraphQLOTELContext: new GraphQLOTELContext(),
     };
   },
 });
@@ -96,6 +91,62 @@ npx graphql-debugger
 ```
 
 Navgiating to [http://localhost:16686](http://localhost:16686) will open the GraphQL Debugger UI.
+
+## Advanced
+
+### 3rd Party Tracing
+
+GraphQL debugger supports the usage of other instrumentation libraries. This means that any span that is propogated inside a trace resolver will be picked up by GraphQL Debugger. To enable this, you need to pass in instrumentations to `traceSchema`. Below is an example with Prisma.
+
+#### Prisma
+
+- https://www.prisma.io/docs/concepts/components/prisma-client/opentelemetry-tracing
+
+To use Prisma with GraphQL Debugger, you need to pass in the Prisma instrumentation to `traceSchema`.
+
+```ts
+import { traceSchema } from "@graphql-debugger/trace-schema";
+
+import { PrismaInstrumentation } from "@prisma/instrumentation";
+
+const tracedSchema = traceSchema({
+  schema,
+  instrumentations: [new PrismaInstrumentation()],
+});
+```
+
+### Plugins
+
+GraphQL debugger supports plugins. Plugins can be used to add additional spans to a trace.
+
+#### Express
+
+The express plugin will add a span at the root of the trace for each http request to your GraphQL server.
+
+```ts
+import { graphqlDebugger } from "@graphql-debugger/plugin-express";
+
+import express, { Express } from "express";
+import { yoga } from "graphql-yoga";
+import path from "path";
+
+export const app: Express = express();
+app.use(express.json());
+app.use(graphqlDebugger()); // <--- Add plugin
+app.use("/graphql", yoga);
+```
+
+### Debugger Client
+
+The client is a typescript package that can be used to read and write, traces, spans and schemas to GraphQL Debugger. The client is used internally and is shipped to npm. You can use it to build your own tooling on top of GraphQL Debugger.
+
+```ts
+import { DebuggerClient } from "@graphql-debugger/client";
+
+const client = new DebuggerClient();
+
+const spans = await client.span.findMany();
+```
 
 ## License
 

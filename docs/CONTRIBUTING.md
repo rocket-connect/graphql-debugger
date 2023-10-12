@@ -4,8 +4,6 @@ Thank you for your interest in contributing to GraphQL Debugger!
 
 This project is open source and welcomes contributions.
 
-The lead maintainer for GraphQL Debugger is [Dan Starns](https://twitter.com/dan_starns), and is supported by [Rocket Connect](https://rocketconnect.co.uk).
-
 Before making any changes we encourage you to either reach out to us or start a discussion in a GitHub issue.
 
 ## Getting running locally
@@ -55,4 +53,6 @@ To run the debugger locally, you can run
 pnpm run dev
 ```
 
-This will spin up the collector and ui for you.
+This will spin up the webpack dev server and the GraphQL server.
+
+You can the ui for debugger at http://localhost:8080.
