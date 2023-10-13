@@ -3,7 +3,6 @@ import { Schema } from "@graphql-debugger/types";
 
 import { Link } from "react-router-dom";
 
-import { rocketConnect } from "../../images";
 import { IDS } from "../../testing";
 import { Help } from "../info/Help";
 import { HowItWorks } from "../info/HowItWorks";
@@ -18,10 +17,7 @@ export const ListSchema = ({
   isLoading?: boolean;
 }) => {
   return (
-    <div
-      id={IDS.SCHEMAS}
-      className="h-screen flex flex-col items-start w-96 max-w-96 py-5 text-neutral-100 overflow-scroll"
-    >
+    <div id={IDS.SCHEMAS}>
       <div>
         <h2 className="font-bold">Schemas</h2>
         <p className="pt-2 text-xs">List of all your GraphQL Schemas.</p>
@@ -78,22 +74,12 @@ export const ListSchema = ({
           )}
 
           <div className="flex flex-col gap-5">
-            {schemas.length && !isLoading ? (
-              <HowItWorks />
-            ) : (
-              <div>{/* Empty div for gap */}</div>
-            )}
+            {schemas.length && !isLoading ? <HowItWorks /> : <></>}
             <Help />
             <MadeWith />
           </div>
         </div>
       )}
-
-      <div className="w-8 h-8 my-auto mx-auto">
-        <a href="https://rocketconnect.co.uk">
-          <img alt="made by rocketconnect" src={rocketConnect} />
-        </a>
-      </div>
     </div>
   );
 };

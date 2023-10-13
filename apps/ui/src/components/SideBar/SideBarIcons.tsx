@@ -1,12 +1,12 @@
-import { Docs, DocsActive, History } from "../icons";
-import { githubDark, npmDark } from "../images";
-import { SideBarProps } from "./types";
+import { Docs, DocsActive, History } from "../../icons";
+import { githubDark, npmDark } from "../../images";
+import { SideBarProps } from "../types";
 
-export const SideBar = ({
+export function SideBarIcons({
   handleToggleSchema,
   isSchemaActive,
   isDashboard,
-}: SideBarProps) => {
+}: SideBarProps) {
   return (
     <div className="flex flex-col items-center gap-8 border-r-2 border-neutral-100/15 p-4 h-screen">
       <div className="flex flex-col justify-between h-full">
@@ -42,4 +42,4 @@ export const SideBar = ({
       </div>
     </div>
   );
-};
+}

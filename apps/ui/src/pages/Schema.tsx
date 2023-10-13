@@ -1,15 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { client } from "../client";
-import { SchemaViewer, SideBar, Trace } from "../components";
-import { Spinner } from "../components/utils/Spinner";
+import { Trace } from "../components";
+import { SideBarContext } from "../components/SideBar/SideBarContext";
+import { Page } from "../components/utils/Page";
 import { DEFAULT_SLEEP_TIME, sleep } from "../utils/sleep";
 
-export const Schema = () => {
+export function Schema() {
+  const sidebar = useContext(SideBarContext);
   const navigate = useNavigate();
-  const [displaySchema, setDisplaySchema] = useState(true);
   const params = useParams();
 
   const { data: schema, isLoading } = useQuery({
@@ -31,34 +32,26 @@ export const Schema = () => {
     networkMode: "always",
   });
 
-  const handleToggleSchema = () => setDisplaySchema((value) => !value);
-
   useEffect(() => {
     if (!isLoading) {
       if (!schema) {
         navigate("/");
       }
     }
-  }, [isLoading, schema, navigate]);
+
+    if (schema) {
+      if (sidebar?.view?.type !== "schema") {
+        sidebar?.open({
+          type: "schema",
+          schema,
+        });
+      }
+    }
+  }, [isLoading, schema, navigate, sidebar]);
 
   return (
-    <div className="h-screen flex-shrink-0 flex items-center gap-8 py-4 bg-white-100 overflow-hidden">
-      <SideBar
-        handleToggleSchema={handleToggleSchema}
-        isSchemaActive={displaySchema}
-      />
-      {isLoading ? (
-        <div className="flex justify-center align-center w-3/6 mx-auto">
-          <Spinner size={"10"} />
-        </div>
-      ) : (
-        <>
-          {displaySchema && schema && (
-            <SchemaViewer typeDefs={schema?.typeDefs} schemaId={schema?.id} />
-          )}
-          <Trace />
-        </>
-      )}
-    </div>
+    <Page>
+      <Trace />
+    </Page>
   );
-};
+}

@@ -29,7 +29,7 @@ export const Trace = () => {
   });
 
   return (
-    <div className="flex flex-col gap-4 bg-neutral/5 p-5 rounded-2xl w-full h-full mx-4 shadow">
+    <>
       <TraceHeader trace={trace} isLoading={isLoading} />
       <div className="flex flex-grow gap-4 h-96 items-center ">
         <Editor trace={trace} />
@@ -38,6 +38,6 @@ export const Trace = () => {
           <SchemaTraces />
         </div>
       </div>
-    </div>
+    </>
   );
 };
