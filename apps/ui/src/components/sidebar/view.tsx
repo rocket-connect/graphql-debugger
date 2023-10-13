@@ -10,7 +10,7 @@ export function SideBarView() {
   if (!sidebarContext?.isOpened) return <></>;
 
   return (
-    <div className="h-screen flex flex-col items-start w-1/3 max-w-1/3 p-5 text-neutral-100 overflow-scroll">
+    <div className="h-screen flex flex-col items-start w-2/6 max-w-2/6 p-5 text-neutral-100 overflow-scroll custom-scrollbar">
       {sidebarContext?.view?.type === "schema" ? <SchemaViewer /> : <></>}
       {sidebarContext?.view?.type === "info" ? <Info /> : <></>}
     </div>

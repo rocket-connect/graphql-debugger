@@ -10,7 +10,7 @@ import { jsonMapper, metaMapper, variablesHeader } from "./utils";
 
 export function Variables({ trace }: { trace?: Trace }) {
   const [selectedMeta, setSelectedMeta] = useState<string>("variables");
-  const [displayVariables, setDisplayVariables] = useState(true);
+  const [displayVariables, setDisplayVariables] = useState(false);
 
   const handleMetaClick = (event: HTMLDivElement) => {
     setSelectedMeta(event.innerHTML.toLowerCase());

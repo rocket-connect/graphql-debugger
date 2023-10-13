@@ -70,7 +70,6 @@ export function SchemaViewer() {
   const schemasContext = useContext(SchemasContext);
   const schema = schemasContext?.schemaRef.current;
 
-  console.log("schema", schema);
   return (
     <div id={IDS.SCHEMA} className="w-full" data-schema={schema?.id as string}>
       <div className="flex flex-col gap-3 w-full mb-3">
@@ -106,7 +105,7 @@ export function SchemaViewer() {
         )}
       </div>
 
-      {schema ? RenderSchema() : <></>}
+      {schema ? <RenderSchema /> : <></>}
     </div>
   );
 }

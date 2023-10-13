@@ -25,9 +25,5 @@ export function Schema() {
     }
   }, [schemaContext, navigate, params.schemaId]);
 
-  return (
-    <Page>
-      <Trace />
-    </Page>
-  );
+  return <Page>{schemaContext?.schemaRef.current && <Trace />}</Page>;
 }
