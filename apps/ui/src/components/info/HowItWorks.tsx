@@ -6,8 +6,9 @@ export function HowItWorks() {
       <h3 className="font-bold">How it works</h3>
       <div className="flex flex-col gap-5 text-xs">
         <p>
-          With GraphQL Debugger you see traces in the context of your schema.
-          One trace will always be associated with a single query or mutation.
+          GraphQL Debugger sits on your GraphQL server and collects traces from
+          each query and mutation. It then aggregates these traces and displays
+          them in this interface.
         </p>
         <p>
           The backend consists of a{" "}
@@ -16,7 +17,7 @@ export function HowItWorks() {
             text="collector"
           />
           , that receives traces from your GraphQL server, and a aggregation
-          layer that feeds this UI.
+          layer that feeds this interface.
         </p>
         <p>
           To send traces to the collector you should trace your schema using the{" "}

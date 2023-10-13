@@ -1,31 +1,22 @@
 import classNames from "classnames";
-import {
-  ReactElement,
-  cloneElement,
-  useContext,
-  useEffect,
-  useRef,
-} from "react";
+import { ReactElement, useContext, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
-import { ModalContext } from "./ModalContext";
-import { OpenModalProps, WindowModalProps } from "./types";
+import { ModalContext } from "../../context/modal";
 
-export const OpenModal = ({
-  children,
-  opens: modalName,
-}: OpenModalProps): JSX.Element => {
-  const context = useContext(ModalContext);
+export interface WindowModalProps {
+  children: ReactElement;
+  name: string;
+  type: "full-screen" | "small";
+  title: string | JSX.Element;
+}
 
-  return cloneElement(children, { onClick: () => context?.open(modalName) });
-};
-
-export const ModalWindow = ({
+export function ModalWindow({
   children,
   name,
   type,
   title,
-}: WindowModalProps): ReactElement | null => {
+}: WindowModalProps): ReactElement | null {
   const context = useContext(ModalContext);
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -73,4 +64,4 @@ export const ModalWindow = ({
     </div>,
     document.body,
   );
-};
+}

@@ -1,53 +1,35 @@
-import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { client } from "../client";
 import { Trace } from "../components";
-import { SideBarContext } from "../components/SideBar/SideBarContext";
 import { Page } from "../components/utils/Page";
-import { DEFAULT_SLEEP_TIME, sleep } from "../utils/sleep";
+import { SchemasContext } from "../context/schemas";
 
 export function Schema() {
-  const sidebar = useContext(SideBarContext);
+  const schemasContext = useContext(SchemasContext);
   const navigate = useNavigate();
   const params = useParams();
 
-  const { data: schema, isLoading } = useQuery({
-    queryKey: ["singleSchema"],
-    queryFn: async () => {
-      const schemas = await client.schema.findMany({
-        where: {
-          id: params.schemaId,
-        },
-      });
-
-      await sleep(DEFAULT_SLEEP_TIME);
-
-      return schemas;
-    },
-    select: (data) => {
-      return data.find(({ id }) => id === params.schemaId);
-    },
-    networkMode: "always",
-  });
-
   useEffect(() => {
-    if (!isLoading) {
-      if (!schema) {
-        navigate("/");
-      }
+    if (!schemasContext) {
+      return;
     }
 
-    if (schema) {
-      if (sidebar?.view?.type !== "schema") {
-        sidebar?.open({
-          type: "schema",
-          schema,
-        });
-      }
+    if (schemasContext.isLoading) {
+      return;
     }
-  }, [isLoading, schema, navigate, sidebar]);
+
+    const foundSchema = schemasContext?.schemas.find(
+      (s) => s.id === params.schemaId,
+    );
+
+    if (!foundSchema) {
+      navigate("/");
+    } else {
+      schemasContext.setSchema(foundSchema);
+      navigate(`/schema/${foundSchema.id}`);
+    }
+  }, [schemasContext, navigate, params]);
 
   return (
     <Page>

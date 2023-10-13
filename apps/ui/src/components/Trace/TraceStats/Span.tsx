@@ -1,6 +1,8 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 
-import { Modal, ModalWindow, OpenModal } from "../../../components/Modal";
+import { Modal } from "../../../context/modal";
+import { ModalWindow } from "../../modal/ModalWindow";
+import { OpenModal } from "../../modal/OpenModal";
 import { JsonViewer } from "../Editor";
 import { RenderTree } from "./utils";
 

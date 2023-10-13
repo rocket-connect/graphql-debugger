@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import { SideBar } from "./components/SideBar/SideBarContext";
+import { SchemasProvider } from "./context/schemas";
+import { SideBar } from "./context/sidebar";
 import { Router } from "./pages/Router";
 
 export const App = () => {
@@ -17,9 +18,11 @@ export const App = () => {
   return (
     <div>
       <QueryClientProvider client={queryClient}>
-        <SideBar>
-          <Router />
-        </SideBar>
+        <SchemasProvider>
+          <SideBar>
+            <Router />
+          </SideBar>
+        </SchemasProvider>
       </QueryClientProvider>
     </div>
   );

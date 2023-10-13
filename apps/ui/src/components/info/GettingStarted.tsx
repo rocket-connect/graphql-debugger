@@ -1,11 +1,18 @@
 import { HighlightedText } from "../utils/HighlightedText";
 import { LinkedText } from "../utils/LinkedText";
+import { Spinner } from "../utils/Spinner";
 
 export function GettingStarted() {
   return (
     <div className="flex flex-col gap-5">
-      <h3 className="font-bold">Getting Started</h3>
       <div className="flex flex-col gap-5 text-xs">
+        <div className="flex flex-col gap-5 text-center">
+          <p className="font-bold text-lg">No schemas found</p>
+          <p className="italic">Waiting for schema upload.</p>
+          <div className="mx-auto w-10">
+            <Spinner />
+          </div>
+        </div>
         <p>
           The debugger is waiting for a{" "}
           <HighlightedText text="POST" spacing="'" color="graphql-otel-green" />{" "}

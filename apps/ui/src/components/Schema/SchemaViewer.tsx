@@ -3,13 +3,17 @@ import {
   type ObjectTypeDefinitionNode,
   parse,
 } from "graphql";
+import { useCallback, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
+import { SchemasContext } from "../../context/schemas";
 import { IDS } from "../../testing";
+import { GettingStarted } from "../info/GettingStarted";
 import { Type } from "./Type";
-import type { SchemaViewerProps } from "./types";
 
-export const SchemaViewer = ({ schemaId, typeDefs }: SchemaViewerProps) => {
-  const parsed = parse(typeDefs ?? "");
+function RenderSchema() {
+  const schemasContext = useContext(SchemasContext);
+  const parsed = parse(schemasContext?.selectedSchema?.typeDefs ?? "");
 
   const queryDefs: ObjectTypeDefinitionNode[] = [];
   const mutationDefs: ObjectTypeDefinitionNode[] = [];
@@ -30,45 +34,87 @@ export const SchemaViewer = ({ schemaId, typeDefs }: SchemaViewerProps) => {
   const sortedDefs = [...queryDefs, ...mutationDefs, ...otherDefs];
 
   return (
+    <div className="h-screen overflow-y-scroll custom-scrollbar py-2">
+      {sortedDefs.map((def, index) => {
+        if (
+          def.kind === "ObjectTypeDefinition" ||
+          def.kind === "InputObjectTypeDefinition"
+        ) {
+          const name = def.name.value;
+          const kind = def.kind;
+
+          return (
+            <div key={def.name.value} className="mb-4">
+              <Type
+                schemaId={schemasContext?.selectedSchema?.id ?? ""}
+                key={index}
+                type={{
+                  name,
+                  kind,
+                  fields: def.fields as FieldDefinitionNode[],
+                }}
+              />
+            </div>
+          );
+        }
+
+        return null;
+      })}
+    </div>
+  );
+}
+
+export const SchemaViewer = () => {
+  const schemasContext = useContext(SchemasContext);
+  const navigate = useNavigate();
+
+  const setSelectedSchema = useCallback(
+    (schema) => {
+      schemasContext?.setSchema(schema);
+      navigate(`/schema/${schema.id}`);
+    },
+    [schemasContext, navigate],
+  );
+
+  return (
     <div
-      className="h-screen flex flex-col items-start w-96 max-w-96 pt-5"
       id={IDS.SCHEMA}
-      data-schema={schemaId}
+      className="w-full"
+      data-schema={schemasContext?.selectedSchema?.id as string}
     >
-      <div>
-        <h2 className="text-neutral-100 font-bold">Schema</h2>
-        <p className="text-neutral-100 py-2 text-xs">
-          Your GraphQL Schema with analytics on each field.
-        </p>
+      <div className="flex flex-col gap-3 w-full mb-3">
+        {schemasContext?.schemas?.length ? (
+          <div className="flex flex-col gap-5">
+            <h2 className="text-neutral-100 font-bold">Schema</h2>
+            <div className="flex flex-col gap-5">
+              {!schemasContext?.selectedSchema ? (
+                <p className="italic text-sm">Select a GraphQL Schema.</p>
+              ) : (
+                <></>
+              )}
+              <ul className="flex flex-col gap-5 list-disc pl-5">
+                {schemasContext?.schemas.map((schema) => (
+                  <li
+                    key={schema.id}
+                    onClick={() => setSelectedSchema(schema)}
+                    className={`text-sm font-bold hover:cursor-pointer ${
+                      schemasContext?.selectedSchema?.id === schema.id
+                        ? "underline"
+                        : ""
+                    }`}
+                  >
+                    {schema.name || "Untitled Schema"}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ) : (
+          <GettingStarted />
+        )}
       </div>
 
-      <div className="h-screen overflow-y-scroll custom-scrollbar py-2">
-        {sortedDefs.map((def, index) => {
-          if (
-            def.kind === "ObjectTypeDefinition" ||
-            def.kind === "InputObjectTypeDefinition"
-          ) {
-            const name = def.name.value;
-            const kind = def.kind;
-
-            return (
-              <div key={def.name.value} className="mb-4">
-                <Type
-                  schemaId={schemaId ?? ""}
-                  key={index}
-                  type={{
-                    name,
-                    kind,
-                    fields: def.fields as FieldDefinitionNode[],
-                  }}
-                />
-              </div>
-            );
-          }
-
-          return null;
-        })}
-      </div>
+      {schemasContext?.selectedSchema ? RenderSchema() : <></>}
     </div>
   );
 };

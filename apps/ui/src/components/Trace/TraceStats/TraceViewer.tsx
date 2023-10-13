@@ -6,9 +6,11 @@ import { useParams } from "react-router-dom";
 
 import { client } from "../../../client";
 import { Spinner } from "../../../components/utils/Spinner";
+import { Modal } from "../../../context/modal";
 import { IDS } from "../../../testing";
 import { DEFAULT_SLEEP_TIME, sleep } from "../../../utils/sleep";
-import { Modal, ModalWindow, OpenModal } from "../../Modal";
+import { ModalWindow } from "../../modal/ModalWindow";
+import { OpenModal } from "../../modal/OpenModal";
 import { Span } from "./Span";
 import { createTreeData } from "./utils";
 

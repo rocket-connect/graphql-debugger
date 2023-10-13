@@ -1,12 +1,16 @@
 import { ReactNode, createContext, useState } from "react";
 
-import { ModalContextProps } from "./types";
+export interface ModalContextProps {
+  openName: string;
+  close: () => void;
+  open: (name: string) => void;
+}
 
 export const ModalContext = createContext<ModalContextProps | undefined>(
   undefined,
 );
 
-export const Modal = ({ children }: { children: ReactNode }): JSX.Element => {
+export function Modal({ children }: { children: ReactNode }): JSX.Element {
   const [openName, setOpenName] = useState("");
   const close = () => setOpenName("");
   const open = setOpenName;
@@ -16,4 +20,4 @@ export const Modal = ({ children }: { children: ReactNode }): JSX.Element => {
       {children}
     </ModalContext.Provider>
   );
-};
+}
