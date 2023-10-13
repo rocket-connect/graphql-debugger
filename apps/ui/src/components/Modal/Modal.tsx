@@ -39,6 +39,7 @@ export const ModalWindow = ({
     document.addEventListener("click", handleClick, true);
 
     return () => document.removeEventListener("click", handleClick, true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [context?.close]);
 
   if (name !== context?.openName) return null;

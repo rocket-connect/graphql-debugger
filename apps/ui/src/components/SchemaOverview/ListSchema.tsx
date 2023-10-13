@@ -1,82 +1,98 @@
 import { TimeStamp } from "@graphql-debugger/time";
-import type { Schema } from "@graphql-debugger/types";
+import { Schema } from "@graphql-debugger/types";
 
 import { Link } from "react-router-dom";
 
+import { rocketConnect } from "../../images";
 import { IDS } from "../../testing";
-import { logo } from "../../utils/images";
+import { Help } from "../info/Help";
+import { HowItWorks } from "../info/HowItWorks";
+import { MadeWith } from "../info/MadeWith";
+import { NoSchemasFound } from "../info/NoSchemasFound";
 
-export const ListSchema = ({ schemas }: { schemas?: Schema[] }) => {
+export const ListSchema = ({
+  schemas,
+  isLoading,
+}: {
+  schemas: Schema[];
+  isLoading?: boolean;
+}) => {
   return (
     <div
       id={IDS.SCHEMAS}
-      className="mx-auto rounded-2xl w-1/2 flex flex-col gap-6 border-2 border-graphiql-light"
+      className="h-screen flex flex-col items-start w-96 max-w-96 py-5 text-neutral-100 overflow-scroll"
     >
-      <div className="flex flex-row justify-between gap-3 p-3">
-        <div className="flex flex-col gap-3">
-          <h1 className="text-bold text-2xl text-neutral-100">Schemas</h1>
-          <p className="text-sm text-neutral-100">
-            List of the GraphQL schemas picked up by GraphQL Debugger.
-          </p>
-        </div>
-
-        <a
-          href="https://github.com/rocket-connect/graphql-debugger"
-          className="my-auto"
-        >
-          <div className="flex flex-row gap-2">
-            <img id={IDS.LOGO} className="w-10" src={logo}></img>
-            <p className="my-auto text-large text-neutral-100 font-bold">
-              GraphQL Debugger
-            </p>
-          </div>
-        </a>
+      <div>
+        <h2 className="font-bold">Schemas</h2>
+        <p className="pt-2 text-xs">List of all your GraphQL Schemas.</p>
       </div>
-      <div className="relative">
-        <table className="text-xs text-left w-full table-fixed">
-          <colgroup>
-            <col className="w-1/3" />
-            <col className="w-1/3" />
-            <col className="w-1/3" />
-          </colgroup>
-          <thead className="text-xs text-neutral-100">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                Name
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Hash
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Created At
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {schemas?.map((schema) => {
-              return (
-                <tr
-                  key={schema.id}
-                  className="text-neutral-500 overflow-wrap break-words"
-                >
-                  <th scope="row" className={`px-6 py-4 whitespace-nowrap`}>
-                    <Link
-                      data-schemaId={schema.id}
-                      to={`/schema/${schema.id}`}
-                      className="text-neutral-500 underline "
-                    >
-                      {schema?.name || "Unknown"}
-                    </Link>
-                  </th>
-                  <td className="px-6 py-4">{schema.hash}</td>
-                  <td className="px-6 py-4">
-                    {new TimeStamp(new Date(schema.createdAt)).moment.fromNow()}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+
+      {isLoading ? (
+        <></>
+      ) : (
+        <div className="flex flex-col w-full">
+          {schemas.length ? (
+            <div className="bg-red rounded-2xl bg-neutral/5 my-10 py-5 shadow">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Created At</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {schemas?.map((schema) => {
+                    return (
+                      <tr
+                        key={schema.id}
+                        className={`border-graphiql-neutral/10 hover:cursor-pointer text-center`}
+                      >
+                        <td className="p-3">
+                          <Link
+                            data-schemaId={schema.id}
+                            to={`/schema/${schema.id}`}
+                            className="text-neutral-500 underline "
+                          >
+                            {schema?.name || "Unknown"}
+                          </Link>
+                        </td>
+                        <td className="p-3">
+                          {new TimeStamp(
+                            new Date(schema.createdAt),
+                          ).moment.fromNow()}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <></>
+          )}
+
+          {!schemas.length && !isLoading && (
+            <div className="mt-5">
+              <NoSchemasFound />
+            </div>
+          )}
+
+          <div className="flex flex-col gap-5">
+            {schemas.length && !isLoading ? (
+              <HowItWorks />
+            ) : (
+              <div>{/* Empty div for gap */}</div>
+            )}
+            <Help />
+            <MadeWith />
+          </div>
+        </div>
+      )}
+
+      <div className="w-8 h-8 my-auto mx-auto">
+        <a href="https://rocketconnect.co.uk">
+          <img alt="made by rocketconnect" src={rocketConnect} />
+        </a>
       </div>
     </div>
   );

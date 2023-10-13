@@ -36,7 +36,7 @@ export const Schema = () => {
   useEffect(() => {
     if (!isLoading) {
       if (!schema) {
-        navigate("/schemas");
+        navigate("/");
       }
     }
   }, [isLoading, schema, navigate]);
@@ -45,7 +45,7 @@ export const Schema = () => {
     <div className="h-screen flex-shrink-0 flex items-center gap-8 py-4 bg-white-100 overflow-hidden">
       <SideBar
         handleToggleSchema={handleToggleSchema}
-        displaySchema={displaySchema}
+        isSchemaActive={displaySchema}
       />
       {isLoading ? (
         <div className="flex justify-center align-center w-3/6 mx-auto">

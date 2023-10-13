@@ -1,4 +1,5 @@
 export interface SideBarProps {
-  handleToggleSchema: () => void;
-  displaySchema: boolean;
+  handleToggleSchema?: () => void;
+  isSchemaActive?: boolean;
+  isDashboard?: boolean;
 }

@@ -31,11 +31,11 @@ export const SchemaViewer = ({ schemaId, typeDefs }: SchemaViewerProps) => {
 
   return (
     <div
-      className="h-screen flex flex-col items-start"
+      className="h-screen flex flex-col items-start w-96 max-w-96 pt-5"
       id={IDS.SCHEMA}
       data-schema={schemaId}
     >
-      <div className="pt-2">
+      <div>
         <h2 className="text-neutral-100 font-bold">Schema</h2>
         <p className="text-neutral-100 py-2 text-xs">
           Your GraphQL Schema with analytics on each field.
