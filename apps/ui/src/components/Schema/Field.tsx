@@ -1,9 +1,9 @@
-import { FieldName } from "./FieldName";
-import { Stats } from "./Stats";
+import { FieldName } from "./field-name";
+import { Stats } from "./stats";
 import type { FieldProps } from "./types";
 import { extractTypeName } from "./utils";
 
-export const Field = ({ field, parentName, isLastField }: FieldProps) => {
+export function Field({ field, parentName, isLastField }: FieldProps) {
   const name = field.name.value;
   const type = extractTypeName(field.type);
 
@@ -19,4 +19,4 @@ export const Field = ({ field, parentName, isLastField }: FieldProps) => {
       )}
     </li>
   );
-};
+}

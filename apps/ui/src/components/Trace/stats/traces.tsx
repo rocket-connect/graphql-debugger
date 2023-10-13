@@ -7,9 +7,9 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import { client } from "../../../client";
-import { Spinner } from "../../../components/utils/Spinner";
 import { IDS } from "../../../testing";
 import { DEFAULT_SLEEP_TIME, sleep } from "../../../utils/sleep";
+import { Spinner } from "../../utils/Spinner";
 
 export const SchemaTraces = () => {
   const navigate = useNavigate();

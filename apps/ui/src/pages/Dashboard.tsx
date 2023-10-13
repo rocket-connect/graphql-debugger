@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { InfoLogo } from "../components/info/InfoLogo";
+import { InfoLogo } from "../components/info/info-logo";
 import { Page } from "../components/utils/Page";
 import { SchemasContext } from "../context/schemas";
 

@@ -1,8 +1,8 @@
 import { Trace } from "@graphql-debugger/types";
 
-import { QueryViewer } from "./query-viewer/QueryViewer";
+import { QueryViewer } from "./query/viewer";
 
-export const Query = ({ trace }: { trace?: Trace }) => {
+export function Query({ trace }: { trace?: Trace }) {
   return (
     <div className="p-4 text-neutral-100">
       <h2 className="font-bold">Query</h2>
@@ -17,4 +17,4 @@ export const Query = ({ trace }: { trace?: Trace }) => {
       </div>
     </div>
   );
-};
+}

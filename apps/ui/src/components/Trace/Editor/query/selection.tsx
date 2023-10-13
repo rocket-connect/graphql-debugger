@@ -6,7 +6,7 @@ import {
   SelectionNode,
 } from "graphql";
 
-import { QueryField } from "./QueryField";
+import { QueryField } from "./field";
 
 export function Selection({
   selection,

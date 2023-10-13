@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import { SideBarView } from "../sidebar/SideBarView";
+import { SideBarView } from "../sidebar/view";
 
 export function Page({ children }: { children: ReactNode }) {
   return (

@@ -4,10 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 
 import { client } from "../../client";
-import { StatsDetails } from "./StatsDetails";
+import { StatsDetails } from "./stat-details";
 import type { StatsProps } from "./types";
 
-export const Stats = ({ field, parentName }: StatsProps) => {
+export function Stats({ field, parentName }: StatsProps) {
   const params = useParams<{ schemaId: string }>();
   const name = field.name.value;
 
@@ -57,4 +57,4 @@ export const Stats = ({ field, parentName }: StatsProps) => {
       )}
     </div>
   );
-};
+}

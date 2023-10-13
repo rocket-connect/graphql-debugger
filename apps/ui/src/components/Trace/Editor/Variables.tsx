@@ -5,10 +5,10 @@ import { useState } from "react";
 
 import { DownArrow, UpArrow } from "../../../icons";
 import { IDS } from "../../../testing";
-import { JsonViewer } from "./json-viewer/JsonViewer";
+import { JsonViewer } from "./json/JsonViewer";
 import { jsonMapper, metaMapper, variablesHeader } from "./utils";
 
-export const Variables = ({ trace }: { trace?: Trace }) => {
+export function Variables({ trace }: { trace?: Trace }) {
   const [selectedMeta, setSelectedMeta] = useState<string>("variables");
   const [displayVariables, setDisplayVariables] = useState(true);
 
@@ -84,4 +84,4 @@ export const Variables = ({ trace }: { trace?: Trace }) => {
       )}
     </div>
   );
-};
+}

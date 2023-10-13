@@ -1,8 +1,8 @@
-import { Field } from "./Field";
+import { Field } from "./field";
 import type { TypeProps } from "./types";
 import { kindKeywordMapper } from "./utils";
 
-export const Type = ({ schemaId, type }: TypeProps) => {
+export function Type({ schemaId, type }: TypeProps) {
   let parentName = type.name;
   if (["Query", "Mutation"].includes(type.name)) {
     parentName = type.name.toLocaleLowerCase();
@@ -31,4 +31,4 @@ export const Type = ({ schemaId, type }: TypeProps) => {
       <span className="text-neutral-100/70">{`}`}</span>
     </div>
   );
-};
+}

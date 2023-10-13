@@ -2,7 +2,7 @@ import { Schema } from "@graphql-debugger/types";
 
 import { createContext, useCallback, useState } from "react";
 
-import { SideBarIcons } from "../components/sidebar/SideBarIcons";
+import { SideBarIcons } from "../components/sidebar/icons";
 
 export type SideBarViewTypes = "schema" | "no-schema" | "schema-list" | "info";
 

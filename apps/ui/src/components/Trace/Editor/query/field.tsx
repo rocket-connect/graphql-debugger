@@ -1,6 +1,6 @@
 import { FieldNode, SelectionNode } from "graphql";
 
-import { Argument } from "./Argument";
+import { Argument } from "./argument";
 
 export function QueryField({
   field,

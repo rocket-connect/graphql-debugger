@@ -5,7 +5,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { FieldNameProps } from "./types";
 import { processedType } from "./utils";
 
-export const FieldName = ({ name, parentName, type }: FieldNameProps) => {
+export function FieldName({ name, parentName, type }: FieldNameProps) {
   const params = useParams<{ schemaId: string }>();
   const [searchParams] = useSearchParams();
   const rootSpanName = searchParams.get("rootSpanName");
@@ -37,4 +37,4 @@ export const FieldName = ({ name, parentName, type }: FieldNameProps) => {
       <span className="text-secondary-blue">{processedType(type)}</span>
     </div>
   );
-};
+}

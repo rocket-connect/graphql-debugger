@@ -3,11 +3,12 @@ import { useParams } from "react-router-dom";
 
 import { client } from "../../client";
 import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
-import { Editor } from "./Editor/Editor";
-import { SchemaTraces, TraceViewer } from "./TraceStats";
-import { TraceHeader } from "./TraceStats/TraceHeader";
+import { Editor } from "./editor/editor";
+import { TraceHeader } from "./stats/trace-header";
+import { TraceViewer } from "./stats/trace-viewer";
+import { SchemaTraces } from "./stats/traces";
 
-export const Trace = () => {
+export function Trace() {
   const params = useParams();
 
   const { data: trace, isLoading } = useQuery({
@@ -40,4 +41,4 @@ export const Trace = () => {
       </div>
     </>
   );
-};
+}

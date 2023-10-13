@@ -1,8 +1,8 @@
-import { About } from "./About";
-import { HowItWorks } from "./HowItWorks";
-import { InfoLogo } from "./InfoLogo";
-import { MadeWith } from "./MadeWith";
-import { Watch } from "./Watch";
+import { About } from "./about";
+import { HowItWorks } from "./how-it-works";
+import { InfoLogo } from "./info-logo";
+import { MadeWith } from "./made-with";
+import { Watch } from "./watch";
 
 export function Info() {
   return (

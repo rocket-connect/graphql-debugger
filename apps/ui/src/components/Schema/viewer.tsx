@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 
 import { SchemasContext } from "../../context/schemas";
 import { IDS } from "../../testing";
-import { GettingStarted } from "../info/GettingStarted";
-import { Type } from "./Type";
+import { GettingStarted } from "../info/getting-started";
+import { Type } from "./type";
 
 function RenderSchema() {
   const schemasContext = useContext(SchemasContext);
@@ -64,7 +64,7 @@ function RenderSchema() {
   );
 }
 
-export const SchemaViewer = () => {
+export function SchemaViewer() {
   const schemasContext = useContext(SchemasContext);
   const navigate = useNavigate();
 
@@ -97,7 +97,7 @@ export const SchemaViewer = () => {
                   <li
                     key={schema.id}
                     onClick={() => setSelectedSchema(schema)}
-                    className={`text-sm font-bold hover:cursor-pointer ${
+                    className={`text-sm hover:cursor-pointer ${
                       schemasContext?.selectedSchema?.id === schema.id
                         ? "underline"
                         : ""
@@ -117,4 +117,4 @@ export const SchemaViewer = () => {
       {schemasContext?.selectedSchema ? RenderSchema() : <></>}
     </div>
   );
-};
+}

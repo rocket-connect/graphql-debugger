@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { SchemasProvider } from "./context/schemas";
 import { SideBar } from "./context/sidebar";
-import { Router } from "./pages/Router";
+import { Router } from "./pages/router";
 
 export const App = () => {
   const queryClient = new QueryClient({

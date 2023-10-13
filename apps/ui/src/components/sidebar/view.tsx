@@ -1,8 +1,8 @@
 import { useContext } from "react";
 
 import { SideBarContext } from "../../context/sidebar";
-import { SchemaViewer } from "../Schema";
-import { Info } from "../info/Info";
+import { Info } from "../info/info";
+import { SchemaViewer } from "../schema/viewer";
 
 export function SideBarView() {
   const sidebarContext = useContext(SideBarContext);

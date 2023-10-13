@@ -11,13 +11,11 @@ export function About() {
           collector with a user interface tailored for debugging GraphQL
           servers.
         </p>
-
         <p className="text-xs">
           It is designed to be used during development to help you identify
           errors, slow queries, and inconsistencies without having to rely on
           outdated methods like logging.
         </p>
-
         <p>
           GraphQL Debugger is free to use, open source, and you can find the
           source code on{" "}
@@ -27,7 +25,6 @@ export function About() {
           />
           .
         </p>
-
         <p>
           You can get started by simply installing our schema plugin and then
           running our CLI to initiate this interface.

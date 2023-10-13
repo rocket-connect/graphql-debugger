@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Trace } from "../components";
+import { Trace } from "../components/trace/trace";
 import { Page } from "../components/utils/Page";
 import { SchemasContext } from "../context/schemas";
 

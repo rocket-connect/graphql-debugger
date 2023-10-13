@@ -3,17 +3,17 @@ import classNames from "classnames";
 import { Spinner } from "../utils/Spinner";
 import type { StatsDetailsProps } from "./types";
 
-export const StatsDetails = ({
+export function StatsDetails({
   statsType,
   statsDetails,
   isLoading = true,
-}: StatsDetailsProps) => {
+}: StatsDetailsProps) {
   return (
     <div className="flex items-center gap-1 ">
       <span>{statsType}:</span>
       {isLoading ? (
         <>
-          <Spinner size={2} />
+          <Spinner size={"2"} />
         </>
       ) : (
         <>
@@ -28,4 +28,4 @@ export const StatsDetails = ({
       )}
     </div>
   );
-};
+}
