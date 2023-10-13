@@ -21,6 +21,7 @@ export function SideBarIcons() {
       sidebar.open();
     }
   }, [sidebar]);
+
   const handleToggleInfo = useCallback(() => {
     if (sidebar) {
       if (sidebar.view?.type === "info" && sidebar.isOpened) {

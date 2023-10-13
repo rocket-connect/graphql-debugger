@@ -1,16 +1,15 @@
 import { Schema } from "@graphql-debugger/types";
 
 import { useQuery } from "@tanstack/react-query";
-import { ReactNode, createContext, useEffect, useState } from "react";
+import { ReactNode, createContext, useCallback, useRef } from "react";
 
 import { client } from "../client";
 
 export interface SchemasContextProps {
-  selectedSchema?: Schema;
   schemas: Schema[];
   isLoading?: boolean;
-  setSchema: (schema: Schema) => void;
-  setSchemas: (schemas: Schema[]) => void;
+  schemaRef: React.MutableRefObject<Schema | undefined>;
+  setSelectedSchema: (schema: Schema | undefined) => void;
 }
 
 export const SchemasContext = createContext<SchemasContextProps | undefined>(
@@ -22,40 +21,30 @@ export function SchemasProvider({
 }: {
   children: ReactNode;
 }): JSX.Element {
-  const [selectedSchema, setSchema] = useState<Schema>();
-  const [schemas, setSchemas] = useState<Schema[]>([]);
+  const schemaRef = useRef<Schema>();
 
   const getSchemas = useQuery({
     queryKey: ["schemas"],
     queryFn: async () => await client.schema.findMany(),
-    networkMode: "always",
+    refetchInterval: 1000,
   });
 
-  useEffect(() => {
-    if (getSchemas.data) {
-      setSchemas(getSchemas.data);
-    }
-  }, [getSchemas]);
+  const setSelectedSchema = useCallback(
+    (schema: Schema | undefined) => {
+      schemaRef.current = schema;
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (!schemas.length) {
-        getSchemas.refetch();
-      } else {
-        clearInterval(timer);
-      }
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [schemas, getSchemas]);
+      // This will trigger a re-render
+      getSchemas.refetch();
+    },
+    [getSchemas],
+  );
 
   return (
     <SchemasContext.Provider
       value={{
-        selectedSchema,
-        setSchema,
-        schemas,
-        setSchemas,
+        setSelectedSchema,
+        schemaRef,
+        schemas: getSchemas.data || [],
         isLoading: getSchemas.isLoading,
       }}
     >

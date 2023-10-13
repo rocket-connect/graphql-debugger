@@ -1,9 +1,10 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import type { Trace } from "@graphql-debugger/types";
 
-import { Link } from "react-router-dom";
+import { useContext } from "react";
 
-import { logo } from "../../../utils/images";
+import { SchemasContext } from "../../context/schemas";
+import { logo } from "../../utils/images";
 
 export const TraceHeader = ({
   trace,
@@ -11,6 +12,7 @@ export const TraceHeader = ({
   trace?: Trace;
   isLoading?: boolean;
 }) => {
+  const schemaContext = useContext(SchemasContext);
   const startTimeUnixNano = UnixNanoTimeStamp.fromString(
     trace?.rootSpan?.startTimeUnixNano || "0",
   );
@@ -34,14 +36,18 @@ export const TraceHeader = ({
           </p>
         </div>
       </div>
-      <Link to="/">
-        <div className="flex flex-row gap-2 py-1">
-          <img className="w-10 my-auto" src={logo}></img>
-          <p className="my-auto text-xl text-neutral-100 font-bold">
-            GraphQL Debugger
-          </p>
-        </div>
-      </Link>
+      <a
+        className="flex flex-row gap-2 py-1 hover:cursor-pointer"
+        href=""
+        onClick={() => {
+          schemaContext?.setSelectedSchema(undefined);
+        }}
+      >
+        <img className="w-10 my-auto" src={logo}></img>
+        <p className="my-auto text-xl text-neutral-100 font-bold">
+          GraphQL Debugger
+        </p>
+      </a>
     </div>
   );
 };

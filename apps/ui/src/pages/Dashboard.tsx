@@ -1,11 +1,12 @@
 import { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { InfoLogo } from "../components/info/info-logo";
 import { Page } from "../components/utils/Page";
 import { SchemasContext } from "../context/schemas";
 
 export function Dashboard() {
+  const params = useParams();
   const schemaContext = useContext(SchemasContext);
   const navigate = useNavigate();
 
@@ -17,7 +18,16 @@ export function Dashboard() {
     if (schemaContext.isLoading) {
       return;
     }
-  }, [schemaContext, navigate]);
+
+    if (params.schemaId) {
+      const schema = schemaContext.schemas.find(
+        (schema) => schema.id === params.schemaId,
+      );
+      if (schema) {
+        schemaContext.setSelectedSchema(schema);
+      }
+    }
+  }, [schemaContext, navigate, params.schemaId]);
 
   return (
     <Page>

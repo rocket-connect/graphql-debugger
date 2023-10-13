@@ -6,10 +6,10 @@ import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
-import { client } from "../../../client";
-import { IDS } from "../../../testing";
-import { DEFAULT_SLEEP_TIME, sleep } from "../../../utils/sleep";
-import { Spinner } from "../../utils/Spinner";
+import { client } from "../../client";
+import { IDS } from "../../testing";
+import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
+import { Spinner } from "../utils/Spinner";
 
 export const SchemaTraces = () => {
   const navigate = useNavigate();
@@ -48,6 +48,7 @@ export const SchemaTraces = () => {
         }?${searchParams.toString()}`,
       );
     }
+
     if (selectedTrace) {
       navigate(
         `/schema/${

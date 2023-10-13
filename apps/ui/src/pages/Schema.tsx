@@ -6,30 +6,24 @@ import { Page } from "../components/utils/Page";
 import { SchemasContext } from "../context/schemas";
 
 export function Schema() {
-  const schemasContext = useContext(SchemasContext);
-  const navigate = useNavigate();
   const params = useParams();
+  const schemaContext = useContext(SchemasContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!schemasContext) {
+    if (!schemaContext) {
       return;
     }
 
-    if (schemasContext.isLoading) {
-      return;
+    if (params.schemaId) {
+      const schema = schemaContext.schemas.find(
+        (schema) => schema.id === params.schemaId,
+      );
+      if (schema) {
+        schemaContext.setSelectedSchema(schema);
+      }
     }
-
-    const foundSchema = schemasContext?.schemas.find(
-      (s) => s.id === params.schemaId,
-    );
-
-    if (!foundSchema) {
-      navigate("/");
-    } else {
-      schemasContext.setSchema(foundSchema);
-      navigate(`/schema/${foundSchema.id}`);
-    }
-  }, [schemasContext, navigate, params]);
+  }, [schemaContext, navigate, params.schemaId]);
 
   return (
     <Page>

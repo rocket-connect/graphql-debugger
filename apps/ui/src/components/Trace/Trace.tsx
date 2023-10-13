@@ -4,9 +4,9 @@ import { useParams } from "react-router-dom";
 import { client } from "../../client";
 import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
 import { Editor } from "./editor/editor";
-import { TraceHeader } from "./stats/trace-header";
-import { TraceViewer } from "./stats/trace-viewer";
-import { SchemaTraces } from "./stats/traces";
+import { TraceHeader } from "./header";
+import { SchemaTraces } from "./traces";
+import { TraceViewer } from "./viewer";
 
 export function Trace() {
   const params = useParams();

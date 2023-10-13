@@ -3,7 +3,7 @@ import {
   type ObjectTypeDefinitionNode,
   parse,
 } from "graphql";
-import { useCallback, useContext } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { SchemasContext } from "../../context/schemas";
@@ -13,7 +13,8 @@ import { Type } from "./type";
 
 function RenderSchema() {
   const schemasContext = useContext(SchemasContext);
-  const parsed = parse(schemasContext?.selectedSchema?.typeDefs ?? "");
+  const schema = schemasContext?.schemaRef.current;
+  const parsed = parse(schema?.typeDefs ?? "");
 
   const queryDefs: ObjectTypeDefinitionNode[] = [];
   const mutationDefs: ObjectTypeDefinitionNode[] = [];
@@ -46,7 +47,7 @@ function RenderSchema() {
           return (
             <div key={def.name.value} className="mb-4">
               <Type
-                schemaId={schemasContext?.selectedSchema?.id ?? ""}
+                schemaId={schema?.id ?? ""}
                 key={index}
                 type={{
                   name,
@@ -65,29 +66,19 @@ function RenderSchema() {
 }
 
 export function SchemaViewer() {
-  const schemasContext = useContext(SchemasContext);
   const navigate = useNavigate();
+  const schemasContext = useContext(SchemasContext);
+  const schema = schemasContext?.schemaRef.current;
 
-  const setSelectedSchema = useCallback(
-    (schema) => {
-      schemasContext?.setSchema(schema);
-      navigate(`/schema/${schema.id}`);
-    },
-    [schemasContext, navigate],
-  );
-
+  console.log("schema", schema);
   return (
-    <div
-      id={IDS.SCHEMA}
-      className="w-full"
-      data-schema={schemasContext?.selectedSchema?.id as string}
-    >
+    <div id={IDS.SCHEMA} className="w-full" data-schema={schema?.id as string}>
       <div className="flex flex-col gap-3 w-full mb-3">
         {schemasContext?.schemas?.length ? (
           <div className="flex flex-col gap-5">
             <h2 className="text-neutral-100 font-bold">Schema</h2>
             <div className="flex flex-col gap-5">
-              {!schemasContext?.selectedSchema ? (
+              {!schema ? (
                 <p className="italic text-sm">Select a GraphQL Schema.</p>
               ) : (
                 <></>
@@ -96,11 +87,12 @@ export function SchemaViewer() {
                 {schemasContext?.schemas.map((schema) => (
                   <li
                     key={schema.id}
-                    onClick={() => setSelectedSchema(schema)}
+                    onClick={() => {
+                      navigate(`/schema/${schema.id}`);
+                      schemasContext?.setSelectedSchema(schema);
+                    }}
                     className={`text-sm hover:cursor-pointer ${
-                      schemasContext?.selectedSchema?.id === schema.id
-                        ? "underline"
-                        : ""
+                      schema?.id === schema.id ? "underline" : ""
                     }`}
                   >
                     {schema.name || "Untitled Schema"}
@@ -114,7 +106,7 @@ export function SchemaViewer() {
         )}
       </div>
 
-      {schemasContext?.selectedSchema ? RenderSchema() : <></>}
+      {schema ? RenderSchema() : <></>}
     </div>
   );
 }

@@ -4,13 +4,13 @@ import type { Span as TSpan, Trace } from "@graphql-debugger/types";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { client } from "../../../client";
-import { Modal } from "../../../context/modal";
-import { IDS } from "../../../testing";
-import { DEFAULT_SLEEP_TIME, sleep } from "../../../utils/sleep";
-import { OpenModal } from "../../modal/open";
-import { ModalWindow } from "../../modal/window";
-import { Spinner } from "../../utils/Spinner";
+import { client } from "../../client";
+import { Modal } from "../../context/modal";
+import { IDS } from "../../testing";
+import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
+import { OpenModal } from "../modal/open";
+import { ModalWindow } from "../modal/window";
+import { Spinner } from "../utils/Spinner";
 import { Span } from "./span";
 import { createTreeData } from "./utils";
 
