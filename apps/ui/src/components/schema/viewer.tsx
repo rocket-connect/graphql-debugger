@@ -85,6 +85,7 @@ export function SchemaViewer() {
               <ul className="flex flex-col gap-5 list-disc pl-5">
                 {schemasContext?.schemas.map((schema) => (
                   <li
+                    data-schemaid={schema.id}
                     key={schema.id}
                     onClick={() => {
                       navigate(`/schema/${schema.id}`);

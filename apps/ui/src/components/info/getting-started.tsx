@@ -1,3 +1,4 @@
+import { IDS } from "../../testing";
 import { HighlightedText } from "../utils/highlighted-text";
 import { LinkedText } from "../utils/linked-text";
 import { Spinner } from "../utils/spinner";
@@ -7,7 +8,9 @@ export function GettingStarted() {
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-5 text-xs">
         <div className="flex flex-col gap-5 text-center">
-          <p className="font-bold text-lg">No schemas found</p>
+          <p className="font-bold text-lg" id={IDS.NO_SCHEMAS_FOUND}>
+            No schemas found
+          </p>
           <p className="italic">Waiting for schema upload.</p>
           <div className="mx-auto w-10">
             <Spinner />

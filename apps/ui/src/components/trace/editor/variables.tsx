@@ -54,11 +54,17 @@ export function Variables({ trace }: { trace?: Trace }) {
           ))}
         </div>
         {displayVariables ? (
-          <button onClick={() => setDisplayVariables(false)}>
+          <button
+            id={IDS.EXPAND_VARIABLES}
+            onClick={() => setDisplayVariables(false)}
+          >
             <DownArrow />
           </button>
         ) : (
-          <button onClick={() => setDisplayVariables(true)}>
+          <button
+            id={IDS.EXPAND_VARIABLES}
+            onClick={() => setDisplayVariables(true)}
+          >
             <UpArrow />
           </button>
         )}
