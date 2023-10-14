@@ -1,10 +1,10 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 
 import { Modal } from "../../context/modal";
+import { RenderTree } from "../../utils/create-tree-data";
 import { OpenModal } from "../modal/open";
 import { ModalWindow } from "../modal/window";
 import { JsonViewer } from "./editor/json/viewer";
-import { RenderTree } from "./utils";
 
 export function Span({
   data,

@@ -5,8 +5,12 @@ import { useState } from "react";
 
 import { DownArrow, UpArrow } from "../../../icons";
 import { IDS } from "../../../testing";
+import {
+  jsonMapper,
+  metaMapper,
+  variablesHeader,
+} from "../../../utils/mappers";
 import { JsonViewer } from "./json/viewer";
-import { jsonMapper, metaMapper, variablesHeader } from "./utils";
 
 export function Variables({ trace }: { trace?: Trace }) {
   const [selectedMeta, setSelectedMeta] = useState<string>("variables");

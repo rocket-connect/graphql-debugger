@@ -7,12 +7,12 @@ import { useParams } from "react-router-dom";
 import { client } from "../../client";
 import { Modal } from "../../context/modal";
 import { IDS } from "../../testing";
+import { createTreeData } from "../../utils/create-tree-data";
 import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
 import { OpenModal } from "../modal/open";
 import { ModalWindow } from "../modal/window";
 import { Spinner } from "../utils/spinner";
 import { Span } from "./span";
-import { createTreeData } from "./utils";
 
 const TraceView = ({ spans }: { spans: TSpan[] }) => {
   const treeData = createTreeData(spans);

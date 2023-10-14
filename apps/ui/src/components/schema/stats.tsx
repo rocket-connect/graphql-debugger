@@ -1,11 +1,16 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 
 import { useQuery } from "@tanstack/react-query";
+import { FieldDefinitionNode } from "graphql";
 import { useParams } from "react-router-dom";
 
 import { client } from "../../client";
 import { StatsDetails } from "./stat-details";
-import type { StatsProps } from "./types";
+
+export interface StatsProps {
+  field: FieldDefinitionNode;
+  parentName: string;
+}
 
 export function Stats({ field, parentName }: StatsProps) {
   const params = useParams<{ schemaId: string }>();

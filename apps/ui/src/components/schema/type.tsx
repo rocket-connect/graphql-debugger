@@ -1,6 +1,16 @@
+import { FieldDefinitionNode } from "graphql";
+
+import { kindKeywordMapper } from "../../utils/mappers";
 import { Field } from "./field";
-import type { TypeProps } from "./types";
-import { kindKeywordMapper } from "./utils";
+
+export interface TypeProps {
+  schemaId: string;
+  type: {
+    name: string;
+    kind: string;
+    fields: readonly FieldDefinitionNode[];
+  };
+}
 
 export function Type({ schemaId, type }: TypeProps) {
   let parentName = type.name;

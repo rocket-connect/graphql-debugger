@@ -12,3 +12,8 @@ export const jsonMapper: Record<string, string> = {
 };
 
 export const variablesHeader = ["Variables", "Result", "Context", "Errors"];
+
+export const kindKeywordMapper: Record<string, string> = {
+  ObjectTypeDefinition: "type",
+  InputObjectTypeDefinition: "input",
+};

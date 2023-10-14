@@ -2,8 +2,11 @@ import classNames from "classnames";
 import { useCallback } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
-import { FieldNameProps } from "./types";
-import { processedType } from "./utils";
+export interface FieldNameProps {
+  parentName: string;
+  name: string;
+  type: string;
+}
 
 export function FieldName({ name, parentName, type }: FieldNameProps) {
   const params = useParams<{ schemaId: string }>();
@@ -34,7 +37,18 @@ export function FieldName({ name, parentName, type }: FieldNameProps) {
       >
         {name}:
       </span>
-      <span className="text-secondary-blue">{processedType(type)}</span>
+      <span className="text-secondary-blue">
+        {Array.from(type).map((char, index) => {
+          if (["!", "[", "]"].includes(char)) {
+            return (
+              <span key={index} className="text-neutral-100">
+                {char}
+              </span>
+            );
+          }
+          return char;
+        })}
+      </span>
     </div>
   );
 }

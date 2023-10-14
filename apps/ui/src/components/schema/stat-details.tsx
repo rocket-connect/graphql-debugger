@@ -1,7 +1,16 @@
 import classNames from "classnames";
 
 import { Spinner } from "../utils/spinner";
-import type { StatsDetailsProps } from "./types";
+
+export interface StatsDetailsProps {
+  statsType:
+    | "Resolve Count"
+    | "Error Count"
+    | "Average Duration"
+    | "Last Resolved";
+  statsDetails?: number | string;
+  isLoading?: boolean;
+}
 
 export function StatsDetails({
   statsType,

@@ -1,7 +1,15 @@
+import { FieldDefinitionNode } from "graphql";
+
+import { extractTypeName } from "../../utils/extract-type-name";
 import { FieldName } from "./field-name";
 import { Stats } from "./stats";
-import type { FieldProps } from "./types";
-import { extractTypeName } from "./utils";
+
+export interface FieldProps {
+  field: FieldDefinitionNode;
+  parentName: string;
+  schemaId: string;
+  isLastField?: boolean;
+}
 
 export function Field({ field, parentName, isLastField }: FieldProps) {
   const name = field.name.value;

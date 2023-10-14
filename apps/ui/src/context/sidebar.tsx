@@ -4,17 +4,13 @@ import { createContext, useCallback, useState } from "react";
 
 import { SideBarIcons } from "../components/sidebar/icons";
 
-export type SideBarViewTypes = "schema" | "no-schema" | "schema-list" | "info";
+export type SideBarViewTypes = "schema" | "schema-list" | "info";
 
 export type SideBarSchemaView = {
   type: "schema";
   data?: {
     schema?: Schema;
   };
-};
-
-export type SideBarNoSchemaView = {
-  type: "no-schema";
 };
 
 export type SideBarSchemaListView = {
@@ -28,7 +24,6 @@ export type SideBarInfoView = {
 
 export type SideBarView = (
   | SideBarSchemaView
-  | SideBarNoSchemaView
   | SideBarSchemaListView
   | SideBarInfoView
 ) & {
