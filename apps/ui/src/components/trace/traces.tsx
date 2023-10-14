@@ -92,12 +92,11 @@ export function SchemaTraces() {
             </div>
           ) : (
             <>
-              <table className="w-full text-xs">
+              <table className="w-full text-xs text-center">
                 <thead>
                   <th>Name</th>
                   <th>Duration</th>
                   <th>Start</th>
-                  <th>End</th>
                 </thead>
                 <tbody>
                   {traces?.length === 0 ? (
@@ -111,9 +110,6 @@ export function SchemaTraces() {
                         const rootSpan = trace.rootSpan;
                         const startTimeUnixNano = UnixNanoTimeStamp.fromString(
                           rootSpan?.startTimeUnixNano || "0",
-                        );
-                        const endTimeUnixNano = UnixNanoTimeStamp.fromString(
-                          rootSpan?.endTimeUnixNano || "0",
                         );
                         const durationUnixNano = UnixNanoTimeStamp.fromString(
                           rootSpan?.durationNano || "0",
@@ -130,7 +126,7 @@ export function SchemaTraces() {
                           >
                             <th
                               className={classNames(
-                                `px-6 py-4 whitespace-nowrap text-left font-medium ${
+                                `px-6 py-4 whitespace-nowrap font-medium ${
                                   isSelected ? "underline" : "font-bold"
                                 }`,
                               )}
@@ -143,9 +139,6 @@ export function SchemaTraces() {
                             )} ${unit}`}</td>
                             <td className="px-6 py-4">
                               {startTimeUnixNano.formatUnixNanoTimestamp()}
-                            </td>
-                            <td className="px-6 py-4">
-                              {endTimeUnixNano.formatUnixNanoTimestamp()}
                             </td>
                           </tr>
                         );
