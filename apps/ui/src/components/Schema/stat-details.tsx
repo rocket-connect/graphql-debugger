@@ -1,6 +1,6 @@
 import classNames from "classnames";
 
-import { Spinner } from "../utils/Spinner";
+import { Spinner } from "../utils/spinner";
 import type { StatsDetailsProps } from "./types";
 
 export function StatsDetails({

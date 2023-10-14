@@ -9,7 +9,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { client } from "../../client";
 import { IDS } from "../../testing";
 import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
-import { Spinner } from "../utils/Spinner";
+import { Spinner } from "../utils/spinner";
 
 export const SchemaTraces = () => {
   const navigate = useNavigate();

@@ -10,7 +10,7 @@ import { IDS } from "../../testing";
 import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
 import { OpenModal } from "../modal/open";
 import { ModalWindow } from "../modal/window";
-import { Spinner } from "../utils/Spinner";
+import { Spinner } from "../utils/spinner";
 import { Span } from "./span";
 import { createTreeData } from "./utils";
 

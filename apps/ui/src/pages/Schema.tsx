@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Trace } from "../components/trace/trace";
-import { Page } from "../components/utils/Page";
+import { Page } from "../components/utils/page";
 import { SchemasContext } from "../context/schemas";
 
 export function Schema() {

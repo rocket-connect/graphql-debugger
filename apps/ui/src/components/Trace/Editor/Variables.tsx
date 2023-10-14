@@ -5,7 +5,7 @@ import { useState } from "react";
 
 import { DownArrow, UpArrow } from "../../../icons";
 import { IDS } from "../../../testing";
-import { JsonViewer } from "./json/JsonViewer";
+import { JsonViewer } from "./json/viewer";
 import { jsonMapper, metaMapper, variablesHeader } from "./utils";
 
 export function Variables({ trace }: { trace?: Trace }) {

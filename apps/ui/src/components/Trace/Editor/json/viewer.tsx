@@ -1,4 +1,4 @@
-import { JsonValue } from "./JsonValue";
+import { JsonValue } from "./value";
 
 export function JsonViewer({ json, id }: { json: string; id: string }) {
   const data = JSON.parse(json);

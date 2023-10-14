@@ -1,6 +1,6 @@
-import { HighlightedText } from "../utils/HighlightedText";
-import { LinkedText } from "../utils/LinkedText";
-import { Spinner } from "../utils/Spinner";
+import { HighlightedText } from "../utils/highlighted-text";
+import { LinkedText } from "../utils/linked-text";
+import { Spinner } from "../utils/spinner";
 
 export function GettingStarted() {
   return (

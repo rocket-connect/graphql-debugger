@@ -1,4 +1,4 @@
-import { LinkedText } from "../utils/LinkedText";
+import { LinkedText } from "../utils/linked-text";
 
 export function HowItWorks() {
   return (
