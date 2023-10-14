@@ -2,7 +2,7 @@ import { useCallback, useContext } from "react";
 
 import { SideBarContext } from "../../context/sidebar";
 import { Docs, DocsActive } from "../../icons";
-import { InfoFilled, InfoStroke } from "../../icons/Info";
+import { InfoFilled, InfoStroke } from "../../icons/info";
 import { githubDark, npmDark } from "../../images";
 
 export function SideBarIcons() {

@@ -1,3 +1,3 @@
-export * from "./DocsIcons";
-export * from "./HistoryIcons";
-export * from "./Arrows";
+export * from "./docs";
+export * from "./history";
+export * from "./arrows";
