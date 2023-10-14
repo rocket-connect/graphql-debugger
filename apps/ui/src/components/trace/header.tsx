@@ -6,12 +6,7 @@ import { useContext } from "react";
 import { SchemasContext } from "../../context/schemas";
 import { logo } from "../../utils/images";
 
-export const TraceHeader = ({
-  trace,
-}: {
-  trace?: Trace;
-  isLoading?: boolean;
-}) => {
+export function TraceHeader({ trace }: { trace?: Trace; isLoading?: boolean }) {
   const schemaContext = useContext(SchemasContext);
   const startTimeUnixNano = UnixNanoTimeStamp.fromString(
     trace?.rootSpan?.startTimeUnixNano || "0",
@@ -50,4 +45,4 @@ export const TraceHeader = ({
       </a>
     </div>
   );
-};
+}

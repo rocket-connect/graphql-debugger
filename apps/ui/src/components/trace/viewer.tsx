@@ -14,7 +14,7 @@ import { ModalWindow } from "../modal/window";
 import { Spinner } from "../utils/spinner";
 import { Span } from "./span";
 
-const TraceView = ({ spans }: { spans: TSpan[] }) => {
+function TraceView({ spans }: { spans: TSpan[] }) {
   const treeData = createTreeData(spans);
 
   const minTimestamp = UnixNanoTimeStamp.earliest(
@@ -36,7 +36,7 @@ const TraceView = ({ spans }: { spans: TSpan[] }) => {
       ))}
     </div>
   );
-};
+}
 
 export function TraceViewer() {
   const [traces, setTraces] = useState<Trace[]>([]);

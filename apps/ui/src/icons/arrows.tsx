@@ -1,6 +1,6 @@
 import { IconProps } from "./types";
 
-export const UpArrow = (props: IconProps) => {
+export function UpArrow(props: IconProps) {
   return (
     <svg
       width={props.size || "14"}
@@ -17,9 +17,9 @@ export const UpArrow = (props: IconProps) => {
       />
     </svg>
   );
-};
+}
 
-export const DownArrow = (props: IconProps) => {
+export function DownArrow(props: IconProps) {
   return (
     <svg
       width={props.size || "14"}
@@ -36,4 +36,4 @@ export const DownArrow = (props: IconProps) => {
       />
     </svg>
   );
-};
+}

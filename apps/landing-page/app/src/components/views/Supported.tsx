@@ -39,7 +39,10 @@ export function Supported() {
       <Container>
         <div className="flex flex-col md:flex-row justify-between gap-10">
           {supported.map((item) => (
-            <div className="flex flex-col justify-center align-center text-center gap-5">
+            <div
+              key={item.name}
+              className="flex flex-col justify-center align-center text-center gap-5"
+            >
               <div className="w-12 mx-auto">
                 <a href={item.link}>
                   <img src={item.img} alt={item.name} />

@@ -1,6 +1,6 @@
 import { IconProps } from "./types";
 
-export const DocsActive = (props: IconProps) => {
+export function DocsActive(props: IconProps) {
   return (
     <svg width={props.size} height={props.size} viewBox="0 0 21 24" fill="none">
       <path
@@ -21,9 +21,9 @@ export const DocsActive = (props: IconProps) => {
       />
     </svg>
   );
-};
+}
 
-export const Docs = (props: IconProps) => {
+export function Docs(props: IconProps) {
   return (
     <svg width={props.size} height={props.size} viewBox="0 0 20 24" fill="none">
       <path
@@ -41,4 +41,4 @@ export const Docs = (props: IconProps) => {
       />
     </svg>
   );
-};
+}

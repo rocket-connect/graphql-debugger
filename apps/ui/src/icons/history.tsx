@@ -1,6 +1,6 @@
 import { IconProps } from "./types";
 
-export const HistoryActive = (props: IconProps) => {
+export function HistoryActive(props: IconProps) {
   return (
     <svg
       width={props.size}
@@ -28,9 +28,9 @@ export const HistoryActive = (props: IconProps) => {
       />
     </svg>
   );
-};
+}
 
-export const History = (props: IconProps) => {
+export function History(props: IconProps) {
   return (
     <svg width={props.size} height={props.size} viewBox="0 0 24 20" fill="none">
       <g opacity="0.4">
@@ -54,4 +54,4 @@ export const History = (props: IconProps) => {
       </g>
     </svg>
   );
-};
+}

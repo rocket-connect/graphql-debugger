@@ -11,7 +11,7 @@ import { IDS } from "../../testing";
 import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
 import { Spinner } from "../utils/spinner";
 
-export const SchemaTraces = () => {
+export function SchemaTraces() {
   const navigate = useNavigate();
   const params = useParams();
   const [searchParams] = useSearchParams();
@@ -160,4 +160,4 @@ export const SchemaTraces = () => {
       </div>
     </div>
   );
-};
+}

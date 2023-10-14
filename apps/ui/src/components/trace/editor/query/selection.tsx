@@ -48,11 +48,9 @@ export function Selection({
         {"... on "}
         {inlineFragment.typeCondition?.name.value}
         <ul className="flex flex-col gap-1">
-          {inlineFragment.selectionSet.selections.map(
-            (selection, selectionIndex) => (
-              <Selection selection={selection} index={selectionIndex} />
-            ),
-          )}
+          {inlineFragment.selectionSet.selections.map((s, i) => (
+            <Selection key={`${s}${i}`} selection={s} index={i} />
+          ))}
         </ul>
       </div>
     );
