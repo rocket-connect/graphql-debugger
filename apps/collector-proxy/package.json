@@ -14,7 +14,7 @@
   "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
   "scripts": {
     "build": "tsc",
-    "test": "cross-env NODE_ENV=test jest --runInBand",
+    "test": "cross-env NODE_ENV=test jest --runInBand --forceExit",
     "dev": "cross-env TRACE_SCHEMA=\"true\" ts-node ./src/main.ts"
   },
   "peerDependencies": {

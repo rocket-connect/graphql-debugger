@@ -15,7 +15,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node build/index.js",
-    "test": "jest --runInBand"
+    "test": "jest --runInBand --forceExit"
   },
   "peerDependencies": {
     "graphql": "^16.0.0 || ^17.0.0"
