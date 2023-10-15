@@ -46,7 +46,8 @@ export const SideBarContext = createContext<SideBarProps | undefined>(
   undefined,
 );
 
-const localStorageKey = "graphql-debugger-sidebar";
+const localStorageViewKey = "graphql-debugger-sidebar-view";
+const localStorageOpenKey = "graphql-debugger-sidebar-isOpen";
 
 export function SideBar({
   children,
@@ -55,22 +56,27 @@ export function SideBar({
 }): JSX.Element {
   const [view, setSideBarView] = useState<SideBarView | undefined>({
     type:
-      (localStorage.getItem(localStorageKey) as unknown as SideBarViewTypes) ||
-      "schema",
+      (localStorage.getItem(
+        localStorageViewKey,
+      ) as unknown as SideBarViewTypes) || "schema",
   });
-  const [isOpened, setIsOpened] = useState(true);
+  const [isOpened, setIsOpened] = useState(
+    localStorage.getItem(localStorageOpenKey) === "true",
+  );
 
   const close = useCallback(() => {
+    localStorage.setItem(localStorageOpenKey, "false");
     setIsOpened(false);
   }, [setIsOpened]);
 
   const open = useCallback(() => {
+    localStorage.setItem(localStorageOpenKey, "true");
     setIsOpened(true);
   }, [setIsOpened]);
 
   const setView = useCallback(
     (v: SideBarView) => {
-      localStorage.setItem(localStorageKey, v.type);
+      localStorage.setItem(localStorageViewKey, v.type);
       setSideBarView(v);
     },
     [setSideBarView],
