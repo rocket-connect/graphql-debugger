@@ -20,6 +20,7 @@ module.exports = {
         ["graphiql-border"]: "#3B4355",
         ["graphiql-pink"]: "#FF5794",
         ["graphiql-highlight"]: "#444D60",
+        ["app-blue"]: "#3A4B68",
       },
     },
   },

@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 
 import { ClientContext } from "../../context/client";
 import { Modal } from "../../context/modal";
+import { expand } from "../../images";
 import { IDS } from "../../testing";
 import { createTreeData } from "../../utils/create-tree-data";
 import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
@@ -78,8 +79,9 @@ export function TraceViewer() {
       >
         <Modal key="trace-full-screen">
           <OpenModal opens="full-screen-trace">
-            <button className="flex items-end text-neutral-100 font-semibold">
-              Expand trace
+            <button className="flex flex-row gap-3 text-neutral-100 text-sm hover:underline">
+              <img className="w-6" src={expand} />
+              <p className="my-auto">Expand</p>
             </button>
           </OpenModal>
           <ModalWindow

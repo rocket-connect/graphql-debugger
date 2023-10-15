@@ -19,3 +19,11 @@ export { default as loginStroke } from "../public/login-stroke.svg";
 export { default as folderFilled } from "../public/folder-filled.svg";
 // @ts-ignore
 export { default as folderStroke } from "../public/folder-stroke.svg";
+// @ts-ignore
+export { default as searchFilled } from "../public/search-filled.svg";
+// @ts-ignore
+export { default as searchStroke } from "../public/search-stroke.svg";
+// @ts-ignore
+export { default as refresh } from "../public/refresh.svg";
+// @ts-ignore
+export { default as expand } from "../public/expand.svg";

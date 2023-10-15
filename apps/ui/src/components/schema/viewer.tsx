@@ -68,10 +68,14 @@ function RenderSchema() {
 export function SchemaViewer() {
   const navigate = useNavigate();
   const schemasContext = useContext(SchemasContext);
-  const schema = schemasContext?.schemaRef.current;
+  const currentSchema = schemasContext?.schemaRef.current;
 
   return (
-    <div id={IDS.SCHEMA} className="w-full" data-schema={schema?.id as string}>
+    <div
+      id={IDS.SCHEMA}
+      className="w-full"
+      data-schema={currentSchema?.id as string}
+    >
       <div className="flex flex-col gap-3 w-full mb-3">
         {schemasContext?.schemas?.length ? (
           <div className="flex flex-col gap-5">
@@ -86,7 +90,7 @@ export function SchemaViewer() {
                       schemasContext?.setSelectedSchema(schema);
                     }}
                     className={`text-sm hover:cursor-pointer ${
-                      schema?.id === schema.id ? "underline" : ""
+                      currentSchema?.id === schema.id ? "underline" : ""
                     }`}
                   >
                     {schema.name || "Untitled Schema"}
@@ -100,7 +104,7 @@ export function SchemaViewer() {
         )}
       </div>
 
-      {schema ? <RenderSchema /> : <></>}
+      {currentSchema ? <RenderSchema /> : <></>}
     </div>
   );
 }

@@ -7,6 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import { ClientContext } from "../../context/client";
+import { refresh, searchFilled } from "../../images";
 import { IDS } from "../../testing";
 import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
 import { Spinner } from "../utils/spinner";
@@ -50,7 +51,7 @@ export function SchemaTraces() {
       );
     }
 
-    if (selectedTrace) {
+    if (selectedTrace && params.traceId) {
       navigate(
         `/schema/${
           params.schemaId
@@ -76,13 +77,25 @@ export function SchemaTraces() {
           <p className="text-md font-bold">Traces</p>
           <p className="text-sm">List of the latest GraphQL queries.</p>
         </div>
-        <div className="flex items-center underline gap-2 text-sm">
-          <p
-            role="button"
-            onClick={() => navigate(`/schema/${params.schemaId}`)}
+        <div className="flex items-center gap-10 text-sm">
+          <button className="flex gap-3 hover:underline" onClick={() => {}}>
+            <img className="w-6" src={searchFilled} />
+            <p>Search</p>
+          </button>
+
+          <button
+            className="flex gap-3 hover:underline"
+            onClick={() => {
+              setSelectedTrace(undefined);
+              navigate({
+                pathname: `/schema/${params.schemaId}`,
+                search: "",
+              });
+            }}
           >
-            Refresh filters
-          </p>
+            <img className="w-6" src={refresh} />
+            <p>Refresh</p>
+          </button>
         </div>
       </div>
       <div className="p-5">
