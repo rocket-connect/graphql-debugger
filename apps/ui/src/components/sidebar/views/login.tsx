@@ -38,15 +38,10 @@ export function Login() {
 
         <p className="text-xs">
           We are currently working on GraphQL Debugger Cloud, and are eager for
-          your feedback and support on{" "}
-          <LinkedText
-            href="https://github.com/rocket-connect/graphql-debugger"
-            text="Github"
-          />
-          .
+          your feedback and support.
         </p>
 
-        <p className="italic text-center text-xs">
+        <p className="italic text-xs">
           <LinkedText
             href="http://graphql-debugger.cloud/"
             text="graphql-debugger.cloud"
