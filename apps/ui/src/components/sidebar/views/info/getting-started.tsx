@@ -1,7 +1,7 @@
-import { IDS } from "../../testing";
-import { HighlightedText } from "../utils/highlighted-text";
-import { LinkedText } from "../utils/linked-text";
-import { Spinner } from "../utils/spinner";
+import { IDS } from "../../../../testing";
+import { HighlightedText } from "../../../utils/highlighted-text";
+import { LinkedText } from "../../../utils/linked-text";
+import { Spinner } from "../../../utils/spinner";
 
 export function GettingStarted() {
   return (

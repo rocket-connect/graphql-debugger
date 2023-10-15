@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 import { SchemasContext } from "../../context/schemas";
 import { IDS } from "../../testing";
-import { GettingStarted } from "../info/getting-started";
+import { GettingStarted } from "../sidebar/views/info/getting-started";
 import { Type } from "./type";
 
 function RenderSchema() {

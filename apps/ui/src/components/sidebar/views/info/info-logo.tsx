@@ -1,7 +1,7 @@
-import { IDS } from "../../testing";
-import { logo } from "../../utils/images";
+import { IDS } from "../../../../testing";
+import { logo } from "../../../../utils/images";
 
-const { version } = require("../../../package.json");
+const { version } = require("../../../../../package.json");
 
 export function InfoLogo() {
   return (

@@ -1,15 +1,17 @@
 import { useContext } from "react";
 
 import { SideBarContext } from "../../context/sidebar";
-import { Config } from "../config/config";
-import { Info } from "../info/info";
-import { Login } from "../login/login";
 import { SchemaViewer } from "../schema/viewer";
+import { Config } from "./views/config";
+import { Info } from "./views/info/info";
+import { Login } from "./views/login";
 
 export function SideBarView() {
   const sidebarContext = useContext(SideBarContext);
 
-  if (!sidebarContext?.isOpened) return <></>;
+  if (!sidebarContext?.isOpened) {
+    return <></>;
+  }
 
   return (
     <div className="h-screen flex flex-col items-start w-2/6 max-w-2/6 p-5 text-neutral-100 overflow-scroll custom-scrollbar">
