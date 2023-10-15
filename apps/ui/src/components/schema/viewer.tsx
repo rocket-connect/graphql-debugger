@@ -75,13 +75,7 @@ export function SchemaViewer() {
       <div className="flex flex-col gap-3 w-full mb-3">
         {schemasContext?.schemas?.length ? (
           <div className="flex flex-col gap-5">
-            <h2 className="text-neutral-100 font-bold">Schema</h2>
             <div className="flex flex-col gap-5">
-              {!schema ? (
-                <p className="italic text-sm">Select a GraphQL Schema.</p>
-              ) : (
-                <></>
-              )}
               <ul className="flex flex-col gap-5 list-disc pl-5">
                 {schemasContext?.schemas.map((schema) => (
                   <li
