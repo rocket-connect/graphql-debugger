@@ -46,13 +46,17 @@ export const SideBarContext = createContext<SideBarProps | undefined>(
   undefined,
 );
 
+const localStorageKey = "graphql-debugger-sidebar";
+
 export function SideBar({
   children,
 }: {
   children: React.ReactNode;
 }): JSX.Element {
   const [view, setSideBarView] = useState<SideBarView | undefined>({
-    type: "schema",
+    type:
+      (localStorage.getItem(localStorageKey) as unknown as SideBarViewTypes) ||
+      "schema",
   });
   const [isOpened, setIsOpened] = useState(true);
 
@@ -66,6 +70,7 @@ export function SideBar({
 
   const setView = useCallback(
     (v: SideBarView) => {
+      localStorage.setItem(localStorageKey, v.type);
       setSideBarView(v);
     },
     [setSideBarView],
