@@ -8,4 +8,5 @@ export const IDS = {
   RESULT_BUTTON: "result-button",
   JSON_VIEWER: "json-viewer",
   SCHEMAS: "schemas",
+  EXPAND_VARIABLES: "expand-variables",
 };

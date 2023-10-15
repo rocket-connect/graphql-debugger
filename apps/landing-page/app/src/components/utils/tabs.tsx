@@ -10,6 +10,7 @@ const Tabs = TabsPrimitive.Root;
 const TabsContent = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
+  // eslint-disable-next-line react/prop-types
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.Content
     ref={ref}

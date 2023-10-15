@@ -4,11 +4,19 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:react-hooks/recommended"
+    "plugin:react-hooks/recommended",
+    "plugin:react/recommended"
   ],
-
   "ignorePatterns": ["build", ".eslintrc.cjs"],
   "rules": {
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": "function-declaration"
+      }
+    ],
+    "react/no-unescaped-entities": "off",
+    "react/react-in-jsx-scope": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-var-requires": "off"
   }

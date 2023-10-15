@@ -148,6 +148,8 @@ describe("schema", () => {
 
     await page.waitForSelector(`[data-trace-view-spanid*="${rootSpan?.id}"]`);
 
+    await page.waitForSelector(`#${IDS.EXPAND_VARIABLES}`);
+    await page.click(`#${IDS.EXPAND_VARIABLES}`);
     await page.waitForSelector(`#${IDS.QUERY_VIEWER}`);
 
     await page.waitForSelector(`[data-query-view-spanid*="${rootSpan?.id}"]`);
