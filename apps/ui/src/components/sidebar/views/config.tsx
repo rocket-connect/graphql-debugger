@@ -111,9 +111,9 @@ export function Config() {
 
         <div className="text-center mt-5 font-bold">
           {clientContext.isConnected ? (
-            <p className="text-graphql-otel-green">Connected</p>
+            <p className="text-graphql-otel-green">Connected!</p>
           ) : (
-            <p className="text-red-500">Disconnected</p>
+            <p className="text-red-500">Disconnected!</p>
           )}
         </div>
       </div>
