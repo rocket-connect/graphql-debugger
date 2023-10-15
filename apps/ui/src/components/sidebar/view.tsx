@@ -41,7 +41,7 @@ export function SideBarView() {
       break;
     case "login":
       description =
-        "Login to GraphQL Debugger cloud to access your projects, view production traces and collaborate with your team";
+        "Login to GraphQL Debugger Cloud to access your projects, view production traces and collaborate with your team";
       break;
     default:
       description = "";
