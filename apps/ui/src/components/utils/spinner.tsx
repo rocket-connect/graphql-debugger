@@ -1,8 +1,16 @@
-export function Spinner({ size = "10" }: { size?: string }) {
+export function Spinner({
+  size = "10",
+  isError,
+}: {
+  size?: string;
+  isError?: boolean;
+}) {
   return (
     <svg
       aria-hidden="true"
-      className={`w-${size} h-${size} text-gray-300 animate-spin fill-graphql-otel-green`}
+      className={`w-${size} h-${size} text-gray-300 animate-spin fill-graphql-otel-green ${
+        isError ? "fill-red-500" : ""
+      }`}
       viewBox="0 0 100 101"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

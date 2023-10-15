@@ -6,7 +6,7 @@ import { Spinner } from "../../../utils/spinner";
 export function GettingStarted() {
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex flex-col gap-5 text-xs">
+      <div className="flex flex-col gap-5 text-sm">
         <div className="flex flex-col gap-5 text-center">
           <p className="font-bold text-lg" id={IDS.NO_SCHEMAS_FOUND}>
             No schemas found

@@ -5,7 +5,7 @@ export function Login() {
     <div className="w-full text-netural-100">
       <form className="flex flex-col gap-5">
         <div className="flex flex-col gap-3">
-          <label htmlFor="username" className="block text-sm font-bold">
+          <label htmlFor="username" className="block font-bold">
             Username
           </label>
           <input
@@ -17,7 +17,7 @@ export function Login() {
           />
         </div>
         <div className="flex flex-col gap-3">
-          <label htmlFor="password" className="block text-sm font-bold">
+          <label htmlFor="password" className="block font-bold">
             Password
           </label>
           <input
@@ -46,7 +46,7 @@ export function Login() {
           .
         </p>
 
-        <p className="text-xs italic text-center">
+        <p className="italic text-center text-xs">
           <LinkedText
             href="http://graphql-debugger.cloud/"
             text="graphql-debugger.cloud"

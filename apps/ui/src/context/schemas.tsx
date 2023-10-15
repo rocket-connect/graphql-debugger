@@ -1,9 +1,15 @@
 import { Schema } from "@graphql-debugger/types";
 
 import { useQuery } from "@tanstack/react-query";
-import { ReactNode, createContext, useCallback, useRef } from "react";
+import {
+  ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useRef,
+} from "react";
 
-import { client } from "../client";
+import { ClientContext } from "./client";
 
 export interface SchemasContextProps {
   schemas: Schema[];
@@ -22,11 +28,12 @@ export function SchemasProvider({
   children: ReactNode;
 }): JSX.Element {
   const schemaRef = useRef<Schema>();
+  const { client } = useContext(ClientContext);
 
   const getSchemas = useQuery({
     queryKey: ["schemas"],
     queryFn: async () => await client.schema.findMany(),
-    refetchInterval: 1000,
+    refetchInterval: 5000,
   });
 
   const setSelectedSchema = useCallback(

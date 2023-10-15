@@ -41,7 +41,7 @@ export function SideBarView() {
       break;
     case "login":
       description =
-        "Login to GraphQL Debugger Cloud to access your projects, view production traces and collaborate with your team";
+        "Access GraphQL Debugger Cloud to view your projects and collaborate with your team";
       break;
     default:
       description = "";
@@ -58,11 +58,11 @@ export function SideBarView() {
         <></>
       )}
       {shouldDisplayHeader ? (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
           <h2 className="font-bold">
             {upperFirst(sidebarContext.view?.type || "")}
           </h2>
-          <p className="text-xs">{description}.</p>
+          <p className="text-sm">{description}.</p>
         </div>
       ) : (
         <></>

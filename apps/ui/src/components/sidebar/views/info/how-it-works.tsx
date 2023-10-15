@@ -2,9 +2,9 @@ import { LinkedText } from "../../../utils/linked-text";
 
 export function HowItWorks() {
   return (
-    <div className="flex flex-col gap-5 ">
+    <div className="flex flex-col gap-5">
       <h3 className="font-bold">How it works</h3>
-      <div className="flex flex-col gap-5 text-xs">
+      <div className="flex flex-col gap-5 text-sm">
         <p>
           GraphQL Debugger sits on your GraphQL server and collects traces from
           each query and mutation. It then aggregates these traces and displays

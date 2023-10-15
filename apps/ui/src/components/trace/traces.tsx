@@ -3,15 +3,16 @@ import { Trace } from "@graphql-debugger/types";
 
 import { useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
-import { client } from "../../client";
+import { ClientContext } from "../../context/client";
 import { IDS } from "../../testing";
 import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
 import { Spinner } from "../utils/spinner";
 
 export function SchemaTraces() {
+  const { client } = useContext(ClientContext);
   const navigate = useNavigate();
   const params = useParams();
   const [searchParams] = useSearchParams();

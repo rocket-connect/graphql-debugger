@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
+import { useContext } from "react";
 import { useParams } from "react-router-dom";
 
-import { client } from "../../client";
+import { ClientContext } from "../../context/client";
 import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
 import { Editor } from "./editor/editor";
 import { TraceHeader } from "./header";
@@ -9,6 +10,7 @@ import { SchemaTraces } from "./traces";
 import { TraceViewer } from "./viewer";
 
 export function Trace() {
+  const { client } = useContext(ClientContext);
   const params = useParams();
 
   const { data: trace, isLoading } = useQuery({

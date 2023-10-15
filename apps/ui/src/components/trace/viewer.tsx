@@ -1,10 +1,10 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import type { Span as TSpan, Trace } from "@graphql-debugger/types";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { client } from "../../client";
+import { ClientContext } from "../../context/client";
 import { Modal } from "../../context/modal";
 import { IDS } from "../../testing";
 import { createTreeData } from "../../utils/create-tree-data";
@@ -39,6 +39,7 @@ function TraceView({ spans }: { spans: TSpan[] }) {
 }
 
 export function TraceViewer() {
+  const { client } = useContext(ClientContext);
   const [traces, setTraces] = useState<Trace[]>([]);
   const params = useParams();
   const [isLoading, setIsLoading] = useState(false);
@@ -67,7 +68,7 @@ export function TraceViewer() {
         setIsLoading(false);
       }
     })();
-  }, [params.traceId]);
+  }, [params.traceId, client]);
 
   return (
     <>

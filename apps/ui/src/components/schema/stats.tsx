@@ -2,9 +2,10 @@ import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 
 import { useQuery } from "@tanstack/react-query";
 import { FieldDefinitionNode } from "graphql";
+import { useContext } from "react";
 import { useParams } from "react-router-dom";
 
-import { client } from "../../client";
+import { ClientContext } from "../../context/client";
 import { StatsDetails } from "./stat-details";
 
 export interface StatsProps {
@@ -13,6 +14,7 @@ export interface StatsProps {
 }
 
 export function Stats({ field, parentName }: StatsProps) {
+  const { client } = useContext(ClientContext);
   const params = useParams<{ schemaId: string }>();
   const name = field.name.value;
 
