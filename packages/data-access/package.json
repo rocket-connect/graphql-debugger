@@ -26,7 +26,7 @@
     "@graphql-debugger/utils": "workspace:^",
     "@graphql-tools/schema": "10.0.0",
     "@graphql-tools/utils": "10.0.6",
-    "@prisma/client": "5.4.1",
+    "@prisma/client": "5.4.2",
     "@prisma/instrumentation": "5.4.1",
     "gql-tag": "1.0.1",
     "prisma": "5.4.1"
