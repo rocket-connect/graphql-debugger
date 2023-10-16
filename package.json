@@ -25,7 +25,7 @@
     "@types/node": "20",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.8",
-    "@types/supertest": "2.0.12",
+    "@types/supertest": "2.0.14",
     "@types/webpack": "5.28.2",
     "@typescript-eslint/eslint-plugin": "6.7.3",
     "autoprefixer": "10.4.15",
