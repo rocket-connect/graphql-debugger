@@ -7,10 +7,14 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import { ClientContext } from "../../context/client";
+import { Modal } from "../../context/modal";
 import { refresh, searchFilled } from "../../images";
 import { IDS } from "../../testing";
 import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
+import { OpenModal } from "../modal/open";
+import { ModalWindow } from "../modal/window";
 import { Spinner } from "../utils/spinner";
+import { Search } from "./search";
 
 export function SchemaTraces() {
   const { client } = useContext(ClientContext);
@@ -78,10 +82,21 @@ export function SchemaTraces() {
           <p className="text-sm">List of the latest GraphQL queries.</p>
         </div>
         <div className="flex items-center gap-10 text-sm">
-          <button className="flex gap-3 hover:underline" onClick={() => {}}>
-            <img className="w-6" src={searchFilled} />
-            <p>Search</p>
-          </button>
+          <Modal key="search-full-screen">
+            <OpenModal opens="full-screen-search">
+              <button className="flex gap-3 hover:underline" onClick={() => {}}>
+                <img className="w-6" src={searchFilled} />
+                <p>Search</p>
+              </button>
+            </OpenModal>
+            <ModalWindow
+              name="full-screen-search"
+              type="small"
+              title={<div className="text-neutral-100 font-bold">Search</div>}
+            >
+              <Search />
+            </ModalWindow>
+          </Modal>
 
           <button
             className="flex gap-3 hover:underline"
