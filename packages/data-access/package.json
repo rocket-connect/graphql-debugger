@@ -29,6 +29,6 @@
     "@prisma/client": "5.4.2",
     "@prisma/instrumentation": "5.4.1",
     "gql-tag": "1.0.1",
-    "prisma": "5.4.1"
+    "prisma": "5.4.2"
   }
 }
