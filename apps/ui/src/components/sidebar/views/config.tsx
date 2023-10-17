@@ -14,8 +14,8 @@ const configs = [
   {
     name: "History",
     description: "Enable the store of trace history in local storage",
-    callout: "(Comming Soon)",
-    enabled: false,
+    callout: "(Enabled)",
+    enabled: true,
   },
   {
     name: "Cookies",

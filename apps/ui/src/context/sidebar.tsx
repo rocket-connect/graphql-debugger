@@ -4,7 +4,12 @@ import { createContext, useCallback, useState } from "react";
 
 import { SideBarIcons } from "../components/sidebar/icons";
 
-export type SideBarViewTypes = "schema" | "info" | "config" | "login";
+export type SideBarViewTypes =
+  | "schema"
+  | "info"
+  | "config"
+  | "login"
+  | "history";
 
 export type SideBarSchemaView = {
   type: "schema";
@@ -25,11 +30,16 @@ export type SideBarLoginView = {
   type: "login";
 };
 
+export type SideBarHistoryView = {
+  type: "history";
+};
+
 export type SideBarView = (
   | SideBarSchemaView
   | SideBarInfoView
   | SideBarConfigView
   | SideBarLoginView
+  | SideBarHistoryView
 ) & {
   isLoading?: boolean;
 };
