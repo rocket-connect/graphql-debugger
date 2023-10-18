@@ -20,7 +20,8 @@ export function Backend() {
         return false;
       }
     },
-    refetchInterval: 5000,
+    refetchInterval: 10000,
+    networkMode: "online",
   });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
