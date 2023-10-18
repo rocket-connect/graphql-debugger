@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { ChangeEvent, useState } from "react";
 
-interface SwitchButtonProps {
+interface ToggleProps {
   initialState?: boolean;
   onToggle: (isChecked: boolean) => void;
   label: string;
@@ -17,7 +17,7 @@ export function Toggle({
   disabled,
   description,
   callout,
-}: SwitchButtonProps) {
+}: ToggleProps) {
   const [checked, setChecked] = useState(initialState);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
