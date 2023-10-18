@@ -13,6 +13,7 @@ import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
 import { OpenModal } from "../modal/open";
 import { ModalWindow } from "../modal/window";
 import { Spinner } from "../utils/spinner";
+import { Pill } from "./pill";
 import { Span } from "./span";
 
 function TraceView({ spans }: { spans: TSpan[] }) {
@@ -56,6 +57,7 @@ export function TraceViewer() {
               id: params.traceId,
             },
             includeSpans: true,
+            includeRootSpan: true,
           });
 
           await sleep(DEFAULT_SLEEP_TIME);
@@ -88,10 +90,8 @@ export function TraceViewer() {
             name="full-screen-trace"
             type="full-screen"
             title={
-              <div className="text-neutral-100">
-                <p className="font-semibold">
-                  <span>{traces[0]?.spans[0].name}</span>
-                </p>
+              <div className="flex flex-row justify-between text-sm">
+                <Pill trace={traces[0]} bg="neutral/10" />
               </div>
             }
           >
@@ -113,7 +113,6 @@ export function TraceViewer() {
           </div>
         ) : (
           <>
-            {" "}
             {traces?.length ? (
               <TraceView spans={traces[0]?.spans || []} />
             ) : (
