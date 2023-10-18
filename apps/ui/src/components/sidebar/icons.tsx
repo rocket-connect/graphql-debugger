@@ -31,7 +31,7 @@ export function SideBarIcons() {
     <div className="flex flex-col items-center gap-8 border-r-2 border-neutral-100/15 p-4 h-screen">
       <div className="flex flex-col justify-between h-full">
         <div className="flex flex-col gap-5 mx-auto w-8">
-          {Object.values(iconsMapper(config?.disabledRoutes)).map((icon) => {
+          {Object.values(iconsMapper(config?.routes)).map((icon) => {
             if (icon.hidden) return null;
             return (
               <button

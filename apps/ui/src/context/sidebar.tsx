@@ -9,7 +9,8 @@ export type SideBarViewTypes =
   | "info"
   | "config"
   | "login"
-  | "history";
+  | "history"
+  | "favourites";
 
 export type SideBarSchemaView = {
   type: "schema";
@@ -20,6 +21,10 @@ export type SideBarSchemaView = {
 
 export type SideBarInfoView = {
   type: "info";
+};
+
+export type SideBarFavouritesView = {
+  type: "favourites";
 };
 
 export type SideBarConfigView = {
@@ -40,6 +45,7 @@ export type SideBarView = (
   | SideBarConfigView
   | SideBarLoginView
   | SideBarHistoryView
+  | SideBarFavouritesView
 ) & {
   isLoading?: boolean;
 };

@@ -3,35 +3,8 @@ import toast from "react-hot-toast";
 
 import { ConfigContext } from "../../../context/config";
 import { Toggle } from "../../utils/toggle";
+import { configs } from "../utils";
 import { Backend } from "./backend";
-
-const configs = [
-  {
-    name: "Dark Mode",
-    description: "Toggle between light and dark mode",
-    callout: "(Comming Soon)",
-    defaultDisabled: true,
-    enabled: false,
-  },
-  {
-    name: "History",
-    description: "Enable the store of trace history in local storage",
-    enabled: true,
-    initialState: localStorage.getItem("history") === "history",
-  },
-  {
-    name: "Cookies",
-    description: "We collect data to improve your experience",
-    enabled: true,
-    initialState: localStorage.getItem("cookies") === "cookies",
-  },
-  {
-    name: "Favourites",
-    description: "We collect data to improve your experience",
-    enabled: true,
-    initialState: localStorage.getItem("favourites") === "favourites",
-  },
-];
 
 export function Config() {
   const context = useContext(ConfigContext);
@@ -47,7 +20,7 @@ export function Config() {
         {configs.map((config) => {
           return (
             <Toggle
-              initialState={config.initialState}
+              initialState={context?.routes.includes(config.name.toLowerCase())}
               label={config.name}
               onToggle={(check) => {
                 if (check) {

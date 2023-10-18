@@ -20,7 +20,7 @@ export function Backend() {
         return false;
       }
     },
-    refetchInterval: 10000,
+    refetchInterval: 2000,
     networkMode: "online",
   });
 
@@ -30,7 +30,7 @@ export function Backend() {
 
   return (
     <div>
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 mb-5">
         <label htmlFor="username" className="block font-bold">
           Backend
         </label>

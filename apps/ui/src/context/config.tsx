@@ -5,7 +5,7 @@ export interface ConfigContextProps {
   setBackendURL: (backendURL: string) => void;
   handleEnableRoute: (type: string) => void;
   handleDisableRoute: (type: string) => void;
-  disabledRoutes: string[];
+  routes: string[];
 }
 
 export const ConfigContext = createContext<ConfigContextProps | undefined>(
@@ -20,19 +20,21 @@ export function ConfigProvider({
   const [backendURL, setBackendURL] = useState(
     localStorage.getItem("backendURL") || "http://localhost:16686",
   );
-  const [disabledRoutes, setDisabledRoutes] = useState<string[]>([
-    localStorage.getItem("history") ?? "",
-    localStorage.getItem("cookies") ?? "",
-  ]);
+  const [routes, setRoutes] = useState<string[]>(
+    JSON.parse(localStorage.getItem("routes") || "[]"),
+  );
 
   const handleEnableRoute = (type: string) => {
-    localStorage.setItem(type, type);
-    setDisabledRoutes([...disabledRoutes, type]);
+    localStorage.setItem("routes", JSON.stringify([...routes, type]));
+    setRoutes([...routes, type]);
   };
 
   const handleDisableRoute = (type: string) => {
-    localStorage.removeItem(type);
-    setDisabledRoutes(disabledRoutes.filter((route) => route !== type));
+    localStorage.setItem(
+      "routes",
+      JSON.stringify(routes.filter((route) => route !== type)),
+    );
+    setRoutes(routes.filter((route) => route !== type));
   };
 
   const handleSetBackendURL = useCallback(
@@ -50,7 +52,7 @@ export function ConfigProvider({
         setBackendURL: handleSetBackendURL,
         handleEnableRoute: handleEnableRoute,
         handleDisableRoute: handleDisableRoute,
-        disabledRoutes: disabledRoutes,
+        routes: routes,
       }}
     >
       {children}
