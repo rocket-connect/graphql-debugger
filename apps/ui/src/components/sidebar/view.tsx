@@ -4,9 +4,15 @@ import { SchemasContext } from "../../context/schemas";
 import { SideBarContext } from "../../context/sidebar";
 import { SchemaViewer } from "../schema/viewer";
 import { Config } from "./views/config";
+import { History } from "./views/history";
 import { Info } from "./views/info/info";
 import { InfoLogo } from "./views/info/info-logo";
 import { Login } from "./views/login";
+
+interface SideBar {
+  description: string;
+  component: JSX.Element;
+}
 
 export function SideBarView() {
   const sidebarContext = useContext(SideBarContext);
@@ -21,13 +27,7 @@ export function SideBarView() {
   const shouldDisplayLogo = ["login", "info"].includes(viewType);
   const shouldDisplayHeader = !["info"].includes(viewType);
 
-  const sideBarComponentMapper: Record<
-    string,
-    {
-      description: string;
-      component: JSX.Element;
-    }
-  > = {
+  const sideBarComponentMapper: Record<string, SideBar> = {
     schema: {
       description: schemasContext?.schemaRef.current
         ? "Your GraphQL Schema, with analytics and traces"
@@ -47,6 +47,10 @@ export function SideBarView() {
       description:
         "Access GraphQL Debugger Cloud to view your projects and collaborate with your team",
       component: <Login />,
+    },
+    history: {
+      description: "View your most recent traces",
+      component: <History />,
     },
   };
 
