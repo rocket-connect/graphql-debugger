@@ -8,6 +8,7 @@ const configs = [
     name: "Dark Mode",
     description: "Toggle between light and dark mode",
     callout: "(Comming Soon)",
+    defaultDisabled: true,
     enabled: false,
   },
   {

@@ -13,6 +13,8 @@ import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
 import { OpenModal } from "../modal/open";
 import { ModalWindow } from "../modal/window";
 import { Spinner } from "../utils/spinner";
+import { Toggle } from "../utils/toggle";
+import { Pill } from "./pill";
 import { Span } from "./span";
 
 function TraceView({ spans }: { spans: TSpan[] }) {
@@ -39,7 +41,32 @@ function TraceView({ spans }: { spans: TSpan[] }) {
   );
 }
 
+export function TraceModalHeader({
+  trace,
+  setShowForeignTraces,
+  showForeignTraces,
+}: {
+  trace: Trace;
+  setShowForeignTraces: (showForeignTraces: boolean) => void;
+  showForeignTraces: boolean;
+}) {
+  return (
+    <div className="flex flex-row justify-between gap-5 text-sm">
+      <Pill trace={trace} bg="neutral/10" />
+      <div className="my-auto mr-5">
+        <Toggle
+          name="Show foreign spans"
+          enabled={showForeignTraces}
+          onToggle={(x) => setShowForeignTraces(x)}
+          color="app-blue"
+        />
+      </div>
+    </div>
+  );
+}
+
 export function TraceViewer() {
+  const [showForeignTraces, setShowForeignTraces] = useState(true);
   const { client } = useContext(ClientContext);
   const [traces, setTraces] = useState<Trace[]>([]);
   const params = useParams();
@@ -56,6 +83,7 @@ export function TraceViewer() {
               id: params.traceId,
             },
             includeSpans: true,
+            includeRootSpan: true,
           });
 
           await sleep(DEFAULT_SLEEP_TIME);
@@ -71,59 +99,58 @@ export function TraceViewer() {
     })();
   }, [params.traceId, client]);
 
+  const trace = traces[0];
+  const spans = trace?.spans;
+  let modalSpans = spans;
+  if (!showForeignTraces) {
+    modalSpans = spans.filter((span) => !span.isForeign);
+  }
+
   return (
-    <>
-      <div
-        id={IDS.TRACE_VIEWER}
-        className="basis-1/2 overflow-y-scroll custom-scrollbar"
-      >
-        <Modal key="trace-full-screen">
-          <OpenModal opens="full-screen-trace">
+    <div id={IDS.TRACE_VIEWER} className="overflow-y-scroll custom-scrollbar">
+      <Modal key="trace-full-screen">
+        <OpenModal opens="full-screen-trace">
+          {trace ? (
             <button className="flex flex-row gap-3 text-neutral-100 text-sm hover:underline">
               <img className="w-6" src={expand} />
               <p className="my-auto">Expand</p>
             </button>
-          </OpenModal>
-          <ModalWindow
-            name="full-screen-trace"
-            type="full-screen"
-            title={
-              <div className="text-neutral-100">
-                <p className="font-semibold">
-                  <span>{traces[0]?.spans[0].name}</span>
-                </p>
-              </div>
-            }
-          >
-            {traces?.length ? (
-              <div>
-                <TraceView spans={traces[0]?.spans || []} />
-              </div>
-            ) : (
-              <div className="mx-auto text-center text-neutral-100 font-bold">
-                No Trace Found
-              </div>
-            )}
-          </ModalWindow>
-        </Modal>
-
-        {isLoading ? (
-          <div className="flex justify-center align-center mx-auto mt-20">
-            <Spinner />
+          ) : (
+            <></>
+          )}
+        </OpenModal>
+        <ModalWindow
+          name="full-screen-trace"
+          type="full-screen"
+          title={
+            <TraceModalHeader
+              trace={trace}
+              setShowForeignTraces={setShowForeignTraces}
+              showForeignTraces={showForeignTraces}
+            />
+          }
+        >
+          <div className="px-4 pb-10">
+            <TraceView spans={modalSpans} />
           </div>
-        ) : (
-          <>
-            {" "}
-            {traces?.length ? (
-              <TraceView spans={traces[0]?.spans || []} />
-            ) : (
-              <div className="mx-auto text-center text-neutral-100 font-bold">
-                No Trace Found
-              </div>
-            )}
-          </>
-        )}
-      </div>
-    </>
+        </ModalWindow>
+      </Modal>
+
+      {isLoading ? (
+        <div className="flex justify-center align-center mx-auto mt-20">
+          <Spinner />
+        </div>
+      ) : (
+        <>
+          {traces?.length ? (
+            <TraceView spans={spans} />
+          ) : (
+            <div className="mx-auto text-center text-neutral-100 font-bold">
+              No Trace Found
+            </div>
+          )}
+        </>
+      )}
+    </div>
   );
 }

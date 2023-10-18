@@ -96,7 +96,7 @@ export function Span({
         </ModalWindow>
       </Modal>
 
-      <div className="text-neutral-100 flex flex-col p-0 m-0 pl-10 border-l-2 border-neutral/10 hover:border-neutral/40">
+      <div className="text-neutral-100 flex flex-col p-0 m-0 pl-10 border-l-2 hover:border-neutral/20">
         {Array.isArray(data.children)
           ? data.children.map((child) => (
               <Span
