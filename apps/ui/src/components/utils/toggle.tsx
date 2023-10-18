@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { ChangeEvent, useState } from "react";
 
 interface SwitchButtonProps {
-  initialState: boolean;
+  initialState?: boolean;
   onToggle: (isChecked: boolean) => void;
   label: string;
   disabled?: boolean;

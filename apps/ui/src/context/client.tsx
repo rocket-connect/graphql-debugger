@@ -13,14 +13,12 @@ import { ConfigContext } from "./config";
 
 export interface ClientContextProps {
   client: DebuggerClient;
-  isConnected?: boolean;
-  isFetching?: boolean;
+  handleSetClient: (url: string) => void;
 }
 
 export const ClientContext = createContext<ClientContextProps>({
   client: new DebuggerClient(),
-  isConnected: false,
-  isFetching: true,
+  handleSetClient: () => {},
 });
 
 export function ClientProvider({
@@ -29,8 +27,6 @@ export function ClientProvider({
   children: ReactNode;
 }): JSX.Element {
   const configContext = useContext(ConfigContext);
-  const [isConnected, setIsConnected] = useState(true);
-  const [isFetching, setIsFetching] = useState(false);
 
   const [client, setClient] = useState(
     new DebuggerClient({
@@ -38,6 +34,13 @@ export function ClientProvider({
     }),
   );
 
+  const handleSetClient = (url: string) => {
+    setClient(
+      new DebuggerClient({
+        backendUrl: url,
+      }),
+    );
+  };
   useEffect(() => {
     setClient(
       new DebuggerClient({
@@ -46,39 +49,11 @@ export function ClientProvider({
     );
   }, [setClient, configContext?.backendURL]);
 
-  useEffect(() => {
-    const checkConnection = async () => {
-      try {
-        setIsFetching(true);
-        await client?.ping();
-        setIsConnected(true);
-      } catch (error) {
-        setIsConnected(false);
-      } finally {
-        await sleep(2000);
-        setIsFetching(false);
-      }
-    };
-
-    (async () => {
-      await checkConnection();
-    })();
-
-    const interval = setInterval(() => {
-      (async () => {
-        await checkConnection();
-      })();
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [client, setIsConnected, setIsFetching]);
-
   return (
     <ClientContext.Provider
       value={{
         client,
-        isConnected,
-        isFetching,
+        handleSetClient,
       }}
     >
       {children}
