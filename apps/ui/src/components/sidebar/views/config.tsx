@@ -1,6 +1,7 @@
 import { useContext } from "react";
 
 import { Spinner } from "../../../components/utils/spinner";
+import { Toggle } from "../../../components/utils/toggle";
 import { ClientContext } from "../../../context/client";
 import { ConfigContext } from "../../../context/config";
 
@@ -9,18 +10,21 @@ const configs = [
     name: "Dark Mode",
     description: "Toggle between light and dark mode",
     callout: "(Comming Soon)",
+    defaultDisabled: true,
     enabled: false,
   },
   {
     name: "History",
     description: "Enable the store of trace history in local storage",
     callout: "(Comming Soon)",
+    defaultDisabled: true,
     enabled: false,
   },
   {
     name: "Cookies",
     description: "We collect data to improve your experience",
     callout: "(Enabled)",
+    defaultDisabled: true,
     enabled: true,
   },
 ];
@@ -39,46 +43,14 @@ export function Config() {
       <div className="flex flex-col gap-10 text-netural-100 text-xs pl-3">
         {configs.map((config) => {
           return (
-            <label key={config.name} className="flex flex-col gap-3 relative">
-              <div
-                className={`flex flex-row items-center gap-3 ${
-                  config.enabled ? "" : "opacity-40"
-                }`}
-              >
-                <input
-                  type="checkbox"
-                  value=""
-                  checked
-                  className="sr-only peer"
-                />
-                <div
-                  className="
-                    w-10
-                    h-6
-                    bg-graphql-otel-green
-                    rounded-full
-                    after:content-['']
-                    after:absolute
-                    after:top-[2px]
-                    after:left-[-3px]
-                    after:bg-white
-                    after:rounded-full
-                    after:h-5
-                    after:w-5
-                    peer
-                    peer-checked:after:translate-x-full
-                    peer-checked:bg-graphql-otel-green
-                "
-                ></div>
-                <span className="ml-3 font-bold italic">{config.name}</span>
-                {config.callout ? (
-                  <span className="ml-3 titalic">{config.callout}</span>
-                ) : (
-                  <></>
-                )}
-              </div>
-              <p className="italic ml-5"> - {config.description}.</p>
-            </label>
+            <Toggle
+              key={config.name}
+              name={config.name}
+              description={config.description}
+              callout={config.callout}
+              enabled={config.enabled}
+              defaultDisabled={config.defaultDisabled}
+            />
           );
         })}
       </div>

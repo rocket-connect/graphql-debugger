@@ -13,6 +13,7 @@ import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
 import { OpenModal } from "../modal/open";
 import { ModalWindow } from "../modal/window";
 import { Spinner } from "../utils/spinner";
+import { Toggle } from "../utils/toggle";
 import { Pill } from "./pill";
 import { Span } from "./span";
 
@@ -40,7 +41,32 @@ function TraceView({ spans }: { spans: TSpan[] }) {
   );
 }
 
+export function TraceModalHeader({
+  trace,
+  setShowForeignTraces,
+  showForeignTraces,
+}: {
+  trace: Trace;
+  setShowForeignTraces: (showForeignTraces: boolean) => void;
+  showForeignTraces: boolean;
+}) {
+  return (
+    <div className="flex flex-row justify-between gap-5 text-sm">
+      <Pill trace={trace} bg="neutral/10" />
+      <div className="my-auto mr-5">
+        <Toggle
+          name="Show foreign spans"
+          enabled={showForeignTraces}
+          onToggle={(x) => setShowForeignTraces(x)}
+          color="app-blue"
+        />
+      </div>
+    </div>
+  );
+}
+
 export function TraceViewer() {
+  const [showForeignTraces, setShowForeignTraces] = useState(true);
   const { client } = useContext(ClientContext);
   const [traces, setTraces] = useState<Trace[]>([]);
   const params = useParams();
@@ -74,6 +100,11 @@ export function TraceViewer() {
   }, [params.traceId, client]);
 
   const trace = traces[0];
+  const spans = trace?.spans;
+  let modalSpans = spans;
+  if (!showForeignTraces) {
+    modalSpans = spans.filter((span) => !span.isForeign);
+  }
 
   return (
     <div id={IDS.TRACE_VIEWER} className="overflow-y-scroll custom-scrollbar">
@@ -92,13 +123,15 @@ export function TraceViewer() {
           name="full-screen-trace"
           type="full-screen"
           title={
-            <div className="flex flex-row justify-between text-sm">
-              <Pill trace={trace} bg="neutral/10" />
-            </div>
+            <TraceModalHeader
+              trace={trace}
+              setShowForeignTraces={setShowForeignTraces}
+              showForeignTraces={showForeignTraces}
+            />
           }
         >
           <div className="px-4 pb-10">
-            <TraceView spans={trace?.spans || []} />
+            <TraceView spans={modalSpans} />
           </div>
         </ModalWindow>
       </Modal>
@@ -110,7 +143,7 @@ export function TraceViewer() {
       ) : (
         <>
           {traces?.length ? (
-            <TraceView spans={trace?.spans || []} />
+            <TraceView spans={spans} />
           ) : (
             <div className="mx-auto text-center text-neutral-100 font-bold">
               No Trace Found
