@@ -96,7 +96,7 @@ export function TraceViewer() {
             }
           >
             {traces?.length ? (
-              <div>
+              <div className="mb-10 px-10 pb-10">
                 <TraceView spans={traces[0]?.spans || []} />
               </div>
             ) : (
