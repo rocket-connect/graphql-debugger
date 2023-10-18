@@ -1,9 +1,9 @@
 import { IconProps } from "./types";
 
-export function Star({ size }: IconProps) {
+export function Star({ size, color }: IconProps) {
   return (
     <svg
-      fill="currentColor"
+      fill={color}
       viewBox="0 0 16 16"
       height={size || "1em"}
       width={size || "1em"}
@@ -13,10 +13,10 @@ export function Star({ size }: IconProps) {
   );
 }
 
-export function StarFilled({ size }: IconProps) {
+export function StarFilled({ size, color }: IconProps) {
   return (
     <svg
-      fill="currentColor"
+      fill={color}
       viewBox="0 0 16 16"
       height={size || "1em"}
       width={size || "1em"}

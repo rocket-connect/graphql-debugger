@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "react-hot-toast";
 
 import { ClientProvider } from "./context/client";
 import { ConfigProvider } from "./context/config";
@@ -30,6 +31,20 @@ export function App() {
           </QueryClientProvider>
         </ClientProvider>
       </ConfigProvider>
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        gutter={8}
+        containerClassName=""
+        toastOptions={{
+          className: "",
+          duration: 5000,
+          style: {
+            background: "#fff",
+            color: "#3b4b68",
+          },
+        }}
+      />
     </div>
   );
 }

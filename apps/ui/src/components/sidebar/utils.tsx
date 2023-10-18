@@ -48,14 +48,14 @@ export const iconsMapper = (
   },
   history: {
     type: "history",
-    active: <HistoryFilled />,
-    inactive: <History />,
+    active: <HistoryFilled size={35} color="#3b4b68" />,
+    inactive: <History size={35} color="#3b4b68" />,
     hidden: !routes?.includes("history"),
   },
   favourites: {
     type: "favourites",
-    active: <Star size={30} />,
-    inactive: <StarFilled size={30} />,
+    active: <Star size={35} color="#3b4b68" />,
+    inactive: <StarFilled size={35} color="#3b4b68" />,
     hidden: !routes?.includes("favourites"),
   },
 });
