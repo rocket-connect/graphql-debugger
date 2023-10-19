@@ -36,6 +36,7 @@ export function SideBarIcons() {
             return (
               <button
                 className="w-8"
+                key={icon.type}
                 onClick={() => handleRouteChange(icon.type as SideBarViewTypes)}
               >
                 {activeRoute(icon.type as SideBarViewTypes)

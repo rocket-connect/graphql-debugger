@@ -37,13 +37,10 @@ export function ConfigProvider({
     setRoutes(routes.filter((route) => route !== type));
   };
 
-  const handleSetBackendURL = useCallback(
-    (backendURL: string) => {
-      localStorage.setItem("backendURL", backendURL);
-      setBackendURL(backendURL);
-    },
-    [setBackendURL],
-  );
+  const handleSetBackendURL = (backendURL: string) => {
+    localStorage.setItem("backendURL", backendURL);
+    setBackendURL(backendURL);
+  };
 
   return (
     <ConfigContext.Provider

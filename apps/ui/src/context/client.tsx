@@ -8,7 +8,6 @@ import {
   useState,
 } from "react";
 
-import { sleep } from "../utils/sleep";
 import { ConfigContext } from "./config";
 
 export interface ClientContextProps {

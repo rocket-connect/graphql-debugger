@@ -22,6 +22,7 @@ export function Config() {
             <Toggle
               initialState={context?.routes.includes(config.name.toLowerCase())}
               label={config.name}
+              key={config.name}
               onToggle={(check) => {
                 if (check) {
                   toast.success(`${config.name} enabled`);
