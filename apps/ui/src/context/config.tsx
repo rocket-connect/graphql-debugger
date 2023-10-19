@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useCallback, useState } from "react";
+import { ReactNode, createContext, useState } from "react";
 
 export interface ConfigContextProps {
   backendURL: string;
