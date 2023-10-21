@@ -1,17 +1,13 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { ClientContext } from "../../../context/client";
+import { Delete } from "../../../icons/delete";
 
 export function History() {
-  const { historyTraces } = useContext(ClientContext);
-  const navigate = useNavigate();
-
-  const handleClick = (traceId: string, schemaId: string) => {
-    navigate(`/schema/${schemaId}/trace/${traceId}`);
-  };
+  const { historyTraces, handleDeleteHistoryTrace } = useContext(ClientContext);
 
   return (
     <div className="flex w-full flex-col gap-2">
@@ -25,12 +21,16 @@ export function History() {
           <div
             className="text-sm font-semibold text-neutral-100 flex items-center justify-between"
             role="button"
-            onClick={() => handleClick(trace.id, schemaId)}
           >
-            <span>{trace.rootSpan?.name}</span>
+            <Link to={`/schema/${schemaId}/trace/${trace.id}`}>
+              {trace.rootSpan?.name}
+            </Link>
             <span className="self-end font-normal">{`${value.toFixed(
               2,
             )} ${unit}`}</span>
+            <button onClick={() => handleDeleteHistoryTrace(trace.id)}>
+              <Delete color="red-500" />
+            </button>
           </div>
         );
       })}

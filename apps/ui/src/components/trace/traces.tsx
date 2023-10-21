@@ -3,11 +3,17 @@ import { Trace } from "@graphql-debugger/types";
 
 import { useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
-import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useContext } from "react";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 
 import { ClientContext } from "../../context/client";
 import { Modal } from "../../context/modal";
+import { Star, StarFilled } from "../../icons/star";
 import { refresh, searchFilled } from "../../images";
 import { IDS } from "../../testing";
 import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
@@ -17,18 +23,21 @@ import { Spinner } from "../utils/spinner";
 import { Search } from "./search";
 
 export function SchemaTraces() {
-  const { client } = useContext(ClientContext);
+  const { client, handleSetHistoryTraces, historyTraces } =
+    useContext(ClientContext);
   const navigate = useNavigate();
   const params = useParams();
   const [searchParams] = useSearchParams();
-  const [selectedTrace, setSelectedTrace] = useState<Trace | undefined>(
-    undefined,
-  );
 
   const { data: traces, isLoading } = useQuery({
-    queryKey: ["traces", params.schemaId, searchParams.get("rootSpanName")],
+    queryKey: [
+      "traces",
+      params.schemaId,
+      searchParams.get("rootSpanName"),
+      params.traceId,
+    ],
     queryFn: async () => {
-      const _traces = await client.trace.findMany({
+      const traces = await client.trace.findMany({
         where: {
           schemaId: params.schemaId,
           rootSpanName: searchParams.get("rootSpanName"),
@@ -38,38 +47,15 @@ export function SchemaTraces() {
 
       await sleep(DEFAULT_SLEEP_TIME);
 
-      return _traces;
+      return traces;
     },
   });
 
   const handleSelectTrace = (trace: Trace) => {
-    setSelectedTrace(trace);
+    if (historyTraces.includes({ trace, schemaId: params.schemaId ?? "" }))
+      return;
+    handleSetHistoryTraces({ trace, schemaId: params.schemaId ?? "" });
   };
-
-  useEffect(() => {
-    if (!params.traceId && traces?.length) {
-      navigate(
-        `/schema/${params.schemaId}/trace/${
-          traces[0].id
-        }?${searchParams.toString()}`,
-      );
-    }
-
-    if (selectedTrace && params.traceId) {
-      navigate(
-        `/schema/${
-          params.schemaId
-        }/trace/${selectedTrace?.id}?${searchParams.toString()}`,
-      );
-    }
-  }, [
-    selectedTrace,
-    traces,
-    navigate,
-    searchParams,
-    params.schemaId,
-    params.traceId,
-  ]);
 
   return (
     <div
@@ -101,7 +87,6 @@ export function SchemaTraces() {
           <button
             className="flex gap-3 hover:underline"
             onClick={() => {
-              setSelectedTrace(undefined);
               navigate({
                 pathname: `/schema/${params.schemaId}`,
                 search: "",
@@ -155,13 +140,19 @@ export function SchemaTraces() {
                           >
                             <th
                               className={classNames(
-                                `px-6 py-4 whitespace-nowrap font-medium ${
-                                  isSelected ? "underline" : "font-bold"
-                                }`,
+                                `px-6 py-4  flex items-center gap-3 `,
                               )}
                               role="button"
                             >
-                              {rootSpan?.name}
+                              <StarFilled />
+                              <Link
+                                className="whitespace-nowrap font-medium"
+                                to={`/schema/${params.schemaId}/trace/${
+                                  trace.id
+                                }?${searchParams.toString()}`}
+                              >
+                                {rootSpan?.name}
+                              </Link>
                             </th>
                             <td className="px-6 py-4">{`${value.toFixed(
                               2,

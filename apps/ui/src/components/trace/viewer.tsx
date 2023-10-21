@@ -1,6 +1,7 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import type { Span as TSpan, Trace } from "@graphql-debugger/types";
 
+import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -46,7 +47,7 @@ export function TraceModalHeader({
   setShowForeignTraces,
   showForeignTraces,
 }: {
-  trace: Trace;
+  trace?: Trace;
   setShowForeignTraces: (showForeignTraces: boolean) => void;
   showForeignTraces: boolean;
 }) {
@@ -55,10 +56,10 @@ export function TraceModalHeader({
       <Pill trace={trace} bg="neutral/10" />
       <div className="my-auto mr-5">
         <Toggle
-          name="Show foreign spans"
-          enabled={showForeignTraces}
+          label="Show foreign spans"
+          initialState={showForeignTraces}
           onToggle={(x) => setShowForeignTraces(x)}
-          color="app-blue"
+          color="bg-app-blue"
         />
       </div>
     </div>
@@ -68,42 +69,30 @@ export function TraceModalHeader({
 export function TraceViewer() {
   const [showForeignTraces, setShowForeignTraces] = useState(true);
   const { client } = useContext(ClientContext);
-  const [traces, setTraces] = useState<Trace[]>([]);
   const params = useParams();
-  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        if (params.traceId) {
-          setIsLoading(true);
+  const { data: traces, isLoading } = useQuery({
+    queryKey: ["viewTraces", params.traceId],
+    queryFn: async () => {
+      const _traces = await client.trace.findMany({
+        where: {
+          id: params.traceId,
+        },
+        includeSpans: true,
+        includeRootSpan: true,
+      });
 
-          const _traces = await client.trace.findMany({
-            where: {
-              id: params.traceId,
-            },
-            includeSpans: true,
-            includeRootSpan: true,
-          });
+      await sleep(DEFAULT_SLEEP_TIME);
 
-          await sleep(DEFAULT_SLEEP_TIME);
+      return _traces;
+    },
+  });
 
-          setTraces(_traces);
-        }
-      } catch (error) {
-        console.error(error);
-        setTraces([]);
-      } finally {
-        setIsLoading(false);
-      }
-    })();
-  }, [params.traceId, client]);
-
-  const trace = traces[0];
+  const trace = traces?.[0];
   const spans = trace?.spans;
   let modalSpans = spans;
   if (!showForeignTraces) {
-    modalSpans = spans.filter((span) => !span.isForeign);
+    modalSpans = spans?.filter((span) => !span.isForeign);
   }
 
   return (
@@ -134,7 +123,7 @@ export function TraceViewer() {
           }
         >
           <div className="px-4 pb-10">
-            <TraceView spans={modalSpans} />
+            <TraceView spans={modalSpans ?? []} />
           </div>
         </ModalWindow>
       </Modal>
@@ -146,7 +135,7 @@ export function TraceViewer() {
       ) : (
         <>
           {traces?.length ? (
-            <TraceView spans={spans} />
+            <TraceView spans={spans ?? []} />
           ) : (
             <div className="mx-auto text-center text-neutral-100 font-bold">
               No Trace Found
