@@ -10,7 +10,7 @@ interface ToggleProps {
   description?: string;
   callout?: string;
   alwaysEnabled?: boolean;
-  color?: string;
+  blueToggle?: boolean;
 }
 
 export function Toggle({
@@ -21,7 +21,7 @@ export function Toggle({
   description,
   callout,
   alwaysEnabled,
-  color,
+  blueToggle,
 }: ToggleProps) {
   const [checked, setChecked] = useState(initialState);
 
@@ -61,9 +61,12 @@ export function Toggle({
             readOnly
           />
           <div
-            className={`w-11 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-green-300  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:${
-              Number(color?.length) > 0 ? color : "bg-graphql-otel-green"
-            }`}
+            className={classNames(
+              `w-11 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-green-300  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-graphql-otel-green`,
+              {
+                "peer-checked:bg-app-blue": blueToggle,
+              },
+            )}
           ></div>
         </label>
 

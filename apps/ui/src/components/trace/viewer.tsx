@@ -59,7 +59,7 @@ export function TraceModalHeader({
           label="Show foreign spans"
           initialState={showForeignTraces}
           onToggle={(x) => setShowForeignTraces(x)}
-          color="bg-app-blue"
+          blueToggle
         />
       </div>
     </div>
