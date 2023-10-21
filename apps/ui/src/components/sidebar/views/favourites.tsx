@@ -9,7 +9,7 @@ import { Delete } from "../../../icons/delete";
 export function Favourites() {
   const { favourites } = useContext(ClientContext);
   return (
-    <div className="flex w-full flex-col gap-2">
+    <div className="flex w-full flex-col gap-3 divide-y-2 divide-neutral/10">
       {favourites.map(({ schemaId, trace }) => {
         const durationUnixNano = UnixNanoTimeStamp.fromString(
           trace.rootSpan?.durationNano || "0",
@@ -22,7 +22,7 @@ export function Favourites() {
         const { value, unit } = durationUnixNano.toSIUnits();
         return (
           <div
-            className="text-sm text-neutral-100 flex items-center justify-between"
+            className="text-sm text-neutral-100 flex items-center justify-between p-1"
             role="button"
           >
             <div className="flex flex-col gap-1">
@@ -37,12 +37,14 @@ export function Favourites() {
               </p>
             </div>
 
-            <span className="self-end font-normal">{`${value.toFixed(
-              2,
-            )} ${unit}`}</span>
-            <button>
-              <Delete color="red-500" />
-            </button>
+            <div className="self-baseline flex justify-center items-center gap-3">
+              <span className="self-end font-normal">{`${value.toFixed(
+                2,
+              )} ${unit}`}</span>
+              <button>
+                <Delete color="red-500" />
+              </button>
+            </div>
           </div>
         );
       })}
