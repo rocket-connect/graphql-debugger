@@ -17,6 +17,7 @@ export function App() {
       },
     },
   });
+  console.count("count: ");
 
   return (
     <div>
@@ -35,7 +36,7 @@ export function App() {
         position="top-center"
         reverseOrder={false}
         gutter={8}
-        containerClassName=""
+        containerClassName="toaster-wrapper"
         toastOptions={{
           className: "text-neutral-100 bg-white",
           duration: 5000,
