@@ -2,7 +2,7 @@ import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import type { Span as TSpan, Trace } from "@graphql-debugger/types";
 
 import { useQuery } from "@tanstack/react-query";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { ClientContext } from "../../context/client";
@@ -72,7 +72,7 @@ export function TraceViewer() {
   const params = useParams();
 
   const { data: traces, isLoading } = useQuery({
-    queryKey: ["viewTraces", params.traceId],
+    queryKey: ["viewTraces", params.traceId, params.schemaId],
     queryFn: async () => {
       const _traces = await client.trace.findMany({
         where: {

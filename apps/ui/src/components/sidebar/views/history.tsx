@@ -16,15 +16,28 @@ export function History() {
           trace.rootSpan?.durationNano || "0",
         );
 
+        const startTimeUnixNano = UnixNanoTimeStamp.fromString(
+          trace.rootSpan?.startTimeUnixNano || "0",
+        );
+
         const { value, unit } = durationUnixNano.toSIUnits();
         return (
           <div
-            className="text-sm font-semibold text-neutral-100 flex items-center justify-between"
+            className="text-sm text-neutral-100 flex items-center justify-between"
             role="button"
           >
-            <Link to={`/schema/${schemaId}/trace/${trace.id}`}>
-              {trace.rootSpan?.name}
-            </Link>
+            <div className="flex flex-col gap-1">
+              <Link
+                to={`/schema/${schemaId}/trace/${trace.id}`}
+                className="font-semibold"
+              >
+                {trace.rootSpan?.name}
+              </Link>
+              <p className="ml-5 text-xs">
+                - {startTimeUnixNano.formatUnixNanoTimestamp()}
+              </p>
+            </div>
+
             <span className="self-end font-normal">{`${value.toFixed(
               2,
             )} ${unit}`}</span>

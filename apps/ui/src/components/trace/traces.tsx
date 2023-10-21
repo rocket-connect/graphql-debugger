@@ -1,5 +1,4 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
-import { Trace } from "@graphql-debugger/types";
 
 import { useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
@@ -23,7 +22,7 @@ import { Spinner } from "../utils/spinner";
 import { Search } from "./search";
 
 export function SchemaTraces() {
-  const { client, handleSetHistoryTraces, historyTraces } =
+  const { client, handleSetHistoryTraces, favourites, handleSetFavourites } =
     useContext(ClientContext);
   const navigate = useNavigate();
   const params = useParams();
@@ -51,10 +50,14 @@ export function SchemaTraces() {
     },
   });
 
-  const handleSelectTrace = (trace: Trace) => {
-    if (historyTraces.includes({ trace, schemaId: params.schemaId ?? "" }))
-      return;
-    handleSetHistoryTraces({ trace, schemaId: params.schemaId ?? "" });
+  const isFavourite = (traceId: string): boolean => {
+    return (
+      favourites.find((fav) => fav.trace.id === traceId)?.trace.id === traceId
+    );
+  };
+
+  const isSelected = (traceId: string): boolean => {
+    return params.traceId === traceId;
   };
 
   return (
@@ -120,7 +123,6 @@ export function SchemaTraces() {
                   ) : (
                     <>
                       {traces?.map((trace) => {
-                        const isSelected = params.traceId === trace.id;
                         const rootSpan = trace.rootSpan;
                         const startTimeUnixNano = UnixNanoTimeStamp.fromString(
                           rootSpan?.startTimeUnixNano || "0",
@@ -136,7 +138,6 @@ export function SchemaTraces() {
                             data-spanid={rootSpan?.id}
                             key={trace.id}
                             className={`border-b-2 border-graphiql-neutral/10 text-neutral-100 hover:cursor-pointer`}
-                            onClick={() => handleSelectTrace(trace)}
                           >
                             <th
                               className={classNames(
@@ -144,12 +145,33 @@ export function SchemaTraces() {
                               )}
                               role="button"
                             >
-                              <StarFilled />
+                              <button
+                                onClick={() =>
+                                  handleSetFavourites({
+                                    trace,
+                                    schemaId: params.schemaId,
+                                  })
+                                }
+                              >
+                                {isFavourite(trace.id) ? (
+                                  <Star />
+                                ) : (
+                                  <StarFilled />
+                                )}
+                              </button>
                               <Link
-                                className="whitespace-nowrap font-medium"
+                                className={classNames(
+                                  "whitespace-nowrap font-medium",
+                                )}
                                 to={`/schema/${params.schemaId}/trace/${
                                   trace.id
                                 }?${searchParams.toString()}`}
+                                onClick={() =>
+                                  handleSetHistoryTraces({
+                                    trace,
+                                    schemaId: params.schemaId ?? "",
+                                  })
+                                }
                               >
                                 {rootSpan?.name}
                               </Link>
