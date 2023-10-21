@@ -37,12 +37,8 @@ export function App() {
         gutter={8}
         containerClassName=""
         toastOptions={{
-          className: "",
+          className: "text-neutral-100 bg-white",
           duration: 5000,
-          style: {
-            background: "#fff",
-            color: "#3b4b68",
-          },
         }}
       />
     </div>

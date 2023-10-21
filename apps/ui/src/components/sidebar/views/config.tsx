@@ -36,6 +36,7 @@ export function Config() {
               callout={config.callout}
               description={config.description}
               disabled={!config.enabled}
+              alwaysEnabled={config.alwaysEnabled}
             />
           );
         })}

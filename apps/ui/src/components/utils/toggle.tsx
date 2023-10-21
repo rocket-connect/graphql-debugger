@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { ChangeEvent, useState } from "react";
+import toast from "react-hot-toast";
 
 interface ToggleProps {
   initialState?: boolean;
@@ -8,6 +9,7 @@ interface ToggleProps {
   disabled?: boolean;
   description?: string;
   callout?: string;
+  alwaysEnabled?: boolean;
 }
 
 export function Toggle({
@@ -17,17 +19,27 @@ export function Toggle({
   disabled,
   description,
   callout,
+  alwaysEnabled,
 }: ToggleProps) {
   const [checked, setChecked] = useState(initialState);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (disabled) {
+    if (alwaysEnabled || disabled) {
       return;
     }
+
     setChecked(event.target.checked);
     onToggle(event.target.checked);
   };
 
+  const handleAlwaysEnabled = () => {
+    if (alwaysEnabled) {
+      toast.error(`${label} cannot be disabled`);
+    }
+    if (disabled) {
+      toast.error(`${label} cannot be enabled, will ship this feature soon`);
+    }
+  };
   return (
     <div
       className={classNames("flex flex-col gap-2", {
@@ -36,18 +48,14 @@ export function Toggle({
     >
       <div className="flex items-center gap-0.5">
         <label
-          className={classNames(
-            "inline-flex relative items-center mr-5 cursor-pointer",
-            {
-              "cursor-default": disabled,
-            },
-          )}
+          className={"inline-flex relative items-center mr-5  cursor-pointer"}
         >
           <input
             type="checkbox"
             className="sr-only peer"
             checked={checked}
             onChange={handleChange}
+            onClick={handleAlwaysEnabled}
             readOnly
           />
           <div className="w-11 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-green-300  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-graphql-otel-green"></div>

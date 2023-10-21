@@ -97,7 +97,6 @@ export const configs = [
     name: "Dark Mode",
     description: "Toggle between light and dark mode",
     callout: "(Comming Soon)",
-    defaultDisabled: true,
     enabled: false,
   },
   {
@@ -109,6 +108,7 @@ export const configs = [
     name: "Cookies",
     description: "We collect data to improve your experience",
     enabled: true,
+    alwaysEnabled: true,
   },
   {
     name: "Favourites",
