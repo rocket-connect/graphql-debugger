@@ -192,4 +192,82 @@ describe("queries/list-trace-groups", () => {
 
     expect(listTraceGroups.traces[0].id).toBe(createdTraceGroup.id);
   });
+
+  test.todo("should return a list of trace groups filtered by root span name");
+
+  test("should return a list of trace groups filtered by error", async () => {
+    // Make a traced schema that points to the collector
+    const tracedSchema = traceSchema({
+      schema: makeExecutableSchema({
+        typeDefs: gql`
+          type Post {
+            content: String!
+          }
+
+          type Query {
+            posts: [Post]
+          }
+        `,
+        resolvers: {
+          Query: {
+            posts: () => {
+              throw new Error("Something went wrong"); // This test is asserting that this error is caught
+            },
+          },
+        },
+      }),
+    });
+
+    await sleep(2000); // wait for collector to injest the schema
+
+    // Run the query twice to ensure we get two trace groups
+    await Promise.all(
+      [1, 2].map(async () => {
+        await graphql({
+          schema: tracedSchema,
+          source: gql`
+            {
+              posts {
+                content
+              }
+            }
+          `,
+          contextValue: {
+            GraphQLOTELContext: new GraphQLOTELContext({
+              includeResult: true,
+              includeContext: true,
+              includeVariables: true,
+            }),
+          },
+        });
+      }),
+    );
+
+    await sleep(2000); // wait for collector to injest the traces
+
+    const query = gql`
+      query ($where: ListTraceGroupsWhere) {
+        listTraceGroups(where: $where) {
+          traces {
+            id
+          }
+        }
+      }
+    `;
+
+    const response = await request()
+      .post("/graphql")
+      .send({
+        query,
+        variables: { where: { isError: true } },
+      })
+      .set("Accept", "application/json");
+
+    const body = await response.body;
+
+    const listTraceGroups = body.data
+      ?.listTraceGroups as ListTraceGroupsResponse;
+
+    expect(listTraceGroups.traces.length).toBe(2);
+  });
 });

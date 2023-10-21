@@ -21,6 +21,9 @@ const ListTraceGroupsWhereInput: InputRef<ListTraceGroupsWhere> =
       rootSpanName: t.string({
         required: false,
       }),
+      isError: t.boolean({
+        required: false,
+      }),
     }),
   });
 
@@ -61,6 +64,27 @@ builder.queryField("listTraceGroups", (t) =>
               name: {
                 equals: args.where.rootSpanName,
               },
+            },
+          },
+        });
+      }
+
+      if (args.where?.isError) {
+        whereConditions.push({
+          spans: {
+            some: {
+              OR: [
+                {
+                  errorMessage: {
+                    not: null,
+                  },
+                },
+                {
+                  errorStack: {
+                    not: null,
+                  },
+                },
+              ],
             },
           },
         });
