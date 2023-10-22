@@ -2,13 +2,14 @@ import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import type { Schema } from "@graphql-debugger/types";
 
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { ClientContext } from "../../../context/client";
 import { SchemasContext } from "../../../context/schemas";
 import { Delete } from "../../../icons/delete";
 
 export function History() {
+  const params = useParams<{ traceId: string }>();
   const { historyTraces, handleDeleteHistoryTrace } = useContext(ClientContext);
   const schemasContext = useContext(SchemasContext);
 
@@ -32,6 +33,9 @@ export function History() {
         );
 
         const { value, unit } = durationUnixNano.toSIUnits();
+
+        const isSelected = params.traceId === trace.id;
+
         return (
           <div
             className="text-xs text-neutral-100 flex items-center justify-between pt-3"
@@ -41,7 +45,7 @@ export function History() {
             <div className="flex flex-col gap-1">
               <Link
                 to={`/schema/${schemaId}/trace/${trace.id}`}
-                className="font-semibold"
+                className={`font-semibold ${isSelected ? "underline" : ""}`}
                 onClick={() => {
                   schemasContext?.setSelectedSchema(schema(schemaId ?? ""));
                 }}
