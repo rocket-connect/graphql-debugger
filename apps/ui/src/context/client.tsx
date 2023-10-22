@@ -71,12 +71,14 @@ export function ClientProvider({
   };
 
   const handleSetHistoryTraces = (trace: HistoryTrace) => {
+    localStorage.setItem("traces", JSON.stringify([...historyTraces, trace]));
     setHistoryTraces((previousTraces) => {
       return [...previousTraces, trace];
     });
   };
 
   const handleSetFavourites = (trace: HistoryTrace) => {
+    localStorage.setItem("favourites", JSON.stringify([...favourites, trace]));
     setFavourites((previousTraces) => {
       return [...previousTraces, trace];
     });
@@ -97,14 +99,6 @@ export function ClientProvider({
       }),
     );
   }, [setClient, configContext?.backendURL]);
-
-  useEffect(() => {
-    localStorage.setItem("traces", JSON.stringify(historyTraces));
-  }, [historyTraces]);
-
-  useEffect(() => {
-    localStorage.setItem("favourites", JSON.stringify(favourites));
-  }, [favourites]);
 
   return (
     <ClientContext.Provider

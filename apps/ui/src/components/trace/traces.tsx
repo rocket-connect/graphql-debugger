@@ -71,7 +71,7 @@ export function SchemaTraces() {
   const handleAddTrace = (trace: Trace) => {
     if (isFavourite(trace.id)) {
       toast.error(
-        <p>
+        <p className="text-sm">
           Removed
           <span className="font-bold px-2">{trace?.rootSpan?.name}</span>
           from favourites
@@ -87,7 +87,7 @@ export function SchemaTraces() {
         timestamp: new Date(),
       });
       toast.success(
-        <p>
+        <p className="text-sm">
           Added
           <span className="font-bold px-2">{trace?.rootSpan?.name}</span>
           to favourites
