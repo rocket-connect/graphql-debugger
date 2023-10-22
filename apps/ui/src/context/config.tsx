@@ -34,7 +34,9 @@ export function ConfigProvider({
       "routes",
       JSON.stringify(routes.filter((route) => route !== type)),
     );
-    setRoutes(routes.filter((route) => route !== type));
+    setRoutes((previousRoutes) => {
+      return previousRoutes.filter((route) => route !== type);
+    });
   };
 
   const handleSetBackendURL = (backendURL: string) => {

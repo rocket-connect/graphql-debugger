@@ -1,29 +1,30 @@
 import { useContext } from "react";
 
 import { ConfigContext } from "../../context/config";
-import { SideBarContext, SideBarViewTypes } from "../../context/sidebar";
+import { SideBarContext, type SideBarViewTypes } from "../../context/sidebar";
 import { InfoFilled, InfoStroke } from "../../icons/info";
 import { githubDark, npmDark } from "../../images";
 import { iconsMapper } from "./utils";
+import { SideBarView } from "./view";
 
 export function SideBarIcons() {
   const sidebar = useContext(SideBarContext);
   const config = useContext(ConfigContext);
 
-  const handleRouteChange = (type: SideBarViewTypes) => {
+  const handleRouteChange = (type: string) => {
     if (sidebar) {
       if (sidebar.view?.type === type && sidebar.isOpened) {
         sidebar.close();
         return;
       }
       sidebar.setView({
-        type,
+        type: type as SideBarViewTypes,
       });
       sidebar?.open();
     }
   };
 
-  const activeRoute = (iconType: SideBarViewTypes): boolean | undefined => {
+  const activeRoute = (iconType: string): boolean | undefined => {
     return sidebar?.view?.type === iconType && sidebar.isOpened;
   };
 
@@ -37,11 +38,9 @@ export function SideBarIcons() {
               <button
                 className="w-8"
                 key={icon.type}
-                onClick={() => handleRouteChange(icon.type as SideBarViewTypes)}
+                onClick={() => handleRouteChange(icon.type)}
               >
-                {activeRoute(icon.type as SideBarViewTypes)
-                  ? icon.active
-                  : icon.inactive}
+                {activeRoute(icon.type) ? icon.active : icon.inactive}
               </button>
             );
           })}
