@@ -4,6 +4,7 @@ import type { Trace } from "@graphql-debugger/types";
 import {
   ReactNode,
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -57,31 +58,53 @@ export function ClientProvider({
     }),
   );
 
-  const handleDeleteHistoryTrace = (uniqueId: string) => {
-    const filteredTraces = historyTraces.filter(
-      (trace) => trace.uniqueId !== uniqueId,
-    );
-    localStorage.setItem("traces", JSON.stringify(filteredTraces));
-    setHistoryTraces(filteredTraces);
-  };
+  const handleDeleteHistoryTrace = useCallback(
+    (uniqueId: string) => {
+      setHistoryTraces((previousTraces) => {
+        const newTraces = previousTraces.filter(
+          (trace) => trace.uniqueId !== uniqueId,
+        );
 
-  const handleDeleteFavouriteTrace = (traceId: string) => {
-    const filteredTraces = favourites?.filter(
-      (trace) => trace.trace.id !== traceId,
-    );
-    localStorage.setItem("favourites", JSON.stringify(filteredTraces));
-    setFavourites(filteredTraces);
-  };
+        return newTraces;
+      });
+    },
+    [setHistoryTraces],
+  );
 
-  const handleSetHistoryTraces = (trace: HistoryTrace) => {
-    localStorage.setItem("traces", JSON.stringify([...historyTraces, trace]));
-    setHistoryTraces((previousTraces) => [...previousTraces, trace]);
-  };
+  const handleDeleteFavouriteTrace = useCallback(
+    (traceId: string) => {
+      setFavourites((previousFavourites) => {
+        const newFavourites = previousFavourites.filter(
+          (trace) => trace.trace.id !== traceId,
+        );
 
-  const handleSetFavourites = (trace: HistoryTrace) => {
-    localStorage.setItem("favourites", JSON.stringify([...favourites, trace]));
-    setFavourites((previousTraces) => [...previousTraces, trace]);
-  };
+        return newFavourites;
+      });
+    },
+    [setFavourites],
+  );
+
+  const handleSetHistoryTraces = useCallback(
+    (trace: HistoryTrace) => {
+      setHistoryTraces((previousTraces) => {
+        const newTraces = previousTraces.filter(
+          (t) => t.uniqueId !== trace.uniqueId,
+        );
+
+        return [...newTraces, trace];
+      });
+    },
+    [setHistoryTraces],
+  );
+
+  const handleSetFavourites = useCallback(
+    (trace: HistoryTrace) => {
+      setFavourites((previousTraces) => {
+        return [...previousTraces, trace];
+      });
+    },
+    [setFavourites],
+  );
 
   const handleSetClient = (url: string) => {
     setClient(
@@ -90,6 +113,7 @@ export function ClientProvider({
       }),
     );
   };
+
   useEffect(() => {
     setClient(
       new DebuggerClient({
@@ -97,6 +121,14 @@ export function ClientProvider({
       }),
     );
   }, [setClient, configContext?.backendURL]);
+
+  useEffect(() => {
+    localStorage.setItem("traces", JSON.stringify(historyTraces));
+  }, [historyTraces]);
+
+  useEffect(() => {
+    localStorage.setItem("favourites", JSON.stringify(favourites));
+  }, [favourites]);
 
   return (
     <ClientContext.Provider
