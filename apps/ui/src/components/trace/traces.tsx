@@ -145,9 +145,11 @@ export function SchemaTraces() {
             <>
               <table className="w-full text-xs text-center">
                 <thead>
-                  <th>Name</th>
-                  <th>Duration</th>
-                  <th>Start</th>
+                  <tr>
+                    <th>Name</th>
+                    <th>Duration</th>
+                    <th>Start</th>
+                  </tr>
                 </thead>
                 <tbody>
                   {traces?.length === 0 ? (

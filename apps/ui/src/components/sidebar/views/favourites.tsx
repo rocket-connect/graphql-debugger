@@ -24,6 +24,7 @@ export function Favourites() {
           <div
             className="text-sm text-neutral-100 flex items-center justify-between p-1"
             role="button"
+            key={trace.id}
           >
             <div className="flex flex-col gap-1">
               <Link
