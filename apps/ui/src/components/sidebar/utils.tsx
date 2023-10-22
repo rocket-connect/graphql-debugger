@@ -48,14 +48,14 @@ export const iconsMapper = (
   },
   history: {
     type: "history",
-    active: <HistoryFilled size={35} color="#3b4b68" />,
-    inactive: <History size={35} color="#3b4b68" />,
+    active: <HistoryFilled size={"35"} color="#3b4b68" />,
+    inactive: <History size={"35"} color="#3b4b68" />,
     hidden: !routes?.includes("history"),
   },
   favourites: {
     type: "favourites",
-    active: <Star size={35} color="#3b4b68" />,
-    inactive: <StarFilled size={35} color="#3b4b68" />,
+    active: <Star size={"35"} color="#3b4b68" />,
+    inactive: <StarFilled size={"35"} color="#3b4b68" />,
     hidden: !routes?.includes("favourites"),
   },
 });
@@ -101,7 +101,12 @@ export const configs = [
   },
   {
     name: "History",
-    description: "Enable the store of trace history in local storage",
+    description: "Store trace history in local storage",
+    enabled: true,
+  },
+  {
+    name: "Favourites",
+    description: "Store trace favourites in local storage",
     enabled: true,
   },
   {
@@ -109,10 +114,5 @@ export const configs = [
     description: "We collect data to improve your experience",
     enabled: true,
     alwaysEnabled: true,
-  },
-  {
-    name: "Favourites",
-    description: "We collect data to improve your experience",
-    enabled: true,
   },
 ];

@@ -18,9 +18,20 @@ export function Config() {
 
       <div className="flex flex-col gap-10 text-netural-100 text-xs pl-3">
         {configs.map((config) => {
+          let initialState = context?.routes.includes(
+            config.name.toLowerCase(),
+          );
+
+          let disabled = !config.enabled;
+
+          if (config.alwaysEnabled) {
+            initialState = true;
+            disabled = true;
+          }
+
           return (
             <Toggle
-              initialState={context?.routes.includes(config.name.toLowerCase())}
+              initialState={initialState}
               label={config.name}
               key={config.name}
               onToggle={(check) => {
@@ -35,12 +46,13 @@ export function Config() {
               }}
               callout={config.callout}
               description={config.description}
-              disabled={!config.enabled}
+              disabled={disabled}
               alwaysEnabled={config.alwaysEnabled}
             />
           );
         })}
       </div>
+
       <Backend />
     </div>
   );
