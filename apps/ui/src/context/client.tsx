@@ -17,12 +17,14 @@ export interface ClientContextProps {
   historyTraces: HistoryTrace[];
   favourites: HistoryTrace[];
   handleSetHistoryTraces: (trace: HistoryTrace) => void;
-  handleDeleteHistoryTrace: (traceId: string) => void;
+  handleDeleteHistoryTrace: (uniqueId: string) => void;
+  handleDeleteFavouriteTrace: (uniqueId: string) => void;
   handleSetFavourites: (trace: HistoryTrace) => void;
 }
 
-interface HistoryTrace {
+export interface HistoryTrace {
   trace: Trace;
+  uniqueId?: string;
   schemaId?: string;
 }
 export const ClientContext = createContext<ClientContextProps>({
@@ -31,8 +33,9 @@ export const ClientContext = createContext<ClientContextProps>({
   historyTraces: [],
   favourites: [],
   handleSetHistoryTraces: (trace: HistoryTrace) => {},
-  handleDeleteHistoryTrace: (traceId: string) => {},
+  handleDeleteHistoryTrace: (uniqueId: string) => {},
   handleSetFavourites: (trace: HistoryTrace) => {},
+  handleDeleteFavouriteTrace: (uniqueId: string) => {},
 });
 
 export function ClientProvider({
@@ -54,12 +57,20 @@ export function ClientProvider({
     }),
   );
 
-  const handleDeleteHistoryTrace = (traceId: string) => {
+  const handleDeleteHistoryTrace = (uniqueId: string) => {
     const filteredTraces = historyTraces.filter(
-      (trace) => trace.trace.id !== traceId,
+      (trace) => trace.uniqueId !== uniqueId,
     );
     localStorage.setItem("traces", JSON.stringify(filteredTraces));
     setHistoryTraces(filteredTraces);
+  };
+
+  const handleDeleteFavouriteTrace = (traceId: string) => {
+    const filteredTraces = favourites?.filter(
+      (trace) => trace.trace.id !== traceId,
+    );
+    localStorage.setItem("favourites", JSON.stringify(filteredTraces));
+    setFavourites(filteredTraces);
   };
 
   const handleSetHistoryTraces = (trace: HistoryTrace) => {
@@ -97,6 +108,7 @@ export function ClientProvider({
         favourites,
         handleSetFavourites,
         handleDeleteHistoryTrace,
+        handleDeleteFavouriteTrace,
       }}
     >
       {children}

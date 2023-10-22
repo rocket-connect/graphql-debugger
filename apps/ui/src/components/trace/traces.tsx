@@ -1,16 +1,19 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
+import { Trace } from "@graphql-debugger/types";
 
 import { useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
 import { useContext } from "react";
+import toast from "react-hot-toast";
 import {
   Link,
   useNavigate,
   useParams,
   useSearchParams,
 } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
-import { ClientContext } from "../../context/client";
+import { ClientContext, HistoryTrace } from "../../context/client";
 import { Modal } from "../../context/modal";
 import { Star, StarFilled } from "../../icons/star";
 import { refresh, searchFilled } from "../../images";
@@ -22,8 +25,13 @@ import { Spinner } from "../utils/spinner";
 import { Search } from "./search";
 
 export function SchemaTraces() {
-  const { client, handleSetHistoryTraces, favourites, handleSetFavourites } =
-    useContext(ClientContext);
+  const {
+    client,
+    handleSetHistoryTraces,
+    favourites,
+    handleSetFavourites,
+    handleDeleteFavouriteTrace,
+  } = useContext(ClientContext);
   const navigate = useNavigate();
   const params = useParams();
   const [searchParams] = useSearchParams();
@@ -58,6 +66,32 @@ export function SchemaTraces() {
 
   const isSelected = (traceId: string): boolean => {
     return params.traceId === traceId;
+  };
+
+  const handleAddTrace = (trace: Trace) => {
+    if (isFavourite(trace.id)) {
+      toast.error(
+        <p>
+          Removed
+          <span className="font-bold px-2">{trace?.rootSpan?.name}</span>
+          from favourites
+        </p>,
+      );
+      handleDeleteFavouriteTrace(trace.id);
+    }
+    if (!isFavourite(trace.id)) {
+      handleSetFavourites({
+        trace,
+        schemaId: params.schemaId,
+      });
+      toast.success(
+        <p>
+          Added
+          <span className="font-bold px-2">{trace?.rootSpan?.name}</span>
+          to favourites
+        </p>,
+      );
+    }
   };
 
   return (
@@ -145,14 +179,7 @@ export function SchemaTraces() {
                               )}
                               role="button"
                             >
-                              <button
-                                onClick={() =>
-                                  handleSetFavourites({
-                                    trace,
-                                    schemaId: params.schemaId,
-                                  })
-                                }
-                              >
+                              <button onClick={() => handleAddTrace(trace)}>
                                 {isFavourite(trace.id) ? (
                                   <Star />
                                 ) : (
@@ -161,7 +188,11 @@ export function SchemaTraces() {
                               </button>
                               <Link
                                 className={classNames(
-                                  "whitespace-nowrap font-medium",
+                                  `px-6 py-4 whitespace-nowrap font-medium ${
+                                    isSelected(trace.id)
+                                      ? "underline"
+                                      : "font-bold"
+                                  }`,
                                 )}
                                 to={`/schema/${params.schemaId}/trace/${
                                   trace.id
@@ -170,6 +201,7 @@ export function SchemaTraces() {
                                   handleSetHistoryTraces({
                                     trace,
                                     schemaId: params.schemaId ?? "",
+                                    uniqueId: uuidv4(),
                                   })
                                 }
                               >

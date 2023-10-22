@@ -7,7 +7,7 @@ import { ClientContext } from "../../../context/client";
 import { Delete } from "../../../icons/delete";
 
 export function Favourites() {
-  const { favourites } = useContext(ClientContext);
+  const { favourites, handleDeleteFavouriteTrace } = useContext(ClientContext);
   return (
     <div className="flex w-full flex-col gap-3 divide-y-2 divide-neutral/10">
       {favourites.map(({ schemaId, trace }) => {
@@ -41,7 +41,9 @@ export function Favourites() {
               <span className="self-end font-normal">{`${value.toFixed(
                 2,
               )} ${unit}`}</span>
-              <button>
+              <button
+                onClick={() => handleDeleteFavouriteTrace(trace.id ?? "")}
+              >
                 <Delete color="red-500" />
               </button>
             </div>
