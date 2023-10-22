@@ -32,7 +32,7 @@ export function History() {
           <div
             className="text-sm text-neutral-100 flex items-center justify-between p-1"
             role="button"
-            key={trace.id}
+            key={uniqueId}
           >
             <div className="flex flex-col gap-1">
               <Link
