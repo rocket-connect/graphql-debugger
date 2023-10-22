@@ -1,13 +1,20 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
+import type { Schema } from "@graphql-debugger/types";
 
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { ClientContext } from "../../../context/client";
+import { SchemasContext } from "../../../context/schemas";
 import { Delete } from "../../../icons/delete";
 
 export function Favourites() {
   const { favourites, handleDeleteFavouriteTrace } = useContext(ClientContext);
+  const schemasContext = useContext(SchemasContext);
+
+  const schema = (schemaId: string): Schema | undefined => {
+    return schemasContext?.schemas.find((schema) => schema.id === schemaId);
+  };
   return (
     <div className="flex w-full flex-col gap-3 divide-y-2 divide-neutral/10">
       {favourites.map(({ schemaId, trace }) => {
@@ -30,6 +37,9 @@ export function Favourites() {
               <Link
                 to={`/schema/${schemaId}/trace/${trace.id}`}
                 className="font-semibold"
+                onClick={() =>
+                  schemasContext?.setSelectedSchema(schema(schemaId ?? ""))
+                }
               >
                 {trace.rootSpan?.name}
               </Link>

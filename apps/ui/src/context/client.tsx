@@ -32,10 +32,10 @@ export const ClientContext = createContext<ClientContextProps>({
   handleSetClient: () => {},
   historyTraces: [],
   favourites: [],
-  handleSetHistoryTraces: (trace: HistoryTrace) => {},
-  handleDeleteHistoryTrace: (uniqueId: string) => {},
-  handleSetFavourites: (trace: HistoryTrace) => {},
-  handleDeleteFavouriteTrace: (uniqueId: string) => {},
+  handleSetHistoryTraces: () => {},
+  handleDeleteHistoryTrace: () => {},
+  handleSetFavourites: () => {},
+  handleDeleteFavouriteTrace: () => {},
 });
 
 export function ClientProvider({

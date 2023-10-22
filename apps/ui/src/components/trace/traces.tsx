@@ -13,7 +13,7 @@ import {
 } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
-import { ClientContext, HistoryTrace } from "../../context/client";
+import { ClientContext } from "../../context/client";
 import { Modal } from "../../context/modal";
 import { Star, StarFilled } from "../../icons/star";
 import { refresh, searchFilled } from "../../images";
