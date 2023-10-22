@@ -17,7 +17,6 @@ export function App() {
       },
     },
   });
-  console.count("count: ");
 
   return (
     <div>
