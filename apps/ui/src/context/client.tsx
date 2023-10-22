@@ -98,14 +98,6 @@ export function ClientProvider({
     );
   }, [setClient, configContext?.backendURL]);
 
-  useEffect(() => {
-    localStorage.setItem("traces", JSON.stringify(historyTraces));
-  }, [historyTraces]);
-
-  useEffect(() => {
-    localStorage.setItem("favourites", JSON.stringify(favourites));
-  }, [favourites]);
-
   return (
     <ClientContext.Provider
       value={{
