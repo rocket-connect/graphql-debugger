@@ -26,7 +26,7 @@ export function ConfigProvider({
 
   const handleEnableRoute = (type: string) => {
     localStorage.setItem("routes", JSON.stringify([...routes, type]));
-    setRoutes([...routes, type]);
+    setRoutes((oldRoutes) => [...oldRoutes, types]);
   };
 
   const handleDisableRoute = (type: string) => {
