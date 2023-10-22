@@ -4,7 +4,6 @@ import type { Trace } from "@graphql-debugger/types";
 import {
   ReactNode,
   createContext,
-  useCallback,
   useContext,
   useEffect,
   useState,
@@ -60,53 +59,28 @@ export function ClientProvider({
     }),
   );
 
-  const handleDeleteHistoryTrace = useCallback(
-    (uniqueId: string) => {
-      setHistoryTraces((previousTraces) => {
-        const newTraces = previousTraces.filter(
-          (trace) => trace.uniqueId !== uniqueId,
-        );
+  const handleDeleteHistoryTrace = (uniqueId: string) => {
+    setHistoryTraces((previousTraces) => {
+      return previousTraces.filter((trace) => trace.uniqueId !== uniqueId);
+    });
+  };
+  const handleDeleteFavouriteTrace = (traceId: string) => {
+    setFavourites((previousFavourites) => {
+      return previousFavourites.filter((trace) => trace.trace.id !== traceId);
+    });
+  };
 
-        return newTraces;
-      });
-    },
-    [setHistoryTraces],
-  );
+  const handleSetHistoryTraces = (trace: HistoryTrace) => {
+    setHistoryTraces((previousTraces) => {
+      return [...previousTraces, trace];
+    });
+  };
 
-  const handleDeleteFavouriteTrace = useCallback(
-    (traceId: string) => {
-      setFavourites((previousFavourites) => {
-        const newFavourites = previousFavourites.filter(
-          (trace) => trace.trace.id !== traceId,
-        );
-
-        return newFavourites;
-      });
-    },
-    [setFavourites],
-  );
-
-  const handleSetHistoryTraces = useCallback(
-    (trace: HistoryTrace) => {
-      setHistoryTraces((previousTraces) => {
-        const newTraces = previousTraces.filter(
-          (t) => t.uniqueId !== trace.uniqueId,
-        );
-
-        return [...newTraces, trace];
-      });
-    },
-    [setHistoryTraces],
-  );
-
-  const handleSetFavourites = useCallback(
-    (trace: HistoryTrace) => {
-      setFavourites((previousTraces) => {
-        return [...previousTraces, trace];
-      });
-    },
-    [setFavourites],
-  );
+  const handleSetFavourites = (trace: HistoryTrace) => {
+    setFavourites((previousTraces) => {
+      return [...previousTraces, trace];
+    });
+  };
 
   const handleSetClient = (url: string) => {
     setClient(
