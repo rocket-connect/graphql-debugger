@@ -82,7 +82,9 @@ export function SchemaTraces() {
     if (!isFavourite(trace.id)) {
       handleSetFavourites({
         trace,
-        schemaId: params.schemaId,
+        schemaId: params.schemaId as string,
+        uniqueId: uuidv4(),
+        timestamp: new Date(),
       });
       toast.success(
         <p>
@@ -183,9 +185,9 @@ export function SchemaTraces() {
                             >
                               <button onClick={() => handleAddTrace(trace)}>
                                 {isFavourite(trace.id) ? (
-                                  <Star />
+                                  <Star size={"1.5em"} />
                                 ) : (
-                                  <StarFilled />
+                                  <StarFilled size={"1.5em"} />
                                 )}
                               </button>
                               <Link
@@ -202,8 +204,9 @@ export function SchemaTraces() {
                                 onClick={() =>
                                   handleSetHistoryTraces({
                                     trace,
-                                    schemaId: params.schemaId ?? "",
+                                    schemaId: params.schemaId as string,
                                     uniqueId: uuidv4(),
+                                    timestamp: new Date(),
                                   })
                                 }
                               >

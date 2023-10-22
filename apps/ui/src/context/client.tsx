@@ -25,9 +25,11 @@ export interface ClientContextProps {
 
 export interface HistoryTrace {
   trace: Trace;
-  uniqueId?: string;
-  schemaId?: string;
+  uniqueId: string;
+  schemaId: string;
+  timestamp: Date;
 }
+
 export const ClientContext = createContext<ClientContextProps>({
   client: new DebuggerClient(),
   handleSetClient: () => {},

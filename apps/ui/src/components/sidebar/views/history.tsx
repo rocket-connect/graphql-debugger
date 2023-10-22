@@ -16,9 +16,13 @@ export function History() {
     return schemasContext?.schemas.find((schema) => schema.id === schemaId);
   };
 
+  const sortedHistoryTraces = historyTraces.sort((a, b) => {
+    return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
+  });
+
   return (
     <div className="flex w-full flex-col gap-3 divide-y-2 divide-neutral/10">
-      {historyTraces.map(({ schemaId, trace, uniqueId }) => {
+      {sortedHistoryTraces.map(({ schemaId, trace, uniqueId }) => {
         const durationUnixNano = UnixNanoTimeStamp.fromString(
           trace.rootSpan?.durationNano || "0",
         );
@@ -30,7 +34,7 @@ export function History() {
         const { value, unit } = durationUnixNano.toSIUnits();
         return (
           <div
-            className="text-sm text-neutral-100 flex items-center justify-between p-1"
+            className="text-xs text-neutral-100 flex items-center justify-between pt-3"
             role="button"
             key={uniqueId}
           >
@@ -49,12 +53,12 @@ export function History() {
               </p>
             </div>
 
-            <div className="self-baseline flex justify-center items-center gap-3">
+            <div className="flex justify-center items-center gap-5">
               <span className="self-end font-normal">{`${value.toFixed(
                 2,
               )} ${unit}`}</span>
               <button onClick={() => handleDeleteHistoryTrace(uniqueId ?? "")}>
-                <Delete color="red-500" />
+                <Delete color="red-500" size="1.5em" />
               </button>
             </div>
           </div>
