@@ -5,7 +5,6 @@ import { SideBarContext, type SideBarViewTypes } from "../../context/sidebar";
 import { InfoFilled, InfoStroke } from "../../icons/info";
 import { githubDark, npmDark } from "../../images";
 import { iconsMapper } from "./utils";
-import { SideBarView } from "./view";
 
 export function SideBarIcons() {
   const sidebar = useContext(SideBarContext);
