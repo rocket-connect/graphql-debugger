@@ -9,11 +9,20 @@ export function SideBarView() {
   const sidebarContext = useContext(SideBarContext);
   const schemasContext = useContext(SchemasContext);
 
+  const viewType = sidebarContext?.view?.type || "";
+
+  const isSchemaSelected =
+    Number(schemasContext?.schemaRef.current?.hash.length) > 0;
+
+  const sideBarViewComponent =
+    sideBarComponentMapper(isSchemaSelected)[viewType].component;
+
+  const sideBarViewDescription =
+    sideBarComponentMapper(isSchemaSelected)[viewType].description;
+
   if (!sidebarContext?.isOpened) {
     return <></>;
   }
-
-  const viewType = sidebarContext?.view?.type || "";
 
   const shouldDisplayLogo = ["login", "info"].includes(viewType);
   const shouldDisplayHeader = !["info"].includes(viewType);
@@ -32,19 +41,12 @@ export function SideBarView() {
           <h2 className="font-bold first-letter:uppercase">
             {sidebarContext.view?.type || ""}
           </h2>
-          <p className="text-sm">
-            {
-              sideBarComponentMapper(
-                Number(schemasContext?.schemaRef.current?.hash.length) > 0,
-              )[viewType].description
-            }
-            .
-          </p>
+          <p className="text-sm">{sideBarViewDescription}.</p>
         </div>
       ) : (
         <></>
       )}
-      {sideBarComponentMapper()[viewType].component}
+      {sideBarViewComponent}
     </div>
   );
 }
