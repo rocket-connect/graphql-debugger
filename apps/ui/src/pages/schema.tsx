@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Trace } from "../components/trace/trace";
 import { Page } from "../components/utils/page";
 import { SchemasContext } from "../context/schemas";
+import { IDS } from "../testing";
 
 export function Schema() {
   const params = useParams();
@@ -25,5 +26,9 @@ export function Schema() {
     }
   }, [schemaContext, navigate, params.schemaId]);
 
-  return <Page>{schemaContext?.schemaRef.current && <Trace />}</Page>;
+  return (
+    <Page id={IDS.schema.page}>
+      {schemaContext?.schemaRef.current && <Trace />}
+    </Page>
+  );
 }

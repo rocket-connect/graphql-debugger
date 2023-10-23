@@ -1,8 +1,9 @@
 import { LinkedText } from "../../../components/utils/linked-text";
+import { IDS } from "../../../testing";
 
 export function Login() {
   return (
-    <div className="w-full text-netural-100">
+    <div id={IDS.sidebar.views.login} className="w-full text-netural-100">
       <form className="flex flex-col gap-5">
         <div className="flex flex-col gap-3">
           <label htmlFor="username" className="block font-bold">

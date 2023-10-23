@@ -4,6 +4,7 @@ import { ConfigContext } from "../../context/config";
 import { SideBarContext, type SideBarViewTypes } from "../../context/sidebar";
 import { InfoFilled, InfoStroke } from "../../icons/info";
 import { githubDark, npmDark } from "../../images";
+import { IDS } from "../../testing";
 import { iconsMapper } from "./utils";
 
 export function SideBarIcons() {
@@ -28,13 +29,20 @@ export function SideBarIcons() {
   };
 
   return (
-    <div className="flex flex-col items-center gap-8 border-r-2 border-neutral-100/15 p-4 h-screen">
+    <div
+      id={IDS.sidebar.icons.view}
+      className="flex flex-col items-center gap-8 border-r-2 border-neutral-100/15 p-4 h-screen"
+    >
       <div className="flex flex-col justify-between h-full">
         <div className="flex flex-col gap-5 mx-auto w-8">
           {Object.values(iconsMapper(config?.routes)).map((icon) => {
-            if (icon.hidden) return null;
+            if (icon.hidden) {
+              return null;
+            }
+
             return (
               <button
+                id={icon.id}
                 className="w-8"
                 key={icon.type}
                 onClick={() => handleRouteChange(icon.type)}
@@ -44,8 +52,10 @@ export function SideBarIcons() {
             );
           })}
         </div>
+
         <div className="flex flex-col gap-5 mx-auto">
           <a
+            id={IDS.sidebar.icons.npm}
             href="https://www.npmjs.com/search?q=graphql-debugger"
             className="flex items-center"
           >
@@ -54,6 +64,7 @@ export function SideBarIcons() {
             </span>
           </a>
           <a
+            id={IDS.sidebar.icons.github}
             href="https://github.com/rocket-connect/graphql-debugger"
             className="flex items-center"
           >
@@ -62,7 +73,11 @@ export function SideBarIcons() {
             </span>
           </a>
 
-          <button className="w-8" onClick={() => handleRouteChange("info")}>
+          <button
+            id={IDS.sidebar.icons.info}
+            className="w-8"
+            onClick={() => handleRouteChange("info")}
+          >
             {activeRoute("info") ? <InfoFilled /> : <InfoStroke />}
           </button>
         </div>

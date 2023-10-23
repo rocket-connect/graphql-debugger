@@ -7,6 +7,7 @@ import { Link, useParams } from "react-router-dom";
 import { ClientContext } from "../../../context/client";
 import { SchemasContext } from "../../../context/schemas";
 import { Delete } from "../../../icons/delete";
+import { IDS } from "../../../testing";
 
 export function History() {
   const params = useParams<{ traceId: string }>();
@@ -22,7 +23,10 @@ export function History() {
   });
 
   return (
-    <div className="flex w-full flex-col gap-3 divide-y-2 divide-neutral/10">
+    <div
+      id={IDS.sidebar.icons.history}
+      className="flex w-full flex-col gap-3 divide-y-2 divide-neutral/10"
+    >
       {sortedHistoryTraces.map(({ schemaId, trace, uniqueId }) => {
         const durationUnixNano = UnixNanoTimeStamp.fromString(
           trace.rootSpan?.durationNano || "0",

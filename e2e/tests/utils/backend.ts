@@ -3,7 +3,7 @@ import * as collector from "@graphql-debugger/collector-proxy";
 
 import http from "http";
 
-import { debug } from "../src/debug";
+import { debug } from "../../src/debug";
 
 let backendServer: http.Server;
 let collectorServer: http.Server;

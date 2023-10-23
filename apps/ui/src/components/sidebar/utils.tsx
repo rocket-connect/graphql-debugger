@@ -8,6 +8,7 @@ import {
   loginFilled,
   loginStroke,
 } from "../../images";
+import { IDS } from "../../testing";
 import { SchemaViewer } from "../schema/viewer";
 import { Config } from "./views/config";
 import { Favourites } from "./views/favourites";
@@ -29,30 +30,36 @@ export const iconsMapper = (
     inactive: React.ReactNode;
     hidden?: boolean;
     type: string;
+    id: string;
   }
 > => ({
   schema: {
+    id: IDS.sidebar.icons.schemas,
     type: "schema",
     active: <img className="w-8" src={folderFilled} />,
     inactive: <img className="w-8" src={folderStroke} />,
   },
   config: {
+    id: IDS.sidebar.icons.config,
     type: "config",
     active: <img className="w-8" src={configFilled} />,
     inactive: <img className="w-8" src={configStroke} />,
   },
   login: {
+    id: IDS.sidebar.icons.login,
     type: "login",
     active: <img className="w-8" src={loginFilled} />,
     inactive: <img className="w-8" src={loginStroke} />,
   },
   history: {
+    id: IDS.sidebar.icons.history,
     type: "history",
     active: <HistoryFilled size={"35"} color="#3b4b68" />,
     inactive: <History size={"35"} color="#3b4b68" />,
     hidden: !routes?.includes("history"),
   },
   favourites: {
+    id: IDS.sidebar.icons.favourites,
     type: "favourites",
     active: <Star size={"35"} color="#3b4b68" />,
     inactive: <StarFilled size={"35"} color="#3b4b68" />,

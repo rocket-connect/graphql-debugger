@@ -72,7 +72,7 @@ export function SchemaViewer() {
 
   return (
     <div
-      id={IDS.SCHEMA}
+      id={IDS.sidebar.views.schemas}
       className="w-full"
       data-schema={currentSchema?.id as string}
     >

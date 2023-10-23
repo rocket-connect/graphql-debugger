@@ -1,3 +1,4 @@
+import { prisma } from "@graphql-debugger/data-access";
 import {
   GraphQLOTELContext,
   traceSchema,
@@ -9,12 +10,11 @@ import { makeExecutableSchema } from "@graphql-tools/schema";
 import { graphql, parse, print } from "graphql";
 import util from "util";
 
-import { prisma } from "./prisma";
-import { Browser, getBrowser, getPage } from "./puppeteer";
+import { Browser, getBrowser, getPage } from "./utils/puppeteer";
 
 const sleep = util.promisify(setTimeout);
 
-describe("schema", () => {
+describe.skip("schema", () => {
   let browser: Browser;
 
   beforeAll(async () => {

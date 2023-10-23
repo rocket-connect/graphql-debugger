@@ -2,6 +2,7 @@ import { useContext } from "react";
 import toast from "react-hot-toast";
 
 import { ConfigContext } from "../../../context/config";
+import { IDS } from "../../../testing";
 import { Toggle } from "../../utils/toggle";
 import { configs } from "../utils";
 import { Backend } from "./backend";
@@ -10,7 +11,7 @@ export function Config() {
   const context = useContext(ConfigContext);
 
   return (
-    <div className="flex flex-col gap-5">
+    <div id={IDS.sidebar.views.config} className="flex flex-col gap-5">
       <div className="flex flex-col gap-1">
         <h3 className="font-bold">General</h3>
         <p className="text-sm">Customize your experience.</p>

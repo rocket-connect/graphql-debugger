@@ -7,6 +7,7 @@ import { Link, useParams } from "react-router-dom";
 import { ClientContext } from "../../../context/client";
 import { SchemasContext } from "../../../context/schemas";
 import { Delete } from "../../../icons/delete";
+import { IDS } from "../../../testing";
 
 export function Favourites() {
   const params = useParams<{ traceId: string }>();
@@ -22,7 +23,10 @@ export function Favourites() {
   });
 
   return (
-    <div className="flex w-full flex-col gap-3 divide-y-2 divide-neutral/10">
+    <div
+      id={IDS.sidebar.icons.favourites}
+      className="flex w-full flex-col gap-3 divide-y-2 divide-neutral/10"
+    >
       {sortedfavourites.map(({ schemaId, trace }) => {
         const durationUnixNano = UnixNanoTimeStamp.fromString(
           trace.rootSpan?.durationNano || "0",
