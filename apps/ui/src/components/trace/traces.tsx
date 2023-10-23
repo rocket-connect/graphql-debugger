@@ -3,11 +3,19 @@ import { Trace } from "@graphql-debugger/types";
 
 import { useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
-import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useContext } from "react";
+import toast from "react-hot-toast";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 import { ClientContext } from "../../context/client";
 import { Modal } from "../../context/modal";
+import { Star, StarFilled } from "../../icons/star";
 import { refresh, searchFilled } from "../../images";
 import { IDS } from "../../testing";
 import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
@@ -17,18 +25,26 @@ import { Spinner } from "../utils/spinner";
 import { Search } from "./search";
 
 export function SchemaTraces() {
-  const { client } = useContext(ClientContext);
+  const {
+    client,
+    handleSetHistoryTraces,
+    favourites,
+    handleSetFavourites,
+    handleDeleteFavouriteTrace,
+  } = useContext(ClientContext);
   const navigate = useNavigate();
   const params = useParams();
   const [searchParams] = useSearchParams();
-  const [selectedTrace, setSelectedTrace] = useState<Trace | undefined>(
-    undefined,
-  );
 
   const { data: traces, isLoading } = useQuery({
-    queryKey: ["traces", params.schemaId, searchParams.get("rootSpanName")],
+    queryKey: [
+      "traces",
+      params.schemaId,
+      searchParams.get("rootSpanName"),
+      params.traceId,
+    ],
     queryFn: async () => {
-      const _traces = await client.trace.findMany({
+      const traces = await client.trace.findMany({
         where: {
           schemaId: params.schemaId,
           rootSpanName: searchParams.get("rootSpanName"),
@@ -38,38 +54,47 @@ export function SchemaTraces() {
 
       await sleep(DEFAULT_SLEEP_TIME);
 
-      return _traces;
+      return traces;
     },
   });
 
-  const handleSelectTrace = (trace: Trace) => {
-    setSelectedTrace(trace);
+  const isFavourite = (traceId: string): boolean => {
+    return (
+      favourites.find((fav) => fav.trace.id === traceId)?.trace.id === traceId
+    );
   };
 
-  useEffect(() => {
-    if (!params.traceId && traces?.length) {
-      navigate(
-        `/schema/${params.schemaId}/trace/${
-          traces[0].id
-        }?${searchParams.toString()}`,
-      );
-    }
+  const isSelected = (traceId: string): boolean => {
+    return params.traceId === traceId;
+  };
 
-    if (selectedTrace && params.traceId) {
-      navigate(
-        `/schema/${
-          params.schemaId
-        }/trace/${selectedTrace?.id}?${searchParams.toString()}`,
+  const handleAddTrace = (trace: Trace) => {
+    if (isFavourite(trace.id)) {
+      toast.error(
+        <p className="text-sm">
+          Removed
+          <span className="font-bold px-2">{trace?.rootSpan?.name}</span>
+          from favourites
+        </p>,
+      );
+      handleDeleteFavouriteTrace(trace.id);
+    }
+    if (!isFavourite(trace.id)) {
+      handleSetFavourites({
+        trace,
+        schemaId: params.schemaId as string,
+        uniqueId: uuidv4(),
+        timestamp: new Date(),
+      });
+      toast.success(
+        <p className="text-sm">
+          Added
+          <span className="font-bold px-2">{trace?.rootSpan?.name}</span>
+          to favourites
+        </p>,
       );
     }
-  }, [
-    selectedTrace,
-    traces,
-    navigate,
-    searchParams,
-    params.schemaId,
-    params.traceId,
-  ]);
+  };
 
   return (
     <div
@@ -101,7 +126,6 @@ export function SchemaTraces() {
           <button
             className="flex gap-3 hover:underline"
             onClick={() => {
-              setSelectedTrace(undefined);
               navigate({
                 pathname: `/schema/${params.schemaId}`,
                 search: "",
@@ -123,9 +147,11 @@ export function SchemaTraces() {
             <>
               <table className="w-full text-xs text-center">
                 <thead>
-                  <th>Name</th>
-                  <th>Duration</th>
-                  <th>Start</th>
+                  <tr>
+                    <th>Name</th>
+                    <th>Duration</th>
+                    <th>Start</th>
+                  </tr>
                 </thead>
                 <tbody>
                   {traces?.length === 0 ? (
@@ -135,7 +161,6 @@ export function SchemaTraces() {
                   ) : (
                     <>
                       {traces?.map((trace) => {
-                        const isSelected = params.traceId === trace.id;
                         const rootSpan = trace.rootSpan;
                         const startTimeUnixNano = UnixNanoTimeStamp.fromString(
                           rootSpan?.startTimeUnixNano || "0",
@@ -151,17 +176,42 @@ export function SchemaTraces() {
                             data-spanid={rootSpan?.id}
                             key={trace.id}
                             className={`border-b-2 border-graphiql-neutral/10 text-neutral-100 hover:cursor-pointer`}
-                            onClick={() => handleSelectTrace(trace)}
                           >
                             <th
                               className={classNames(
-                                `px-6 py-4 whitespace-nowrap font-medium ${
-                                  isSelected ? "underline" : "font-bold"
-                                }`,
+                                `px-6 py-4  flex items-center gap-3 `,
                               )}
                               role="button"
                             >
-                              {rootSpan?.name}
+                              <button onClick={() => handleAddTrace(trace)}>
+                                {isFavourite(trace.id) ? (
+                                  <Star size={"1.5em"} />
+                                ) : (
+                                  <StarFilled size={"1.5em"} />
+                                )}
+                              </button>
+                              <Link
+                                className={classNames(
+                                  `px-6 py-4 whitespace-nowrap font-medium ${
+                                    isSelected(trace.id)
+                                      ? "underline"
+                                      : "font-bold"
+                                  }`,
+                                )}
+                                to={`/schema/${params.schemaId}/trace/${
+                                  trace.id
+                                }?${searchParams.toString()}`}
+                                onClick={() =>
+                                  handleSetHistoryTraces({
+                                    trace,
+                                    schemaId: params.schemaId as string,
+                                    uniqueId: uuidv4(),
+                                    timestamp: new Date(),
+                                  })
+                                }
+                              >
+                                {rootSpan?.name}
+                              </Link>
                             </th>
                             <td className="px-6 py-4">{`${value.toFixed(
                               2,
