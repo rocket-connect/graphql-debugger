@@ -60,11 +60,21 @@ export function ClientProvider({
   );
 
   const handleDeleteHistoryTrace = (uniqueId: string) => {
+    localStorage.setItem(
+      "traces",
+      JSON.stringify(
+        historyTraces.filter((trace) => trace.uniqueId !== uniqueId),
+      ),
+    );
     setHistoryTraces((previousTraces) => {
       return previousTraces.filter((trace) => trace.uniqueId !== uniqueId);
     });
   };
   const handleDeleteFavouriteTrace = (traceId: string) => {
+    localStorage.setItem(
+      "favourites",
+      JSON.stringify(favourites.filter((trace) => trace.trace.id !== traceId)),
+    );
     setFavourites((previousFavourites) => {
       return previousFavourites.filter((trace) => trace.trace.id !== traceId);
     });
