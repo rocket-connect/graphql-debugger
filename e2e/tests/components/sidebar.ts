@@ -1,7 +1,7 @@
 import { IDS } from "@graphql-debugger/ui/src/testing";
 
 import { expect } from "@jest/globals";
-import { Browser, Page as PPage } from "puppeteer";
+import { Browser, ElementHandle, Page as PPage } from "puppeteer";
 
 import { Page } from "../pages/page";
 import { BaseComponent } from "./component";
@@ -56,5 +56,39 @@ export class Sidebar extends BaseComponent {
         timeout: 500,
       }),
     ).rejects.toThrow();
+  }
+
+  public async getView(
+    key: keyof typeof IDS.sidebar.views,
+  ): Promise<ElementHandle<Element> | null> {
+    const page = this.page?.page as PPage;
+
+    const id = IDS.sidebar.views[key];
+
+    let view: ElementHandle<Element> | null = null;
+    try {
+      view = await page.waitForSelector(`#${id}`, {
+        timeout: 500,
+      });
+    } catch (e) {
+      // Ignore
+    }
+
+    return view;
+  }
+
+  public async toggleView(
+    key: keyof typeof IDS.sidebar.views,
+  ): Promise<ElementHandle<Element> | null> {
+    const page = this.page?.page as PPage;
+
+    const id = IDS.sidebar.icons[key];
+
+    const infoIcon = await page.waitForSelector(`#${id}`);
+    await infoIcon?.click();
+
+    const view = await this.getView(key);
+
+    return view;
   }
 }
