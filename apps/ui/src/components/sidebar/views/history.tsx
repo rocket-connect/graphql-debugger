@@ -25,7 +25,7 @@ export function History() {
 
   return (
     <div
-      id={IDS.sidebar.icons.history}
+      id={IDS.sidebar.views.history}
       className="flex w-full flex-col gap-3 divide-y-2 divide-neutral/10"
     >
       {sortedHistoryTraces.map(({ schemaId, trace, uniqueId }) => {
@@ -48,6 +48,7 @@ export function History() {
             className="text-xs text-neutral-100 flex items-center justify-between pt-3"
             role="button"
             key={uniqueId}
+            data-traceid={trace.id}
           >
             <div className="flex flex-col gap-1">
               <Link

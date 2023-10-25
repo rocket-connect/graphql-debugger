@@ -26,7 +26,16 @@ export class Sidebar extends BaseComponent {
       `#${IDS.sidebar.icons.config}`,
     );
 
+    const historyIcon = await page.waitForSelector(
+      `#${IDS.sidebar.icons.history}`,
+    );
+
+    const favouritesIcon = await page.waitForSelector(
+      `#${IDS.sidebar.icons.favourites}`,
+    );
+
     const loginIcon = await page.waitForSelector(`#${IDS.sidebar.icons.login}`);
+
     const npmIcon = await page.waitForSelector(`#${IDS.sidebar.icons.npm}`);
 
     const githubIcon = await page.waitForSelector(
@@ -38,24 +47,12 @@ export class Sidebar extends BaseComponent {
     expect(sidebarIcons).toBeTruthy();
     expect(schemasIcon).toBeTruthy();
     expect(configIcon).toBeTruthy();
+    expect(historyIcon).toBeTruthy();
+    expect(favouritesIcon).toBeTruthy();
     expect(loginIcon).toBeTruthy();
     expect(npmIcon).toBeTruthy();
     expect(githubIcon).toBeTruthy();
     expect(infoIcon).toBeTruthy();
-
-    // History is disabled by default
-    await expect(
-      page.waitForSelector(`#${IDS.sidebar.icons.history}`, {
-        timeout: 500,
-      }),
-    ).rejects.toThrow();
-
-    // Favourites is disabled by default
-    await expect(
-      page.waitForSelector(`#${IDS.sidebar.icons.favourites}`, {
-        timeout: 500,
-      }),
-    ).rejects.toThrow();
   }
 
   public async getView(

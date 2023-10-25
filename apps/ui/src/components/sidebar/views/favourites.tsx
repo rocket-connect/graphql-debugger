@@ -25,7 +25,7 @@ export function Favourites() {
 
   return (
     <div
-      id={IDS.sidebar.icons.favourites}
+      id={IDS.sidebar.views.favourites}
       className="flex w-full flex-col gap-3 divide-y-2 divide-neutral/10"
     >
       {sortedfavourites.map(({ schemaId, trace }) => {

@@ -21,9 +21,7 @@ interface SideBar {
   component: JSX.Element;
 }
 
-export const iconsMapper = (
-  routes: string[] | undefined,
-): Record<
+export const iconsMapper = (): Record<
   string,
   {
     active: React.ReactNode;
@@ -56,14 +54,12 @@ export const iconsMapper = (
     type: "history",
     active: <HistoryFilled size={"35"} color="#3b4b68" />,
     inactive: <History size={"35"} color="#3b4b68" />,
-    hidden: !routes?.includes("history"),
   },
   favourites: {
     id: IDS.sidebar.icons.favourites,
     type: "favourites",
     active: <Star size={"35"} color="#3b4b68" />,
     inactive: <StarFilled size={"35"} color="#3b4b68" />,
-    hidden: !routes?.includes("favourites"),
   },
 });
 
@@ -105,16 +101,6 @@ export const configs = [
     description: "Toggle between light and dark mode",
     callout: "(Comming Soon)",
     enabled: false,
-  },
-  {
-    name: "History",
-    description: "Store trace history in local storage",
-    enabled: true,
-  },
-  {
-    name: "Favourites",
-    description: "Store trace favourites in local storage",
-    enabled: true,
   },
   {
     name: "Cookies",

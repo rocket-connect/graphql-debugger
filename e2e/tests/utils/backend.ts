@@ -34,3 +34,6 @@ export async function close() {
 
   debug("Collector Proxy closed");
 }
+
+export const BACKEND_PORT = backend.BACKEND_PORT;
+export const COLLECTOR_PORT = collector.COLLECTOR_PORT;

@@ -30,10 +30,9 @@ describe("sidebar", () => {
     });
     await sidebar.init();
 
-    const defaultHiddenViews = ["history", "favourites"];
-    const sidebarViews = (
-      Object.keys(IDS.sidebar.views) as (keyof typeof IDS.sidebar.views)[]
-    ).filter((key) => !defaultHiddenViews.includes(key));
+    const sidebarViews = Object.keys(
+      IDS.sidebar.views,
+    ) as (keyof typeof IDS.sidebar.views)[];
 
     for await (const key of sidebarViews) {
       let view = await sidebar.toggleView(key);

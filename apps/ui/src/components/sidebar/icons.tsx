@@ -1,6 +1,5 @@
 import { useContext } from "react";
 
-import { ConfigContext } from "../../context/config";
 import { SideBarContext, type SideBarViewTypes } from "../../context/sidebar";
 import { InfoFilled, InfoStroke } from "../../icons/info";
 import { githubDark, npmDark } from "../../images";
@@ -9,7 +8,6 @@ import { iconsMapper } from "./utils";
 
 export function SideBarIcons() {
   const sidebar = useContext(SideBarContext);
-  const config = useContext(ConfigContext);
 
   const handleRouteChange = (type: string) => {
     if (sidebar) {
@@ -35,11 +33,7 @@ export function SideBarIcons() {
     >
       <div className="flex flex-col justify-between h-full">
         <div className="flex flex-col gap-5 mx-auto w-8">
-          {Object.values(iconsMapper(config?.routes)).map((icon) => {
-            if (icon.hidden) {
-              return null;
-            }
-
+          {Object.values(iconsMapper()).map((icon) => {
             return (
               <button
                 id={icon.id}
