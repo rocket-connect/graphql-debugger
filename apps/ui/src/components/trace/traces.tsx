@@ -145,23 +145,27 @@ export function SchemaTraces() {
             </div>
           ) : (
             <>
-              <table
-                id={IDS.trace_list.table}
-                className="w-full text-xs text-center"
-              >
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Duration</th>
-                    <th>Start</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {traces?.length === 0 ? (
-                    <div className="font-bold text-neutral-200 flex items-center justify-center text-center mx-auto">
-                      No traces found
-                    </div>
-                  ) : (
+              {traces?.length === 0 ? (
+                <div
+                  id={IDS.trace_list.not_found}
+                  className="mx-auto text-center text-neutral-100 font-bold"
+                >
+                  <p className="mt-20">No Traces Found</p>
+                </div>
+              ) : (
+                <table
+                  id={IDS.trace_list.table}
+                  className="w-full text-xs text-center"
+                >
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Duration</th>
+                      <th>Start</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
                     <>
                       {traces?.map((trace) => {
                         const rootSpan = trace.rootSpan;
@@ -226,9 +230,9 @@ export function SchemaTraces() {
                         );
                       })}
                     </>
-                  )}
-                </tbody>
-              </table>
+                  </tbody>
+                </table>
+              )}
             </>
           )}
         </div>

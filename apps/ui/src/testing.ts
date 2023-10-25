@@ -24,6 +24,7 @@ export const IDS = {
   trace_list: {
     view: "trace-list-view",
     table: "trace-list-table",
+    not_found: "trace-list-not-found",
   },
   trace_viewer: {
     view: "trace-viewer-view",

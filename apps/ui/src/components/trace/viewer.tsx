@@ -141,7 +141,7 @@ export function TraceViewer() {
               id={IDS.trace_viewer.not_found}
               className="mx-auto text-center text-neutral-100 font-bold"
             >
-              No Trace Found
+              <p className="mt-20">No Trace Selected</p>
             </div>
           )}
         </>
