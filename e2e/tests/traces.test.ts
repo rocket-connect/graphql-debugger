@@ -2,6 +2,7 @@ import { prisma } from "@graphql-debugger/data-access";
 import {
   dbSpanToNetwork,
   getTraceStart,
+  isTraceError,
   sumTraceTime,
 } from "@graphql-debugger/utils";
 
@@ -42,7 +43,14 @@ describe("traces", () => {
     });
     await schemasComponent.init();
 
-    const { dbSchema, schema, query } = await createTestSchema();
+    const { dbSchema, schema, query, randomFieldName } =
+      await createTestSchema();
+
+    const { schema: failSchema } = await createTestSchema({
+      randomFieldName,
+      shouldError: true,
+    });
+
     await schemasComponent.clickSchema(dbSchema);
 
     const traceComponent = new Trace({
@@ -51,14 +59,23 @@ describe("traces", () => {
     });
     await traceComponent.init();
 
-    const response = await querySchema({
-      schema: schema,
-      query: query,
-    });
-    expect(response.errors).toBeUndefined();
+    const responses = await Promise.all([
+      querySchema({
+        schema: schema,
+        query: query,
+      }),
+      querySchema({
+        schema: failSchema,
+        query: query,
+      }),
+    ]);
+
+    expect(responses[0].errors).toBeUndefined();
+    expect(responses[1].errors).toBeDefined();
+
     await page.reload();
 
-    const [trace] = await prisma.traceGroup.findMany({
+    const traces = await prisma.traceGroup.findMany({
       where: {
         schemaId: dbSchema.id,
       },
@@ -75,33 +92,42 @@ describe("traces", () => {
     await tracesComponent.init();
 
     const uiTraces = await tracesComponent.getUITraces();
-    expect(uiTraces.length).toEqual(1);
+    expect(uiTraces.length).toEqual(2);
 
-    const uiTrace = uiTraces.find((t) => t.id === trace.id);
-    expect(uiTrace).toBeDefined();
+    traces.forEach((trace) => {
+      const isError = isTraceError(trace);
 
-    const duration = sumTraceTime({
-      id: trace.id,
-      traceId: trace.traceId,
-      spans: trace.spans.map((span) => dbSpanToNetwork(span)),
-    });
+      const uiTrace = uiTraces.find((t) => t.id === trace.id);
+      expect(uiTrace).toBeDefined();
 
-    const traceDurationSIUnits = duration?.toSIUnits();
-    const { value, unit } = traceDurationSIUnits;
+      const duration = sumTraceTime({
+        id: trace.id,
+        traceId: trace.traceId,
+        spans: trace.spans.map((span) => dbSpanToNetwork(span)),
+      });
 
-    expect(uiTrace?.duration).toEqual(`${value.toFixed(2)} ${unit}`);
+      const traceDurationSIUnits = duration?.toSIUnits();
+      const { value, unit } = traceDurationSIUnits;
+      expect(uiTrace?.duration).toEqual(`${value.toFixed(2)} ${unit}`);
 
-    const startTimeUnixNano = getTraceStart({
-      id: trace.id,
-      traceId: trace.traceId,
-      spans: trace.spans.map((span) => dbSpanToNetwork(span)),
-    });
+      const startTimeUnixNano = getTraceStart({
+        id: trace.id,
+        traceId: trace.traceId,
+        spans: trace.spans.map((span) => dbSpanToNetwork(span)),
+      });
+      expect(uiTrace?.start).toEqual(
+        startTimeUnixNano.formatUnixNanoTimestamp(),
+      );
 
-    expect(uiTrace?.start).toEqual(startTimeUnixNano.formatUnixNanoTimestamp());
+      const color = uiTrace?.color;
 
-    await tracesComponent.clickTrace({
-      schemaId: dbSchema.id,
-      traceId: trace.id,
+      if (isError) {
+        const red = "rgb(239, 68, 68)";
+        expect(color).toEqual(red);
+      } else {
+        const neturalColor = "rgb(59, 75, 104)";
+        expect(color).toBe(neturalColor);
+      }
     });
   });
 });

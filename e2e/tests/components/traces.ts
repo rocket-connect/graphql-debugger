@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { IDS } from "@graphql-debugger/ui/src/testing";
 
 import { Browser, Page as PPage } from "puppeteer";
@@ -31,7 +32,13 @@ export class Traces extends BaseComponent {
   }
 
   public async getUITraces(): Promise<
-    { id: string; name: string; start: string; duration: string }[]
+    {
+      id: string;
+      name: string;
+      start: string;
+      duration: string;
+      color: string;
+    }[]
   > {
     const page = this.page?.page as PPage;
 
@@ -52,6 +59,15 @@ export class Traces extends BaseComponent {
         ? await page.evaluate((el) => el.innerText.trim(), nameCell)
         : null;
 
+      const color = nameCell
+        ? await page.evaluate((el) => {
+            return el
+              ? // @ts-ignore
+                window.getComputedStyle(el).color
+              : "";
+          }, nameCell)
+        : null;
+
       const durationCell = await row.$("td:nth-last-child(3)");
 
       const startCell = await row.$("td:nth-last-child(2)");
@@ -64,8 +80,8 @@ export class Traces extends BaseComponent {
         ? await page.evaluate((el) => el.innerText.trim(), startCell)
         : null;
 
-      if (id && name && start && duration) {
-        uiTraces.push({ id, name, start, duration });
+      if (id && name && start && duration && color) {
+        uiTraces.push({ id, name, start, duration, color });
       }
     }
 

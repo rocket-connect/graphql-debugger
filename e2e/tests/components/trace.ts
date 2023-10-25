@@ -43,6 +43,7 @@ export class Trace extends BaseComponent {
     name: string;
     duration: string;
     start: string;
+    color: string;
   }> {
     const page = this.page?.page as PPage;
 
@@ -71,17 +72,33 @@ export class Trace extends BaseComponent {
       throw new Error("Failed to find the trace start.");
     }
 
+    const bg = await page.evaluate((el) => {
+      // @ts-ignore
+      const element = el.querySelector("span");
+
+      return element
+        ? // @ts-ignore
+          window.getComputedStyle(element).color
+        : "";
+    }, pill);
+
     return {
       name,
       duration,
       start,
+      color: bg,
     };
   }
 
-  public async getEditorValues(): Promise<{
+  public async getEditorValues({
+    includeError,
+  }: {
+    includeError?: boolean;
+  }): Promise<{
     query: string;
     variables?: string;
     result?: string;
+    error?: string;
   }> {
     const page = this.page?.page as PPage;
 
@@ -100,7 +117,13 @@ export class Trace extends BaseComponent {
 
     const links = await variables.$$("a");
     const map = new Map<string, string>();
-    const excluded = ["Context", "Errors"];
+    const excluded = ["Context"];
+
+    if (includeError) {
+      excluded.push("Result");
+    } else {
+      excluded.push("Errors");
+    }
 
     for await (const link of links) {
       const text = await page.evaluate((el) => {
@@ -130,6 +153,7 @@ export class Trace extends BaseComponent {
       query: renderedQuery || "",
       variables: map.get("Variables"),
       result: map.get("Result"),
+      error: map.get("Errors"),
     };
   }
 }

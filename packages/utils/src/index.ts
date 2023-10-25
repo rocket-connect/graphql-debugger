@@ -4,3 +4,6 @@ export * from "./safe-json";
 export * from "./sum-trace-time";
 export * from "./db-span-to-network";
 export * from "./get-trace-start";
+export * from "./print-trace-errors";
+export * from "./make-valid-json";
+export * from "./is-trace-error";

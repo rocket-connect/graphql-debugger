@@ -1,4 +1,5 @@
 import { Trace } from "@graphql-debugger/types";
+import { printTraceErrors } from "@graphql-debugger/utils";
 
 import classNames from "classnames";
 import { useState } from "react";
@@ -27,20 +28,8 @@ export function Variables({ trace }: { trace?: Trace }) {
     });
   };
 
-  const errorsJson = JSON.stringify(
-    [
-      ...(trace?.spans || []),
-      ...(trace?.rootSpan ? [trace?.rootSpan] : []),
-    ].reduce((result, span) => {
-      if (span.errorMessage || span.errorStack) {
-        result[span.name] = {
-          errorMessage: span.errorMessage,
-          errorStack: span.errorStack,
-        };
-      }
-
-      return result;
-    }, {}),
+  const errors = JSON.parse(
+    trace ? printTraceErrors(trace) : JSON.stringify({}),
   );
 
   return (
@@ -73,7 +62,7 @@ export function Variables({ trace }: { trace?: Trace }) {
             <JsonViewer
               json={
                 selectedMeta === "errors"
-                  ? errorsJson
+                  ? JSON.stringify(errors)
                   : trace?.rootSpan?.[jsonMapper[selectedMeta]] || "{}"
               }
             />

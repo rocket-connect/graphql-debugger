@@ -6,20 +6,24 @@ import { faker } from "@faker-js/faker";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { GraphQLSchema } from "graphql";
 
-export async function createTestSchema(): Promise<{
+export async function createTestSchema({
+  shouldError,
+  randomFieldName,
+}: { shouldError?: boolean; randomFieldName?: string } = {}): Promise<{
   schema: GraphQLSchema;
   typeDefs: string;
   hash: string;
   dbSchema: Schema;
   query: string;
+  randomFieldName: string;
 }> {
-  const randomFieldName = faker.string.alpha(6);
+  const random = randomFieldName || faker.string.alpha(6);
 
   const typeDefs = /* GraphQL */ `
     type User {
       id: ID!
       name: String!
-      ${randomFieldName}: String!
+      ${random}: String!
     }
 
     type Query {
@@ -30,11 +34,15 @@ export async function createTestSchema(): Promise<{
   const resolvers = {
     Query: {
       users: () => {
+        if (shouldError) {
+          throw new Error("test");
+        }
+
         return [
           {
             id: 1,
             name: "John",
-            [randomFieldName]: "test",
+            [random]: "test",
           },
         ];
       },
@@ -73,9 +81,10 @@ export async function createTestSchema(): Promise<{
         users(name: "John") {
           id
           name
-          ${randomFieldName}
+          ${random}
         }
       }
     `,
+    randomFieldName: random,
   };
 }
