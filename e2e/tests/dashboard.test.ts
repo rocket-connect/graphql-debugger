@@ -1,9 +1,5 @@
-import util from "util";
-
 import { Dashboard } from "./pages/dashboard";
 import { Browser, getBrowser, getPage } from "./utils/puppeteer";
-
-const sleep = util.promisify(setTimeout);
 
 describe("dashboard", () => {
   let browser: Browser;
@@ -25,7 +21,5 @@ describe("dashboard", () => {
     });
 
     await dashboard.init();
-
-    await sleep(10000);
   });
 });

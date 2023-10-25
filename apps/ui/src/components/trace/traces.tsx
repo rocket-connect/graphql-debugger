@@ -99,7 +99,7 @@ export function SchemaTraces() {
   return (
     <div
       className="bg-white-100 flex-grow rounded-2xl divide-y-2 divide-neutral/10"
-      id={IDS.SCHEMA_TRACES}
+      id={IDS.trace_list.view}
     >
       <div className="flex items-center p-5 justify-between text-neutral-100">
         <div className="flex flex-col">
@@ -145,7 +145,10 @@ export function SchemaTraces() {
             </div>
           ) : (
             <>
-              <table className="w-full text-xs text-center">
+              <table
+                id={IDS.trace_list.table}
+                className="w-full text-xs text-center"
+              >
                 <thead>
                   <tr>
                     <th>Name</th>
@@ -173,7 +176,7 @@ export function SchemaTraces() {
 
                         return (
                           <tr
-                            data-spanid={rootSpan?.id}
+                            data-traceid={trace?.id}
                             key={trace.id}
                             className={`border-b-2 border-graphiql-neutral/10 text-neutral-100 hover:cursor-pointer`}
                           >

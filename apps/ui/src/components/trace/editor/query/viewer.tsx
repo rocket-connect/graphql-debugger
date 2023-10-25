@@ -9,7 +9,7 @@ export function QueryViewer({ doc, spanId }: { doc: string; spanId: string }) {
 
   return (
     <div
-      id={IDS.QUERY_VIEWER}
+      id={IDS.trace.query}
       data-query-view-spanid={spanId}
       className="flex-1 "
     >

@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
 
+import { IDS } from "../..//testing";
 import { ClientContext } from "../../context/client";
 import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
 import { Editor } from "./editor/editor";
@@ -32,7 +33,10 @@ export function Trace() {
   });
 
   return (
-    <>
+    <div
+      id={IDS.trace.view}
+      className="flex flex-col flex-grow w-full h-full gap-4"
+    >
       <TraceHeader trace={trace} isLoading={isLoading} />
       <div className="flex flex-grow gap-4 h-96 items-center ">
         <Editor trace={trace} />
@@ -41,6 +45,6 @@ export function Trace() {
           <SchemaTraces />
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -45,7 +45,7 @@ export function Variables({ trace }: { trace?: Trace }) {
               }
               {...(variable === "Result"
                 ? {
-                    id: IDS.RESULT_BUTTON,
+                    id: IDS.trace.switch_view,
                   }
                 : {})}
               className={classNames("text-neutral-100 ", {
@@ -59,14 +59,14 @@ export function Variables({ trace }: { trace?: Trace }) {
         </div>
         {displayVariables ? (
           <button
-            id={IDS.EXPAND_VARIABLES}
+            id={IDS.trace.expand_variables}
             onClick={() => setDisplayVariables(false)}
           >
             <DownArrow />
           </button>
         ) : (
           <button
-            id={IDS.EXPAND_VARIABLES}
+            id={IDS.trace.expand_variables}
             onClick={() => setDisplayVariables(true)}
           >
             <UpArrow />
@@ -82,7 +82,7 @@ export function Variables({ trace }: { trace?: Trace }) {
           <p className="text-xs mb-2">{metaMapper[selectedMeta]}</p>
           <div className="overflow-scroll custom-scrollbar h-full">
             <JsonViewer
-              id={selectedMeta === "result" ? IDS.JSON_VIEWER : ""}
+              id={selectedMeta === "result" ? IDS.trace.json_viewer : ""}
               json={
                 selectedMeta === "errors"
                   ? errorsJson

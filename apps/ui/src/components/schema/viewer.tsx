@@ -35,7 +35,12 @@ function RenderSchema() {
   const sortedDefs = [...queryDefs, ...mutationDefs, ...otherDefs];
 
   return (
-    <div className="h-screen overflow-y-scroll custom-scrollbar py-2">
+    <div
+      id={IDS.schema.render}
+      data-schemaid={schema?.id}
+      data-typedefs={schema?.typeDefs}
+      className="h-screen overflow-y-scroll custom-scrollbar py-2"
+    >
       {sortedDefs.map((def, index) => {
         if (
           def.kind === "ObjectTypeDefinition" ||

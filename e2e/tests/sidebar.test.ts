@@ -1,12 +1,8 @@
 import { IDS } from "@graphql-debugger/ui/src/testing";
 
-import util from "util";
-
 import { Sidebar } from "./components/sidebar";
 import { Dashboard } from "./pages/dashboard";
 import { Browser, getBrowser, getPage } from "./utils/puppeteer";
-
-const sleep = util.promisify(setTimeout);
 
 describe("sidebar", () => {
   let browser: Browser;
@@ -43,8 +39,6 @@ describe("sidebar", () => {
       // Show the view
       let view = await sidebar.toggleView(key);
       expect(view).toBeTruthy();
-
-      await sleep(200);
 
       // Refresh the page
       await page.reload({

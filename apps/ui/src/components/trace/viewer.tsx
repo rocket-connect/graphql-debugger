@@ -97,7 +97,7 @@ export function TraceViewer() {
 
   return (
     <div
-      id={IDS.TRACE_VIEWER}
+      id={IDS.trace_viewer.view}
       className="overflow-y-scroll basis-3/4 h-full custom-scrollbar"
     >
       <Modal key="trace-full-screen">
