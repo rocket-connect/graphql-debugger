@@ -152,9 +152,10 @@ export function SchemaTraces() {
                 >
                   <thead>
                     <tr>
-                      <th>Name</th>
+                      <th className="px-6 text-left">Name</th>
                       <th>Duration</th>
                       <th>Start</th>
+                      <th>Favourite</th>
                     </tr>
                   </thead>
 
@@ -180,20 +181,11 @@ export function SchemaTraces() {
                             className={`border-b-2 border-graphiql-neutral/10 text-neutral-100 hover:cursor-pointer`}
                           >
                             <th
-                              className={classNames(
-                                `px-6 py-4  flex items-center gap-3 ${
-                                  isError ? "text-error-red" : ""
-                                }`,
-                              )}
+                              className={`py-4 ${
+                                isError ? "text-error-red" : ""
+                              } text-left`}
                               role="button"
                             >
-                              <button onClick={() => handleAddTrace(trace)}>
-                                {isFavourite(trace.id) ? (
-                                  <Star size={"1.5em"} />
-                                ) : (
-                                  <StarFilled size={"1.5em"} />
-                                )}
-                              </button>
                               <Link
                                 className={classNames(
                                   `px-6 py-4 whitespace-nowrap font-medium ${
@@ -222,6 +214,15 @@ export function SchemaTraces() {
                             )} ${unit}`}</td>
                             <td className="px-6 py-4">
                               {startTimeUnixNano.formatUnixNanoTimestamp()}
+                            </td>
+                            <td className="px-6 py-4">
+                              <button onClick={() => handleAddTrace(trace)}>
+                                {isFavourite(trace.id) ? (
+                                  <Star size={"1.5em"} />
+                                ) : (
+                                  <StarFilled size={"1.5em"} />
+                                )}
+                              </button>
                             </td>
                           </tr>
                         );
