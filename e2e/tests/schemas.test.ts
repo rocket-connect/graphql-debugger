@@ -33,7 +33,8 @@ describe("schemas", () => {
   });
 
   test("should display a list of schemas", async () => {
-    const { dbSchema } = await createTestSchema();
+    const { dbSchema: schema1 } = await createTestSchema();
+    const { dbSchema: schema2 } = await createTestSchema();
     const page = await getPage({ browser });
 
     const dashboardPage = new Dashboard({
@@ -50,11 +51,15 @@ describe("schemas", () => {
     });
 
     const uiSchemas = await schemasComponent.getUISchemas();
-    expect(uiSchemas.length).toEqual(1);
+    expect(uiSchemas.length).toEqual(2);
 
-    const [uiSchema] = uiSchemas;
-    expect(uiSchema.id).toEqual(dbSchema.id);
-    expect(uiSchema.typeDefs).toEqual(dbSchema.typeDefs);
+    const uiSchema1 = uiSchemas.find((uiSchema) => uiSchema.id === schema1.id);
+    expect(uiSchema1).toBeTruthy();
+    expect(uiSchema1?.typeDefs).toEqual(schema1.typeDefs);
+
+    const uiSchema2 = uiSchemas.find((uiSchema) => uiSchema.id === schema2.id);
+    expect(uiSchema2).toBeTruthy();
+    expect(uiSchema2?.typeDefs).toEqual(schema2.typeDefs);
   });
 
   test("should open and display a schema", async () => {

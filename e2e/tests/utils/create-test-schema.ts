@@ -2,6 +2,7 @@ import { Schema, prisma } from "@graphql-debugger/data-access";
 import { traceSchema } from "@graphql-debugger/trace-schema";
 import { hashSchema } from "@graphql-debugger/utils";
 
+import { faker } from "@faker-js/faker";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { GraphQLSchema } from "graphql";
 
@@ -12,10 +13,13 @@ export async function createTestSchema(): Promise<{
   dbSchema: Schema;
   query: string;
 }> {
+  const randomFieldName = faker.string.alpha(6);
+
   const typeDefs = /* GraphQL */ `
     type User {
       id: ID!
       name: String!
+      ${randomFieldName}: String!
     }
 
     type Query {
@@ -30,6 +34,7 @@ export async function createTestSchema(): Promise<{
           {
             id: 1,
             name: "John",
+            [randomFieldName]: "test",
           },
         ];
       },
@@ -68,6 +73,7 @@ export async function createTestSchema(): Promise<{
         users {
           id
           name
+          ${randomFieldName}
         }
       }
     `,
