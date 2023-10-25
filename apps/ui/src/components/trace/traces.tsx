@@ -162,76 +162,74 @@ export function SchemaTraces() {
                   </thead>
 
                   <tbody>
-                    <>
-                      {traces?.map((trace) => {
-                        const rootSpan = trace.rootSpan;
-                        const startTimeUnixNano = UnixNanoTimeStamp.fromString(
-                          rootSpan?.startTimeUnixNano || "0",
-                        );
-                        const traceDurationUnixNano =
-                          trace && sumTraceTime(trace);
+                    {traces?.map((trace) => {
+                      const rootSpan = trace.rootSpan;
+                      const startTimeUnixNano = UnixNanoTimeStamp.fromString(
+                        rootSpan?.startTimeUnixNano || "0",
+                      );
+                      const traceDurationUnixNano =
+                        trace && sumTraceTime(trace);
 
-                        const traceDurationSIUnits =
-                          traceDurationUnixNano?.toSIUnits();
+                      const traceDurationSIUnits =
+                        traceDurationUnixNano?.toSIUnits();
 
-                        const { value, unit } = traceDurationSIUnits;
+                      const { value, unit } = traceDurationSIUnits;
 
-                        const isError = isTraceError(trace);
+                      const isError = isTraceError(trace);
 
-                        return (
-                          <tr
-                            data-traceid={trace?.id}
-                            key={trace.id}
-                            className={`border-b-2 border-graphiql-neutral/10 text-neutral-100 hover:cursor-pointer`}
+                      return (
+                        <tr
+                          data-traceid={trace?.id}
+                          key={trace.id}
+                          className={`border-b-2 border-graphiql-neutral/10 text-neutral-100 hover:cursor-pointer`}
+                        >
+                          <th
+                            className={`py-4 ${
+                              isError ? "text-error-red" : ""
+                            } text-left`}
+                            role="button"
                           >
-                            <th
-                              className={`py-4 ${
-                                isError ? "text-error-red" : ""
-                              } text-left`}
-                              role="button"
+                            <Link
+                              className={classNames(
+                                `px-6 py-4 whitespace-nowrap font-medium ${
+                                  isSelected(trace.id)
+                                    ? "underline"
+                                    : "font-bold"
+                                }`,
+                              )}
+                              to={`/schema/${params.schemaId}/trace/${
+                                trace.id
+                              }?${searchParams.toString()}`}
+                              onClick={() =>
+                                handleSetHistoryTraces({
+                                  trace,
+                                  schemaId: params.schemaId as string,
+                                  uniqueId: uuidv4(),
+                                  timestamp: new Date(),
+                                })
+                              }
                             >
-                              <Link
-                                className={classNames(
-                                  `px-6 py-4 whitespace-nowrap font-medium ${
-                                    isSelected(trace.id)
-                                      ? "underline"
-                                      : "font-bold"
-                                  }`,
-                                )}
-                                to={`/schema/${params.schemaId}/trace/${
-                                  trace.id
-                                }?${searchParams.toString()}`}
-                                onClick={() =>
-                                  handleSetHistoryTraces({
-                                    trace,
-                                    schemaId: params.schemaId as string,
-                                    uniqueId: uuidv4(),
-                                    timestamp: new Date(),
-                                  })
-                                }
-                              >
-                                {rootSpan?.name}
-                              </Link>
-                            </th>
-                            <td className="px-6 py-4">{`${value.toFixed(
-                              2,
-                            )} ${unit}`}</td>
-                            <td className="px-6 py-4">
-                              {startTimeUnixNano.formatUnixNanoTimestamp()}
-                            </td>
-                            <td className="px-6 py-4">
-                              <button onClick={() => handleAddTrace(trace)}>
-                                {isFavourite(trace.id) ? (
-                                  <Star size={"1.5em"} />
-                                ) : (
-                                  <StarFilled size={"1.5em"} />
-                                )}
-                              </button>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </>
+                              {rootSpan?.name}
+                            </Link>
+                          </th>
+                          <td className="px-6 py-4">{`${value.toFixed(
+                            2,
+                          )} ${unit}`}</td>
+                          <td className="px-6 py-4">
+                            {startTimeUnixNano.formatUnixNanoTimestamp()}
+                          </td>
+                          <td className="px-6 py-4">
+                            <button onClick={() => handleAddTrace(trace)}>
+                              {isFavourite(trace.id) ? (
+                                <Star size={"1.5em"} />
+                              ) : (
+                                <StarFilled size={"1.5em"} />
+                              )}
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               )}

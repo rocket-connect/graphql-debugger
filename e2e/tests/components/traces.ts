@@ -52,7 +52,7 @@ export class Traces extends BaseComponent {
         ? await page.evaluate((el) => el.innerText.trim(), nameCell)
         : null;
 
-      const startCell = await row.$("td:last-child");
+      const startCell = await row.$("td:nth-last-child(2)");
 
       const start = startCell
         ? await page.evaluate((el) => el.innerText.trim(), startCell)
