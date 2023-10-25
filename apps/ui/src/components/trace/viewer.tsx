@@ -137,7 +137,10 @@ export function TraceViewer() {
           {traces?.length ? (
             <TraceView spans={spans ?? []} />
           ) : (
-            <div className="mx-auto text-center text-neutral-100 font-bold">
+            <div
+              id={IDS.trace_viewer.not_found}
+              className="mx-auto text-center text-neutral-100 font-bold"
+            >
               No Trace Found
             </div>
           )}

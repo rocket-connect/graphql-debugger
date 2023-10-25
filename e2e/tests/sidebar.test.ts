@@ -36,29 +36,23 @@ describe("sidebar", () => {
     ).filter((key) => !defaultHiddenViews.includes(key));
 
     for await (const key of sidebarViews) {
-      // Show the view
       let view = await sidebar.toggleView(key);
       expect(view).toBeTruthy();
 
-      // Refresh the page
       await page.reload({
         waitUntil: ["networkidle0", "domcontentloaded"],
       });
 
-      // Expect the view to be visible
       view = await sidebar.getView(key);
       expect(view).toBeTruthy();
 
-      // Close the view
       view = await sidebar.toggleView(key);
       expect(await view?.isHidden()).toBeFalsy();
 
-      // Refresh the page
       await page.reload({
         waitUntil: ["networkidle0", "domcontentloaded"],
       });
 
-      // Expect the view to still be hidden
       view = await sidebar.getView(key);
       expect(await view?.isHidden()).toBeFalsy();
     }

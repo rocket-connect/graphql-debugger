@@ -1,6 +1,8 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import { Trace } from "@graphql-debugger/types";
 
+import { IDS } from "../../testing";
+
 export function Pill({
   trace,
   bg = "white-100",
@@ -17,7 +19,10 @@ export function Pill({
   const traceDurationSIUnits = traceDurationUnixNano.toSIUnits();
 
   return (
-    <div className={`py-2 px-4 bg-${bg} rounded-2xl text-neutral-100`}>
+    <div
+      id={IDS.trace.pill}
+      className={`py-2 px-4 bg-${bg} rounded-2xl text-neutral-100`}
+    >
       <p className="font-semibold">
         <span className="underline">{trace?.rootSpan?.name}</span>
         {` - ${traceDurationSIUnits.value.toFixed(2)} ${

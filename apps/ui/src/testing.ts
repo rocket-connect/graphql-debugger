@@ -16,6 +16,7 @@ export const IDS = {
     expand_variables: "trace-expand-variables",
     switch_view: "trace-switch-view",
     json_viewer: "trace-json-viewer",
+    pill: "trace-pill",
   },
   trace_list: {
     view: "trace-list-view",
@@ -23,6 +24,7 @@ export const IDS = {
   },
   trace_viewer: {
     view: "trace-viewer-view",
+    not_found: "trace-viewer-not-found",
   },
   dashboard: {
     page: "dashboard-page",
