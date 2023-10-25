@@ -9,8 +9,6 @@ export const excludedKeys = [
   "_res",
   "params",
   "_params",
-  "result",
-  "_result",
 ];
 
 export function safeJson(object: any = {}) {

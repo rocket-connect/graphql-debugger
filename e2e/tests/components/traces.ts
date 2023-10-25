@@ -93,7 +93,7 @@ export class Traces extends BaseComponent {
       throw new Error(`Failed to find the link for trace with ID ${traceId}.`);
     }
 
-    await linkElement.click();
+    await Promise.all([page.waitForNavigation(), linkElement.click()]);
 
     const url = await page.url();
     expect(url).toContain(`/schema/${schemaId}/trace/${traceId}`);

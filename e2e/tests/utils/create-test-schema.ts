@@ -23,7 +23,7 @@ export async function createTestSchema(): Promise<{
     }
 
     type Query {
-      users: [User]
+      users(name: String): [User]
     }
   `;
 
@@ -70,7 +70,7 @@ export async function createTestSchema(): Promise<{
     dbSchema,
     query: /* GraphQL */ `
       {
-        users {
+        users(name: "John") {
           id
           name
           ${randomFieldName}

@@ -312,7 +312,12 @@ describe("@trace directive", () => {
       JSON.parse(
         spanTree.span.attributes[AttributeNames.OPERATION_ARGS] as string,
       ),
-    ).toEqual(JSON.parse('{"name":"Dan","age":23}'));
+    ).toMatchObject({
+      args: {
+        name: "Dan",
+        age: 23,
+      },
+    });
 
     const postsSpan = spanTree.children.find(
       (child) => child.span.name === "User posts",
@@ -494,7 +499,7 @@ describe("@trace directive", () => {
       spanTree.span.attributes[AttributeNames.OPERATION_ARGS] as string,
     );
     expect(variables).toMatchObject({
-      name: randomName,
+      args: { name: randomName },
     });
 
     const context = JSON.parse(
@@ -514,7 +519,7 @@ describe("@trace directive", () => {
     const typeDefs = `
       type User {
         name: String @trace
-        age: String
+        age: String @trace
       }
 
       type Query {
@@ -524,7 +529,7 @@ describe("@trace directive", () => {
 
     const resolvers = {
       Query: {
-        user: () => ({ name: randomString, age: BigInt(23) }),
+        user: () => ({ name: randomString, age: "23" }),
       },
     };
 
@@ -541,6 +546,7 @@ describe("@trace directive", () => {
       query {
         user {
           name
+          age
         }
       }
     `;
@@ -567,7 +573,9 @@ describe("@trace directive", () => {
     );
 
     const result = spanTree.span.attributes[AttributeNames.OPERATION_RESULT];
-    expect(result).toEqual(JSON.stringify({ name: randomString, age: "23" }));
+    expect(result).toEqual(
+      JSON.stringify({ result: { name: randomString, age: "23" } }),
+    );
 
     const nameSpan = spanTree.children.find(
       (child) => child.span.name === "User name",

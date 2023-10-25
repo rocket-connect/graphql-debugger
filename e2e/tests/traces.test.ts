@@ -26,7 +26,6 @@ describe("traces", () => {
 
   test("should load and display a list of traces", async () => {
     const page = await getPage({ browser });
-    const { dbSchema, schema, query } = await createTestSchema();
 
     const dashboardPage = new Dashboard({
       browser,
@@ -42,6 +41,8 @@ describe("traces", () => {
       page: dashboardPage,
     });
     await schemasComponent.init();
+
+    const { dbSchema, schema, query } = await createTestSchema();
     await schemasComponent.clickSchema(dbSchema);
 
     const traceComponent = new Trace({

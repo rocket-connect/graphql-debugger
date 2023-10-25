@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { IDS } from "@graphql-debugger/ui/src/testing";
 
 import { Browser, Page as PPage } from "puppeteer";
@@ -31,11 +32,104 @@ export class Trace extends BaseComponent {
     expect(trace_viewer).toBeTruthy();
     expect(trace_viewer_not_found).toBeTruthy();
 
-    //  No trace found so query is hidden
     await expect(
       page.waitForSelector(`#${IDS.trace.query}`, {
         timeout: 500,
       }),
     ).rejects.toThrow();
+  }
+
+  public async getPill(): Promise<{
+    name: string;
+    duration: string;
+    start: string;
+  }> {
+    const page = this.page?.page as PPage;
+
+    const pill = await page.waitForSelector(`#${IDS.trace.pill}`);
+    if (!pill) {
+      throw new Error("Failed to find the trace pill.");
+    }
+
+    const nameDuration = await page.evaluate((el) => {
+      // @ts-ignore
+      return el.querySelector("p:nth-child(1)")?.innerText;
+    }, pill);
+
+    if (!nameDuration) {
+      throw new Error("Failed to find the trace name and duration.");
+    }
+
+    const [name, duration] = nameDuration.split(" - ");
+
+    const start = await page.evaluate((el) => {
+      // @ts-ignore
+      return el.querySelector("p:nth-child(2)")?.innerText;
+    }, pill);
+
+    if (!start) {
+      throw new Error("Failed to find the trace start.");
+    }
+
+    return {
+      name,
+      duration,
+      start,
+    };
+  }
+
+  public async getEditorValues(): Promise<{
+    query: string;
+    variables?: string;
+    result?: string;
+  }> {
+    const page = this.page?.page as PPage;
+
+    await page.waitForSelector(`#${IDS.trace.editor}`);
+    const query = await page.waitForSelector(`#${IDS.trace.query}`);
+
+    const renderedQuery = await page.evaluate((el) => {
+      // @ts-ignore
+      return el.querySelector("pre")?.innerText;
+    }, query);
+
+    const variables = await page.waitForSelector(`#${IDS.trace.variables}`);
+    if (!variables) {
+      throw new Error("Failed to find the variables.");
+    }
+
+    const links = await variables.$$("a");
+    const map = new Map<string, string>();
+    const excluded = ["Context", "Errors"];
+
+    for await (const link of links) {
+      const text = await page.evaluate((el) => {
+        // @ts-ignore
+        return el.innerText;
+      }, link);
+
+      if (excluded.includes(text)) {
+        continue;
+      }
+
+      await link.click();
+
+      const json_viewer = await page.waitForSelector(
+        `#${IDS.trace.json_viewer}`,
+      );
+
+      const json_text = await page.evaluate((el) => {
+        // @ts-ignore
+        return el.innerText;
+      }, json_viewer);
+
+      map.set(text, json_text);
+    }
+
+    return {
+      query: renderedQuery || "",
+      variables: map.get("Variables"),
+      result: map.get("Result"),
+    };
   }
 }

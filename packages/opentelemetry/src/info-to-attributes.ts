@@ -8,17 +8,15 @@ export function infoToAttributes({
   schemaHash,
   args,
   context,
+  isRoot,
 }: {
   info: GraphQLResolveInfo;
   schemaHash?: string;
   args?: any;
   context?: any;
+  isRoot?: boolean;
 }): Record<string, any> {
-  const isRoot = ["Query", "Mutation", "Subscription"].includes(
-    info.parentType.name,
-  );
-
-  const operationArgs = safeJson(info.variableValues || {});
+  const _args = args || info.variableValues;
 
   const attributes = {
     [AttributeNames.OPERATION_NAME]: info.fieldName,
@@ -29,7 +27,14 @@ export function infoToAttributes({
       ? {
           [AttributeNames.OPERATION_ROOT]: true,
           [AttributeNames.DOCUMENT]: print(info.operation),
-          ...(args ? { [AttributeNames.OPERATION_ARGS]: operationArgs } : {}),
+          ...(_args
+            ? {
+                [AttributeNames.OPERATION_ARGS]: safeJson({
+                  args: _args,
+                }),
+              }
+            : {}),
+
           ...(context
             ? {
                 [AttributeNames.OPERATION_CONTEXT]: safeJson(context),

@@ -44,27 +44,25 @@ export function Variables({ trace }: { trace?: Trace }) {
   );
 
   return (
-    <div className="flex p-4 flex-col gap-2 justify-between text-neutral-100">
+    <div
+      id={IDS.trace.variables}
+      className="flex p-4 flex-col gap-2 justify-between text-neutral-100"
+    >
       <div className="flex items-center justify-between">
         <div className="flex gap-2 items-center">
           {variablesHeader.map((variable) => (
-            <p
+            <a
               key={variable}
               onClick={(event) =>
                 handleMetaClick(event.target as HTMLDivElement)
               }
-              {...(variable === "Result"
-                ? {
-                    id: IDS.trace.switch_view,
-                  }
-                : {})}
               className={classNames("text-neutral-100 ", {
                 ["font-semibold"]: selectedMeta === variable.toLowerCase(),
               })}
               role="button"
             >
               {variable}
-            </p>
+            </a>
           ))}
         </div>
       </div>
@@ -73,7 +71,6 @@ export function Variables({ trace }: { trace?: Trace }) {
           <p className="text-sm">{metaMapper[selectedMeta]}</p>
           <div className="h-96 w-96 overflow-scroll custom-scrollbar">
             <JsonViewer
-              id={selectedMeta === "result" ? IDS.trace.json_viewer : ""}
               json={
                 selectedMeta === "errors"
                   ? errorsJson

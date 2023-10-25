@@ -79,6 +79,7 @@ export function traceDirective(directiveName = "trace") {
                 args,
                 context: _context,
                 schemaHash: internalCtx.schemaHash,
+                isRoot,
               });
 
               const result = await runInSpan(
@@ -99,31 +100,19 @@ export function traceDirective(directiveName = "trace") {
                   const result = await resolve(source, args, context, info);
 
                   if (isRoot) {
-                    if (internalCtx.includeVariables) {
+                    const _args = args || info.variableValues;
+                    if (internalCtx.includeVariables && _args) {
                       span.setAttribute(
                         AttributeNames.OPERATION_ARGS,
-                        safeJson(args || {}),
+                        safeJson({ args: _args }),
                       );
                     }
 
-                    if (internalCtx.includeResult) {
-                      if (
-                        typeof result === "number" ||
-                        typeof result === "string" ||
-                        typeof result === "boolean"
-                      ) {
-                        span.setAttribute(
-                          AttributeNames.OPERATION_RESULT,
-                          JSON.stringify({
-                            result: result,
-                          }),
-                        );
-                      } else if (typeof result === "object") {
-                        span.setAttribute(
-                          AttributeNames.OPERATION_RESULT,
-                          safeJson(result || {}),
-                        );
-                      }
+                    if (internalCtx.includeResult && result) {
+                      span.setAttribute(
+                        AttributeNames.OPERATION_RESULT,
+                        safeJson({ result }),
+                      );
                     }
                   }
 
