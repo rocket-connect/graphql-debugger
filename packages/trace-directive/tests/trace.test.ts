@@ -505,9 +505,9 @@ describe("@trace directive", () => {
     const context = JSON.parse(
       spanTree.span.attributes[AttributeNames.OPERATION_CONTEXT] as string,
     );
+
     expect(context).toEqual({
-      name: randomName,
-      someFunction: "Function",
+      context: { name: randomName, someFunction: "Function" },
     });
 
     expect(context[excludeContext]).toBeUndefined();

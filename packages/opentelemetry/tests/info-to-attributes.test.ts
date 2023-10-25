@@ -28,6 +28,7 @@ describe("infoToAttributes", () => {
               schemaHash,
               context: { value: randomContextValue },
               args: _args,
+              isRoot: true,
             }),
           );
         },
@@ -61,10 +62,10 @@ describe("infoToAttributes", () => {
       [AttributeNames.OPERATION_RETURN_TYPE]: "String",
       [AttributeNames.SCHEMA_HASH]: schemaHash,
       [AttributeNames.OPERATION_ARGS]: JSON.stringify({
-        value: randomArgValue,
+        args: { value: randomArgValue },
       }),
       [AttributeNames.OPERATION_CONTEXT]: JSON.stringify({
-        value: randomContextValue,
+        context: { value: randomContextValue },
       }),
     });
   });

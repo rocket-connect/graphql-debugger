@@ -37,7 +37,7 @@ export function infoToAttributes({
 
           ...(context
             ? {
-                [AttributeNames.OPERATION_CONTEXT]: safeJson(context),
+                [AttributeNames.OPERATION_CONTEXT]: safeJson({ context }),
               }
             : {}),
         }
