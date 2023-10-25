@@ -18,6 +18,7 @@ import { Modal } from "../../context/modal";
 import { Star, StarFilled } from "../../icons/star";
 import { refresh, searchFilled } from "../../images";
 import { IDS } from "../../testing";
+import { isTraceError } from "../../utils/is-trace-error";
 import { OpenModal } from "../modal/open";
 import { ModalWindow } from "../modal/window";
 import { Spinner } from "../utils/spinner";
@@ -170,6 +171,8 @@ export function SchemaTraces() {
 
                         const { value, unit } = durationUnixNano.toSIUnits();
 
+                        const isError = isTraceError(trace);
+
                         return (
                           <tr
                             data-traceid={trace?.id}
@@ -178,7 +181,9 @@ export function SchemaTraces() {
                           >
                             <th
                               className={classNames(
-                                `px-6 py-4  flex items-center gap-3 `,
+                                `px-6 py-4  flex items-center gap-3 ${
+                                  isError ? "text-error-red" : ""
+                                }`,
                               )}
                               role="button"
                             >

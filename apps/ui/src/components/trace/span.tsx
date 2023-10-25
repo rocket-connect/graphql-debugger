@@ -2,6 +2,7 @@ import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 
 import { Modal } from "../../context/modal";
 import { RenderTree } from "../../utils/create-tree-data";
+import { isSpanError } from "../../utils/is-trace-error";
 import { OpenModal } from "../modal/open";
 import { ModalWindow } from "../modal/window";
 import { JsonViewer } from "./editor/json/viewer";
@@ -29,8 +30,8 @@ export function Span({
   const { value, unit } = durationNano.toSIUnits();
 
   let spanClasses = "absolute h-4";
-  if (data.errorMessage) {
-    spanClasses += " bg-red-500";
+  if (isSpanError(data)) {
+    spanClasses += " bg-error-red";
   } else {
     if (data.isForeign) {
       spanClasses += " bg-app-blue";
@@ -42,7 +43,7 @@ export function Span({
   const displyInfo = (
     <p
       className={`tracking-widest ${
-        data.errorMessage || data.errorStack ? "text-red-500" : {}
+        data.errorMessage || data.errorStack ? "text-error-red" : {}
       } py-2`}
     >
       <span className="font-bold">{data.name}</span>

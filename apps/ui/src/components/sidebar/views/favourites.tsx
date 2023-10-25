@@ -8,6 +8,7 @@ import { ClientContext } from "../../../context/client";
 import { SchemasContext } from "../../../context/schemas";
 import { Delete } from "../../../icons/delete";
 import { IDS } from "../../../testing";
+import { isTraceError } from "../../../utils/is-trace-error";
 
 export function Favourites() {
   const params = useParams<{ traceId: string }>();
@@ -40,6 +41,8 @@ export function Favourites() {
 
         const isSelected = params.traceId === trace.id;
 
+        const isError = isTraceError(trace);
+
         return (
           <div
             className="text-xs text-neutral-100 flex items-center justify-between pt-3"
@@ -49,7 +52,9 @@ export function Favourites() {
             <div className="flex flex-col gap-1">
               <Link
                 to={`/schema/${schemaId}/trace/${trace.id}`}
-                className={`font-semibold ${isSelected ? "underline" : ""}`}
+                className={`font-semibold ${isSelected ? "underline" : ""} ${
+                  isError ? "text-error-red" : ""
+                }`}
                 onClick={() =>
                   schemasContext?.setSelectedSchema(schema(schemaId ?? ""))
                 }
@@ -68,7 +73,7 @@ export function Favourites() {
               <button
                 onClick={() => handleDeleteFavouriteTrace(trace.id ?? "")}
               >
-                <Delete color="red-500" size="1.5em" />
+                <Delete color="error-red" size="1.5em" />
               </button>
             </div>
           </div>

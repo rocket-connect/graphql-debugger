@@ -9,7 +9,7 @@ export function Spinner({
     <svg
       aria-hidden="true"
       className={`w-${size} h-${size} text-gray-300 animate-spin fill-graphql-otel-green ${
-        isError ? "fill-red-500" : ""
+        isError ? "fill-error-red" : ""
       }`}
       viewBox="0 0 100 101"
       fill="none"
