@@ -10,7 +10,6 @@ import { Modal } from "../../context/modal";
 import { expand } from "../../images";
 import { IDS } from "../../testing";
 import { createTreeData } from "../../utils/create-tree-data";
-import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
 import { OpenModal } from "../modal/open";
 import { ModalWindow } from "../modal/window";
 import { Spinner } from "../utils/spinner";
@@ -74,15 +73,18 @@ export function TraceViewer() {
   const { data: traces, isLoading } = useQuery({
     queryKey: ["viewTraces", params.traceId, params.schemaId],
     queryFn: async () => {
+      if (!params.traceId || !params.schemaId) {
+        return [];
+      }
+
       const _traces = await client.trace.findMany({
         where: {
           id: params.traceId,
+          schemaId: params.schemaId,
         },
         includeSpans: true,
         includeRootSpan: true,
       });
-
-      await sleep(DEFAULT_SLEEP_TIME);
 
       return _traces;
     },
