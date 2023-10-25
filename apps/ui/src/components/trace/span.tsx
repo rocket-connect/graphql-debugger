@@ -31,7 +31,7 @@ export function Span({
 
   let spanClasses = "absolute h-4";
   if (isSpanError(data)) {
-    spanClasses += " bg-error-red";
+    spanClasses += " bg-red-500";
   } else {
     if (data.isForeign) {
       spanClasses += " bg-app-blue";
@@ -43,16 +43,22 @@ export function Span({
   const displyInfo = (
     <p
       className={`tracking-widest ${
-        data.errorMessage || data.errorStack ? "text-error-red" : {}
+        data.errorMessage || data.errorStack ? "text-red-500" : {}
       } py-2`}
+      data-info="span-info"
     >
-      <span className="font-bold">{data.name}</span>
+      <span className="font-bold" data-name="span-name">
+        {data.name}
+      </span>
       {" - "}
-      <span className="font-light">
+      <span className="font-light" data-time="span-time">
         {Number(value).toFixed(2)} {unit}
       </span>
       {data.isForeign && (
-        <span className="text-neutral-300 text-xs italic font-bold">
+        <span
+          className="text-neutral-300 text-xs italic font-bold"
+          data-foreign="span-foreign"
+        >
           {" "}
           - (unknown)
         </span>
@@ -70,6 +76,7 @@ export function Span({
           <div className="py-4 hover:cursor-pointer hover:underline">
             {displyInfo}
             <div
+              data-line="span-line"
               className={`absolute h-4 bg-neutral/30 rounded-2xl w-full`}
             ></div>
             <div className={spanClasses} style={{ width, left: offset }}></div>
@@ -91,7 +98,6 @@ export function Span({
                 null,
                 2,
               )}
-              id="span-json"
             />
           </div>
         </ModalWindow>

@@ -59,7 +59,7 @@ describe("trace", () => {
     await tracesComponent.init();
   });
 
-  test.only("should load a trace correctly", async () => {
+  test("should load a trace correctly", async () => {
     const page = await getPage({ browser });
     const { dbSchema, schema, query } = await createTestSchema();
 

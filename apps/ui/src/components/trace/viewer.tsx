@@ -13,7 +13,7 @@ import { Toggle } from "../utils/toggle";
 import { Pill } from "./pill";
 import { Span } from "./span";
 
-function TraceView({ spans }: { spans: TSpan[] }) {
+function TraceView({ spans, id }: { spans: TSpan[]; id: string }) {
   const treeData = createTreeData(spans);
 
   const minTimestamp = UnixNanoTimeStamp.earliest(
@@ -24,7 +24,7 @@ function TraceView({ spans }: { spans: TSpan[] }) {
   );
 
   return (
-    <div className="text-neutral-100 flex flex-col">
+    <div id={id} className="text-neutral-100 flex flex-col">
       {treeData.map((treeItem) => (
         <Span
           key={treeItem.spanId}
@@ -78,7 +78,10 @@ export function TraceViewer({ trace }: { trace?: Trace }) {
       <Modal key="trace-full-screen">
         <OpenModal opens="full-screen-trace">
           {trace ? (
-            <button className="flex flex-row gap-3 text-neutral-100 text-sm hover:underline">
+            <button
+              id={IDS.trace_viewer.expand}
+              className="flex flex-row gap-3 text-neutral-100 text-sm hover:underline"
+            >
               <img className="w-6" src={expand} />
               <p className="my-auto">Expand</p>
             </button>
@@ -98,13 +101,16 @@ export function TraceViewer({ trace }: { trace?: Trace }) {
           }
         >
           <div className="px-4 pb-10">
-            <TraceView spans={modalSpans ?? []} />
+            <TraceView
+              id={IDS.trace_viewer.full_screen}
+              spans={modalSpans ?? []}
+            />
           </div>
         </ModalWindow>
       </Modal>
 
       {trace?.rootSpan ? (
-        <TraceView spans={spans} />
+        <TraceView id={IDS.trace_viewer.small_screen} spans={spans} />
       ) : (
         <div
           id={IDS.trace_viewer.not_found}

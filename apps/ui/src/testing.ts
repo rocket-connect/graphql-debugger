@@ -29,6 +29,9 @@ export const IDS = {
   trace_viewer: {
     view: "trace-viewer-view",
     not_found: "trace-viewer-not-found",
+    expand: "trace-viewer-expand",
+    full_screen: "trace-viewer-full-screen",
+    small_screen: "trace-viewer-small-screen",
   },
   dashboard: {
     page: "dashboard-page",
@@ -56,5 +59,8 @@ export const IDS = {
       favourites: "sidebar-favourites-view",
       info: "sidebar-info-view",
     },
+  },
+  modal: {
+    close: "modal-close",
   },
 };

@@ -3,6 +3,7 @@ import { ReactElement, useContext, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 import { ModalContext } from "../../context/modal";
+import { IDS } from "../../testing";
 
 export interface WindowModalProps {
   children: ReactElement;
@@ -49,6 +50,7 @@ export function ModalWindow({
         )}
       >
         <button
+          id={IDS.modal.close}
           onClick={context.close}
           className="bg-none border-none p-2 rounded-sm transform translate-x-4 transition-all duration-200 absolute top-3 right-6 hover:bg-gray-200"
         >
