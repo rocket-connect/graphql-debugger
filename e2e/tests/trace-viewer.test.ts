@@ -76,6 +76,7 @@ describe("trace-viewer", () => {
       schemaId: dbSchema.id,
       traceId: trace.id,
     });
+    await sleep(500);
 
     const traceViewerComponent = new TraceViewer({
       browser,
