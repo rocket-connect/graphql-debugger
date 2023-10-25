@@ -98,23 +98,32 @@ export function traceDirective(directiveName = "trace") {
 
                   const result = await resolve(source, args, context, info);
 
-                  if (internalCtx.includeResult && isRoot) {
-                    if (
-                      typeof result === "number" ||
-                      typeof result === "string" ||
-                      typeof result === "boolean"
-                    ) {
+                  if (isRoot) {
+                    if (internalCtx.includeVariables) {
                       span.setAttribute(
-                        AttributeNames.OPERATION_RESULT,
-                        JSON.stringify({
-                          result: result,
-                        }),
+                        AttributeNames.OPERATION_ARGS,
+                        safeJson(args || {}),
                       );
-                    } else if (typeof result === "object") {
-                      span.setAttribute(
-                        AttributeNames.OPERATION_RESULT,
-                        safeJson(result || {}),
-                      );
+                    }
+
+                    if (internalCtx.includeResult) {
+                      if (
+                        typeof result === "number" ||
+                        typeof result === "string" ||
+                        typeof result === "boolean"
+                      ) {
+                        span.setAttribute(
+                          AttributeNames.OPERATION_RESULT,
+                          JSON.stringify({
+                            result: result,
+                          }),
+                        );
+                      } else if (typeof result === "object") {
+                        span.setAttribute(
+                          AttributeNames.OPERATION_RESULT,
+                          safeJson(result || {}),
+                        );
+                      }
                     }
                   }
 

@@ -292,7 +292,9 @@ describe("@trace directive", () => {
       schema,
       source: query,
       contextValue: {
-        GraphQLOTELContext: new GraphQLOTELContext(),
+        GraphQLOTELContext: new GraphQLOTELContext({
+          includeVariables: true,
+        }),
       },
     });
 
@@ -306,6 +308,11 @@ describe("@trace directive", () => {
     expect(spanTree.span.attributes[AttributeNames.DOCUMENT]).toMatch(
       print(parse(query)),
     );
+    expect(
+      JSON.parse(
+        spanTree.span.attributes[AttributeNames.OPERATION_ARGS] as string,
+      ),
+    ).toEqual(JSON.parse('{"name":"Dan","age":23}'));
 
     const postsSpan = spanTree.children.find(
       (child) => child.span.name === "User posts",
