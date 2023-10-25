@@ -28,7 +28,7 @@ export function Schema() {
 
   return (
     <Page id={IDS.schema.page}>
-      {schemaContext?.schemaRef.current && <Trace />}
+      <Trace />
     </Page>
   );
 }
