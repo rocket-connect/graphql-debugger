@@ -3,6 +3,7 @@ import { Trace } from "@graphql-debugger/types";
 
 import { IDS } from "../../testing";
 import { isTraceError } from "../../utils/is-trace-error";
+import { sumTraceTime } from "../../utils/sum-trace-time";
 
 export function Pill({
   trace,
@@ -14,10 +15,8 @@ export function Pill({
   const startTimeUnixNano = UnixNanoTimeStamp.fromString(
     trace?.rootSpan?.startTimeUnixNano || "0",
   );
-  const traceDurationUnixNano = UnixNanoTimeStamp.fromString(
-    trace?.rootSpan?.durationNano || "0",
-  );
-  const traceDurationSIUnits = traceDurationUnixNano.toSIUnits();
+  const traceDurationUnixNano = trace && sumTraceTime(trace);
+  const traceDurationSIUnits = traceDurationUnixNano?.toSIUnits();
 
   const isError = trace && isTraceError(trace);
 
@@ -30,9 +29,9 @@ export function Pill({
         <span className={`underline ${isError ? "text-error-red" : ""}`}>
           {trace?.rootSpan?.name}
         </span>
-        {` - ${traceDurationSIUnits.value.toFixed(2)} ${
-          traceDurationSIUnits.unit
-        } `}
+        {` - ${traceDurationSIUnits?.value.toFixed(
+          2,
+        )} ${traceDurationSIUnits?.unit} `}
       </p>
       <p className="text-xs italic">
         {startTimeUnixNano.formatUnixNanoTimestamp()}

@@ -4,8 +4,6 @@ import puppeteer, { Browser, Page } from "puppeteer";
 
 export { Browser } from "puppeteer";
 
-let browser: Browser | null;
-
 export async function getPage(options: { browser: Browser }): Promise<Page> {
   const page = await options.browser.newPage();
 
@@ -15,15 +13,12 @@ export async function getPage(options: { browser: Browser }): Promise<Page> {
 }
 
 export async function getBrowser() {
-  if (browser) {
-    return browser;
-  }
-
-  browser = await puppeteer.launch({
+  const browser = await puppeteer.launch({
     // headless: false,
     headless: "new",
     defaultViewport: null,
     args: ["--disable-web-security"],
+    protocolTimeout: 240000,
   });
 
   return browser;

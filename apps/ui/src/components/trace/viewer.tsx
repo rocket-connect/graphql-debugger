@@ -1,18 +1,14 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import type { Span as TSpan, Trace } from "@graphql-debugger/types";
 
-import { useQuery } from "@tanstack/react-query";
-import { useContext, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
 
-import { ClientContext } from "../../context/client";
 import { Modal } from "../../context/modal";
 import { expand } from "../../images";
 import { IDS } from "../../testing";
 import { createTreeData } from "../../utils/create-tree-data";
 import { OpenModal } from "../modal/open";
 import { ModalWindow } from "../modal/window";
-import { Spinner } from "../utils/spinner";
 import { Toggle } from "../utils/toggle";
 import { Pill } from "./pill";
 import { Span } from "./span";
@@ -65,33 +61,10 @@ export function TraceModalHeader({
   );
 }
 
-export function TraceViewer() {
+export function TraceViewer({ trace }: { trace?: Trace }) {
   const [showForeignTraces, setShowForeignTraces] = useState(true);
-  const { client } = useContext(ClientContext);
-  const params = useParams();
 
-  const { data: traces, isLoading } = useQuery({
-    queryKey: ["viewTraces", params.traceId, params.schemaId],
-    queryFn: async () => {
-      if (!params.traceId || !params.schemaId) {
-        return [];
-      }
-
-      const _traces = await client.trace.findMany({
-        where: {
-          id: params.traceId,
-          schemaId: params.schemaId,
-        },
-        includeSpans: true,
-        includeRootSpan: true,
-      });
-
-      return _traces;
-    },
-  });
-
-  const trace = traces?.[0];
-  const spans = trace?.spans;
+  const spans = trace?.spans || [];
   let modalSpans = spans;
   if (!showForeignTraces) {
     modalSpans = spans?.filter((span) => !span.isForeign);
@@ -130,23 +103,15 @@ export function TraceViewer() {
         </ModalWindow>
       </Modal>
 
-      {isLoading ? (
-        <div className="flex justify-center align-center mx-auto mt-20">
-          <Spinner />
-        </div>
+      {trace?.rootSpan ? (
+        <TraceView spans={spans} />
       ) : (
-        <>
-          {traces?.length ? (
-            <TraceView spans={spans ?? []} />
-          ) : (
-            <div
-              id={IDS.trace_viewer.not_found}
-              className="mx-auto text-center text-neutral-100 font-bold"
-            >
-              <p className="mt-20">No Trace Selected</p>
-            </div>
-          )}
-        </>
+        <div
+          id={IDS.trace_viewer.not_found}
+          className="mx-auto text-center text-neutral-100 font-bold"
+        >
+          <p className="mt-20">No Trace Selected</p>
+        </div>
       )}
     </div>
   );

@@ -19,6 +19,7 @@ import { Star, StarFilled } from "../../icons/star";
 import { refresh, searchFilled } from "../../images";
 import { IDS } from "../../testing";
 import { isTraceError } from "../../utils/is-trace-error";
+import { sumTraceTime } from "../../utils/sum-trace-time";
 import { OpenModal } from "../modal/open";
 import { ModalWindow } from "../modal/window";
 import { Spinner } from "../utils/spinner";
@@ -45,6 +46,7 @@ export function SchemaTraces() {
           rootSpanName: searchParams.get("rootSpanName"),
         },
         includeRootSpan: true,
+        includeSpans: true,
       });
 
       return traces;
@@ -166,11 +168,13 @@ export function SchemaTraces() {
                         const startTimeUnixNano = UnixNanoTimeStamp.fromString(
                           rootSpan?.startTimeUnixNano || "0",
                         );
-                        const durationUnixNano = UnixNanoTimeStamp.fromString(
-                          rootSpan?.durationNano || "0",
-                        );
+                        const traceDurationUnixNano =
+                          trace && sumTraceTime(trace);
 
-                        const { value, unit } = durationUnixNano.toSIUnits();
+                        const traceDurationSIUnits =
+                          traceDurationUnixNano?.toSIUnits();
+
+                        const { value, unit } = traceDurationSIUnits;
 
                         const isError = isTraceError(trace);
 
