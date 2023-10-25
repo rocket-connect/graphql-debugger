@@ -1,6 +1,5 @@
-import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import { Trace } from "@graphql-debugger/types";
-import { sumTraceTime } from "@graphql-debugger/utils";
+import { getTraceStart, sumTraceTime } from "@graphql-debugger/utils";
 
 import { useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
@@ -164,9 +163,7 @@ export function SchemaTraces() {
                   <tbody>
                     {traces?.map((trace) => {
                       const rootSpan = trace.rootSpan;
-                      const startTimeUnixNano = UnixNanoTimeStamp.fromString(
-                        rootSpan?.startTimeUnixNano || "0",
-                      );
+                      const startTimeUnixNano = getTraceStart(trace);
                       const traceDurationUnixNano =
                         trace && sumTraceTime(trace);
 

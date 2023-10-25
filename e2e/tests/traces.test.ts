@@ -1,6 +1,10 @@
 import { prisma } from "@graphql-debugger/data-access";
+import {
+  dbSpanToNetwork,
+  getTraceStart,
+  sumTraceTime,
+} from "@graphql-debugger/utils";
 
-// import { sumTraceTime } from "@graphql-debugger/utils";
 import { Schemas } from "./components/schemas";
 import { Trace } from "./components/trace";
 import { Traces } from "./components/traces";
@@ -75,10 +79,24 @@ describe("traces", () => {
     const uiTrace = uiTraces.find((t) => t.id === trace.id);
     expect(uiTrace).toBeDefined();
 
-    // const duration = sumTraceTime({
-    //   id: trace.id,
-    //   traceId: trace.traceId,
-    // });
+    const duration = sumTraceTime({
+      id: trace.id,
+      traceId: trace.traceId,
+      spans: trace.spans.map((span) => dbSpanToNetwork(span)),
+    });
+
+    const traceDurationSIUnits = duration?.toSIUnits();
+    const { value, unit } = traceDurationSIUnits;
+
+    expect(uiTrace?.duration).toEqual(`${value.toFixed(2)} ${unit}`);
+
+    const startTimeUnixNano = getTraceStart({
+      id: trace.id,
+      traceId: trace.traceId,
+      spans: trace.spans.map((span) => dbSpanToNetwork(span)),
+    });
+
+    expect(uiTrace?.start).toEqual(startTimeUnixNano.formatUnixNanoTimestamp());
 
     await tracesComponent.clickTrace({
       schemaId: dbSchema.id,
