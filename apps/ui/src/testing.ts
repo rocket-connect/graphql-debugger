@@ -1,10 +1,13 @@
 export const IDS = {
   LOGO: "logo",
-  NO_SCHEMAS_FOUND: "no-schemas-found",
+  getting_started: {
+    view: "getting-started-view",
+  },
   schema: {
     page: "schema-page",
     list: "schema-list",
     render: "schema-render",
+    not_found: "schema-not-found",
   },
   trace: {
     view: "trace-view",

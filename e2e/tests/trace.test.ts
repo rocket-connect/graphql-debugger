@@ -1,4 +1,4 @@
-import { Schema } from "./components/schema";
+import { Schemas } from "./components/schemas";
 import { Trace } from "./components/trace";
 import { Dashboard } from "./pages/dashboard";
 import { createTestSchema } from "./utils/create-test-schema";
@@ -7,11 +7,11 @@ import { Browser, getBrowser, getPage } from "./utils/puppeteer";
 describe("trace", () => {
   let browser: Browser;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     browser = await getBrowser();
   });
 
-  afterAll(async () => {
+  afterEach(async () => {
     await browser.close();
   });
 
@@ -28,12 +28,12 @@ describe("trace", () => {
     const sidebar = await dashboardPage.getSidebar();
     await sidebar.toggleView("schemas");
 
-    const schemaComponent = new Schema({
+    const schemasComponent = new Schemas({
       browser,
       page: dashboardPage,
-      dbSchema,
     });
-    await schemaComponent.init();
+    await schemasComponent.init();
+    await schemasComponent.clickSchema(dbSchema);
 
     const traceComponent = new Trace({
       browser,

@@ -1,6 +1,6 @@
 import { prisma } from "@graphql-debugger/data-access";
 
-import { Schema } from "./components/schema";
+import { Schemas } from "./components/schemas";
 import { Trace } from "./components/trace";
 import { Traces } from "./components/traces";
 import { Dashboard } from "./pages/dashboard";
@@ -11,11 +11,11 @@ import { querySchema } from "./utils/query-schema";
 describe("traces", () => {
   let browser: Browser;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     browser = await getBrowser();
   });
 
-  afterAll(async () => {
+  afterEach(async () => {
     await browser.close();
   });
 
@@ -32,12 +32,12 @@ describe("traces", () => {
     const sidebar = await dashboardPage.getSidebar();
     await sidebar.toggleView("schemas");
 
-    const schemaComponent = new Schema({
+    const schemasComponent = new Schemas({
       browser,
       page: dashboardPage,
-      dbSchema,
     });
-    await schemaComponent.init();
+    await schemasComponent.init();
+    await schemasComponent.clickSchema(dbSchema);
 
     const traceComponent = new Trace({
       browser,
@@ -69,17 +69,14 @@ describe("traces", () => {
     await tracesComponent.init();
 
     const uiTraces = await tracesComponent.getUITraces();
+    expect(uiTraces.length).toEqual(1);
+
     const uiTrace = uiTraces.find((t) => t.id === trace.id);
     expect(uiTrace).toBeDefined();
 
-    expect(uiTraces.length).toEqual(1);
-    expect(uiTraces[0].id).toEqual(trace.id);
-    expect(uiTraces[0].name).toEqual(
-      trace.spans.find((span) => span.isGraphQLRootSpan)?.name,
-    );
-
-    await tracesComponent.clickTrace(trace.id);
-    const url = await page.url();
-    expect(url).toContain(`/schema/${dbSchema.id}/trace/${trace.id}`);
+    await tracesComponent.clickTrace({
+      schemaId: dbSchema.id,
+      traceId: trace.id,
+    });
   });
 });

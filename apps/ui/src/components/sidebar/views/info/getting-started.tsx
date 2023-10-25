@@ -5,12 +5,13 @@ import { Spinner } from "../../../utils/spinner";
 
 export function GettingStarted() {
   return (
-    <div className="flex flex-col gap-5">
+    <div id={IDS.getting_started.view} className="flex flex-col gap-5">
       <div className="flex flex-col gap-5 text-sm">
-        <div className="flex flex-col gap-5 text-center">
-          <p className="font-bold text-lg" id={IDS.NO_SCHEMAS_FOUND}>
-            No schemas found
-          </p>
+        <div
+          className="flex flex-col gap-5 text-center"
+          id={IDS.schema.not_found}
+        >
+          <p className="font-bold text-lg">No schemas found</p>
           <p className="italic">Waiting for schema upload.</p>
           <div className="mx-auto w-10">
             <Spinner />

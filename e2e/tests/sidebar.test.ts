@@ -7,11 +7,11 @@ import { Browser, getBrowser, getPage } from "./utils/puppeteer";
 describe("sidebar", () => {
   let browser: Browser;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     browser = await getBrowser();
   });
 
-  afterAll(async () => {
+  afterEach(async () => {
     await browser.close();
   });
 

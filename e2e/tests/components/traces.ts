@@ -66,7 +66,13 @@ export class Traces extends BaseComponent {
     return uiTraces;
   }
 
-  public async clickTrace(traceId: string) {
+  public async clickTrace({
+    schemaId,
+    traceId,
+  }: {
+    schemaId: string;
+    traceId: string;
+  }) {
     const page = this.page?.page as PPage;
 
     const traceRow = await page.waitForSelector(
@@ -82,5 +88,8 @@ export class Traces extends BaseComponent {
     }
 
     await linkElement.click();
+
+    const url = await page.url();
+    expect(url).toContain(`/schema/${schemaId}/trace/${traceId}`);
   }
 }

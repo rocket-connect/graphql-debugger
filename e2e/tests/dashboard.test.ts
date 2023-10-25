@@ -4,11 +4,11 @@ import { Browser, getBrowser, getPage } from "./utils/puppeteer";
 describe("dashboard", () => {
   let browser: Browser;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     browser = await getBrowser();
   });
 
-  afterAll(async () => {
+  afterEach(async () => {
     await browser.close();
   });
 
