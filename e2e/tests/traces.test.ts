@@ -1,5 +1,6 @@
 import { prisma } from "@graphql-debugger/data-access";
 
+// import { sumTraceTime } from "@graphql-debugger/utils";
 import { Schemas } from "./components/schemas";
 import { Trace } from "./components/trace";
 import { Traces } from "./components/traces";
@@ -73,6 +74,11 @@ describe("traces", () => {
 
     const uiTrace = uiTraces.find((t) => t.id === trace.id);
     expect(uiTrace).toBeDefined();
+
+    // const duration = sumTraceTime({
+    //   id: trace.id,
+    //   traceId: trace.traceId,
+    // });
 
     await tracesComponent.clickTrace({
       schemaId: dbSchema.id,

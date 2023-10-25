@@ -1,9 +1,9 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import { Trace } from "@graphql-debugger/types";
+import { sumTraceTime } from "@graphql-debugger/utils";
 
 import { IDS } from "../../testing";
 import { isTraceError } from "../../utils/is-trace-error";
-import { sumTraceTime } from "../../utils/sum-trace-time";
 
 export function Pill({
   trace,
@@ -16,7 +16,10 @@ export function Pill({
     trace?.rootSpan?.startTimeUnixNano || "0",
   );
   const traceDurationUnixNano = trace && sumTraceTime(trace);
-  const traceDurationSIUnits = traceDurationUnixNano?.toSIUnits();
+  const traceDurationSIUnits = traceDurationUnixNano?.toSIUnits() || {
+    unit: "ms",
+    value: 0,
+  };
 
   const isError = trace && isTraceError(trace);
 

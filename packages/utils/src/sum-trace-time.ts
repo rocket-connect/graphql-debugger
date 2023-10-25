@@ -1,9 +1,7 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
-import { ListTraceGroupsResponse } from "@graphql-debugger/types";
+import { Trace } from "@graphql-debugger/types";
 
-export function sumTraceTime(
-  tracegroup: ListTraceGroupsResponse["traces"][0],
-): UnixNanoTimeStamp {
+export function sumTraceTime(tracegroup: Trace): UnixNanoTimeStamp {
   let bigint = BigInt(0);
 
   tracegroup.spans?.forEach((span) => {

@@ -31,7 +31,7 @@ export class Traces extends BaseComponent {
   }
 
   public async getUITraces(): Promise<
-    { id: string; name: string; start: string }[]
+    { id: string; name: string; start: string; duration: string }[]
   > {
     const page = this.page?.page as PPage;
 
@@ -52,14 +52,20 @@ export class Traces extends BaseComponent {
         ? await page.evaluate((el) => el.innerText.trim(), nameCell)
         : null;
 
+      const durationCell = await row.$("td:nth-last-child(3)");
+
       const startCell = await row.$("td:nth-last-child(2)");
+
+      const duration = durationCell
+        ? await page.evaluate((el) => el.innerText.trim(), durationCell)
+        : null;
 
       const start = startCell
         ? await page.evaluate((el) => el.innerText.trim(), startCell)
         : null;
 
-      if (id && name && start) {
-        uiTraces.push({ id, name, start });
+      if (id && name && start && duration) {
+        uiTraces.push({ id, name, start, duration });
       }
     }
 

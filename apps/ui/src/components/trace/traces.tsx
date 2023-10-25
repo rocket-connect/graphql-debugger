@@ -1,5 +1,6 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import { Trace } from "@graphql-debugger/types";
+import { sumTraceTime } from "@graphql-debugger/utils";
 
 import { useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
@@ -19,7 +20,6 @@ import { Star, StarFilled } from "../../icons/star";
 import { refresh, searchFilled } from "../../images";
 import { IDS } from "../../testing";
 import { isTraceError } from "../../utils/is-trace-error";
-import { sumTraceTime } from "../../utils/sum-trace-time";
 import { OpenModal } from "../modal/open";
 import { ModalWindow } from "../modal/window";
 import { Spinner } from "../utils/spinner";
