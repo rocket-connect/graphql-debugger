@@ -18,7 +18,6 @@ import { Modal } from "../../context/modal";
 import { Star, StarFilled } from "../../icons/star";
 import { refresh, searchFilled } from "../../images";
 import { IDS } from "../../testing";
-import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
 import { OpenModal } from "../modal/open";
 import { ModalWindow } from "../modal/window";
 import { Spinner } from "../utils/spinner";
@@ -37,12 +36,7 @@ export function SchemaTraces() {
   const [searchParams] = useSearchParams();
 
   const { data: traces, isLoading } = useQuery({
-    queryKey: [
-      "traces",
-      params.schemaId,
-      searchParams.get("rootSpanName"),
-      params.traceId,
-    ],
+    queryKey: ["traces", params.schemaId, searchParams.get("rootSpanName")],
     queryFn: async () => {
       const traces = await client.trace.findMany({
         where: {
@@ -51,8 +45,6 @@ export function SchemaTraces() {
         },
         includeRootSpan: true,
       });
-
-      await sleep(DEFAULT_SLEEP_TIME);
 
       return traces;
     },
