@@ -25,7 +25,7 @@ describe("history", () => {
     await browser.close();
   });
 
-  test("should load and display a list of traces", async () => {
+  test("should add traces to history and remove them", async () => {
     const page = await getPage({ browser });
 
     const dashboardPage = new Dashboard({
