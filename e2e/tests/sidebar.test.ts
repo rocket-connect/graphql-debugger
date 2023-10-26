@@ -43,7 +43,7 @@ describe("sidebar", () => {
       expect(view).toBeTruthy();
 
       await page.reload();
-      await sleep(500);
+      await sleep(100);
 
       view = await sidebar.getView(key);
       expect(view).toBeTruthy();
@@ -52,7 +52,7 @@ describe("sidebar", () => {
       expect(await view?.isHidden()).toBeFalsy();
 
       await page.reload();
-      await sleep(500);
+      await sleep(100);
 
       view = await sidebar.getView(key);
       expect(await view?.isHidden()).toBeFalsy();

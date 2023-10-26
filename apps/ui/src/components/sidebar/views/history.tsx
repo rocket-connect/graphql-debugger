@@ -48,7 +48,7 @@ export function History() {
             className="text-xs text-neutral-100 flex items-center justify-between pt-3"
             role="button"
             key={uniqueId}
-            data-traceid={trace.id}
+            data-historytraceid={trace.id}
           >
             <div className="flex flex-col gap-1">
               <Link

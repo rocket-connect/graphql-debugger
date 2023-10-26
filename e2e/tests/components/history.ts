@@ -43,7 +43,9 @@ export class History extends BaseComponent {
     const uiTraces = [];
 
     for (const row of rows) {
-      const id = await row.evaluate((el) => el.getAttribute("data-traceid"));
+      const id = await row.evaluate((el) =>
+        el.getAttribute("data-historytraceid"),
+      );
 
       const nameCell = await row.$("a");
 
@@ -92,7 +94,7 @@ export class History extends BaseComponent {
     const page = this.page?.page as PPage;
 
     const traceRow = await page.waitForSelector(
-      `div[data-traceid="${traceId}"]`,
+      `div[data-historytraceid="${traceId}"]`,
     );
     if (!traceRow) {
       throw new Error(`Failed to find the trace with ID ${traceId}.`);
@@ -114,7 +116,7 @@ export class History extends BaseComponent {
     const page = this.page?.page as PPage;
 
     const traceRow = await page.waitForSelector(
-      `div[data-traceid="${traceId}"]`,
+      `div[data-historytraceid="${traceId}"]`,
     );
     if (!traceRow) {
       throw new Error(`Failed to find the trace with ID ${traceId}.`);
