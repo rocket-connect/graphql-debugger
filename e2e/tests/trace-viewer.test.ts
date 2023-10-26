@@ -52,6 +52,7 @@ describe("trace-viewer", () => {
 
     const sidebar = await dashboardPage.getSidebar();
     await sidebar.toggleView("schemas");
+    await sleep(500);
 
     const schemasComponent = new Schemas({
       browser,
