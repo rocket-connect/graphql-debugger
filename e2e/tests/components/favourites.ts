@@ -105,7 +105,7 @@ export class Favourites extends BaseComponent {
       throw new Error(`Failed to find the link for trace with ID ${traceId}.`);
     }
 
-    await Promise.all([page.waitForNavigation(), linkElement.click()]);
+    await linkElement.click();
     await sleep(1000);
 
     const url = await page.url();
