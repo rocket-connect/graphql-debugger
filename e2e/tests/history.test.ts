@@ -73,6 +73,7 @@ describe("history", () => {
     expect(responses[1].errors).toBeDefined();
 
     await page.reload();
+    await sleep(1000);
 
     const tracesComponent = new Traces({
       browser,
@@ -101,7 +102,6 @@ describe("history", () => {
     await sidebar.toggleView("history");
 
     await page.goto(`http://localhost:${BACKEND_PORT}/`);
-    await page.reload();
     await sleep(1000);
 
     const historyComponent = new History({

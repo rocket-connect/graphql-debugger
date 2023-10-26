@@ -75,7 +75,7 @@ describe("trace-viewer", () => {
         expect(response.errors).toBeUndefined();
       }
 
-      await sleep(500);
+      await sleep(1000);
 
       const traces = await prisma.traceGroup.findMany({
         where: {
@@ -152,6 +152,8 @@ describe("trace-viewer", () => {
 
     const variant1 = variants[0];
     await testVariant(variant1);
+
+    await sleep(1000);
 
     const variant2 = variants[1];
     await testVariant(variant2);
