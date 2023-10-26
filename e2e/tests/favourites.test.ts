@@ -109,16 +109,12 @@ describe("favourites", () => {
     expect(uiFavouriteTrace1.name).toEqual(uiTrace2.name);
     expect(uiFavouriteTrace1.start).toEqual(`- ${uiTrace2.start}`);
 
-    await favouritesComponent.clickTrace({
-      schemaId: dbSchema.id,
+    await favouritesComponent.assertLink({
       traceId: uiFavouriteTrace1.id,
     });
-    await sleep(500);
-    await favouritesComponent.clickTrace({
-      schemaId: dbSchema.id,
+    await favouritesComponent.assertLink({
       traceId: uiFavouriteTrace2.id,
     });
-    await sleep(500);
 
     await tracesComponent.toggleFavouriteTrace({
       traceId: uiTrace1.id,

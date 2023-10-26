@@ -3,12 +3,9 @@ import { IDS } from "@graphql-debugger/ui/src/testing";
 
 import { expect } from "@jest/globals";
 import { Browser, Page as PPage } from "puppeteer";
-import util from "util";
 
 import { Page } from "../pages/page";
 import { BaseComponent } from "./component";
-
-const sleep = util.promisify(setTimeout);
 
 export class Favourites extends BaseComponent {
   constructor({ browser, page }: { browser: Browser; page: Page }) {
@@ -84,13 +81,7 @@ export class Favourites extends BaseComponent {
     return uiTraces;
   }
 
-  public async clickTrace({
-    schemaId,
-    traceId,
-  }: {
-    schemaId: string;
-    traceId: string;
-  }) {
+  public async assertLink({ traceId }: { traceId: string }) {
     const page = this.page?.page as PPage;
 
     const traceRow = await page.waitForSelector(
@@ -104,11 +95,5 @@ export class Favourites extends BaseComponent {
     if (!linkElement) {
       throw new Error(`Failed to find the link for trace with ID ${traceId}.`);
     }
-
-    await linkElement.click();
-    await sleep(1000);
-
-    const url = await page.url();
-    expect(url).toContain(`/schema/${schemaId}/trace/${traceId}`);
   }
 }

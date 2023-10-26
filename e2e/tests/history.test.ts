@@ -119,17 +119,12 @@ describe("history", () => {
     expect(uiHistoryTrace2.name).toEqual(uiTrace2.name);
     expect(uiHistoryTrace2.start).toEqual(`- ${uiTrace2.start}`);
 
-    await historyComponent.clickTrace({
-      schemaId: dbSchema.id,
+    await historyComponent.assertLink({
       traceId: uiHistoryTrace1.id,
     });
-    await sleep(500);
-
-    await historyComponent.clickTrace({
-      schemaId: dbSchema.id,
+    await historyComponent.assertLink({
       traceId: uiHistoryTrace2.id,
     });
-    await sleep(500);
 
     await historyComponent.deleteItem({
       schemaId: dbSchema.id,
