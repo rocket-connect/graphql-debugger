@@ -125,8 +125,6 @@ describe("trace-viewer", () => {
         expect(pillComponent.color).toBe(neturalColor);
       }
 
-      await sleep(1000);
-
       const uiSpans = await traceViewerComponent.getSpans();
       expect(uiSpans.length).toBe(trace.spans.length);
 
