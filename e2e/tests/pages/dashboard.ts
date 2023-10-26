@@ -28,7 +28,7 @@ export class Dashboard extends Page {
     // Sidebar view is hidden by default
     await expect(
       page.waitForSelector(`#${IDS.sidebar.view}`, {
-        timeout: 500,
+        timeout: 10000,
       }),
     ).rejects.toThrow();
 

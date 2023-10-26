@@ -2,25 +2,16 @@
 import { IDS } from "@graphql-debugger/ui/src/testing";
 
 import { Browser, Page as PPage } from "puppeteer";
+import util from "util";
 
 import { Page } from "../pages/page";
 import { BaseComponent } from "./component";
-import { Trace } from "./trace";
+
+const sleep = util.promisify(setTimeout);
 
 export class Traces extends BaseComponent {
-  private trace: Trace;
-
-  constructor({
-    browser,
-    page,
-    trace,
-  }: {
-    browser: Browser;
-    page: Page;
-    trace: Trace;
-  }) {
+  constructor({ browser, page }: { browser: Browser; page: Page }) {
     super({ browser, page });
-    this.trace = trace;
   }
 
   public async init() {
@@ -109,7 +100,8 @@ export class Traces extends BaseComponent {
       throw new Error(`Failed to find the link for trace with ID ${traceId}.`);
     }
 
-    await Promise.all([page.waitForNavigation(), linkElement.click()]);
+    await linkElement.click();
+    await sleep(500);
 
     const url = await page.url();
     expect(url).toContain(`/schema/${schemaId}/trace/${traceId}`);

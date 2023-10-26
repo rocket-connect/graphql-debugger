@@ -7,7 +7,6 @@ import util from "util";
 
 import { UnixNanoTimeStamp } from "../../packages/time/build";
 import { Schemas } from "./components/schemas";
-import { Trace } from "./components/trace";
 import { TraceViewer } from "./components/trace-viewer";
 import { Traces } from "./components/traces";
 import { Dashboard } from "./pages/dashboard";
@@ -103,10 +102,6 @@ describe("trace-viewer", () => {
       const tracesComponent = new Traces({
         browser,
         page: dashboardPage,
-        trace: new Trace({
-          browser,
-          page: dashboardPage,
-        }),
       });
 
       await tracesComponent.clickTrace({

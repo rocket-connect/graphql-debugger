@@ -34,7 +34,7 @@ export class Trace extends BaseComponent {
 
     await expect(
       page.waitForSelector(`#${IDS.trace.query}`, {
-        timeout: 500,
+        timeout: 10000,
       }),
     ).rejects.toThrow();
   }

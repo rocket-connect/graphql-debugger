@@ -59,7 +59,6 @@ describe("trace", () => {
     const tracesComponent = new Traces({
       browser,
       page: dashboardPage,
-      trace: traceComponent,
     });
     await tracesComponent.init();
   });
@@ -108,7 +107,6 @@ describe("trace", () => {
     const tracesComponent = new Traces({
       browser,
       page: dashboardPage,
-      trace: traceComponent,
     });
     await tracesComponent.init();
     await tracesComponent.clickTrace({
@@ -207,7 +205,6 @@ describe("trace", () => {
     const tracesComponent = new Traces({
       browser,
       page: dashboardPage,
-      trace: traceComponent,
     });
     await tracesComponent.init();
     await tracesComponent.clickTrace({

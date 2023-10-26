@@ -76,7 +76,6 @@ describe("favourites", () => {
     const tracesComponent = new Traces({
       browser,
       page: dashboardPage,
-      trace: traceComponent,
     });
     await tracesComponent.init();
 

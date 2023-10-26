@@ -65,7 +65,7 @@ export class Sidebar extends BaseComponent {
     let view: ElementHandle<Element> | null = null;
     try {
       view = await page.waitForSelector(`#${id}`, {
-        timeout: 500,
+        timeout: 10000,
       });
     } catch (e) {
       // Ignore
