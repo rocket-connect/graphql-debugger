@@ -1,11 +1,9 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
-import type { Schema } from "@graphql-debugger/types";
 
 import { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import { ClientContext } from "../../../context/client";
-import { SchemasContext } from "../../../context/schemas";
 import { Delete } from "../../../icons/delete";
 import { IDS } from "../../../testing";
 import { isTraceError } from "../../../utils/is-trace-error";
@@ -13,11 +11,6 @@ import { isTraceError } from "../../../utils/is-trace-error";
 export function History() {
   const params = useParams<{ traceId: string }>();
   const { historyTraces, handleDeleteHistoryTrace } = useContext(ClientContext);
-  const schemasContext = useContext(SchemasContext);
-
-  const schema = (schemaId: string): Schema | undefined => {
-    return schemasContext?.schemas.find((schema) => schema.id === schemaId);
-  };
 
   const sortedHistoryTraces = historyTraces.sort((a, b) => {
     return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
@@ -56,9 +49,6 @@ export function History() {
                 className={`font-semibold ${isSelected ? "underline" : ""} ${
                   isError ? "text-error-red" : ""
                 }`}
-                onClick={() => {
-                  schemasContext?.setSelectedSchema(schema(schemaId ?? ""));
-                }}
               >
                 {trace.rootSpan?.name}
               </Link>
