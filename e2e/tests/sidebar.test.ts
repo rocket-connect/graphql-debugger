@@ -1,12 +1,8 @@
 import { IDS } from "@graphql-debugger/ui/src/testing";
 
-import utils from "util";
-
 import { Sidebar } from "./components/sidebar";
 import { Dashboard } from "./pages/dashboard";
 import { Browser, getBrowser, getPage } from "./utils/puppeteer";
-
-const sleep = utils.promisify(setTimeout);
 
 describe("sidebar", () => {
   let browser: Browser;
@@ -43,7 +39,6 @@ describe("sidebar", () => {
       expect(view).toBeTruthy();
 
       await page.reload();
-      await sleep(100);
 
       view = await sidebar.getView(key);
       expect(view).toBeTruthy();
@@ -52,7 +47,6 @@ describe("sidebar", () => {
       expect(await view?.isHidden()).toBeFalsy();
 
       await page.reload();
-      await sleep(100);
 
       view = await sidebar.getView(key);
       expect(await view?.isHidden()).toBeFalsy();
