@@ -105,8 +105,8 @@ export class History extends BaseComponent {
       throw new Error(`Failed to find the link for trace with ID ${traceId}.`);
     }
 
-    await linkElement.click();
-    await sleep(500);
+    await Promise.all([page.waitForNavigation(), linkElement.click()]);
+    await sleep(1000);
 
     const url = await page.url();
     expect(url).toContain(`/schema/${schemaId}/trace/${traceId}`);
