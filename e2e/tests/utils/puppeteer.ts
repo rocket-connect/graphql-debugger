@@ -18,7 +18,8 @@ export async function getBrowser() {
     headless: "new",
     defaultViewport: null,
     args: ["--disable-web-security"],
-    protocolTimeout: 240000,
+    protocolTimeout: 600000,
+    timeout: 600000,
   });
 
   return browser;

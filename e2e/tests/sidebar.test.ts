@@ -1,8 +1,12 @@
 import { IDS } from "@graphql-debugger/ui/src/testing";
 
+import utils from "util";
+
 import { Sidebar } from "./components/sidebar";
 import { Dashboard } from "./pages/dashboard";
 import { Browser, getBrowser, getPage } from "./utils/puppeteer";
+
+const sleep = utils.promisify(setTimeout);
 
 describe("sidebar", () => {
   let browser: Browser;
@@ -38,9 +42,8 @@ describe("sidebar", () => {
       let view = await sidebar.toggleView(key);
       expect(view).toBeTruthy();
 
-      await page.reload({
-        waitUntil: ["networkidle0", "domcontentloaded"],
-      });
+      await page.reload();
+      await sleep(500);
 
       view = await sidebar.getView(key);
       expect(view).toBeTruthy();
@@ -48,9 +51,8 @@ describe("sidebar", () => {
       view = await sidebar.toggleView(key);
       expect(await view?.isHidden()).toBeFalsy();
 
-      await page.reload({
-        waitUntil: ["networkidle0", "domcontentloaded"],
-      });
+      await page.reload();
+      await sleep(500);
 
       view = await sidebar.getView(key);
       expect(await view?.isHidden()).toBeFalsy();

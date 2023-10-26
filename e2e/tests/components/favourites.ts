@@ -10,7 +10,7 @@ import { BaseComponent } from "./component";
 
 const sleep = util.promisify(setTimeout);
 
-export class History extends BaseComponent {
+export class Favourites extends BaseComponent {
   constructor({ browser, page }: { browser: Browser; page: Page }) {
     super({ browser, page });
   }
@@ -18,7 +18,7 @@ export class History extends BaseComponent {
   public async init() {
     const page = this.page?.page as PPage;
 
-    const view = await page.waitForSelector(`#${IDS.sidebar.views.history}`);
+    const view = await page.waitForSelector(`#${IDS.sidebar.views.favourites}`);
 
     expect(view).toBeTruthy();
   }
@@ -34,9 +34,9 @@ export class History extends BaseComponent {
   > {
     const page = this.page?.page as PPage;
 
-    const view = await page.waitForSelector(`#${IDS.sidebar.views.history}`);
+    const view = await page.waitForSelector(`#${IDS.sidebar.views.favourites}`);
     if (!view) {
-      throw new Error("Failed to find the history view.");
+      throw new Error("Failed to find the favourites view.");
     }
 
     const rows = await view.$$("div");
@@ -108,25 +108,5 @@ export class History extends BaseComponent {
 
     const url = await page.url();
     expect(url).toContain(`/schema/${schemaId}/trace/${traceId}`);
-  }
-
-  public async deleteItem({ traceId }: { schemaId: string; traceId: string }) {
-    const page = this.page?.page as PPage;
-
-    const traceRow = await page.waitForSelector(
-      `div[data-traceid="${traceId}"]`,
-    );
-    if (!traceRow) {
-      throw new Error(`Failed to find the trace with ID ${traceId}.`);
-    }
-
-    const button = await traceRow.$("button");
-    if (!button) {
-      throw new Error(
-        `Failed to find the button for trace with ID ${traceId}.`,
-      );
-    }
-
-    await button.click();
   }
 }

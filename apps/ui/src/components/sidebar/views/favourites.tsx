@@ -47,6 +47,7 @@ export function Favourites() {
           <div
             className="text-xs text-neutral-100 flex items-center justify-between pt-3"
             role="button"
+            data-traceId={trace.id}
             key={trace.id}
           >
             <div className="flex flex-col gap-1">

@@ -114,4 +114,25 @@ export class Traces extends BaseComponent {
     const url = await page.url();
     expect(url).toContain(`/schema/${schemaId}/trace/${traceId}`);
   }
+
+  public async toggleFavouriteTrace({ traceId }: { traceId: string }) {
+    const page = this.page?.page as PPage;
+
+    const traceRow = await page.waitForSelector(
+      `tr[data-traceid="${traceId}"]`,
+    );
+
+    if (!traceRow) {
+      throw new Error(`Failed to find the trace with ID ${traceId}.`);
+    }
+
+    const buttonElement = await traceRow.$("button");
+    if (!buttonElement) {
+      throw new Error(
+        `Failed to find the button for trace with ID ${traceId}.`,
+      );
+    }
+
+    await buttonElement.click();
+  }
 }

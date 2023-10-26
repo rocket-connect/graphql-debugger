@@ -1,8 +1,6 @@
-import { BACKEND_PORT } from "@graphql-debugger/backend";
-
 import util from "util";
 
-import { History } from "./components/history";
+import { Favourites } from "./components/favourites";
 import { Schemas } from "./components/schemas";
 import { Trace } from "./components/trace";
 import { Traces } from "./components/traces";
@@ -13,7 +11,7 @@ import { querySchema } from "./utils/query-schema";
 
 const sleep = util.promisify(setTimeout);
 
-describe("history", () => {
+describe("favourites", () => {
   let browser: Browser;
 
   beforeEach(async () => {
@@ -24,7 +22,7 @@ describe("history", () => {
     await browser.close();
   });
 
-  test("should add traces to history and remove them", async () => {
+  test("should add traces to favourites and remove them", async () => {
     const page = await getPage({ browser });
 
     const dashboardPage = new Dashboard({
@@ -73,6 +71,7 @@ describe("history", () => {
     expect(responses[1].errors).toBeDefined();
 
     await page.reload();
+    await sleep(1000);
 
     const tracesComponent = new Traces({
       browser,
@@ -87,63 +86,49 @@ describe("history", () => {
     const uiTrace1 = uiTraces[0];
     const uiTrace2 = uiTraces[1];
 
-    await tracesComponent.clickTrace({
-      schemaId: dbSchema.id,
+    await tracesComponent.toggleFavouriteTrace({
       traceId: uiTrace1.id,
     });
-    await sleep(500);
-
-    await tracesComponent.clickTrace({
-      schemaId: dbSchema.id,
+    await tracesComponent.toggleFavouriteTrace({
       traceId: uiTrace2.id,
     });
-    await sleep(500);
 
-    await sidebar.toggleView("history");
+    await sidebar.toggleView("favourites");
 
-    await page.goto(`http://localhost:${BACKEND_PORT}/`);
-    await page.reload();
-    await sleep(1000);
-
-    const historyComponent = new History({
+    const favouritesComponent = new Favourites({
       browser,
       page: dashboardPage,
     });
-    await historyComponent.init();
+    await favouritesComponent.init();
 
-    const [uiHistoryTrace2, uiHistoryTrace1] =
-      await historyComponent.getUITraces();
+    const [uiFavouriteTrace1, uiFavouriteTrace2] =
+      await favouritesComponent.getUITraces();
 
-    expect(uiHistoryTrace1.name).toEqual(uiTrace1.name);
-    expect(uiHistoryTrace1.start).toEqual(`- ${uiTrace1.start}`);
+    expect(uiFavouriteTrace2.name).toEqual(uiTrace1.name);
+    expect(uiFavouriteTrace2.start).toEqual(`- ${uiTrace1.start}`);
 
-    expect(uiHistoryTrace2.name).toEqual(uiTrace2.name);
-    expect(uiHistoryTrace2.start).toEqual(`- ${uiTrace2.start}`);
+    expect(uiFavouriteTrace1.name).toEqual(uiTrace2.name);
+    expect(uiFavouriteTrace1.start).toEqual(`- ${uiTrace2.start}`);
 
-    await historyComponent.clickTrace({
+    await favouritesComponent.clickTrace({
       schemaId: dbSchema.id,
-      traceId: uiHistoryTrace1.id,
+      traceId: uiFavouriteTrace1.id,
+    });
+    await sleep(500);
+    await favouritesComponent.clickTrace({
+      schemaId: dbSchema.id,
+      traceId: uiFavouriteTrace2.id,
     });
     await sleep(500);
 
-    await historyComponent.clickTrace({
-      schemaId: dbSchema.id,
-      traceId: uiHistoryTrace2.id,
+    await tracesComponent.toggleFavouriteTrace({
+      traceId: uiTrace1.id,
     });
-    await sleep(500);
-
-    await historyComponent.deleteItem({
-      schemaId: dbSchema.id,
-      traceId: uiHistoryTrace1.id,
+    await tracesComponent.toggleFavouriteTrace({
+      traceId: uiTrace2.id,
     });
-    await historyComponent.deleteItem({
-      schemaId: dbSchema.id,
-      traceId: uiHistoryTrace2.id,
-    });
-    await sleep(500);
 
-    const newUiTraces = await historyComponent.getUITraces();
-
+    const newUiTraces = await favouritesComponent.getUITraces();
     expect(newUiTraces.length).toEqual(0);
   });
 });
