@@ -3,7 +3,6 @@ import { prisma } from "@graphql-debugger/data-access";
 import { isTraceError } from "@graphql-debugger/utils";
 
 import { faker } from "@faker-js/faker";
-import util from "util";
 
 import { UnixNanoTimeStamp } from "../../packages/time/build";
 import { Schemas } from "./components/schemas";
@@ -13,8 +12,7 @@ import { Dashboard } from "./pages/dashboard";
 import { createTestSchema } from "./utils/create-test-schema";
 import { Browser, getBrowser, getPage } from "./utils/puppeteer";
 import { querySchema } from "./utils/query-schema";
-
-const sleep = util.promisify(setTimeout);
+import { sleep } from "./utils/sleep";
 
 describe("trace-viewer", () => {
   let browser: Browser;
@@ -74,8 +72,7 @@ describe("trace-viewer", () => {
       } else {
         expect(response.errors).toBeUndefined();
       }
-
-      await sleep(1000);
+      await sleep(500);
 
       const traces = await prisma.traceGroup.findMany({
         where: {
@@ -154,8 +151,6 @@ describe("trace-viewer", () => {
 
     const variant1 = variants[0];
     await testVariant(variant1);
-
-    await sleep(1000);
 
     const variant2 = variants[1];
     await testVariant(variant2);

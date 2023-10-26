@@ -13,6 +13,7 @@ import { Dashboard } from "./pages/dashboard";
 import { createTestSchema } from "./utils/create-test-schema";
 import { Browser, getBrowser, getPage } from "./utils/puppeteer";
 import { querySchema } from "./utils/query-schema";
+import { sleep } from "./utils/sleep";
 
 describe("traces", () => {
   let browser: Browser;
@@ -74,6 +75,7 @@ describe("traces", () => {
     expect(responses[1].errors).toBeDefined();
 
     await page.reload();
+    await sleep(1000);
 
     const traces = await prisma.traceGroup.findMany({
       where: {

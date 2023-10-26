@@ -1,5 +1,3 @@
-import util from "util";
-
 import { Favourites } from "./components/favourites";
 import { Schemas } from "./components/schemas";
 import { Trace } from "./components/trace";
@@ -8,8 +6,7 @@ import { Dashboard } from "./pages/dashboard";
 import { createTestSchema } from "./utils/create-test-schema";
 import { Browser, getBrowser, getPage } from "./utils/puppeteer";
 import { querySchema } from "./utils/query-schema";
-
-const sleep = util.promisify(setTimeout);
+import { sleep } from "./utils/sleep";
 
 describe("favourites", () => {
   let browser: Browser;
@@ -71,7 +68,7 @@ describe("favourites", () => {
     expect(responses[1].errors).toBeDefined();
 
     await page.reload();
-    await sleep(1000);
+    await sleep(500);
 
     const tracesComponent = new Traces({
       browser,

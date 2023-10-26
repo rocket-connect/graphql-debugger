@@ -2,12 +2,10 @@
 import { IDS } from "@graphql-debugger/ui/src/testing";
 
 import { Browser, Page as PPage } from "puppeteer";
-import util from "util";
 
 import { Page } from "../pages/page";
+import { sleep } from "../utils/sleep";
 import { BaseComponent } from "./component";
-
-const sleep = util.promisify(setTimeout);
 
 export class Traces extends BaseComponent {
   constructor({ browser, page }: { browser: Browser; page: Page }) {

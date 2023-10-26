@@ -7,7 +7,6 @@ import {
 } from "@graphql-debugger/utils";
 
 import { parse, print } from "graphql";
-import util from "util";
 
 import { UnixNanoTimeStamp } from "../../packages/time/build";
 import { Schemas } from "./components/schemas";
@@ -17,8 +16,7 @@ import { Dashboard } from "./pages/dashboard";
 import { createTestSchema } from "./utils/create-test-schema";
 import { Browser, getBrowser, getPage } from "./utils/puppeteer";
 import { querySchema } from "./utils/query-schema";
-
-const sleep = util.promisify(setTimeout);
+import { sleep } from "./utils/sleep";
 
 describe("trace", () => {
   let browser: Browser;

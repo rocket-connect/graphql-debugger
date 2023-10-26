@@ -1,7 +1,5 @@
 import { BACKEND_PORT } from "@graphql-debugger/backend";
 
-import util from "util";
-
 import { History } from "./components/history";
 import { Schemas } from "./components/schemas";
 import { Trace } from "./components/trace";
@@ -10,8 +8,7 @@ import { Dashboard } from "./pages/dashboard";
 import { createTestSchema } from "./utils/create-test-schema";
 import { Browser, getBrowser, getPage } from "./utils/puppeteer";
 import { querySchema } from "./utils/query-schema";
-
-const sleep = util.promisify(setTimeout);
+import { sleep } from "./utils/sleep";
 
 describe("history", () => {
   let browser: Browser;
@@ -73,7 +70,7 @@ describe("history", () => {
     expect(responses[1].errors).toBeDefined();
 
     await page.reload();
-    await sleep(1000);
+    await sleep(500);
 
     const tracesComponent = new Traces({
       browser,
