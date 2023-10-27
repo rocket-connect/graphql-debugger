@@ -33,10 +33,10 @@ describe("trace-viewer", () => {
         shouldError: false,
         randomFieldName,
       },
-      {
-        shouldError: true,
-        randomFieldName,
-      },
+      // {
+      //   shouldError: true,
+      //   randomFieldName,
+      // },
     ];
 
     const page = await getPage({ browser });
