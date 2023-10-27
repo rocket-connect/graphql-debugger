@@ -112,6 +112,8 @@ describe("trace-viewer", () => {
       await traceViewerComponent.assert();
       await traceViewerComponent.expand();
 
+      await sleep(200);
+
       const pillComponent = await traceViewerComponent.getPill();
       expect(pillComponent.name).toBeTruthy();
 

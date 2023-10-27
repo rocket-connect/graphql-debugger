@@ -4,6 +4,7 @@ import { IDS } from "@graphql-debugger/ui/src/testing";
 import { Browser, Page as PPage } from "puppeteer";
 
 import { Page } from "../pages/page";
+import { sleep } from "../utils/sleep";
 import { BaseComponent } from "./component";
 import { Trace } from "./trace";
 
@@ -31,6 +32,13 @@ export class TraceViewer extends BaseComponent {
     }
 
     await expand.click();
+
+    await sleep(200);
+
+    const view = await page.$(`#${IDS.trace_viewer.full_screen}`);
+    if (!view) {
+      throw new Error("Failed to find the trace viewer view.");
+    }
   }
 
   public async close() {
