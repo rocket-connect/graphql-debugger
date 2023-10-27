@@ -15,8 +15,8 @@ export class TraceViewer extends BaseComponent {
   public async assert() {
     const page = this.page?.page as PPage;
 
-    const view = await page.waitForSelector(`#${IDS.trace_viewer.view}`);
-    const expand = await page.waitForSelector(`#${IDS.trace_viewer.expand}`);
+    const view = await page.$(`#${IDS.trace_viewer.view}`);
+    const expand = await page.$(`#${IDS.trace_viewer.expand}`);
 
     expect(view).toBeTruthy();
     expect(expand).toBeTruthy();
@@ -25,7 +25,7 @@ export class TraceViewer extends BaseComponent {
   public async expand() {
     const page = this.page?.page as PPage;
 
-    const expand = await page.waitForSelector(`#${IDS.trace_viewer.expand}`);
+    const expand = await page.$(`#${IDS.trace_viewer.expand}`);
     if (!expand) {
       throw new Error("Failed to find the trace viewer expand button.");
     }
@@ -36,7 +36,7 @@ export class TraceViewer extends BaseComponent {
   public async close() {
     const page = this.page?.page as PPage;
 
-    const close = await page.waitForSelector(`#${IDS.modal.close}`);
+    const close = await page.$(`#${IDS.modal.close}`);
     if (!close) {
       throw new Error("Failed to find the trace viewer close button.");
     }
@@ -49,7 +49,7 @@ export class TraceViewer extends BaseComponent {
   > {
     const page = this.page?.page as PPage;
 
-    const view = await page.waitForSelector(`#${IDS.trace_viewer.full_screen}`);
+    const view = await page.$(`#${IDS.trace_viewer.full_screen}`);
     if (!view) {
       throw new Error("Failed to find the trace viewer view.");
     }

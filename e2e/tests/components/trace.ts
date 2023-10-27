@@ -14,14 +14,12 @@ export class Trace extends BaseComponent {
   public async assert() {
     const page = this.page?.page as PPage;
 
-    const view = await page.waitForSelector(`#${IDS.trace.view}`);
-    const header = await page.waitForSelector(`#${IDS.trace.header}`);
-    const editor = await page.waitForSelector(`#${IDS.trace.editor}`);
-    const pill = await page.waitForSelector(`#${IDS.trace.pill}`);
-    const trace_viewer = await page.waitForSelector(
-      `#${IDS.trace_viewer.view}`,
-    );
-    const trace_viewer_not_found = await page.waitForSelector(
+    const view = await page.$(`#${IDS.trace.view}`);
+    const header = await page.$(`#${IDS.trace.header}`);
+    const editor = await page.$(`#${IDS.trace.editor}`);
+    const pill = await page.$(`#${IDS.trace.pill}`);
+    const trace_viewer = await page.$(`#${IDS.trace_viewer.view}`);
+    const trace_viewer_not_found = await page.$(
       `#${IDS.trace_viewer.not_found}`,
     );
 
@@ -33,7 +31,7 @@ export class Trace extends BaseComponent {
     expect(trace_viewer_not_found).toBeTruthy();
 
     await expect(
-      page.waitForSelector(`#${IDS.trace.query}`, {
+      page.$(`#${IDS.trace.query}`, {
         timeout: 10000,
       }),
     ).rejects.toThrow();
@@ -47,7 +45,7 @@ export class Trace extends BaseComponent {
   }> {
     const page = this.page?.page as PPage;
 
-    const pill = await page.waitForSelector(`#${IDS.trace.pill}`);
+    const pill = await page.$(`#${IDS.trace.pill}`);
     if (!pill) {
       throw new Error("Failed to find the trace pill.");
     }
@@ -102,15 +100,15 @@ export class Trace extends BaseComponent {
   }> {
     const page = this.page?.page as PPage;
 
-    await page.waitForSelector(`#${IDS.trace.editor}`);
-    const query = await page.waitForSelector(`#${IDS.trace.query}`);
+    await page.$(`#${IDS.trace.editor}`);
+    const query = await page.$(`#${IDS.trace.query}`);
 
     const renderedQuery = await page.evaluate((el) => {
       // @ts-ignore
       return el.querySelector("pre")?.innerText;
     }, query);
 
-    const variables = await page.waitForSelector(`#${IDS.trace.variables}`);
+    const variables = await page.$(`#${IDS.trace.variables}`);
     if (!variables) {
       throw new Error("Failed to find the variables.");
     }
@@ -137,9 +135,7 @@ export class Trace extends BaseComponent {
 
       await link.click();
 
-      const json_viewer = await page.waitForSelector(
-        `#${IDS.trace.json_viewer}`,
-      );
+      const json_viewer = await page.$(`#${IDS.trace.json_viewer}`);
 
       const json_text = await page.evaluate((el) => {
         // @ts-ignore

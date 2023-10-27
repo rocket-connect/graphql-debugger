@@ -15,7 +15,7 @@ export class Traces extends BaseComponent {
   public async assert() {
     const page = this.page?.page as PPage;
 
-    const view = await page.waitForSelector(`#${IDS.trace_list.view}`);
+    const view = await page.$(`#${IDS.trace_list.view}`);
 
     expect(view).toBeTruthy();
   }
@@ -31,7 +31,7 @@ export class Traces extends BaseComponent {
   > {
     const page = this.page?.page as PPage;
 
-    const table = await page.waitForSelector(`#${IDS.trace_list.table}`);
+    const table = await page.$(`#${IDS.trace_list.table}`);
     if (!table) {
       throw new Error("Failed to find the traces table.");
     }
@@ -86,9 +86,7 @@ export class Traces extends BaseComponent {
   }) {
     const page = this.page?.page as PPage;
 
-    const traceRow = await page.waitForSelector(
-      `tr[data-traceid="${traceId}"]`,
-    );
+    const traceRow = await page.$(`tr[data-traceid="${traceId}"]`);
     if (!traceRow) {
       throw new Error(`Failed to find the trace with ID ${traceId}.`);
     }
@@ -108,9 +106,7 @@ export class Traces extends BaseComponent {
   public async toggleFavouriteTrace({ traceId }: { traceId: string }) {
     const page = this.page?.page as PPage;
 
-    const traceRow = await page.waitForSelector(
-      `tr[data-traceid="${traceId}"]`,
-    );
+    const traceRow = await page.$(`tr[data-traceid="${traceId}"]`);
 
     if (!traceRow) {
       throw new Error(`Failed to find the trace with ID ${traceId}.`);

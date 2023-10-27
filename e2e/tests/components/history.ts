@@ -15,7 +15,7 @@ export class History extends BaseComponent {
   public async assert() {
     const page = this.page?.page as PPage;
 
-    const view = await page.waitForSelector(`#${IDS.sidebar.views.history}`);
+    const view = await page.$(`#${IDS.sidebar.views.history}`);
 
     expect(view).toBeTruthy();
   }
@@ -31,7 +31,7 @@ export class History extends BaseComponent {
   > {
     const page = this.page?.page as PPage;
 
-    const view = await page.waitForSelector(`#${IDS.sidebar.views.history}`);
+    const view = await page.$(`#${IDS.sidebar.views.history}`);
     if (!view) {
       throw new Error("Failed to find the history view.");
     }
@@ -84,9 +84,7 @@ export class History extends BaseComponent {
   public async assertLink({ traceId }: { traceId: string }) {
     const page = this.page?.page as PPage;
 
-    const traceRow = await page.waitForSelector(
-      `div[data-historytraceid="${traceId}"]`,
-    );
+    const traceRow = await page.$(`div[data-historytraceid="${traceId}"]`);
     if (!traceRow) {
       throw new Error(`Failed to find the trace with ID ${traceId}.`);
     }
@@ -100,9 +98,7 @@ export class History extends BaseComponent {
   public async deleteItem({ traceId }: { schemaId: string; traceId: string }) {
     const page = this.page?.page as PPage;
 
-    const traceRow = await page.waitForSelector(
-      `div[data-historytraceid="${traceId}"]`,
-    );
+    const traceRow = await page.$(`div[data-historytraceid="${traceId}"]`);
     if (!traceRow) {
       throw new Error(`Failed to find the trace with ID ${traceId}.`);
     }

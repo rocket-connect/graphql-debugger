@@ -15,7 +15,7 @@ export class Favourites extends BaseComponent {
   public async assert() {
     const page = this.page?.page as PPage;
 
-    const view = await page.waitForSelector(`#${IDS.sidebar.views.favourites}`);
+    const view = await page.$(`#${IDS.sidebar.views.favourites}`);
 
     expect(view).toBeTruthy();
   }
@@ -31,7 +31,7 @@ export class Favourites extends BaseComponent {
   > {
     const page = this.page?.page as PPage;
 
-    const view = await page.waitForSelector(`#${IDS.sidebar.views.favourites}`);
+    const view = await page.$(`#${IDS.sidebar.views.favourites}`);
     if (!view) {
       throw new Error("Failed to find the favourites view.");
     }
@@ -84,9 +84,7 @@ export class Favourites extends BaseComponent {
   public async assertLink({ traceId }: { traceId: string }) {
     const page = this.page?.page as PPage;
 
-    const traceRow = await page.waitForSelector(
-      `div[data-favouritestraceid="${traceId}"]`,
-    );
+    const traceRow = await page.$(`div[data-favouritestraceid="${traceId}"]`);
     if (!traceRow) {
       throw new Error(`Failed to find the trace with ID ${traceId}.`);
     }

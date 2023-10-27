@@ -14,12 +14,10 @@ export class Dashboard extends Page {
   public async assert() {
     const page = this.page as PPage;
 
-    const pageComponent = await page.waitForSelector(`#${IDS.dashboard.page}`);
-    const logoComponent = await page.waitForSelector(`#${IDS.dashboard.logo}`);
+    const pageComponent = await page.$(`#${IDS.dashboard.page}`);
+    const logoComponent = await page.$(`#${IDS.dashboard.logo}`);
 
-    const sidebarIcons = await page.waitForSelector(
-      `#${IDS.sidebar.icons.view}`,
-    );
+    const sidebarIcons = await page.$(`#${IDS.sidebar.icons.view}`);
 
     expect(pageComponent).toBeTruthy();
     expect(logoComponent).toBeTruthy();
@@ -27,7 +25,7 @@ export class Dashboard extends Page {
 
     // Sidebar view is hidden by default
     await expect(
-      page.waitForSelector(`#${IDS.sidebar.view}`, {
+      page.$(`#${IDS.sidebar.view}`, {
         timeout: 10000,
       }),
     ).rejects.toThrow();
