@@ -39,9 +39,10 @@ export function ModalWindow({
   if (name !== context?.openName) return null;
 
   return createPortal(
-    <div id={id} className="text-neutral-100">
+    <div className="text-neutral-100">
       <div className="fixed top-0 left-0 w-full h-full bg-black opacity-50"></div>
       <div
+        id={id}
         ref={ref}
         className={classNames(
           "fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-100 rounded-lg shadow-lg p-10 transition-all duration-500 overflow-hidden",
