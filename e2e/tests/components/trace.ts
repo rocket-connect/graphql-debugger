@@ -16,6 +16,7 @@ export class Trace extends BaseComponent {
 
     const view = await page.$(`#${IDS.trace.view}`);
     const header = await page.$(`#${IDS.trace.header}`);
+    const query = await page.$(`#${IDS.trace.query}`);
     const editor = await page.$(`#${IDS.trace.editor}`);
     const pill = await page.$(`#${IDS.trace.pill}`);
     const trace_viewer = await page.$(`#${IDS.trace_viewer.view}`);
@@ -30,11 +31,8 @@ export class Trace extends BaseComponent {
     expect(trace_viewer).toBeTruthy();
     expect(trace_viewer_not_found).toBeTruthy();
 
-    await expect(
-      page.$(`#${IDS.trace.query}`, {
-        timeout: 10000,
-      }),
-    ).rejects.toThrow();
+    // No trace selected at first
+    expect(query).toBeFalsy;
   }
 
   public async getPill(): Promise<{

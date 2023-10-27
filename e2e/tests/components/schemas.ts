@@ -27,7 +27,7 @@ export class Schemas extends BaseComponent {
   public async getUISchemas(): Promise<{ id: string; typeDefs: string }[]> {
     const page = this.page?.page as PPage;
 
-    await page.$(`#${IDS.sidebar.views.schemas}`);
+    await page.waitForSelector(`#${IDS.sidebar.views.schemas}`);
 
     const uiSchemas = await page.$$eval(
       `#${IDS.sidebar.views.schemas} li`,
@@ -44,16 +44,16 @@ export class Schemas extends BaseComponent {
   public async clickSchema(dbSchema: PSchema) {
     const page = this.page?.page as PPage;
 
-    await page.$(`#${IDS.sidebar.views.schemas}`);
+    await page.waitForSelector(`#${IDS.sidebar.views.schemas}`);
 
     const schemaSelector = `[data-schemaid*="${dbSchema.id}"]`;
-    await page.$(schemaSelector);
+    await page.waitForSelector(schemaSelector);
     await page.click(schemaSelector);
 
     const url = await page.url();
     expect(url).toContain(`/schema/${dbSchema.id}`);
 
-    await page.$(`#${IDS.schema.render}`);
+    await page.waitForSelector(`#${IDS.schema.render}`);
 
     const [renderedSchema] = await page.$$eval(
       `#${IDS.schema.render}`,

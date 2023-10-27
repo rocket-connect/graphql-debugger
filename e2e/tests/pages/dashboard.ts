@@ -16,7 +16,7 @@ export class Dashboard extends Page {
 
     const pageComponent = await page.$(`#${IDS.dashboard.page}`);
     const logoComponent = await page.$(`#${IDS.dashboard.logo}`);
-
+    const sidebarView = await page.$(`#${IDS.sidebar.view}`);
     const sidebarIcons = await page.$(`#${IDS.sidebar.icons.view}`);
 
     expect(pageComponent).toBeTruthy();
@@ -24,11 +24,7 @@ export class Dashboard extends Page {
     expect(sidebarIcons).toBeTruthy();
 
     // Sidebar view is hidden by default
-    await expect(
-      page.$(`#${IDS.sidebar.view}`, {
-        timeout: 10000,
-      }),
-    ).rejects.toThrow();
+    expect(sidebarView).toBeFalsy();
   }
 
   public async getSidebar(): Promise<Sidebar> {
