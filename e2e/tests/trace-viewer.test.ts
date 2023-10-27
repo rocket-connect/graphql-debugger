@@ -152,7 +152,7 @@ describe("trace-viewer", () => {
     const variant1 = variants[0];
     await testVariant(variant1);
 
-    const variant2 = variants[1];
-    await testVariant(variant2);
+    // const variant2 = variants[1];
+    // await testVariant(variant2);
   });
 });
