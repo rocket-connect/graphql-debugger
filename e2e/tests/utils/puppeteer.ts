@@ -15,7 +15,7 @@ export async function getPage(options: { browser: Browser }): Promise<Page> {
 export async function getBrowser() {
   const browser = await puppeteer.launch({
     // headless: false,
-    headless: process.env.HEADLESS ? "new" : false,
+    headless: process.env.HEADLESS ? false : "new",
     defaultViewport: null,
     args: ["--disable-web-security"],
     protocolTimeout: 600000,
