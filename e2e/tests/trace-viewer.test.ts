@@ -110,8 +110,23 @@ describe("trace-viewer", () => {
         page: dashboardPage,
       });
       await traceViewerComponent.assert();
+      await traceViewerComponent.expand();
+
+      await sleep(200);
+
+      const pillComponent = await traceViewerComponent.getPill();
+      expect(pillComponent.name).toBeTruthy();
+
+      if (variant.shouldError) {
+        const red = "rgb(239, 68, 68)";
+        expect(pillComponent.color).toBe(red);
+      } else {
+        const neturalColor = "rgb(59, 75, 104)";
+        expect(pillComponent.color).toBe(neturalColor);
+      }
 
       const uiSpans = await traceViewerComponent.getSpans();
+      await traceViewerComponent.close();
 
       expect(uiSpans.length).toBe(trace.spans.length);
 

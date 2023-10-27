@@ -4,7 +4,9 @@ import { IDS } from "@graphql-debugger/ui/src/testing";
 import { Browser, Page as PPage } from "puppeteer";
 
 import { Page } from "../pages/page";
+import { sleep } from "../utils/sleep";
 import { BaseComponent } from "./component";
+import { Trace } from "./trace";
 
 export class TraceViewer extends BaseComponent {
   constructor({ browser, page }: { browser: Browser; page: Page }) {
@@ -19,6 +21,35 @@ export class TraceViewer extends BaseComponent {
 
     expect(view).toBeTruthy();
     expect(expand).toBeTruthy();
+  }
+
+  public async expand() {
+    const page = this.page?.page as PPage;
+
+    const expand = await page.$(`#${IDS.trace_viewer.expand}`);
+    if (!expand) {
+      throw new Error("Failed to find the trace viewer expand button.");
+    }
+
+    await expand.click();
+
+    await sleep(200);
+
+    const view = await page.$(`#${IDS.trace_viewer.view}`);
+    if (!view) {
+      throw new Error("Failed to find the trace viewer view.");
+    }
+  }
+
+  public async close() {
+    const page = this.page?.page as PPage;
+
+    const close = await page.$(`#${IDS.modal.close}`);
+    if (!close) {
+      throw new Error("Failed to find the trace viewer close button.");
+    }
+
+    await close.click();
   }
 
   public async getSpans(): Promise<
@@ -50,5 +81,15 @@ export class TraceViewer extends BaseComponent {
       });
 
     return uiSpans;
+  }
+
+  public async getPill() {
+    const traceComponent = new Trace({
+      browser: this.browser,
+      page: this.page,
+    });
+    const pill = await traceComponent.getPill();
+
+    return pill;
   }
 }
