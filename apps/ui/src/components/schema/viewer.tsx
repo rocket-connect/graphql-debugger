@@ -37,7 +37,6 @@ function RenderSchema() {
   return (
     <div
       id={IDS.schema.render}
-      data-schemaid={schema?.id}
       data-typedefs={schema?.typeDefs}
       className="h-screen overflow-y-scroll custom-scrollbar py-2"
     >
