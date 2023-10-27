@@ -35,7 +35,7 @@ export class TraceViewer extends BaseComponent {
 
     await sleep(200);
 
-    const view = await page.$(`#${IDS.trace_viewer.full_screen}`);
+    const view = await page.$(`#${IDS.trace_viewer.view}`);
     if (!view) {
       throw new Error("Failed to find the trace viewer view.");
     }
@@ -57,7 +57,7 @@ export class TraceViewer extends BaseComponent {
   > {
     const page = this.page?.page as PPage;
 
-    const view = await page.$(`#${IDS.trace_viewer.full_screen}`);
+    const view = await page.$(`#${IDS.trace_viewer.view}`);
     if (!view) {
       throw new Error("Failed to find the trace viewer view.");
     }

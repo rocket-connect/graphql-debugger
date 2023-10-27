@@ -13,7 +13,7 @@ import { Toggle } from "../utils/toggle";
 import { Pill } from "./pill";
 import { Span } from "./span";
 
-function TraceView({ spans, id }: { spans: TSpan[]; id?: string }) {
+function TraceView({ spans }: { spans: TSpan[] }) {
   const treeData = createTreeData(spans);
 
   const minTimestamp = UnixNanoTimeStamp.earliest(
@@ -24,7 +24,7 @@ function TraceView({ spans, id }: { spans: TSpan[]; id?: string }) {
   );
 
   return (
-    <div id={id} className="text-neutral-100 flex flex-col">
+    <div className="text-neutral-100 flex flex-col">
       {treeData.map((treeItem) => (
         <Span
           key={treeItem.spanId}
@@ -90,7 +90,6 @@ export function TraceViewer({ trace }: { trace?: Trace }) {
           )}
         </OpenModal>
         <ModalWindow
-          id={IDS.trace_viewer.full_screen}
           name="full-screen-trace"
           type="full-screen"
           title={
@@ -108,7 +107,7 @@ export function TraceViewer({ trace }: { trace?: Trace }) {
       </Modal>
 
       {trace?.rootSpan ? (
-        <TraceView id={IDS.trace_viewer.small_screen} spans={spans} />
+        <TraceView spans={spans} />
       ) : (
         <div
           id={IDS.trace_viewer.not_found}

@@ -10,7 +10,6 @@ export interface WindowModalProps {
   name: string;
   type: "full-screen" | "small";
   title: string | JSX.Element;
-  id: string;
 }
 
 export function ModalWindow({
@@ -18,7 +17,6 @@ export function ModalWindow({
   name,
   type,
   title,
-  id,
 }: WindowModalProps): ReactElement | null {
   const context = useContext(ModalContext);
   const ref = useRef<HTMLDivElement | null>(null);
@@ -59,7 +57,7 @@ export function ModalWindow({
           <div className="w-6 h-6 text-gray-500">X</div>
         </button>
         <h2 className="text-bold text-xl mb-3">{title}</h2>
-        <div id={id} className="h-full w-full overflow-scroll custom-scrollbar">
+        <div className="h-full w-full overflow-scroll custom-scrollbar">
           {children}
         </div>
       </div>
