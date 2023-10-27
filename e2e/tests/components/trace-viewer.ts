@@ -41,17 +41,6 @@ export class TraceViewer extends BaseComponent {
     }
   }
 
-  public async close() {
-    const page = this.page?.page as PPage;
-
-    const close = await page.$(`#${IDS.modal.close}`);
-    if (!close) {
-      throw new Error("Failed to find the trace viewer close button.");
-    }
-
-    await close.click();
-  }
-
   public async getSpans(): Promise<
     { name: string; time: string; color: string }[]
   > {
