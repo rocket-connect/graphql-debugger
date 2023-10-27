@@ -29,7 +29,7 @@ describe("schemas", () => {
       browser,
       page: dashboardPage,
     });
-    await schemasComponent.init();
+    await schemasComponent.assert();
   });
 
   test("should display a list of schemas", async () => {

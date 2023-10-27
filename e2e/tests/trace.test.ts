@@ -37,7 +37,6 @@ describe("trace", () => {
       browser,
       page,
     });
-    await dashboardPage.init();
 
     const sidebar = await dashboardPage.getSidebar();
     await sidebar.toggleView("schemas");
@@ -52,13 +51,7 @@ describe("trace", () => {
       browser,
       page: dashboardPage,
     });
-    await traceComponent.init();
-
-    const tracesComponent = new Traces({
-      browser,
-      page: dashboardPage,
-    });
-    await tracesComponent.init();
+    await traceComponent.assert();
   });
 
   test("should load a trace correctly", async () => {
@@ -100,13 +93,11 @@ describe("trace", () => {
       browser,
       page: dashboardPage,
     });
-    await traceComponent.init();
 
     const tracesComponent = new Traces({
       browser,
       page: dashboardPage,
     });
-    await tracesComponent.init();
     await tracesComponent.clickTrace({
       schemaId: dbSchema.id,
       traceId: trace.id,
@@ -198,13 +189,11 @@ describe("trace", () => {
       browser,
       page: dashboardPage,
     });
-    await traceComponent.init();
 
     const tracesComponent = new Traces({
       browser,
       page: dashboardPage,
     });
-    await tracesComponent.init();
     await tracesComponent.clickTrace({
       schemaId: dbSchema.id,
       traceId: trace.id,

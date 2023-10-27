@@ -19,7 +19,6 @@ describe("dashboard", () => {
       browser,
       page,
     });
-
-    await dashboard.init();
+    await dashboard.assert();
   });
 });

@@ -22,13 +22,12 @@ describe("sidebar", () => {
       browser,
       page,
     });
-    await dashboard.init();
 
     const sidebar = new Sidebar({
       browser,
       page: dashboard,
     });
-    await sidebar.init();
+    await sidebar.assert();
 
     const sidebarViews = Object.keys(
       IDS.sidebar.views,

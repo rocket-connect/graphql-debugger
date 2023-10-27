@@ -45,17 +45,15 @@ describe("trace-viewer", () => {
       browser,
       page,
     });
-    await dashboardPage.init();
 
     const sidebar = await dashboardPage.getSidebar();
     await sidebar.toggleView("schemas");
-    await sleep(500);
+    await sleep(200);
 
     const schemasComponent = new Schemas({
       browser,
       page: dashboardPage,
     });
-    await schemasComponent.init();
 
     const testVariant = async (variant: {
       shouldError: boolean;
@@ -72,7 +70,7 @@ describe("trace-viewer", () => {
       } else {
         expect(response.errors).toBeUndefined();
       }
-      await sleep(500);
+      await sleep(200);
 
       const traces = await prisma.traceGroup.findMany({
         where: {
@@ -93,7 +91,7 @@ describe("trace-viewer", () => {
       }
 
       await page.reload();
-      await sleep(500);
+      await sleep(200);
       await schemasComponent.clickSchema(dbSchema);
 
       const tracesComponent = new Traces({
@@ -105,13 +103,13 @@ describe("trace-viewer", () => {
         schemaId: dbSchema.id,
         traceId: trace.id,
       });
-      await sleep(500);
+      await sleep(200);
 
       const traceViewerComponent = new TraceViewer({
         browser,
         page: dashboardPage,
       });
-      await traceViewerComponent.init();
+      await traceViewerComponent.assert();
       await traceViewerComponent.expand();
 
       const pillComponent = await traceViewerComponent.getPill();
@@ -126,6 +124,8 @@ describe("trace-viewer", () => {
       }
 
       const uiSpans = await traceViewerComponent.getSpans();
+      await traceViewerComponent.close();
+
       expect(uiSpans.length).toBe(trace.spans.length);
 
       trace.spans.forEach((span) => {
@@ -145,8 +145,6 @@ describe("trace-viewer", () => {
 
         expect(uiSpan?.time).toBe(`${value.toFixed(2)} ${unit}`);
       });
-
-      await traceViewerComponent.close();
     };
 
     const variant1 = variants[0];

@@ -2,7 +2,6 @@ import { BACKEND_PORT } from "@graphql-debugger/backend";
 
 import { History } from "./components/history";
 import { Schemas } from "./components/schemas";
-import { Trace } from "./components/trace";
 import { Traces } from "./components/traces";
 import { Dashboard } from "./pages/dashboard";
 import { createTestSchema } from "./utils/create-test-schema";
@@ -28,7 +27,6 @@ describe("history", () => {
       browser,
       page,
     });
-    await dashboardPage.init();
 
     const sidebar = await dashboardPage.getSidebar();
     await sidebar.toggleView("schemas");
@@ -37,7 +35,6 @@ describe("history", () => {
       browser,
       page: dashboardPage,
     });
-    await schemasComponent.init();
 
     const { dbSchema, schema, query, randomFieldName } =
       await createTestSchema();
@@ -48,12 +45,6 @@ describe("history", () => {
     });
 
     await schemasComponent.clickSchema(dbSchema);
-
-    const traceComponent = new Trace({
-      browser,
-      page: dashboardPage,
-    });
-    await traceComponent.init();
 
     const responses = await Promise.all([
       querySchema({
@@ -70,13 +61,12 @@ describe("history", () => {
     expect(responses[1].errors).toBeDefined();
 
     await page.reload();
-    await sleep(500);
+    await sleep(200);
 
     const tracesComponent = new Traces({
       browser,
       page: dashboardPage,
     });
-    await tracesComponent.init();
 
     const uiTraces = await tracesComponent.getUITraces();
     expect(uiTraces.length).toEqual(2);
@@ -88,24 +78,24 @@ describe("history", () => {
       schemaId: dbSchema.id,
       traceId: uiTrace1.id,
     });
-    await sleep(500);
+    await sleep(200);
 
     await tracesComponent.clickTrace({
       schemaId: dbSchema.id,
       traceId: uiTrace2.id,
     });
-    await sleep(500);
+    await sleep(200);
 
     await sidebar.toggleView("history");
 
     await page.goto(`http://localhost:${BACKEND_PORT}/`);
-    await sleep(1000);
+    await sleep(500);
 
     const historyComponent = new History({
       browser,
       page: dashboardPage,
     });
-    await historyComponent.init();
+    await historyComponent.assert();
 
     const [uiHistoryTrace2, uiHistoryTrace1] =
       await historyComponent.getUITraces();
@@ -131,7 +121,7 @@ describe("history", () => {
       schemaId: dbSchema.id,
       traceId: uiHistoryTrace2.id,
     });
-    await sleep(500);
+    await sleep(200);
 
     const newUiTraces = await historyComponent.getUITraces();
 

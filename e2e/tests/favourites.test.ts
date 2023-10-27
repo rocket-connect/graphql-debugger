@@ -1,6 +1,5 @@
 import { Favourites } from "./components/favourites";
 import { Schemas } from "./components/schemas";
-import { Trace } from "./components/trace";
 import { Traces } from "./components/traces";
 import { Dashboard } from "./pages/dashboard";
 import { createTestSchema } from "./utils/create-test-schema";
@@ -26,7 +25,6 @@ describe("favourites", () => {
       browser,
       page,
     });
-    await dashboardPage.init();
 
     const sidebar = await dashboardPage.getSidebar();
     await sidebar.toggleView("schemas");
@@ -35,7 +33,6 @@ describe("favourites", () => {
       browser,
       page: dashboardPage,
     });
-    await schemasComponent.init();
 
     const { dbSchema, schema, query, randomFieldName } =
       await createTestSchema();
@@ -46,12 +43,6 @@ describe("favourites", () => {
     });
 
     await schemasComponent.clickSchema(dbSchema);
-
-    const traceComponent = new Trace({
-      browser,
-      page: dashboardPage,
-    });
-    await traceComponent.init();
 
     const responses = await Promise.all([
       querySchema({
@@ -68,13 +59,12 @@ describe("favourites", () => {
     expect(responses[1].errors).toBeDefined();
 
     await page.reload();
-    await sleep(500);
+    await sleep(200);
 
     const tracesComponent = new Traces({
       browser,
       page: dashboardPage,
     });
-    await tracesComponent.init();
 
     const uiTraces = await tracesComponent.getUITraces();
     expect(uiTraces.length).toEqual(2);
@@ -95,7 +85,7 @@ describe("favourites", () => {
       browser,
       page: dashboardPage,
     });
-    await favouritesComponent.init();
+    await favouritesComponent.assert();
 
     const [uiFavouriteTrace1, uiFavouriteTrace2] =
       await favouritesComponent.getUITraces();

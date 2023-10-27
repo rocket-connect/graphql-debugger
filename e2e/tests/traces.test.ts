@@ -7,7 +7,6 @@ import {
 } from "@graphql-debugger/utils";
 
 import { Schemas } from "./components/schemas";
-import { Trace } from "./components/trace";
 import { Traces } from "./components/traces";
 import { Dashboard } from "./pages/dashboard";
 import { createTestSchema } from "./utils/create-test-schema";
@@ -33,7 +32,6 @@ describe("traces", () => {
       browser,
       page,
     });
-    await dashboardPage.init();
 
     const sidebar = await dashboardPage.getSidebar();
     await sidebar.toggleView("schemas");
@@ -42,7 +40,6 @@ describe("traces", () => {
       browser,
       page: dashboardPage,
     });
-    await schemasComponent.init();
 
     const { dbSchema, schema, query, randomFieldName } =
       await createTestSchema();
@@ -53,12 +50,6 @@ describe("traces", () => {
     });
 
     await schemasComponent.clickSchema(dbSchema);
-
-    const traceComponent = new Trace({
-      browser,
-      page: dashboardPage,
-    });
-    await traceComponent.init();
 
     const responses = await Promise.all([
       querySchema({
@@ -75,7 +66,7 @@ describe("traces", () => {
     expect(responses[1].errors).toBeDefined();
 
     await page.reload();
-    await sleep(1000);
+    await sleep(500);
 
     const traces = await prisma.traceGroup.findMany({
       where: {
@@ -90,7 +81,7 @@ describe("traces", () => {
       browser,
       page: dashboardPage,
     });
-    await tracesComponent.init();
+    await tracesComponent.assert();
 
     const uiTraces = await tracesComponent.getUITraces();
     expect(uiTraces.length).toEqual(2);

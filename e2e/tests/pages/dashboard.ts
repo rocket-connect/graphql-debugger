@@ -11,7 +11,7 @@ export class Dashboard extends Page {
     super({ browser, page });
   }
 
-  public async init() {
+  public async assert() {
     const page = this.page as PPage;
 
     const pageComponent = await page.waitForSelector(`#${IDS.dashboard.page}`);
@@ -31,14 +31,10 @@ export class Dashboard extends Page {
         timeout: 10000,
       }),
     ).rejects.toThrow();
-
-    const sidebar = new Sidebar({ browser: this.browser, page: this });
-    await sidebar.init();
   }
 
   public async getSidebar(): Promise<Sidebar> {
     const sidebar = new Sidebar({ browser: this.browser, page: this });
-    await sidebar.init();
 
     return sidebar;
   }

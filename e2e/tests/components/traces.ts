@@ -12,7 +12,7 @@ export class Traces extends BaseComponent {
     super({ browser, page });
   }
 
-  public async init() {
+  public async assert() {
     const page = this.page?.page as PPage;
 
     const view = await page.waitForSelector(`#${IDS.trace_list.view}`);
@@ -99,7 +99,7 @@ export class Traces extends BaseComponent {
     }
 
     await linkElement.click();
-    await sleep(500);
+    await sleep(200);
 
     const url = await page.url();
     expect(url).toContain(`/schema/${schemaId}/trace/${traceId}`);

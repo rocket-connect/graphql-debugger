@@ -13,7 +13,7 @@ export class Schemas extends BaseComponent {
     super({ browser, page });
   }
 
-  public async init() {
+  public async assert() {
     const page = this.page?.page as PPage;
 
     const schemasView = await page.waitForSelector(

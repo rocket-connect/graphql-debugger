@@ -11,48 +11,19 @@ export class Sidebar extends BaseComponent {
     super({ browser, page });
   }
 
-  public async init() {
+  public async assert() {
     const page = this.page?.page as PPage;
 
-    const sidebarIcons = await page.waitForSelector(
-      `#${IDS.sidebar.icons.view}`,
+    await Promise.all(
+      Object.entries(IDS.sidebar.icons).map(async ([key, id]) => {
+        try {
+          const icon = await page.$(`#${id}`);
+          expect(icon).toBeTruthy();
+        } catch (e) {
+          throw new Error(`Failed to find the ${key} icon.`);
+        }
+      }),
     );
-
-    const schemasIcon = await page.waitForSelector(
-      `#${IDS.sidebar.icons.schemas}`,
-    );
-
-    const configIcon = await page.waitForSelector(
-      `#${IDS.sidebar.icons.config}`,
-    );
-
-    const historyIcon = await page.waitForSelector(
-      `#${IDS.sidebar.icons.history}`,
-    );
-
-    const favouritesIcon = await page.waitForSelector(
-      `#${IDS.sidebar.icons.favourites}`,
-    );
-
-    const loginIcon = await page.waitForSelector(`#${IDS.sidebar.icons.login}`);
-
-    const npmIcon = await page.waitForSelector(`#${IDS.sidebar.icons.npm}`);
-
-    const githubIcon = await page.waitForSelector(
-      `#${IDS.sidebar.icons.github}`,
-    );
-
-    const infoIcon = await page.waitForSelector(`#${IDS.sidebar.icons.info}`);
-
-    expect(sidebarIcons).toBeTruthy();
-    expect(schemasIcon).toBeTruthy();
-    expect(configIcon).toBeTruthy();
-    expect(historyIcon).toBeTruthy();
-    expect(favouritesIcon).toBeTruthy();
-    expect(loginIcon).toBeTruthy();
-    expect(npmIcon).toBeTruthy();
-    expect(githubIcon).toBeTruthy();
-    expect(infoIcon).toBeTruthy();
   }
 
   public async getView(
@@ -64,9 +35,7 @@ export class Sidebar extends BaseComponent {
 
     let view: ElementHandle<Element> | null = null;
     try {
-      view = await page.waitForSelector(`#${id}`, {
-        timeout: 10000,
-      });
+      view = await page.$(`#${id}`);
     } catch (e) {
       // Ignore
     }
@@ -81,7 +50,7 @@ export class Sidebar extends BaseComponent {
 
     const id = IDS.sidebar.icons[key];
 
-    const infoIcon = await page.waitForSelector(`#${id}`);
+    const infoIcon = await page.$(`#${id}`);
     await infoIcon?.click();
 
     const view = await this.getView(key);
