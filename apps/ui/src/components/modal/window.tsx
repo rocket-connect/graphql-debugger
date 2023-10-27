@@ -42,7 +42,6 @@ export function ModalWindow({
     <div className="text-neutral-100">
       <div className="fixed top-0 left-0 w-full h-full bg-black opacity-50"></div>
       <div
-        id={id}
         ref={ref}
         className={classNames(
           "fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-100 rounded-lg shadow-lg p-10 transition-all duration-500 overflow-hidden",
@@ -60,7 +59,7 @@ export function ModalWindow({
           <div className="w-6 h-6 text-gray-500">X</div>
         </button>
         <h2 className="text-bold text-xl mb-3">{title}</h2>
-        <div className="h-full w-full overflow-scroll custom-scrollbar">
+        <div id={id} className="h-full w-full overflow-scroll custom-scrollbar">
           {children}
         </div>
       </div>

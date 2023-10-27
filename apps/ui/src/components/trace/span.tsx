@@ -82,7 +82,12 @@ export function Span({
             <div className={spanClasses} style={{ width, left: offset }}></div>
           </div>
         </OpenModal>
-        <ModalWindow name="single-trace" type="small" title={displyInfo}>
+        <ModalWindow
+          id="single-trace"
+          name="single-trace"
+          type="small"
+          title={displyInfo}
+        >
           <div className="flex flex-col gap-5 text-neutral-300 text-md divide-y-2 divide-neutral/10">
             <JsonViewer
               json={JSON.stringify(
