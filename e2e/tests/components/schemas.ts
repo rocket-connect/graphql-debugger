@@ -33,7 +33,7 @@ export class Schemas extends BaseComponent {
       `#${IDS.sidebar.views.schemas} li`,
       (liElements) =>
         liElements.map((li) => ({
-          id: li.getAttribute("data-schemaid") || "",
+          id: li.getAttribute("data-schemalistid") || "",
           typeDefs: li.getAttribute("data-typedefs") || "",
         })),
     );
@@ -46,7 +46,7 @@ export class Schemas extends BaseComponent {
 
     await page.waitForSelector(`#${IDS.sidebar.views.schemas}`);
 
-    const schemaSelector = `[data-schemaid*="${dbSchema.id}"]`;
+    const schemaSelector = `[data-schemalistid*="${dbSchema.id}"]`;
     await page.waitForSelector(schemaSelector);
     await page.click(schemaSelector);
 
