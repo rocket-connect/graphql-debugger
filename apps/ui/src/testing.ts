@@ -30,8 +30,6 @@ export const IDS = {
     view: "trace-viewer-view",
     not_found: "trace-viewer-not-found",
     expand: "trace-viewer-expand",
-    full_screen: "trace-viewer-full-screen",
-    small_screen: "trace-viewer-small-screen",
   },
   dashboard: {
     page: "dashboard-page",
