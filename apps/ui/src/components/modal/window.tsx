@@ -10,7 +10,6 @@ export interface WindowModalProps {
   name: string;
   type: "full-screen" | "small";
   title: string | JSX.Element;
-  id?: string;
 }
 
 export function ModalWindow({
@@ -18,7 +17,6 @@ export function ModalWindow({
   name,
   type,
   title,
-  id,
 }: WindowModalProps): ReactElement | null {
   const context = useContext(ModalContext);
   const ref = useRef<HTMLDivElement | null>(null);
@@ -39,7 +37,7 @@ export function ModalWindow({
   if (name !== context?.openName) return null;
 
   return createPortal(
-    <div id={id} className="text-neutral-100">
+    <div className="text-neutral-100">
       <div className="fixed top-0 left-0 w-full h-full bg-black opacity-50"></div>
       <div
         ref={ref}

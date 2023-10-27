@@ -145,6 +145,8 @@ describe("trace-viewer", () => {
 
         expect(uiSpan?.time).toBe(`${value.toFixed(2)} ${unit}`);
       });
+
+      await traceViewerComponent.close();
     };
 
     const variant1 = variants[0];
