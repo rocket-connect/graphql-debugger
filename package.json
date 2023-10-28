@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/monorepo",
-  "version": "0.0.0-alpha.62",
+  "version": "0.0.0-alpha.63",
   "private": true,
   "scripts": {
     "dev": "cross-env turbo dev --filter '!graphql-debugger' --filter '!@graphql-debugger/landing-page-app' --filter '!@graphql-debugger/landing-page-server' --concurrency=18",
