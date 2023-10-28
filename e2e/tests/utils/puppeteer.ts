@@ -20,7 +20,7 @@ export async function getBrowser() {
     args: ["--disable-web-security"],
     protocolTimeout: 600000,
     timeout: 600000,
-    slowMo: 50,
+    slowMo: process.env.SLOW_MO ? Number(process.env.SLOW_MO) : 50,
   });
 
   return browser;
