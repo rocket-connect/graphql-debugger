@@ -102,9 +102,17 @@ describe("trace-viewer", () => {
       await traceViewerComponent.assert();
       await sleep(200);
 
-      for await (const isExpanded of [false, true]) {
+      for (const isExpanded of [false, true]) {
         if (isExpanded) {
           await traceViewerComponent.expand();
+
+          const pillComponent = await traceViewerComponent.getPill();
+          expect(pillComponent.name).toBeTruthy();
+
+          const colorToExpect = variant.shouldError
+            ? colors.red_text
+            : colors.netural_text;
+          expect(pillComponent.color).toBe(colorToExpect);
         }
 
         const uiSpans = await traceViewerComponent.getSpans({
@@ -125,16 +133,6 @@ describe("trace-viewer", () => {
           const durationNano = new UnixNanoTimeStamp(span.durationNano);
           const { value, unit } = durationNano.toSIUnits();
           expect(uiSpan?.time).toBe(`${value.toFixed(2)} ${unit}`);
-        }
-
-        if (isExpanded) {
-          const pillComponent = await traceViewerComponent.getPill();
-          expect(pillComponent.name).toBeTruthy();
-
-          const colorToExpect = variant.shouldError
-            ? colors.red_text
-            : colors.netural_text;
-          expect(pillComponent.color).toBe(colorToExpect);
         }
       }
     }
