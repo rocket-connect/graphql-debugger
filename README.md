@@ -10,6 +10,10 @@
 
 [![](./docs/screenshot.png)](https://www.graphql-debugger.com/)
 
+
+<div style="display: flex;">
+<img src="./docs/screenshot-error.png" width="50%" alt="GraphQL Debugger">
+<img src="./docs/screenshot-trace-viewer.png" width="50%" alt="GraphQL Debugger">
 </div>
 
 ## Watch the talk!
