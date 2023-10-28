@@ -4,15 +4,11 @@ import { IDS } from "../../../../testing";
 import { Selection } from "./selection";
 import { QueryType } from "./type";
 
-export function QueryViewer({ doc, spanId }: { doc: string; spanId: string }) {
+export function QueryViewer({ doc }: { doc: string }) {
   const ast: DocumentNode = parse(doc);
 
   return (
-    <div
-      id={IDS.QUERY_VIEWER}
-      data-query-view-spanid={spanId}
-      className="flex-1 "
-    >
+    <div id={IDS.trace.query} data-query={doc} className="flex-1 ">
       <pre className="text-xs flex flex-col gap-5">
         {ast?.definitions.map((def, index) => {
           if (def.kind === Kind.OPERATION_DEFINITION) {

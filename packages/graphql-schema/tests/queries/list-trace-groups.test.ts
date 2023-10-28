@@ -1,4 +1,3 @@
-import { createTestTraceGroup } from "@graphql-debugger/data-access";
 import { ListTraceGroupsResponseSchema } from "@graphql-debugger/schemas";
 import {
   GraphQLOTELContext,
@@ -11,6 +10,7 @@ import gql from "gql-tag";
 import { graphql } from "graphql";
 import util from "util";
 
+import { createTestTraceGroup } from "../utils";
 import { request } from "../utils";
 
 const sleep = util.promisify(setTimeout);

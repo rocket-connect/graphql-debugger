@@ -2,6 +2,7 @@ import { useContext } from "react";
 
 import { SchemasContext } from "../../context/schemas";
 import { SideBarContext } from "../../context/sidebar";
+import { IDS } from "../../testing";
 import { sideBarComponentMapper } from "./utils";
 import { InfoLogo } from "./views/info/info-logo";
 
@@ -28,10 +29,13 @@ export function SideBarView() {
   const shouldDisplayHeader = !["info"].includes(viewType);
 
   return (
-    <div className="h-screen flex flex-col items-start w-2/6 max-w-2/6 p-5 text-neutral-100 overflow-scroll gap-5 custom-scrollbar">
+    <div
+      id={IDS.sidebar.view}
+      className="h-screen flex flex-col items-start w-2/6 max-w-2/6 p-5 text-neutral-100 overflow-scroll gap-5 custom-scrollbar"
+    >
       {shouldDisplayLogo ? (
         <div className="mx-auto">
-          <InfoLogo />
+          <InfoLogo id={IDS.sidebar.logo} />
         </div>
       ) : (
         <></>

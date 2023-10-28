@@ -75,31 +75,7 @@ export const TraceObject: ObjectRef<Trace> = builder.objectType("Trace", {
 
             return list;
           } else {
-            return [
-              ...list,
-              {
-                id: span.id,
-                spanId: span.spanId,
-                parentSpanId: span.parentSpanId,
-                traceId: span.traceId,
-                name: span.name,
-                kind: span.kind,
-                startTimeUnixNano: span.startTimeUnixNano,
-                endTimeUnixNano: span.endTimeUnixNano,
-                durationNano: span.durationNano,
-                graphqlDocument: span.graphqlDocument,
-                graphqlVariables: span.graphqlVariables,
-                graphqlResult: span.graphqlResult,
-                graphqlContext: span.graphqlContext,
-                timestamp: 0,
-                createdAt: span.createdAt,
-                updatedAt: span.updatedAt,
-                errorMessage: span.errorMessage,
-                errorStack: span.errorStack,
-                isForeign: span.isForeign,
-                attributes: span.attributes as string,
-              },
-            ];
+            return [...list, span];
           }
         }, []);
       },

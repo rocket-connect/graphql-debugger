@@ -3,12 +3,14 @@ import { ReactElement, useContext, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 import { ModalContext } from "../../context/modal";
+import { IDS } from "../../testing";
 
 export interface WindowModalProps {
   children: ReactElement;
   name: string;
   type: "full-screen" | "small";
   title: string | JSX.Element;
+  id?: string;
 }
 
 export function ModalWindow({
@@ -16,6 +18,7 @@ export function ModalWindow({
   name,
   type,
   title,
+  id,
 }: WindowModalProps): ReactElement | null {
   const context = useContext(ModalContext);
   const ref = useRef<HTMLDivElement | null>(null);
@@ -40,6 +43,7 @@ export function ModalWindow({
       <div className="fixed top-0 left-0 w-full h-full bg-black opacity-50"></div>
       <div
         ref={ref}
+        id={id}
         className={classNames(
           "fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-100 rounded-lg shadow-lg p-10 transition-all duration-500 overflow-hidden",
           {
@@ -49,6 +53,7 @@ export function ModalWindow({
         )}
       >
         <button
+          id={IDS.modal.close}
           onClick={context.close}
           className="bg-none border-none p-2 rounded-sm transform translate-x-4 transition-all duration-200 absolute top-3 right-6 hover:bg-gray-200"
         >

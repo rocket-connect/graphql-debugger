@@ -233,5 +233,20 @@ describe("UnixNanoTimeStamp", () => {
 
       expect(formattedTimestamp).toContain(expectedFormat);
     });
+
+    it("should return the today prefix if date is today", () => {
+      const today = new Date();
+      const unixNanoTimeStampValue = today.getTime() * 1e6;
+      const unixNanoTimeStamp = UnixNanoTimeStamp.fromString(
+        unixNanoTimeStampValue.toString(),
+      );
+
+      const formattedTimestamp = unixNanoTimeStamp.formatUnixNanoTimestamp({
+        timeZone: "utc",
+        includeTimeZoneString: false,
+      });
+
+      expect(formattedTimestamp).toContain("Today at");
+    });
   });
 });

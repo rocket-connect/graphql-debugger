@@ -8,6 +8,7 @@ import {
   loginFilled,
   loginStroke,
 } from "../../images";
+import { IDS } from "../../testing";
 import { SchemaViewer } from "../schema/viewer";
 import { Config } from "./views/config";
 import { Favourites } from "./views/favourites";
@@ -20,43 +21,45 @@ interface SideBar {
   component: JSX.Element;
 }
 
-export const iconsMapper = (
-  routes: string[] | undefined,
-): Record<
+export const iconsMapper = (): Record<
   string,
   {
     active: React.ReactNode;
     inactive: React.ReactNode;
     hidden?: boolean;
     type: string;
+    id: string;
   }
 > => ({
   schema: {
+    id: IDS.sidebar.icons.schemas,
     type: "schema",
     active: <img className="w-8" src={folderFilled} />,
     inactive: <img className="w-8" src={folderStroke} />,
   },
   config: {
+    id: IDS.sidebar.icons.config,
     type: "config",
     active: <img className="w-8" src={configFilled} />,
     inactive: <img className="w-8" src={configStroke} />,
   },
   login: {
+    id: IDS.sidebar.icons.login,
     type: "login",
     active: <img className="w-8" src={loginFilled} />,
     inactive: <img className="w-8" src={loginStroke} />,
   },
   history: {
+    id: IDS.sidebar.icons.history,
     type: "history",
     active: <HistoryFilled size={"35"} color="#3b4b68" />,
     inactive: <History size={"35"} color="#3b4b68" />,
-    hidden: !routes?.includes("history"),
   },
   favourites: {
+    id: IDS.sidebar.icons.favourites,
     type: "favourites",
     active: <Star size={"35"} color="#3b4b68" />,
     inactive: <StarFilled size={"35"} color="#3b4b68" />,
-    hidden: !routes?.includes("favourites"),
   },
 });
 
@@ -98,16 +101,6 @@ export const configs = [
     description: "Toggle between light and dark mode",
     callout: "(Comming Soon)",
     enabled: false,
-  },
-  {
-    name: "History",
-    description: "Store trace history in local storage",
-    enabled: true,
-  },
-  {
-    name: "Favourites",
-    description: "Store trace favourites in local storage",
-    enabled: true,
   },
   {
     name: "Cookies",

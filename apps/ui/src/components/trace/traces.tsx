@@ -1,5 +1,5 @@
-import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import { Trace } from "@graphql-debugger/types";
+import { getTraceStart, sumTraceTime } from "@graphql-debugger/utils";
 
 import { useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
@@ -18,7 +18,7 @@ import { Modal } from "../../context/modal";
 import { Star, StarFilled } from "../../icons/star";
 import { refresh, searchFilled } from "../../images";
 import { IDS } from "../../testing";
-import { DEFAULT_SLEEP_TIME, sleep } from "../../utils/sleep";
+import { isTraceError } from "../../utils/is-trace-error";
 import { OpenModal } from "../modal/open";
 import { ModalWindow } from "../modal/window";
 import { Spinner } from "../utils/spinner";
@@ -37,12 +37,7 @@ export function SchemaTraces() {
   const [searchParams] = useSearchParams();
 
   const { data: traces, isLoading } = useQuery({
-    queryKey: [
-      "traces",
-      params.schemaId,
-      searchParams.get("rootSpanName"),
-      params.traceId,
-    ],
+    queryKey: ["traces", params.schemaId, searchParams.get("rootSpanName")],
     queryFn: async () => {
       const traces = await client.trace.findMany({
         where: {
@@ -50,9 +45,8 @@ export function SchemaTraces() {
           rootSpanName: searchParams.get("rootSpanName"),
         },
         includeRootSpan: true,
+        includeSpans: true,
       });
-
-      await sleep(DEFAULT_SLEEP_TIME);
 
       return traces;
     },
@@ -99,7 +93,7 @@ export function SchemaTraces() {
   return (
     <div
       className="bg-white-100 flex-grow rounded-2xl divide-y-2 divide-neutral/10"
-      id={IDS.SCHEMA_TRACES}
+      id={IDS.trace_list.view}
     >
       <div className="flex items-center p-5 justify-between text-neutral-100">
         <div className="flex flex-col">
@@ -108,7 +102,7 @@ export function SchemaTraces() {
         </div>
         <div className="flex items-center gap-10 text-sm">
           <Modal key="search-full-screen">
-            <OpenModal opens="full-screen-search">
+            <OpenModal id={"open-search"} opens="full-screen-search">
               <button className="flex gap-3 hover:underline" onClick={() => {}}>
                 <img className="w-6" src={searchFilled} />
                 <p>Search</p>
@@ -145,87 +139,97 @@ export function SchemaTraces() {
             </div>
           ) : (
             <>
-              <table className="w-full text-xs text-center">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Duration</th>
-                    <th>Start</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {traces?.length === 0 ? (
-                    <div className="font-bold text-neutral-200 flex items-center justify-center text-center mx-auto">
-                      No traces found
-                    </div>
-                  ) : (
-                    <>
-                      {traces?.map((trace) => {
-                        const rootSpan = trace.rootSpan;
-                        const startTimeUnixNano = UnixNanoTimeStamp.fromString(
-                          rootSpan?.startTimeUnixNano || "0",
-                        );
-                        const durationUnixNano = UnixNanoTimeStamp.fromString(
-                          rootSpan?.durationNano || "0",
-                        );
+              {traces?.length === 0 ? (
+                <div
+                  id={IDS.trace_list.not_found}
+                  className="mx-auto text-center text-neutral-100 font-bold"
+                >
+                  <p className="mt-20">No Traces Found</p>
+                </div>
+              ) : (
+                <table
+                  id={IDS.trace_list.table}
+                  className="w-full text-xs text-center"
+                >
+                  <thead>
+                    <tr>
+                      <th className="px-6 text-left">Name</th>
+                      <th>Duration</th>
+                      <th>Start</th>
+                      <th>Favourite</th>
+                    </tr>
+                  </thead>
 
-                        const { value, unit } = durationUnixNano.toSIUnits();
+                  <tbody>
+                    {traces?.map((trace) => {
+                      const rootSpan = trace.rootSpan;
+                      const startTimeUnixNano = getTraceStart(trace);
+                      const traceDurationUnixNano =
+                        trace && sumTraceTime(trace);
 
-                        return (
-                          <tr
-                            data-spanid={rootSpan?.id}
-                            key={trace.id}
-                            className={`border-b-2 border-graphiql-neutral/10 text-neutral-100 hover:cursor-pointer`}
+                      const traceDurationSIUnits =
+                        traceDurationUnixNano?.toSIUnits();
+
+                      const { value, unit } = traceDurationSIUnits;
+
+                      const isError = isTraceError(trace);
+
+                      return (
+                        <tr
+                          data-traceid={trace?.id}
+                          key={trace.id}
+                          className={`border-b-2 border-graphiql-neutral/10 text-neutral-100 hover:cursor-pointer`}
+                        >
+                          <th
+                            className={`py-4 ${
+                              isError ? "text-error-red" : ""
+                            } text-left`}
+                            role="button"
                           >
-                            <th
+                            <Link
                               className={classNames(
-                                `px-6 py-4  flex items-center gap-3 `,
+                                `px-6 py-4 whitespace-nowrap font-medium ${
+                                  isSelected(trace.id)
+                                    ? "underline"
+                                    : "font-bold"
+                                }`,
                               )}
-                              role="button"
+                              to={`/schema/${params.schemaId}/trace/${
+                                trace.id
+                              }?${searchParams.toString()}`}
+                              onClick={() =>
+                                handleSetHistoryTraces({
+                                  trace,
+                                  schemaId: params.schemaId as string,
+                                  uniqueId: uuidv4(),
+                                  timestamp: new Date(),
+                                })
+                              }
                             >
-                              <button onClick={() => handleAddTrace(trace)}>
-                                {isFavourite(trace.id) ? (
-                                  <Star size={"1.5em"} />
-                                ) : (
-                                  <StarFilled size={"1.5em"} />
-                                )}
-                              </button>
-                              <Link
-                                className={classNames(
-                                  `px-6 py-4 whitespace-nowrap font-medium ${
-                                    isSelected(trace.id)
-                                      ? "underline"
-                                      : "font-bold"
-                                  }`,
-                                )}
-                                to={`/schema/${params.schemaId}/trace/${
-                                  trace.id
-                                }?${searchParams.toString()}`}
-                                onClick={() =>
-                                  handleSetHistoryTraces({
-                                    trace,
-                                    schemaId: params.schemaId as string,
-                                    uniqueId: uuidv4(),
-                                    timestamp: new Date(),
-                                  })
-                                }
-                              >
-                                {rootSpan?.name}
-                              </Link>
-                            </th>
-                            <td className="px-6 py-4">{`${value.toFixed(
-                              2,
-                            )} ${unit}`}</td>
-                            <td className="px-6 py-4">
-                              {startTimeUnixNano.formatUnixNanoTimestamp()}
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </>
-                  )}
-                </tbody>
-              </table>
+                              {rootSpan?.name}
+                            </Link>
+                          </th>
+                          <td className="px-6 py-4">{`${value.toFixed(
+                            2,
+                          )} ${unit}`}</td>
+                          <td className="px-6 py-4">
+                            {startTimeUnixNano.formatUnixNanoTimestamp()}
+                          </td>
+                          <td className="px-6 py-4">
+                            <button onClick={() => handleAddTrace(trace)}>
+                              {isFavourite(trace.id) ? (
+                                <Star size={"1.5em"} />
+                              ) : (
+                                <StarFilled size={"1.5em"} />
+                              )}
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              )}
             </>
           )}
         </div>

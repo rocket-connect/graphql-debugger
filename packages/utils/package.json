@@ -21,10 +21,13 @@
     "graphql": "^16.0.0 || ^17.0.0"
   },
   "dependencies": {
+    "@graphql-debugger/data-access": "workspace:^",
+    "@graphql-debugger/time": "workspace:^",
     "debug": "4.3.4",
     "safe-json-stringify": "1.2.0"
   },
   "devDependencies": {
+    "@graphql-debugger/types": "workspace:^",
     "@types/debug": "4.1.9",
     "@types/safe-json-stringify": "1.1.2"
   }

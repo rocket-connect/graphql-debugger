@@ -1,3 +1,4 @@
+import { IDS } from "../../testing";
 import { InfoLogo } from "../sidebar/views/info/info-logo";
 
 export function Search() {
@@ -12,7 +13,7 @@ export function Search() {
         filter the traces.
       </p>
       <div className="mt-10">
-        <InfoLogo />
+        <InfoLogo id={IDS.LOGO} />
       </div>
     </div>
   );

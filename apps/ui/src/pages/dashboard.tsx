@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { InfoLogo } from "../components/sidebar/views/info/info-logo";
 import { Page } from "../components/utils/page";
 import { SchemasContext } from "../context/schemas";
+import { IDS } from "../testing";
 
 export function Dashboard() {
   const params = useParams();
@@ -30,9 +31,9 @@ export function Dashboard() {
   }, [schemaContext, navigate, params.schemaId]);
 
   return (
-    <Page>
+    <Page id={IDS.dashboard.page}>
       <div className="rounded-2xl py-10 px-28 mx-auto my-auto shadow bg-white">
-        <InfoLogo />
+        <InfoLogo id={IDS.dashboard.logo} />
       </div>
     </Page>
   );

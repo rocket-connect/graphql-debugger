@@ -29,5 +29,7 @@
     "@graphql-tools/utils": "10.0.6",
     "puppeteer": "21.1.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@faker-js/faker": "8.0.2"
+  }
 }
