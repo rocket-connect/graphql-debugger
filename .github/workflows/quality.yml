@@ -19,7 +19,7 @@ jobs:
       - name: graphql-debugger/e2e
         run: cd ./e2e && pnpm run test
         env:
-          SLOW_MO: "100"
+          SLOW_MO: "150"
           SKIP_MODAL: "true"
 
   test-collector-proxy:
