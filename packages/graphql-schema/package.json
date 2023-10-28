@@ -20,18 +20,18 @@
     "graphql": "^16.0.0 || ^17.0.0"
   },
   "dependencies": {
+    "@graphql-debugger/collector-proxy": "workspace:^",
     "@graphql-debugger/data-access": "workspace:^",
+    "@graphql-debugger/schemas": "workspace:^",
     "@graphql-debugger/time": "workspace:^",
     "@graphql-debugger/trace-schema": "workspace:^",
     "@graphql-debugger/types": "workspace:^",
-    "@graphql-debugger/schemas": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
-    "@graphql-debugger/collector-proxy": "workspace:^",
     "@graphql-tools/schema": "10.0.0",
-    "@graphql-tools/utils": "10.0.6",
+    "@graphql-tools/utils": "10.0.7",
     "@pothos/core": "3.38.0",
     "dataloader": "2.2.2",
-    "graphql-yoga": "4.0.4"
+    "graphql-yoga": "5.0.0"
   },
   "devDependencies": {
     "express": "4.18.2",

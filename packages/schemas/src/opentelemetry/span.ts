@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { UnixNanoSchema } from ".";
 import { KeyValueSchema } from "./any-value";
 import { EventSchema } from "./event";
 import { LinkSchema } from "./link";
@@ -12,8 +13,8 @@ export const OTELSpanSchema = z.object({
   parentSpanId: z.string().optional(),
   name: z.string(),
   kind: z.number(),
-  startTimeUnixNano: z.number(),
-  endTimeUnixNano: z.number(),
+  startTimeUnixNano: UnixNanoSchema,
+  endTimeUnixNano: UnixNanoSchema,
   attributes: z.array(KeyValueSchema),
   droppedAttributesCount: z.number().optional(),
   events: z.array(EventSchema).optional(),

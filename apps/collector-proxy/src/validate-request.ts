@@ -2,6 +2,8 @@ import { z } from "@graphql-debugger/schemas";
 
 import { NextFunction, Request, Response } from "express";
 
+import { debug } from "./debug";
+
 export function validateRequest(schema: z.AnyZodObject) {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -26,6 +28,19 @@ export function validateRequest(schema: z.AnyZodObject) {
 
       return next();
     } catch (error) {
+      debug(
+        JSON.stringify(
+          {
+            body: req.body,
+            query: req.query,
+            params: req.params,
+          },
+          null,
+          2,
+        ),
+      );
+      debug("Error parsing request", error);
+
       const e = error as Error;
 
       return res.status(400).json({

@@ -5,6 +5,7 @@ import { parse, print } from "graphql";
 
 import { extractSpans } from "../src/extract-spans";
 import { TRACER_NAME, TRACER_VERSION } from "../src/tracer";
+import { unixNanoToBigInt } from "../src/unix-nano-to-bigint";
 
 describe("extractSpans", () => {
   test("should extract data from spans", () => {
@@ -117,8 +118,14 @@ describe("extractSpans", () => {
                   },
                 ],
                 droppedAttributesCount: 0,
-                startTimeUnixNano: 1,
-                endTimeUnixNano: 1,
+                startTimeUnixNano: {
+                  high: 1,
+                  low: 1,
+                },
+                endTimeUnixNano: {
+                  high: 1,
+                  low: 1,
+                },
                 droppedEventsCount: 0,
                 droppedLinksCount: 0,
                 events: [],
@@ -142,8 +149,14 @@ describe("extractSpans", () => {
                   },
                 ],
                 droppedAttributesCount: 0,
-                startTimeUnixNano: 2,
-                endTimeUnixNano: 2,
+                startTimeUnixNano: {
+                  high: 2,
+                  low: 2,
+                },
+                endTimeUnixNano: {
+                  high: 2,
+                  low: 2,
+                },
                 droppedEventsCount: 0,
                 droppedLinksCount: 0,
                 events: [],
@@ -167,14 +180,23 @@ describe("extractSpans", () => {
                   },
                 ],
                 droppedAttributesCount: 0,
-                startTimeUnixNano: 3,
-                endTimeUnixNano: 3,
+                startTimeUnixNano: {
+                  high: 3,
+                  low: 3,
+                },
+                endTimeUnixNano: {
+                  high: 3,
+                  low: 3,
+                },
                 droppedEventsCount: 0,
                 droppedLinksCount: 0,
                 events: [
                   {
                     name: "exception",
-                    timeUnixNano: 3,
+                    timeUnixNano: {
+                      high: 3,
+                      low: 3,
+                    },
                     droppedAttributesCount: 0,
                     attributes: [
                       {
@@ -206,8 +228,12 @@ describe("extractSpans", () => {
         parentSpanId: undefined,
         name: "query users",
         kind: 0,
-        startTimeUnixNano: 1,
-        endTimeUnixNano: 1,
+        startTimeUnixNano: unixNanoToBigInt(
+          resourceSpans[0].scopeSpans[0].spans[0].startTimeUnixNano,
+        ).toString(),
+        endTimeUnixNano: unixNanoToBigInt(
+          resourceSpans[0].scopeSpans[0].spans[0].endTimeUnixNano,
+        ).toString(),
         graphqlSchemaHash: schemaHash,
         graphqlDocument: document,
         graphqlVariables: variables,
@@ -229,8 +255,12 @@ describe("extractSpans", () => {
         parentSpanId: "1",
         name: "User name",
         kind: 0,
-        startTimeUnixNano: 2,
-        endTimeUnixNano: 2,
+        startTimeUnixNano: unixNanoToBigInt(
+          resourceSpans[0].scopeSpans[0].spans[1].startTimeUnixNano,
+        ).toString(),
+        endTimeUnixNano: unixNanoToBigInt(
+          resourceSpans[0].scopeSpans[0].spans[1].endTimeUnixNano,
+        ).toString(),
         graphqlSchemaHash: schemaHash,
         graphqlDocument: undefined,
         graphqlVariables: undefined,
@@ -247,8 +277,12 @@ describe("extractSpans", () => {
         parentSpanId: "1",
         name: "User errorField",
         kind: 0,
-        startTimeUnixNano: 3,
-        endTimeUnixNano: 3,
+        startTimeUnixNano: unixNanoToBigInt(
+          resourceSpans[0].scopeSpans[0].spans[2].startTimeUnixNano,
+        ).toString(),
+        endTimeUnixNano: unixNanoToBigInt(
+          resourceSpans[0].scopeSpans[0].spans[2].endTimeUnixNano,
+        ).toString(),
         graphqlSchemaHash: schemaHash,
         graphqlDocument: undefined,
         graphqlVariables: undefined,
@@ -334,8 +368,14 @@ describe("extractSpans", () => {
                     },
                   },
                 ],
-                startTimeUnixNano: 1,
-                endTimeUnixNano: 2,
+                startTimeUnixNano: {
+                  high: 1,
+                  low: 1,
+                },
+                endTimeUnixNano: {
+                  high: 2,
+                  low: 2,
+                },
                 status: {
                   code: 0,
                 },
@@ -354,8 +394,14 @@ describe("extractSpans", () => {
                     },
                   },
                 ],
-                startTimeUnixNano: 3,
-                endTimeUnixNano: 3,
+                startTimeUnixNano: {
+                  high: 3,
+                  low: 3,
+                },
+                endTimeUnixNano: {
+                  high: 3,
+                  low: 3,
+                },
                 status: {
                   code: 0,
                 },
@@ -371,8 +417,14 @@ describe("extractSpans", () => {
                 parentSpanId: "1",
                 name: "prisma:client:operation",
                 kind: 1,
-                startTimeUnixNano: 3,
-                endTimeUnixNano: 4,
+                startTimeUnixNano: {
+                  high: 3,
+                  low: 4,
+                },
+                endTimeUnixNano: {
+                  high: 4,
+                  low: 4,
+                },
                 attributes: [
                   {
                     key: "method",
@@ -403,8 +455,14 @@ describe("extractSpans", () => {
                 parentSpanId: "2",
                 name: "prisma:engine:db_query",
                 kind: 1,
-                startTimeUnixNano: 5,
-                endTimeUnixNano: 6,
+                startTimeUnixNano: {
+                  high: 5,
+                  low: 5,
+                },
+                endTimeUnixNano: {
+                  high: 6,
+                  low: 6,
+                },
                 attributes: [
                   {
                     key: "db.statement",
@@ -431,8 +489,12 @@ describe("extractSpans", () => {
         traceId: "1",
         name: "query users",
         kind: 0,
-        startTimeUnixNano: 1,
-        endTimeUnixNano: 2,
+        startTimeUnixNano: unixNanoToBigInt(
+          resourceSpans[0].scopeSpans[0].spans[0].startTimeUnixNano,
+        ).toString(),
+        endTimeUnixNano: unixNanoToBigInt(
+          resourceSpans[0].scopeSpans[0].spans[0].endTimeUnixNano,
+        ).toString(),
         isForeign: false,
         graphqlSchemaHash: schemaHash,
         graphqlDocument: "{\n  users {\n    name\n  }\n}",
@@ -455,8 +517,12 @@ describe("extractSpans", () => {
         parentSpanId: "1",
         name: "User name",
         kind: 0,
-        startTimeUnixNano: 3,
-        endTimeUnixNano: 3,
+        startTimeUnixNano: unixNanoToBigInt(
+          resourceSpans[0].scopeSpans[0].spans[1].startTimeUnixNano,
+        ).toString(),
+        endTimeUnixNano: unixNanoToBigInt(
+          resourceSpans[0].scopeSpans[0].spans[1].endTimeUnixNano,
+        ).toString(),
         isForeign: false,
         graphqlSchemaHash: schemaHash,
         errorMessage: undefined,
@@ -473,8 +539,12 @@ describe("extractSpans", () => {
         parentSpanId: "1",
         name: "prisma:client:operation",
         kind: 1,
-        startTimeUnixNano: 3,
-        endTimeUnixNano: 4,
+        startTimeUnixNano: unixNanoToBigInt(
+          resourceSpans[0].scopeSpans[1].spans[0].startTimeUnixNano,
+        ).toString(),
+        endTimeUnixNano: unixNanoToBigInt(
+          resourceSpans[0].scopeSpans[1].spans[0].endTimeUnixNano,
+        ).toString(),
         isForeign: true,
         attributes: {
           method: "findMany",
@@ -495,8 +565,12 @@ describe("extractSpans", () => {
         parentSpanId: "2",
         name: "prisma:engine:db_query",
         kind: 1,
-        startTimeUnixNano: 5,
-        endTimeUnixNano: 6,
+        startTimeUnixNano: unixNanoToBigInt(
+          resourceSpans[0].scopeSpans[1].spans[1].startTimeUnixNano,
+        ).toString(),
+        endTimeUnixNano: unixNanoToBigInt(
+          resourceSpans[0].scopeSpans[1].spans[1].endTimeUnixNano,
+        ).toString(),
         isForeign: true,
         attributes: { "db.statement": "SELECT * FROM User" },
         errorMessage: undefined,

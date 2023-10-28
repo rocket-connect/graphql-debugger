@@ -41,8 +41,8 @@ describe("plugin express", () => {
           parentSpanId: undefined, // In this case the express plugin is the root span
           name: "HTTP POST /graphql",
           kind: 1,
-          startTimeUnixNano: 3,
-          endTimeUnixNano: 4,
+          startTimeUnixNano: { high: 3, low: 3 },
+          endTimeUnixNano: { high: 4, low: 4 },
           attributes: [
             {
               key: HttpServerAttributeNames.HTTP_ROUTE,
@@ -128,8 +128,14 @@ describe("plugin express", () => {
                     },
                   ],
                   droppedAttributesCount: 0,
-                  startTimeUnixNano: 1,
-                  endTimeUnixNano: 2,
+                  startTimeUnixNano: {
+                    high: 1,
+                    low: 1,
+                  },
+                  endTimeUnixNano: {
+                    high: 2,
+                    low: 2,
+                  },
                   droppedEventsCount: 0,
                   droppedLinksCount: 0,
                   events: [],
@@ -145,8 +151,14 @@ describe("plugin express", () => {
                   name: "User name",
                   kind: 0,
                   droppedAttributesCount: 0,
-                  startTimeUnixNano: 2,
-                  endTimeUnixNano: 2,
+                  startTimeUnixNano: {
+                    high: 1,
+                    low: 1,
+                  },
+                  endTimeUnixNano: {
+                    high: 2,
+                    low: 2,
+                  },
                   droppedEventsCount: 0,
                   droppedLinksCount: 0,
                   events: [],

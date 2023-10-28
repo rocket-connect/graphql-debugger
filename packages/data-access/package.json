@@ -19,8 +19,8 @@
     "test": "echo \"No tests\""
   },
   "dependencies": {
-    "@prisma/client": "5.4.2",
-    "@prisma/instrumentation": "5.4.1",
-    "prisma": "5.4.2"
+    "@prisma/client": "5.5.2",
+    "@prisma/instrumentation": "5.5.2",
+    "prisma": "5.5.2"
   }
 }

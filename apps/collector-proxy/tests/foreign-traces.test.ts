@@ -87,8 +87,14 @@ describe("foreign traces", () => {
                     },
                   ],
                   droppedAttributesCount: 0,
-                  startTimeUnixNano: 1,
-                  endTimeUnixNano: 2,
+                  startTimeUnixNano: {
+                    high: 1,
+                    low: 1,
+                  },
+                  endTimeUnixNano: {
+                    high: 2,
+                    low: 2,
+                  },
                   droppedEventsCount: 0,
                   droppedLinksCount: 0,
                   events: [],
@@ -104,8 +110,14 @@ describe("foreign traces", () => {
                   name: "User name",
                   kind: 0,
                   droppedAttributesCount: 0,
-                  startTimeUnixNano: 2,
-                  endTimeUnixNano: 2,
+                  startTimeUnixNano: {
+                    high: 2,
+                    low: 2,
+                  },
+                  endTimeUnixNano: {
+                    high: 3,
+                    low: 3,
+                  },
                   droppedEventsCount: 0,
                   droppedLinksCount: 0,
                   events: [],
@@ -133,8 +145,14 @@ describe("foreign traces", () => {
                   parentSpanId: "1",
                   name: "prisma:client:operation",
                   kind: 1,
-                  startTimeUnixNano: 3,
-                  endTimeUnixNano: 4,
+                  startTimeUnixNano: {
+                    high: 3,
+                    low: 3,
+                  },
+                  endTimeUnixNano: {
+                    high: 4,
+                    low: 4,
+                  },
                   attributes: [
                     {
                       key: "method",
@@ -165,8 +183,14 @@ describe("foreign traces", () => {
                   parentSpanId: "3",
                   name: "prisma:engine:db_query",
                   kind: 1,
-                  startTimeUnixNano: 5,
-                  endTimeUnixNano: 6,
+                  startTimeUnixNano: {
+                    high: 5,
+                    low: 5,
+                  },
+                  endTimeUnixNano: {
+                    high: 6,
+                    low: 6,
+                  },
                   attributes: [
                     {
                       key: "db.statement",

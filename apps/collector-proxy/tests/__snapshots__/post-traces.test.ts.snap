@@ -52,7 +52,7 @@ exports[`POST /v1/traces should throw span validation error when not sent correc
   },
   {
     "code": "invalid_type",
-    "expected": "number",
+    "expected": "object",
     "received": "undefined",
     "path": [
       "body",
@@ -68,7 +68,7 @@ exports[`POST /v1/traces should throw span validation error when not sent correc
   },
   {
     "code": "invalid_type",
-    "expected": "number",
+    "expected": "object",
     "received": "undefined",
     "path": [
       "body",

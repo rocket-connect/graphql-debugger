@@ -9,6 +9,7 @@ import { parse, print } from "graphql";
 import { attributesToObject } from "./attributes-to-object";
 import { debug } from "./debug";
 import { TRACER_NAME } from "./tracer";
+import { unixNanoToBigInt } from "./unix-nano-to-bigint";
 
 export function extractSpans({
   resourceSpans,
@@ -111,8 +112,10 @@ export function extractSpans({
           parentSpanId: span.parentSpanId,
           name: span.name,
           kind: span.kind,
-          startTimeUnixNano: span.startTimeUnixNano,
-          endTimeUnixNano: span.endTimeUnixNano,
+          startTimeUnixNano: unixNanoToBigInt(
+            span.startTimeUnixNano,
+          ).toString(),
+          endTimeUnixNano: unixNanoToBigInt(span.endTimeUnixNano).toString(),
           isForeign: isForeignSpan,
           attributes: remainingAttributes,
           graphqlSchemaHash,
