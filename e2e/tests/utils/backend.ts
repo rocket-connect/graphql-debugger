@@ -3,7 +3,7 @@ import * as collector from "@graphql-debugger/collector-proxy";
 
 import http from "http";
 
-import { debug } from "../src/debug";
+import { debug } from "../../src/debug";
 
 let backendServer: http.Server;
 let collectorServer: http.Server;
@@ -34,3 +34,6 @@ export async function close() {
 
   debug("Collector Proxy closed");
 }
+
+export const BACKEND_PORT = backend.BACKEND_PORT;
+export const COLLECTOR_PORT = collector.COLLECTOR_PORT;

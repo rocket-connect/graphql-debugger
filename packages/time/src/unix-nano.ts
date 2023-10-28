@@ -110,8 +110,9 @@ export class UnixNanoTimeStamp {
   }: { timeZone?: "utc"; includeTimeZoneString?: boolean } = {}) {
     const milliseconds = Number(this.getBigInt()) / 1e6;
     const date = new Date(milliseconds);
+    const today = new Date();
 
-    const formattedDate = date.toLocaleDateString("en-US", {
+    let formattedDate = date.toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
       day: "numeric",
@@ -127,6 +128,15 @@ export class UnixNanoTimeStamp {
       timeZone,
       hour12: false, // Force 24-hour format
     });
+
+    // Check if the date is today
+    if (
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    ) {
+      formattedDate = "Today";
+    }
 
     let result = `${formattedDate} at ${formattedTime}`;
     if (!includeTimeZoneString) {

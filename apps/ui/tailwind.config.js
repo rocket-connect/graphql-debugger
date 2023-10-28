@@ -21,6 +21,7 @@ module.exports = {
         ["graphiql-pink"]: "#FF5794",
         ["graphiql-highlight"]: "#444D60",
         ["app-blue"]: "#3A4B68",
+        ["error-red"]: "#EF4444",
       },
     },
   },

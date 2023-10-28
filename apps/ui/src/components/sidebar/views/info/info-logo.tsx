@@ -3,9 +3,9 @@ import { logo } from "../../../../utils/images";
 
 const { version } = require("../../../../../package.json");
 
-export function InfoLogo() {
+export function InfoLogo({ id }: { id: string }) {
   return (
-    <div className="flex flex-col gap-5 text-center">
+    <div id={id} className="flex flex-col gap-5 text-center">
       <img className="w-12 mx-auto" src={logo} id={IDS.LOGO}></img>
       <p className="text-xl font-bold">GraphQL Debugger</p>
       <a

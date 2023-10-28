@@ -133,3 +133,5 @@ build
 dev.db
 
 schema.graphql
+*.cookie
+dev.db-journal

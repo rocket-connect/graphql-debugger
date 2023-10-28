@@ -17,4 +17,3 @@ if (!process.env.TRACE_PRISMA) {
 
 export * from ".prisma/client";
 export * from "./clear-db";
-export * from "./test-entities";

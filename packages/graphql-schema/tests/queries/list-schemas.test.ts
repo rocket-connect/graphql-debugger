@@ -1,10 +1,10 @@
-import { createTestSchema } from "@graphql-debugger/data-access";
 import { ListSchemasResponseSchema } from "@graphql-debugger/schemas";
 import { ListSchemasResponse } from "@graphql-debugger/types";
 
 import gql from "gql-tag";
 
 import { request } from "../utils";
+import { createTestSchema } from "../utils";
 
 const query = gql`
   query ($where: ListSchemasWhere) {

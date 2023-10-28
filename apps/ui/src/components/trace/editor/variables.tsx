@@ -1,9 +1,9 @@
 import { Trace } from "@graphql-debugger/types";
+import { printTraceErrors } from "@graphql-debugger/utils";
 
 import classNames from "classnames";
 import { useState } from "react";
 
-import { DownArrow, UpArrow } from "../../../icons";
 import { IDS } from "../../../testing";
 import {
   jsonMapper,
@@ -18,74 +18,51 @@ export function Variables({ trace }: { trace?: Trace }) {
 
   const handleMetaClick = (event: HTMLDivElement) => {
     setSelectedMeta(event.innerHTML.toLowerCase());
+
+    setDisplayVariables((x) => {
+      if (event.innerHTML.toLowerCase() === selectedMeta && x === true) {
+        return false;
+      } else {
+        return true;
+      }
+    });
   };
 
-  const errorsJson = JSON.stringify(
-    (trace?.spans || []).reduce((result, span) => {
-      if (span.errorMessage || span.errorStack) {
-        result[span.name] = {
-          errorMessage: span.errorMessage,
-          errorStack: span.errorStack,
-        };
-      }
-
-      return result;
-    }, {}),
+  const errors = JSON.parse(
+    trace ? printTraceErrors(trace) : JSON.stringify({}),
   );
 
   return (
-    <div className="flex p-4 flex-col justify-between text-neutral-100">
+    <div
+      id={IDS.trace.variables}
+      className="flex p-4 flex-col gap-2 justify-between text-neutral-100"
+    >
       <div className="flex items-center justify-between">
         <div className="flex gap-2 items-center">
           {variablesHeader.map((variable) => (
-            <p
+            <a
               key={variable}
               onClick={(event) =>
                 handleMetaClick(event.target as HTMLDivElement)
               }
-              {...(variable === "Result"
-                ? {
-                    id: IDS.RESULT_BUTTON,
-                  }
-                : {})}
               className={classNames("text-neutral-100 ", {
                 ["font-semibold"]: selectedMeta === variable.toLowerCase(),
               })}
               role="button"
             >
               {variable}
-            </p>
+            </a>
           ))}
         </div>
-        {displayVariables ? (
-          <button
-            id={IDS.EXPAND_VARIABLES}
-            onClick={() => setDisplayVariables(false)}
-          >
-            <DownArrow />
-          </button>
-        ) : (
-          <button
-            id={IDS.EXPAND_VARIABLES}
-            onClick={() => setDisplayVariables(true)}
-          >
-            <UpArrow />
-          </button>
-        )}
       </div>
       {displayVariables && (
-        <div
-          className={classNames({
-            ["h-96"]: displayVariables,
-          })}
-        >
-          <p className="text-xs mb-2">{metaMapper[selectedMeta]}</p>
-          <div className="overflow-scroll custom-scrollbar h-full">
+        <div className="flex flex-col gap-2">
+          <p className="text-sm">{metaMapper[selectedMeta]}</p>
+          <div className="h-96 w-96 overflow-scroll custom-scrollbar">
             <JsonViewer
-              id={selectedMeta === "result" ? IDS.JSON_VIEWER : ""}
               json={
                 selectedMeta === "errors"
-                  ? errorsJson
+                  ? JSON.stringify(errors)
                   : trace?.rootSpan?.[jsonMapper[selectedMeta]] || "{}"
               }
             />

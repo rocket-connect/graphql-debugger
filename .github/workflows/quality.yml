@@ -18,6 +18,9 @@ jobs:
         run: npm i -g puppeteer@21.1.1
       - name: graphql-debugger/e2e
         run: cd ./e2e && pnpm run test
+        env:
+          SLOW_MO: "150"
+          SKIP_MODAL: "true"
 
   test-collector-proxy:
     runs-on: ubuntu-latest
