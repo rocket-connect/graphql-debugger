@@ -28,7 +28,6 @@ export function validateRequest(schema: z.AnyZodObject) {
 
       return next();
     } catch (error) {
-      console.log(JSON.stringify(req.body, null, 2));
       debug("Error parsing request", error);
 
       const e = error as Error;
