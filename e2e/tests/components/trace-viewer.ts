@@ -17,9 +17,11 @@ export class TraceViewer extends BaseComponent {
     const page = this.page?.page as PPage;
 
     const view = await page.$(`#${IDS.trace_viewer.view}`);
+    const dView = await page.$(`#${IDS.trace_viewer.default}`);
     const expand = await page.$(`#${IDS.trace_viewer.expand}`);
 
     expect(view).toBeTruthy();
+    expect(dView).toBeTruthy();
     expect(expand).toBeTruthy();
   }
 
@@ -35,18 +37,24 @@ export class TraceViewer extends BaseComponent {
 
     await sleep(200);
 
-    const view = await page.$(`#${IDS.trace_viewer.view}`);
+    const view = await page.$(`#${IDS.trace_viewer.full_screen}`);
     if (!view) {
-      throw new Error("Failed to find the trace viewer view.");
+      throw new Error("Failed to find the full screen viewer view.");
     }
   }
 
-  public async getSpans(): Promise<
-    { name: string; time: string; color: string }[]
-  > {
+  public async getSpans({
+    isExpanded,
+  }: {
+    isExpanded?: boolean;
+  }): Promise<{ name: string; time: string; color: string }[]> {
     const page = this.page?.page as PPage;
 
-    const view = await page.$(`#${IDS.trace_viewer.view}`);
+    const view = await page.$(
+      `#${
+        isExpanded ? IDS.trace_viewer.full_screen : IDS.trace_viewer.default
+      }`,
+    );
     if (!view) {
       throw new Error("Failed to find the trace viewer view.");
     }

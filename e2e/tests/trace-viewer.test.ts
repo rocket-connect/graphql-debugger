@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { prisma } from "@graphql-debugger/data-access";
 import { isTraceError } from "@graphql-debugger/utils";
 
@@ -100,32 +99,42 @@ describe("trace-viewer", () => {
         page: dashboardPage,
       });
       await traceViewerComponent.assert();
-      await traceViewerComponent.expand();
       await sleep(200);
 
-      const pillComponent = await traceViewerComponent.getPill();
-      expect(pillComponent.name).toBeTruthy();
+      for await (const isExpanded of [false, true]) {
+        if (isExpanded) {
+          await traceViewerComponent.expand();
+        }
 
-      const colorToExpect = variant.shouldError
-        ? "rgb(239, 68, 68)"
-        : "rgb(59, 75, 104)";
-      expect(pillComponent.color).toBe(colorToExpect);
+        const uiSpans = await traceViewerComponent.getSpans({
+          isExpanded,
+        });
+        expect(uiSpans.length).toBe(trace?.spans.length);
 
-      const uiSpans = await traceViewerComponent.getSpans();
-      expect(uiSpans.length).toBe(trace?.spans.length);
+        for (const span of trace?.spans || []) {
+          const uiSpan = uiSpans.find((uiS) => uiS.name === span.name);
+          expect(uiSpan?.name).toBe(span.name);
 
-      for (const span of trace?.spans || []) {
-        const uiSpan = uiSpans.find((uiS) => uiS.name === span.name);
-        expect(uiSpan?.name).toBe(span.name);
+          const spanColorToExpect = variant.shouldError
+            ? "rgba(59, 75, 104, 0.3)"
+            : "rgba(59, 75, 104, 0.3)";
+          expect(uiSpan?.color).toBe(spanColorToExpect);
 
-        const spanColorToExpect = variant.shouldError
-          ? "rgba(59, 75, 104, 0.3)"
-          : "rgba(59, 75, 104, 0.3)";
-        expect(uiSpan?.color).toBe(spanColorToExpect);
+          const durationNano = new UnixNanoTimeStamp(span.durationNano);
+          const { value, unit } = durationNano.toSIUnits();
+          expect(uiSpan?.time).toBe(`${value.toFixed(2)} ${unit}`);
+        }
 
-        const durationNano = new UnixNanoTimeStamp(span.durationNano);
-        const { value, unit } = durationNano.toSIUnits();
-        expect(uiSpan?.time).toBe(`${value.toFixed(2)} ${unit}`);
+        if (isExpanded) {
+          await traceViewerComponent.expand();
+          const pillComponent = await traceViewerComponent.getPill();
+          expect(pillComponent.name).toBeTruthy();
+
+          const colorToExpect = variant.shouldError
+            ? "rgb(239, 68, 68)"
+            : "rgb(59, 75, 104)";
+          expect(pillComponent.color).toBe(colorToExpect);
+        }
       }
     }
   });
