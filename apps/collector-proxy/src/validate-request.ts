@@ -28,6 +28,17 @@ export function validateRequest(schema: z.AnyZodObject) {
 
       return next();
     } catch (error) {
+      debug(
+        JSON.stringify(
+          {
+            body: req.body,
+            query: req.query,
+            params: req.params,
+          },
+          null,
+          2,
+        ),
+      );
       debug("Error parsing request", error);
 
       const e = error as Error;

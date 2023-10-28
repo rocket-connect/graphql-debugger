@@ -193,7 +193,10 @@ describe("extractSpans", () => {
                 events: [
                   {
                     name: "exception",
-                    timeUnixNano: 3,
+                    timeUnixNano: {
+                      high: 3,
+                      low: 3,
+                    },
                     droppedAttributesCount: 0,
                     attributes: [
                       {
