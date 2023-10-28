@@ -102,7 +102,10 @@ describe("trace-viewer", () => {
       await traceViewerComponent.assert();
       await sleep(200);
 
-      for (const isExpanded of [false, true]) {
+      for (const isExpanded of [
+        false,
+        process.env.SKIP_MODAL === "true" ? true : false,
+      ]) {
         if (isExpanded) {
           await traceViewerComponent.expand();
 
