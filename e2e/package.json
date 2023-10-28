@@ -19,17 +19,17 @@
     "graphql": "^16.0.0 || ^17.0.0"
   },
   "dependencies": {
-    "@graphql-debugger/utils": "workspace:^",
-    "@graphql-debugger/ui": "workspace:^",
     "@graphql-debugger/backend": "workspace:^",
-    "@graphql-debugger/trace-schema": "workspace:^",
-    "@graphql-debugger/data-access": "workspace:^",
     "@graphql-debugger/collector-proxy": "workspace:^",
+    "@graphql-debugger/data-access": "workspace:^",
+    "@graphql-debugger/trace-schema": "workspace:^",
+    "@graphql-debugger/ui": "workspace:^",
+    "@graphql-debugger/utils": "workspace:^",
     "@graphql-tools/schema": "10.0.0",
-    "@graphql-tools/utils": "10.0.6",
-    "puppeteer": "21.1.1"
+    "@graphql-tools/utils": "10.0.7",
+    "puppeteer": "21.4.1"
   },
   "devDependencies": {
-    "@faker-js/faker": "8.0.2"
+    "@faker-js/faker": "8.2.0"
   }
 }
