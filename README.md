@@ -15,6 +15,7 @@
 <img src="./docs/screenshot-error.png" width="30%" alt="GraphQL Debugger">
 <img src="./docs/screenshot-trace-viewer.png" width="30%" alt="GraphQL Debugger">
 </div>
+</div>
 
 ## Watch the talk!
 
