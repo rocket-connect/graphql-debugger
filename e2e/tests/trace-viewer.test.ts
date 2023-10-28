@@ -128,7 +128,6 @@ describe("trace-viewer", () => {
         }
 
         if (isExpanded) {
-          await traceViewerComponent.expand();
           const pillComponent = await traceViewerComponent.getPill();
           expect(pillComponent.name).toBeTruthy();
 
