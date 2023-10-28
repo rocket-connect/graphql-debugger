@@ -12,8 +12,8 @@
 
 
 <div style="display: flex; text-align: center; justify-content: center" align="center">
-<img src="./docs/screenshot-error.png" width="30%" alt="GraphQL Debugger">
-<img src="./docs/screenshot-trace-viewer.png" width="30%" alt="GraphQL Debugger">
+<img src="./docs/screenshot-error.png" width="50%" alt="GraphQL Debugger">
+<img src="./docs/screenshot-trace-viewer.png" width="50%" alt="GraphQL Debugger">
 </div>
 </div>
 
