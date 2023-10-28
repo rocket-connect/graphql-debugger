@@ -55,16 +55,10 @@ describe("trace-viewer", () => {
       page: dashboardPage,
     });
 
-    const testVariant = async (variant: {
-      shouldError: boolean;
-      randomFieldName: string;
-    }) => {
+    for (const variant of variants) {
       const { dbSchema, schema, query } = await createTestSchema(variant);
 
-      const response = await querySchema({
-        schema: schema,
-        query: query,
-      });
+      const response = await querySchema({ schema, query });
       if (variant.shouldError) {
         expect(response.errors).toBeDefined();
       } else {
@@ -81,14 +75,9 @@ describe("trace-viewer", () => {
         },
       });
 
-      let trace = traces[0];
-      if (variant.shouldError) {
-        // @ts-ignore
-        trace = traces.find((t) => isTraceError(t));
-      } else {
-        // @ts-ignore
-        trace = traces.find((t) => !isTraceError(t));
-      }
+      const trace = variant.shouldError
+        ? traces.find((t) => isTraceError(t))
+        : traces.find((t) => !isTraceError(t));
 
       await page.reload();
       await sleep(200);
@@ -101,7 +90,7 @@ describe("trace-viewer", () => {
 
       await tracesComponent.clickTrace({
         schemaId: dbSchema.id,
-        traceId: trace.id,
+        traceId: trace?.id as string,
       });
       await sleep(200);
 
@@ -111,47 +100,32 @@ describe("trace-viewer", () => {
       });
       await traceViewerComponent.assert();
       await traceViewerComponent.expand();
-
       await sleep(200);
 
       const pillComponent = await traceViewerComponent.getPill();
       expect(pillComponent.name).toBeTruthy();
 
-      if (variant.shouldError) {
-        const red = "rgb(239, 68, 68)";
-        expect(pillComponent.color).toBe(red);
-      } else {
-        const neturalColor = "rgb(59, 75, 104)";
-        expect(pillComponent.color).toBe(neturalColor);
-      }
+      const colorToExpect = variant.shouldError
+        ? "rgb(239, 68, 68)"
+        : "rgb(59, 75, 104)";
+      expect(pillComponent.color).toBe(colorToExpect);
 
       const uiSpans = await traceViewerComponent.getSpans();
+      expect(uiSpans.length).toBe(trace?.spans.length);
 
-      expect(uiSpans.length).toBe(trace.spans.length);
-
-      trace.spans.forEach((span) => {
+      for (const span of trace?.spans || []) {
         const uiSpan = uiSpans.find((uiS) => uiS.name === span.name);
         expect(uiSpan?.name).toBe(span.name);
 
-        if (variant.shouldError) {
-          const red = "rgba(59, 75, 104, 0.3)";
-          expect(uiSpan?.color).toBe(red);
-        } else {
-          const green = "rgba(59, 75, 104, 0.3)";
-          expect(uiSpan?.color).toBe(green);
-        }
+        const spanColorToExpect = variant.shouldError
+          ? "rgba(59, 75, 104, 0.3)"
+          : "rgba(59, 75, 104, 0.3)";
+        expect(uiSpan?.color).toBe(spanColorToExpect);
 
         const durationNano = new UnixNanoTimeStamp(span.durationNano);
         const { value, unit } = durationNano.toSIUnits();
-
         expect(uiSpan?.time).toBe(`${value.toFixed(2)} ${unit}`);
-      });
-    };
-
-    const variant1 = variants[0];
-    await testVariant(variant1);
-
-    const variant2 = variants[1];
-    await testVariant(variant2);
+      }
+    }
   });
 });
