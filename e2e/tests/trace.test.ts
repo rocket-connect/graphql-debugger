@@ -13,6 +13,7 @@ import { Schemas } from "./components/schemas";
 import { Trace } from "./components/trace";
 import { Traces } from "./components/traces";
 import { Dashboard } from "./pages/dashboard";
+import { colors } from "./utils/colors";
 import { createTestSchema } from "./utils/create-test-schema";
 import { Browser, getBrowser, getPage } from "./utils/puppeteer";
 import { querySchema } from "./utils/query-schema";
@@ -125,8 +126,7 @@ describe("trace", () => {
       trace.spans.find((span) => span.isGraphQLRootSpan)?.name,
     );
 
-    const neturalColor = "rgb(59, 75, 104)";
-    expect(pill.color).toBe(neturalColor);
+    expect(pill.color).toBe(colors.netural_text);
     expect(pill.start).toBe(startTimeUnixNano.formatUnixNanoTimestamp());
     expect(pill.duration).toBe(
       `${traceDurationSIUnits?.value.toFixed(2)} ${traceDurationSIUnits?.unit}`,
@@ -206,8 +206,7 @@ describe("trace", () => {
     expect(pill.name).toBe(
       trace.spans.find((span) => span.isGraphQLRootSpan)?.name,
     );
-    const red = "rgb(239, 68, 68)";
-    expect(pill.color).toBe(red);
+    expect(pill.color).toBe(colors.red_text);
 
     const editorValues = await traceComponent.getEditorValues({
       includeError: true,

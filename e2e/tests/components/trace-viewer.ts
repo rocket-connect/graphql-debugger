@@ -47,7 +47,7 @@ export class TraceViewer extends BaseComponent {
     isExpanded,
   }: {
     isExpanded?: boolean;
-  }): Promise<{ name: string; time: string; color: string }[]> {
+  }): Promise<{ id: string; name: string; time: string; color: string }[]> {
     const page = this.page?.page as PPage;
 
     const view = await page.$(
@@ -59,14 +59,16 @@ export class TraceViewer extends BaseComponent {
       throw new Error("Failed to find the trace viewer view.");
     }
 
-    const uiSpans: { name: string; time: string; color: string }[] =
-      await view.$$eval("div[data-trace-view-spanid]", (spans) => {
+    const uiSpans: { id: string; name: string; time: string; color: string }[] =
+      await view.$$eval("div[data-traceviewspanid]", (spans) => {
         return spans.map((span) => {
+          const id = span.getAttribute("data-traceviewspanid");
           const nameElem = span.querySelector('[data-name="span-name"]');
           const timeElem = span.querySelector('[data-time="span-time"]');
           const lineElement = span.querySelector('[data-line="span-line"]');
 
           return {
+            id: id || "",
             name: nameElem ? nameElem.textContent || "" : "",
             time: timeElem ? timeElem.textContent : "",
             color: lineElement

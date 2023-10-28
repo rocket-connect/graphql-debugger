@@ -68,7 +68,7 @@ export function Span({
 
   return (
     <div
-      data-trace-view-spanid={data.id}
+      data-traceviewspanid={data.id}
       className="relative overflow-hidden flex flex-col gap-1 text-xs"
     >
       <Modal>
@@ -76,10 +76,13 @@ export function Span({
           <div className="py-4 hover:cursor-pointer hover:underline">
             {displyInfo}
             <div
-              data-line="span-line"
               className={`absolute h-4 bg-neutral/30 rounded-2xl w-full`}
             ></div>
-            <div className={spanClasses} style={{ width, left: offset }}></div>
+            <div
+              data-line="span-line"
+              className={spanClasses}
+              style={{ width, left: offset }}
+            ></div>
           </div>
         </OpenModal>
         <ModalWindow name="single-trace" type="small" title={displyInfo}>

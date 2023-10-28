@@ -1,5 +1,5 @@
 import { prisma } from "@graphql-debugger/data-access";
-import { isTraceError } from "@graphql-debugger/utils";
+import { isSpanError, isTraceError } from "@graphql-debugger/utils";
 
 import { faker } from "@faker-js/faker";
 
@@ -8,6 +8,7 @@ import { Schemas } from "./components/schemas";
 import { TraceViewer } from "./components/trace-viewer";
 import { Traces } from "./components/traces";
 import { Dashboard } from "./pages/dashboard";
+import { colors } from "./utils/colors";
 import { createTestSchema } from "./utils/create-test-schema";
 import { Browser, getBrowser, getPage } from "./utils/puppeteer";
 import { querySchema } from "./utils/query-schema";
@@ -112,13 +113,14 @@ describe("trace-viewer", () => {
         expect(uiSpans.length).toBe(trace?.spans.length);
 
         for (const span of trace?.spans || []) {
-          const uiSpan = uiSpans.find((uiS) => uiS.name === span.name);
+          const uiSpan = uiSpans.find((uiS) => uiS.id === span.id);
           expect(uiSpan?.name).toBe(span.name);
 
-          const spanColorToExpect = variant.shouldError
-            ? "rgba(59, 75, 104, 0.3)"
-            : "rgba(59, 75, 104, 0.3)";
-          expect(uiSpan?.color).toBe(spanColorToExpect);
+          if (variant.shouldError && isSpanError(span)) {
+            expect(uiSpan?.color).toBe(colors.red_text);
+          } else {
+            expect(uiSpan?.color).toBe(colors.green_text);
+          }
 
           const durationNano = new UnixNanoTimeStamp(span.durationNano);
           const { value, unit } = durationNano.toSIUnits();
@@ -131,8 +133,8 @@ describe("trace-viewer", () => {
           expect(pillComponent.name).toBeTruthy();
 
           const colorToExpect = variant.shouldError
-            ? "rgb(239, 68, 68)"
-            : "rgb(59, 75, 104)";
+            ? colors.red_text
+            : colors.netural_text;
           expect(pillComponent.color).toBe(colorToExpect);
         }
       }

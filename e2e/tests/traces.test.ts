@@ -9,6 +9,7 @@ import {
 import { Schemas } from "./components/schemas";
 import { Traces } from "./components/traces";
 import { Dashboard } from "./pages/dashboard";
+import { colors } from "./utils/colors";
 import { createTestSchema } from "./utils/create-test-schema";
 import { Browser, getBrowser, getPage } from "./utils/puppeteer";
 import { querySchema } from "./utils/query-schema";
@@ -114,11 +115,9 @@ describe("traces", () => {
       const color = uiTrace?.color;
 
       if (isError) {
-        const red = "rgb(239, 68, 68)";
-        expect(color).toEqual(red);
+        expect(color).toEqual(colors.red_text);
       } else {
-        const neturalColor = "rgb(59, 75, 104)";
-        expect(color).toBe(neturalColor);
+        expect(color).toBe(colors.netural_text);
       }
     });
   });
