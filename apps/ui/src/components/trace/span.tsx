@@ -72,7 +72,7 @@ export function Span({
       className="relative overflow-hidden flex flex-col gap-1 text-xs"
     >
       <Modal>
-        <OpenModal opens="single-trace">
+        <OpenModal id={`trace-open-modal-${data.id}`} opens="single-trace">
           <div className="py-4 hover:cursor-pointer hover:underline">
             {displyInfo}
             <div

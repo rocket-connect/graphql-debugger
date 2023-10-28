@@ -102,7 +102,7 @@ export function SchemaTraces() {
         </div>
         <div className="flex items-center gap-10 text-sm">
           <Modal key="search-full-screen">
-            <OpenModal opens="full-screen-search">
+            <OpenModal id={"open-search"} opens="full-screen-search">
               <button className="flex gap-3 hover:underline" onClick={() => {}}>
                 <img className="w-6" src={searchFilled} />
                 <p>Search</p>

@@ -76,12 +76,9 @@ export function TraceViewer({ trace }: { trace?: Trace }) {
       className="overflow-y-scroll basis-3/4 h-full custom-scrollbar"
     >
       <Modal key="trace-full-screen">
-        <OpenModal opens="full-screen-trace">
+        <OpenModal id={IDS.trace_viewer.expand} opens="full-screen-trace">
           {trace ? (
-            <button
-              id={IDS.trace_viewer.expand}
-              className="flex flex-row gap-3 text-neutral-100 text-sm hover:underline"
-            >
+            <button className="flex flex-row gap-3 text-neutral-100 text-sm hover:underline">
               <img className="w-6" src={expand} />
               <p className="my-auto">Expand</p>
             </button>
