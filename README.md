@@ -12,22 +12,11 @@
 
 
 <div style="display: flex; text-align: center; justify-content: center" align="center">
-<img src="./docs/screenshot-error.png" width="40%" alt="GraphQL Debugger">
-<img src="./docs/screenshot-trace-viewer.png" width="40%" alt="GraphQL Debugger">
+<img src="./docs/screenshot-error.png" width="30%" alt="GraphQL Debugger">
+<img src="./docs/screenshot-trace-viewer.png" width="30%" alt="GraphQL Debugger">
 </div>
 </div>
 
-## Watch the talk!
-
-<div align="center" style="text-align: center;">
-
-[![](https://markdown-videos-api.jorgenkh.no/youtube/EpC6xmw2a6Y)](https://youtu.be/EpC6xmw2a6Y)
-
-<p>
-  <a href="https://youtu.be/EpC6xmw2a6Y">https://youtu.be/EpC6xmw2a6Y</a>
-</p>
-
-</div>
 
 ## About
 
@@ -40,12 +29,6 @@ To get started, use the [trace schema package](https://github.com/rocket-connect
 ```
 npx graphql-debugger
 ```
-
-## Contributing
-
-We welcome contributions to GraphQL Debugger.
-
-Please read our [contributing guide](./docs/CONTRIBUTING.md) to get started.
 
 ## Getting Started
 
