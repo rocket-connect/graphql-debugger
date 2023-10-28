@@ -55,8 +55,12 @@ export async function foreignTracesWorker(
           }
         }
 
-        const startTimeUnixNano = new UnixNanoTimeStamp(span.startTimeUnixNano);
-        const endTimeUnixNano = new UnixNanoTimeStamp(span.endTimeUnixNano);
+        const startTimeUnixNano = UnixNanoTimeStamp.fromString(
+          span.startTimeUnixNano,
+        );
+        const endTimeUnixNano = UnixNanoTimeStamp.fromString(
+          span.endTimeUnixNano,
+        );
         const durationNano = UnixNanoTimeStamp.duration(
           startTimeUnixNano,
           endTimeUnixNano,

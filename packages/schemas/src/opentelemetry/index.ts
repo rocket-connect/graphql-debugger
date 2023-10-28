@@ -8,3 +8,4 @@ export * from "./span";
 export * from "./status";
 export * from "./attributes";
 export * from "./extracted-span";
+export * from "./unix-nano";
