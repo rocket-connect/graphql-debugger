@@ -47,8 +47,11 @@ export class Schemas extends BaseComponent {
     await page.waitForSelector(`#${IDS.sidebar.views.schemas}`);
 
     const schemaSelector = `[data-schemalistid*="${dbSchema.id}"]`;
-    await page.waitForSelector(schemaSelector);
-    await page.click(schemaSelector);
+    const schema = await page.waitForSelector(schemaSelector);
+    if (!schema) {
+      throw new Error(`Failed to find schema with selector: ${schemaSelector}`);
+    }
+    await schema?.click();
 
     const url = await page.url();
     expect(url).toContain(`/schema/${dbSchema.id}`);
