@@ -37,7 +37,7 @@ export class TraceViewer extends BaseComponent {
 
     await sleep(200);
 
-    const view = await page.$(`#${IDS.trace_viewer.full_screen}`);
+    const view = await page.waitForSelector(`#${IDS.trace_viewer.full_screen}`);
     if (!view) {
       throw new Error("Failed to find the full screen viewer view.");
     }
