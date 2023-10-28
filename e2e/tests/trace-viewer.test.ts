@@ -39,24 +39,25 @@ describe("trace-viewer", () => {
       },
     ];
 
-    const page = await getPage({ browser });
-
-    const dashboardPage = new Dashboard({
-      browser,
-      page,
-    });
-
-    const sidebar = await dashboardPage.getSidebar();
-    await sidebar.toggleView("schemas");
-    await sleep(200);
-
-    const schemasComponent = new Schemas({
-      browser,
-      page: dashboardPage,
-    });
-
     for (const variant of variants) {
       const { dbSchema, schema, query } = await createTestSchema(variant);
+      const page = await getPage({ browser });
+      const dashboardPage = new Dashboard({
+        browser,
+        page,
+      });
+
+      const sidebar = await dashboardPage.getSidebar();
+      const view = await sidebar.toggleView("schemas");
+      if (!view) {
+        await sidebar.toggleView("schemas");
+      }
+      await sleep(200);
+
+      const schemasComponent = new Schemas({
+        browser,
+        page: dashboardPage,
+      });
 
       const response = await querySchema({ schema, query });
       if (variant.shouldError) {
