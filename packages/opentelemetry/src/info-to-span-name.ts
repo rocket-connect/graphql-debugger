@@ -1,18 +1,25 @@
 import { GraphQLResolveInfo } from "graphql";
 
-export function infoToSpanName({ info }: { info: GraphQLResolveInfo }): string {
-  const isRoot = ["Query", "Mutation", "Subscription"].includes(
-    info.parentType.name,
-  );
-
-  let name = "";
+export function infoToSpanName({
+  info,
+  isRoot,
+}: {
+  info: GraphQLResolveInfo;
+  isRoot?: boolean;
+}): {
+  spanName: string;
+  operationName?: string;
+} {
+  let spanName = "";
+  let operationName;
   if (isRoot) {
-    name = `${info.parentType.name.toLowerCase()} ${
-      info.operation.name?.value || info.fieldName
-    }`;
+    spanName = `${info.parentType.name.toLowerCase()} ${info.fieldName}`;
+    if (info.operation.name) {
+      operationName = info.operation.name.value;
+    }
   } else {
-    name = `${info.parentType.name} ${info.fieldName}`;
+    spanName = `${info.parentType.name} ${info.fieldName}`;
   }
 
-  return name;
+  return { spanName, operationName };
 }

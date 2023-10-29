@@ -19,6 +19,8 @@ export function dbSpanToNetwork(dbSpan: DBSpan): NetworkSpan {
     graphqlVariables: dbSpan.graphqlVariables,
     graphqlResult: dbSpan.graphqlResult,
     graphqlContext: dbSpan.graphqlContext,
+    graphqlOperationName: dbSpan.graphqlOperationName,
+    graphqlOperationType: dbSpan.graphqlOperationType,
     createdAt: new TimeStamp(dbSpan.createdAt).toString(),
     updatedAt: new TimeStamp(dbSpan.updatedAt).toString(),
     errorMessage: dbSpan.errorMessage,

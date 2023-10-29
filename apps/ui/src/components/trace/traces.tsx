@@ -19,6 +19,7 @@ import { Star, StarFilled } from "../../icons/star";
 import { refresh, searchFilled } from "../../images";
 import { IDS } from "../../testing";
 import { isTraceError } from "../../utils/is-trace-error";
+import { rootSpanName } from "../../utils/root-span-name";
 import { OpenModal } from "../modal/open";
 import { ModalWindow } from "../modal/window";
 import { Spinner } from "../utils/spinner";
@@ -162,7 +163,6 @@ export function SchemaTraces() {
 
                   <tbody>
                     {traces?.map((trace) => {
-                      const rootSpan = trace.rootSpan;
                       const startTimeUnixNano = getTraceStart(trace);
                       const traceDurationUnixNano =
                         trace && sumTraceTime(trace);
@@ -206,7 +206,9 @@ export function SchemaTraces() {
                                 })
                               }
                             >
-                              {rootSpan?.name}
+                              {rootSpanName({
+                                trace,
+                              })}
                             </Link>
                           </th>
                           <td className="px-6 py-4">{`${value.toFixed(

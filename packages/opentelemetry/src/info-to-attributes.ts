@@ -9,12 +9,14 @@ export function infoToAttributes({
   args,
   context,
   isRoot,
+  operationName,
 }: {
   info: GraphQLResolveInfo;
   schemaHash?: string;
   args?: any;
   context?: any;
   isRoot?: boolean;
+  operationName?: string;
 }): Record<string, any> {
   const _args = args || info.variableValues;
 
@@ -26,6 +28,13 @@ export function infoToAttributes({
     ...(isRoot
       ? {
           [AttributeNames.OPERATION_ROOT]: true,
+
+          ...(operationName
+            ? {
+                [AttributeNames.OPERATION_ROOT_NAME]: operationName,
+              }
+            : {}),
+
           [AttributeNames.DOCUMENT]: print(info.operation),
           ...(_args
             ? {

@@ -55,11 +55,11 @@ export function traceDirective(directiveName = "trace") {
 
               const parentSpan = context.parentSpan as Span | undefined;
 
-              const isRoot = ["Query", "Mutation", "Subscription"].includes(
-                info.parentType.name,
+              const isRoot = ["query", "mutation", "subscription"].includes(
+                info.operation.operation,
               );
 
-              const spanName = infoToSpanName({ info });
+              const { spanName, operationName } = infoToSpanName({ info });
 
               const _context = {
                 ...context,
@@ -80,6 +80,7 @@ export function traceDirective(directiveName = "trace") {
                 context: _context,
                 schemaHash: internalCtx.schemaHash,
                 isRoot,
+                operationName,
               });
 
               const result = await runInSpan(

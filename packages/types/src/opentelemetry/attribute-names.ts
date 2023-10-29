@@ -10,4 +10,5 @@ export enum AttributeNames {
   OPERATION_RESULT = "graphql.operation.result", // Non-Spec attribute
   OPERATION_RETURN_TYPE = "graphql.operation.returnType", // Non-Spec attribute
   OPERATION_ROOT = "graphql.operation.root", // Non-Spec attribute
+  OPERATION_ROOT_NAME = "graphql.operation.name.operation", // Non-Spec attribute
 }
