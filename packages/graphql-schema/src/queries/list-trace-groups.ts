@@ -43,7 +43,15 @@ builder.queryField("listTraceGroups", (t) =>
       }),
     },
     resolve: async (root, args) => {
-      const whereConditions = [];
+      const whereConditions: any = [
+        {
+          spans: {
+            some: {
+              isGraphQLRootSpan: true,
+            },
+          },
+        },
+      ];
 
       if (args.where?.id) {
         whereConditions.push({ id: args.where.id });
@@ -57,7 +65,6 @@ builder.queryField("listTraceGroups", (t) =>
         whereConditions.push({
           spans: {
             some: {
-              isGraphQLRootSpan: true,
               name: {
                 equals: args.where.rootSpanName,
               },

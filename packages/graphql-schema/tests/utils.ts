@@ -1,11 +1,14 @@
-import { prisma } from "@graphql-debugger/data-access";
+import { Schema, prisma } from "@graphql-debugger/data-access";
+import {
+  GraphQLOTELContext,
+  traceSchema,
+} from "@graphql-debugger/trace-schema";
 import { hashSchema } from "@graphql-debugger/utils";
 
 import { faker } from "@faker-js/faker";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import express from "express";
-import gql from "gql-tag";
-import { printSchema } from "graphql";
+import { GraphQLSchema, graphql } from "graphql";
 import supertest from "supertest";
 
 import { yoga } from "../src";
@@ -18,44 +21,6 @@ export function request() {
   return supertest(app);
 }
 
-export async function createTestSchema() {
-  const fakeTypeName = faker.string.alpha(8);
-  const fakeSchemaName = faker.string.alpha(8);
-
-  const typeDefs = gql`
-    type ${fakeTypeName} {
-        id: ID!
-    }
-
-    type Query {
-        users: [${fakeTypeName}]
-    }
-  `;
-
-  const resolvers = {
-    Query: {
-      users: () => [],
-    },
-  };
-
-  const schema = makeExecutableSchema({
-    typeDefs,
-    resolvers,
-  });
-
-  const hash = hashSchema(schema);
-
-  const createdSchema = await prisma.schema.create({
-    data: {
-      hash,
-      typeDefs: printSchema(schema),
-      name: fakeSchemaName,
-    },
-  });
-
-  return createdSchema;
-}
-
 export async function createTestTraceGroup() {
   const testSchema = await createTestSchema();
   const traceId = faker.string.alpha(8);
@@ -63,9 +28,120 @@ export async function createTestTraceGroup() {
   const createdTraceGroup = await prisma.traceGroup.create({
     data: {
       traceId,
-      schemaId: testSchema.id,
+      schemaId: testSchema.dbSchema.id,
     },
   });
 
   return createdTraceGroup;
+}
+
+export async function createTestSchema({
+  shouldError,
+  randomFieldName,
+  shouldNameQuery,
+}: {
+  shouldError?: boolean;
+  randomFieldName?: string;
+  shouldNameQuery?: boolean;
+  name?: string;
+} = {}): Promise<{
+  schema: GraphQLSchema;
+  typeDefs: string;
+  hash: string;
+  dbSchema: Schema;
+  query: string;
+  randomFieldName: string;
+}> {
+  const random = randomFieldName || faker.string.alpha(6);
+
+  const typeDefs = /* GraphQL */ `
+    type User {
+      id: ID!
+      name: String!
+      ${random}: String!
+    }
+
+    type Query {
+      users(name: String): [User]
+    }
+  `;
+
+  const resolvers = {
+    Query: {
+      users: () => {
+        if (shouldError) {
+          throw new Error("test");
+        }
+
+        return [
+          {
+            id: 1,
+            name: "John",
+            [random]: "test",
+          },
+        ];
+      },
+    },
+  };
+
+  const executableSchema = makeExecutableSchema({
+    typeDefs: typeDefs,
+    resolvers,
+  });
+
+  const schema = traceSchema({
+    schema: executableSchema,
+  });
+
+  const hash = hashSchema(schema);
+
+  const dbSchema = await prisma.schema.upsert({
+    where: {
+      hash,
+    },
+    create: {
+      hash: hash,
+      typeDefs: typeDefs,
+    },
+    update: {},
+  });
+
+  return {
+    schema,
+    typeDefs,
+    hash,
+    dbSchema,
+    query: /* GraphQL */ `
+      query ${shouldNameQuery ? random : ""} {
+        users(name: "John") {
+          id
+          name
+          ${random}
+        }
+      }
+    `,
+    randomFieldName: random,
+  };
+}
+
+export async function querySchema({
+  schema,
+  query,
+}: {
+  schema: GraphQLSchema;
+  query: string;
+}) {
+  const response = await graphql({
+    schema: schema,
+    source: query,
+    contextValue: {
+      GraphQLOTELContext: new GraphQLOTELContext({
+        includeResult: true,
+        includeContext: true,
+        includeVariables: true,
+      }),
+    },
+  });
+
+  return response;
 }
