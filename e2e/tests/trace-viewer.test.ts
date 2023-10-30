@@ -38,6 +38,12 @@ describe("trace-viewer", () => {
       shouldError: true,
       randomFieldName,
     },
+    {
+      name: "should load a named query in the trace viewer correctly",
+      shouldError: false,
+      randomFieldName,
+      shouldNameQuery: true,
+    },
   ];
 
   for (const variant of variants) {
@@ -104,6 +110,8 @@ describe("trace-viewer", () => {
       await traceViewerComponent.assert();
       await sleep(200);
 
+      const rootSpan = trace?.spans.find((span) => span.isGraphQLRootSpan);
+
       for (const isExpanded of [
         false,
         ...(process.env.SKIP_MODAL ? [] : [true]),
@@ -112,7 +120,13 @@ describe("trace-viewer", () => {
           await traceViewerComponent.expand();
 
           const pillComponent = await traceViewerComponent.getPill();
-          expect(pillComponent.name).toBeTruthy();
+          if (variant.shouldNameQuery) {
+            expect(pillComponent.name).toBe(
+              `${rootSpan?.graphqlOperationType} ${variant.randomFieldName}`,
+            );
+          } else {
+            expect(pillComponent.name).toBe(rootSpan?.name);
+          }
 
           const colorToExpect = variant.shouldError
             ? colors.red_text
