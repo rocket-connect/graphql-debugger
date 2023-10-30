@@ -1,7 +1,6 @@
-#!/usr/bin/env node
 import { BACKEND_PORT } from "@graphql-debugger/backend";
-import { COLLECTOR_PORT } from "@graphql-debugger/collector-proxy";
 
+import axios from "axios";
 import { SpawnOptionsWithoutStdio, spawn } from "child_process";
 import path from "path";
 
@@ -70,21 +69,35 @@ async function main() {
       }),
     ];
 
-    const messages = [
-      "Thanks for downloading GraphQL Debugger!",
-      "You can use GraphQL Debugger to debug your GraphQL server locally.",
+    let versionWarning: string[] = [];
+    try {
+      const response = await axios.get(`https://registry.npmjs.org/${name}`);
+      const latestVersion = response.data["dist-tags"].latest;
+
+      if (latestVersion !== version) {
+        versionWarning = [
+          `\x1b[33mGraphQL Debugger '${name}@${latestVersion}' is available.`,
+          "Consider updating for the latest features and fixes.",
+          "\x1b[0m",
+        ];
+      }
+    } catch (e) {
+      console.error(e);
+    }
+
+    const coreMessages = [
+      "Thank you for downloading GraphQL Debugger!",
       "Visit https://www.graphql-debugger.com for more info.",
-      `You are using '${name}@${version}'.`,
-      `Collector Online, send traces to http://localhost:${COLLECTOR_PORT}/v1/traces.`,
-      `Debugger Online, visit http://localhost:${BACKEND_PORT} to view traces.`,
-      ``,
+      `Debugger Online, visit http://localhost:${BACKEND_PORT} to get started.`,
     ];
 
-    console.log(
-      "\x1b[32m",
-      messages.map((message) => `\n\n${message}`).join(""),
-      "\x1b[0m",
-    );
+    let messagesToDisplay = ["\x1b[32m", ...coreMessages, "\x1b[0m"];
+
+    if (versionWarning.length) {
+      messagesToDisplay = [...messagesToDisplay, ...versionWarning];
+    }
+
+    console.log(messagesToDisplay.map((message) => `\n\n${message}`).join(""));
 
     await Promise.all(childProcesses);
   } catch (error) {
