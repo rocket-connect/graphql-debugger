@@ -1,25 +1,16 @@
+import { isGraphQLInfoRoot } from "@graphql-debugger/utils";
+
 import { GraphQLResolveInfo } from "graphql";
 
-export function infoToSpanName({
-  info,
-  isRoot,
-}: {
-  info: GraphQLResolveInfo;
-  isRoot?: boolean;
-}): {
+export function infoToSpanName({ info }: { info: GraphQLResolveInfo }): {
   spanName: string;
-  operationName?: string;
 } {
   let spanName = "";
-  let operationName;
-  if (isRoot) {
+  if (isGraphQLInfoRoot({ info })) {
     spanName = `${info.parentType.name.toLowerCase()} ${info.fieldName}`;
-    if (info.operation.name) {
-      operationName = info.operation.name.value;
-    }
   } else {
     spanName = `${info.parentType.name} ${info.fieldName}`;
   }
 
-  return { spanName, operationName };
+  return { spanName };
 }

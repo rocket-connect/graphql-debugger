@@ -25,21 +25,23 @@ describe("trace-viewer", () => {
     await browser.close();
   });
 
-  test("should load a trace viewer correctly", async () => {
-    const randomFieldName = faker.string.alpha(8);
+  const randomFieldName = faker.string.alpha(8);
 
-    const variants = [
-      {
-        shouldError: false,
-        randomFieldName,
-      },
-      {
-        shouldError: true,
-        randomFieldName,
-      },
-    ];
+  const variants = [
+    {
+      name: "should load a success trace viewer correctly",
+      shouldError: false,
+      randomFieldName,
+    },
+    {
+      name: "should load a error trace viewer correctly",
+      shouldError: true,
+      randomFieldName,
+    },
+  ];
 
-    for (const variant of variants) {
+  for (const variant of variants) {
+    test(variant.name, async () => {
       const { dbSchema, schema, query } = await createTestSchema(variant);
       const page = await getPage({ browser });
       const dashboardPage = new Dashboard({
@@ -138,6 +140,6 @@ describe("trace-viewer", () => {
           expect(uiSpan?.time).toBe(`${value.toFixed(2)} ${unit}`);
         }
       }
-    }
-  });
+    });
+  }
 });

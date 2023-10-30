@@ -17,7 +17,7 @@ describe("infoToSpanName", () => {
     const resolvers = {
       Query: {
         [randomQuery]: (_root, _args, _ctx, info) => {
-          return infoToSpanName({ info });
+          return infoToSpanName({ info }).spanName;
         },
       },
     };
@@ -67,7 +67,7 @@ describe("infoToSpanName", () => {
       },
       [randomType]: {
         [randomField]: (_root, _args, _ctx, info) => {
-          return infoToSpanName({ info });
+          return infoToSpanName({ info }).spanName;
         },
       },
     };

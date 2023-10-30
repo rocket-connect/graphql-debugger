@@ -93,8 +93,7 @@ export function extractSpans({
               key !== AttributeNames.OPERATION_ARGS &&
               key !== AttributeNames.OPERATION_RESULT &&
               key !== AttributeNames.OPERATION_CONTEXT &&
-              key !== AttributeNames.OPERATION_ROOT_NAME &&
-              key !== AttributeNames.OPERATION_TYPE
+              key !== AttributeNames.OPERATION_ROOT_NAME
             ) {
               acc[key] = value;
             }

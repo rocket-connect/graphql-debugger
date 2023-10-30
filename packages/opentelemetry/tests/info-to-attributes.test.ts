@@ -28,7 +28,6 @@ describe("infoToAttributes", () => {
               schemaHash,
               context: { value: randomContextValue },
               args: _args,
-              isRoot: true,
             }),
           );
         },
@@ -38,7 +37,7 @@ describe("infoToAttributes", () => {
     const schema = makeExecutableSchema({ typeDefs, resolvers });
 
     const document = /* GraphQL */ `
-      query ($value: String) {
+      query QueryName ($value: String) {
         ${randomQuery}(value: $value)
       }
     `;
@@ -67,6 +66,7 @@ describe("infoToAttributes", () => {
       [AttributeNames.OPERATION_CONTEXT]: JSON.stringify({
         context: { value: randomContextValue },
       }),
+      [AttributeNames.OPERATION_ROOT_NAME]: "QueryName",
     });
   });
 });

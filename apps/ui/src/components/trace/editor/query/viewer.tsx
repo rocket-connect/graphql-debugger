@@ -1,16 +1,25 @@
-import { DocumentNode, Kind, parse } from "graphql";
+import { Trace } from "@graphql-debugger/types";
+
+import { Kind, parse } from "graphql";
 
 import { IDS } from "../../../../testing";
 import { Selection } from "./selection";
 import { QueryType } from "./type";
 
-export function QueryViewer({ doc }: { doc: string }) {
-  const ast: DocumentNode = parse(doc);
+export function QueryViewer({ trace }: { trace: Trace }) {
+  const operationName = trace?.rootSpan?.graphqlOperationName || "";
+  const doc = trace?.rootSpan?.graphqlDocument || "";
+  const ast = parse(doc);
 
   return (
-    <div id={IDS.trace.query} data-query={doc} className="flex-1 ">
+    <div id={IDS.trace.query} data-query={doc} className="flex-1">
       <pre className="text-xs flex flex-col gap-5">
         {ast?.definitions.map((def, index) => {
+          if (index > 0) {
+            // TODO: add support for multiple queries
+            return null;
+          }
+
           if (def.kind === Kind.OPERATION_DEFINITION) {
             const kind = def.operation;
 
@@ -28,8 +37,9 @@ export function QueryViewer({ doc }: { doc: string }) {
             return (
               <div key={index} className="flex flex-col">
                 <div className="flex items-center">
-                  <span className="text-text-neutral-100">
+                  <span className="text-neutral-100">
                     <span className="text-graphiql-pink">{kind}</span>
+                    {operationName ? <span> {operationName} </span> : <></>}
                     {variableDefinitions?.length ? (
                       <span className="text-neutral-100">
                         {" "}

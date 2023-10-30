@@ -7,7 +7,7 @@ import {
   runInSpan,
 } from "@graphql-debugger/opentelemetry";
 import { AttributeNames } from "@graphql-debugger/types";
-import { safeJson } from "@graphql-debugger/utils";
+import { isGraphQLInfoRoot, safeJson } from "@graphql-debugger/utils";
 
 import { MapperKind, getDirective, mapSchema } from "@graphql-tools/utils";
 import { GraphQLSchema, defaultFieldResolver } from "graphql";
@@ -55,12 +55,6 @@ export function traceDirective(directiveName = "trace") {
 
               const parentSpan = context.parentSpan as Span | undefined;
 
-              const isRoot = ["query", "mutation", "subscription"].includes(
-                info.operation.operation,
-              );
-
-              const { spanName, operationName } = infoToSpanName({ info });
-
               const _context = {
                 ...context,
                 GraphQLOTELContext: undefined,
@@ -79,8 +73,10 @@ export function traceDirective(directiveName = "trace") {
                 args,
                 context: _context,
                 schemaHash: internalCtx.schemaHash,
-                isRoot,
-                operationName,
+              });
+
+              const { spanName } = infoToSpanName({
+                info,
               });
 
               const result = await runInSpan(
@@ -100,15 +96,7 @@ export function traceDirective(directiveName = "trace") {
 
                   const result = await resolve(source, args, context, info);
 
-                  if (isRoot) {
-                    const _args = args || info.variableValues;
-                    if (internalCtx.includeVariables && _args) {
-                      span.setAttribute(
-                        AttributeNames.OPERATION_ARGS,
-                        safeJson({ args: _args }),
-                      );
-                    }
-
+                  if (isGraphQLInfoRoot({ info })) {
                     if (internalCtx.includeResult && result) {
                       span.setAttribute(
                         AttributeNames.OPERATION_RESULT,
