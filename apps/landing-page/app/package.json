@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/landing-page-app",
-  "version": "0.0.0-alpha.65",
+  "version": "0.0.0-alpha.66",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "private": true,

@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/trace-schema",
-  "version": "0.0.0-alpha.65",
+  "version": "0.0.0-alpha.66",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
