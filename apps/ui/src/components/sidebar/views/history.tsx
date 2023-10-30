@@ -7,6 +7,7 @@ import { ClientContext } from "../../../context/client";
 import { Delete } from "../../../icons/delete";
 import { IDS } from "../../../testing";
 import { isTraceError } from "../../../utils/is-trace-error";
+import { rootSpanName } from "../../../utils/root-span-name";
 
 export function History() {
   const params = useParams<{ traceId: string }>();
@@ -50,7 +51,7 @@ export function History() {
                   isError ? "text-error-red" : ""
                 }`}
               >
-                {trace.rootSpan?.name}
+                {rootSpanName({ trace })}
               </Link>
               <p className="ml-5 text-xs">
                 - {startTimeUnixNano.formatUnixNanoTimestamp()}
