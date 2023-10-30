@@ -71,6 +71,8 @@ export class Traces extends BaseComponent {
 
       if (id && name && start && duration && color) {
         uiTraces.push({ id, name, start, duration, color });
+      } else {
+        throw new Error("Failed to find the trace data.");
       }
     }
 

@@ -22,7 +22,7 @@ const query = gql`
 
 describe("queries/list-schemas", () => {
   test("should return a list of schemas", async () => {
-    const createdSchema = await createTestSchema();
+    const { dbSchema } = await createTestSchema();
 
     const response = await request()
       .post("/graphql")
@@ -35,10 +35,10 @@ describe("queries/list-schemas", () => {
 
     expect(listSchemas.schemas).toEqual([
       {
-        id: createdSchema.id,
-        hash: createdSchema.hash,
-        name: createdSchema.name,
-        typeDefs: createdSchema.typeDefs,
+        id: dbSchema.id,
+        hash: dbSchema.hash,
+        name: dbSchema.name,
+        typeDefs: dbSchema.typeDefs,
         createdAt: expect.any(String),
       },
     ]);
@@ -51,12 +51,12 @@ describe("queries/list-schemas", () => {
   });
 
   test("should return a schema by id", async () => {
-    const createdSchema = await createTestSchema();
+    const { dbSchema } = await createTestSchema();
     await createTestSchema(); // create another so we exclude it
 
     const response = await request()
       .post("/graphql")
-      .send({ query, variables: { where: { id: createdSchema.id } } })
+      .send({ query, variables: { where: { id: dbSchema.id } } })
       .set("Accept", "application/json");
 
     const body = await response.body;
@@ -65,10 +65,10 @@ describe("queries/list-schemas", () => {
 
     expect(listSchemas.schemas).toEqual([
       {
-        id: createdSchema.id,
-        hash: createdSchema.hash,
-        name: createdSchema.name,
-        typeDefs: createdSchema.typeDefs,
+        id: dbSchema.id,
+        hash: dbSchema.hash,
+        name: dbSchema.name,
+        typeDefs: dbSchema.typeDefs,
         createdAt: expect.any(String),
       },
     ]);
