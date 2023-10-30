@@ -127,6 +127,8 @@ export async function postTracesWorker(data: PostTraces["body"]) {
             graphqlResult: span.graphqlResult,
             graphqlContext: span.graphqlContext,
             graphqlSchemaHash: span.graphqlSchemaHash,
+            graphqlOperationName: span.graphqlOperationName,
+            graphqlOperationType: span.graphqlOperationType,
             isForeign: span.isForeign,
             isGraphQLRootSpan: Boolean(
               span.attributes?.[AttributeNames.OPERATION_ROOT],

@@ -8,9 +8,7 @@ export function Query({ trace }: { trace?: Trace }) {
       <h2 className="font-bold">Query</h2>
       <p className="text-xs mb-2">The issued GraphQL Query.</p>
       <div className="overflow-scroll custom-scrollbar ml-1">
-        {trace?.rootSpan?.graphqlDocument && (
-          <QueryViewer doc={trace?.rootSpan?.graphqlDocument} />
-        )}
+        {trace?.rootSpan?.graphqlDocument && <QueryViewer trace={trace} />}
       </div>
     </div>
   );

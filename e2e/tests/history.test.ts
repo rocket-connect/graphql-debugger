@@ -1,4 +1,7 @@
 import { BACKEND_PORT } from "@graphql-debugger/backend";
+import { prisma } from "@graphql-debugger/data-access";
+
+import { faker } from "@faker-js/faker";
 
 import { History } from "./components/history";
 import { Schemas } from "./components/schemas";
@@ -20,111 +23,112 @@ describe("history", () => {
     await browser.close();
   });
 
-  test("should add traces to history and remove them", async () => {
-    const page = await getPage({ browser });
+  const randomFieldName = faker.string.alpha(8);
 
-    const dashboardPage = new Dashboard({
-      browser,
-      page,
-    });
-
-    const sidebar = await dashboardPage.getSidebar();
-    await sidebar.toggleView("schemas");
-
-    const schemasComponent = new Schemas({
-      browser,
-      page: dashboardPage,
-    });
-
-    const { dbSchema, schema, query, randomFieldName } =
-      await createTestSchema();
-
-    const { schema: failSchema } = await createTestSchema({
+  const variants = [
+    {
+      name: "should add a successful trace to history and remove it",
+      shouldError: false,
       randomFieldName,
+    },
+    {
+      name: "should add an error trace to history and remove it",
       shouldError: true,
-    });
+      randomFieldName,
+    },
+    {
+      name: "should add a named query trace to history and remove it",
+      shouldError: false,
+      shouldNameQuery: true,
+      randomFieldName,
+    },
+  ];
 
-    await schemasComponent.clickSchema(dbSchema);
+  for (const variant of variants) {
+    test(variant.name, async () => {
+      const page = await getPage({ browser });
+      const dashboardPage = new Dashboard({
+        browser,
+        page,
+      });
+      const sidebar = await dashboardPage.getSidebar();
+      await sidebar.toggleView("schemas");
 
-    const responses = await Promise.all([
-      querySchema({
+      const schemasComponent = new Schemas({ browser, page: dashboardPage });
+      const { dbSchema, schema, query } = await createTestSchema(variant);
+
+      await schemasComponent.clickSchema(dbSchema);
+
+      const response = await querySchema({
         schema: schema,
         query: query,
-      }),
-      querySchema({
-        schema: failSchema,
-        query: query,
-      }),
-    ]);
+      });
+      if (variant.shouldError) {
+        expect(response.errors).toBeDefined();
+      } else {
+        expect(response.errors).toBeUndefined();
+      }
 
-    expect(responses[0].errors).toBeUndefined();
-    expect(responses[1].errors).toBeDefined();
+      await page.reload();
+      await sleep(200);
 
-    await page.reload();
-    await sleep(200);
+      const traces = await prisma.traceGroup.findMany({
+        where: {
+          schemaId: dbSchema.id,
+        },
+        include: {
+          spans: true,
+        },
+      });
 
-    const tracesComponent = new Traces({
-      browser,
-      page: dashboardPage,
+      const tracesComponent = new Traces({ browser, page: dashboardPage });
+      const uiTraces = await tracesComponent.getUITraces();
+      expect(uiTraces.length).toEqual(1);
+
+      const uiTrace = uiTraces[0];
+      const trace = traces[0];
+      const rootSpan = trace.spans.find((span) => span.isGraphQLRootSpan);
+
+      await tracesComponent.clickTrace({
+        schemaId: dbSchema.id,
+        traceId: uiTrace.id,
+      });
+      await sidebar.toggleView("history");
+
+      // to stop more than one trace being added to history
+      await page.goto(`http://localhost:${BACKEND_PORT}/`);
+      await sleep(500);
+
+      const historyComponent = new History({
+        browser,
+        page: dashboardPage,
+      });
+      await historyComponent.assert();
+
+      const [uiHistoryTrace] = await historyComponent.getUITraces();
+
+      if (rootSpan?.graphqlOperationName) {
+        expect(uiHistoryTrace?.name).toBe(
+          `${rootSpan?.graphqlOperationType} ${variant.randomFieldName}`,
+        );
+      } else {
+        expect(uiHistoryTrace?.name).toEqual(rootSpan?.name);
+      }
+
+      expect(uiHistoryTrace.start).toEqual(`- ${uiTrace.start}`);
+
+      await historyComponent.assertLink({
+        traceId: uiHistoryTrace.id,
+      });
+
+      await historyComponent.deleteItem({
+        schemaId: dbSchema.id,
+        traceId: uiHistoryTrace.id,
+      });
+      await sleep(200);
+
+      const newUiTraces = await historyComponent.getUITraces();
+      expect(newUiTraces.length).toEqual(0);
     });
-
-    const uiTraces = await tracesComponent.getUITraces();
-    expect(uiTraces.length).toEqual(2);
-
-    const uiTrace1 = uiTraces[0];
-    const uiTrace2 = uiTraces[1];
-
-    await tracesComponent.clickTrace({
-      schemaId: dbSchema.id,
-      traceId: uiTrace1.id,
-    });
-    await sleep(200);
-
-    await tracesComponent.clickTrace({
-      schemaId: dbSchema.id,
-      traceId: uiTrace2.id,
-    });
-    await sleep(200);
-
-    await sidebar.toggleView("history");
-
-    await page.goto(`http://localhost:${BACKEND_PORT}/`);
-    await sleep(500);
-
-    const historyComponent = new History({
-      browser,
-      page: dashboardPage,
-    });
-    await historyComponent.assert();
-
-    const [uiHistoryTrace2, uiHistoryTrace1] =
-      await historyComponent.getUITraces();
-
-    expect(uiHistoryTrace1.name).toEqual(uiTrace1.name);
-    expect(uiHistoryTrace1.start).toEqual(`- ${uiTrace1.start}`);
-
-    expect(uiHistoryTrace2.name).toEqual(uiTrace2.name);
-    expect(uiHistoryTrace2.start).toEqual(`- ${uiTrace2.start}`);
-
-    await historyComponent.assertLink({
-      traceId: uiHistoryTrace1.id,
-    });
-    await historyComponent.assertLink({
-      traceId: uiHistoryTrace2.id,
-    });
-
-    await historyComponent.deleteItem({
-      schemaId: dbSchema.id,
-      traceId: uiHistoryTrace1.id,
-    });
-    await historyComponent.deleteItem({
-      schemaId: dbSchema.id,
-      traceId: uiHistoryTrace2.id,
-    });
-    await sleep(200);
-
-    const newUiTraces = await historyComponent.getUITraces();
-
-    expect(newUiTraces.length).toEqual(0);
-  });
+  }
 });

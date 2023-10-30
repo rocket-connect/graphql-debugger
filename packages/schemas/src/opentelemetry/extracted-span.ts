@@ -11,6 +11,8 @@ export const ExtractedSpanSchema = z.object({
   isForeign: z.boolean(),
   attributes: z.record(z.string()).optional(),
   graphqlSchemaHash: z.string().optional(),
+  graphqlOperationName: z.string().optional(),
+  graphqlOperationType: z.string().optional(),
   graphqlDocument: z.string().optional(),
   graphqlVariables: z.string().optional(),
   graphqlResult: z.string().optional(),

@@ -242,6 +242,8 @@ describe("extractSpans", () => {
         errorMessage: undefined,
         errorStack: undefined,
         isForeign: false,
+        graphqlOperationName: undefined,
+        graphqlOperationType: "query",
         attributes: {
           [AttributeNames.OPERATION_NAME]: "users",
           [AttributeNames.OPERATION_RETURN_TYPE]: "[User]",
@@ -265,6 +267,8 @@ describe("extractSpans", () => {
         graphqlDocument: undefined,
         graphqlVariables: undefined,
         graphqlResult: undefined,
+        graphqlOperationName: undefined,
+        graphqlOperationType: undefined,
         graphqlContext: undefined,
         errorMessage: undefined,
         errorStack: undefined,
@@ -288,6 +292,8 @@ describe("extractSpans", () => {
         graphqlVariables: undefined,
         graphqlResult: undefined,
         graphqlContext: undefined,
+        graphqlOperationName: undefined,
+        graphqlOperationType: undefined,
         errorMessage: error.message,
         errorStack: undefined,
         isForeign: false,
@@ -504,6 +510,8 @@ describe("extractSpans", () => {
         graphqlContext: undefined,
         graphqlResult: undefined,
         graphqlVariables: undefined,
+        graphqlOperationName: undefined,
+        graphqlOperationType: "query",
         attributes: {
           [AttributeNames.OPERATION_NAME]: "users",
           [AttributeNames.OPERATION_RETURN_TYPE]: "[User]",
@@ -531,6 +539,8 @@ describe("extractSpans", () => {
         graphqlDocument: undefined,
         graphqlResult: undefined,
         graphqlVariables: undefined,
+        graphqlOperationName: undefined,
+        graphqlOperationType: undefined,
         attributes: {},
       },
       {
@@ -558,6 +568,8 @@ describe("extractSpans", () => {
         graphqlResult: undefined,
         graphqlSchemaHash: undefined,
         graphqlVariables: undefined,
+        graphqlOperationName: undefined,
+        graphqlOperationType: undefined,
       },
       {
         spanId: "3",
@@ -580,6 +592,8 @@ describe("extractSpans", () => {
         graphqlResult: undefined,
         graphqlSchemaHash: undefined,
         graphqlVariables: undefined,
+        graphqlOperationName: undefined,
+        graphqlOperationType: undefined,
       },
     ]);
   });

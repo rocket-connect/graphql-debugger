@@ -18,6 +18,8 @@ export const SpanSchema = z.object({
   graphqlVariables: z.string().optional().nullable(),
   graphqlResult: z.string().optional().nullable(),
   graphqlContext: z.string().optional().nullable(),
+  graphqlOperationName: z.string().optional().nullable(),
+  graphqlOperationType: z.string().optional().nullable(),
   createdAt: z.string(),
   updatedAt: z.string(),
 });

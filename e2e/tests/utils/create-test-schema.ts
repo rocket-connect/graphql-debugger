@@ -9,7 +9,13 @@ import { GraphQLSchema } from "graphql";
 export async function createTestSchema({
   shouldError,
   randomFieldName,
-}: { shouldError?: boolean; randomFieldName?: string } = {}): Promise<{
+  shouldNameQuery,
+}: {
+  shouldError?: boolean;
+  randomFieldName?: string;
+  shouldNameQuery?: boolean;
+  name?: string;
+} = {}): Promise<{
   schema: GraphQLSchema;
   typeDefs: string;
   hash: string;
@@ -77,7 +83,7 @@ export async function createTestSchema({
     hash,
     dbSchema,
     query: /* GraphQL */ `
-      {
+      query ${shouldNameQuery ? random : ""} {
         users(name: "John") {
           id
           name

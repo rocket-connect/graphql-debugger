@@ -4,6 +4,7 @@ import { sumTraceTime } from "@graphql-debugger/utils";
 
 import { IDS } from "../../testing";
 import { isTraceError } from "../../utils/is-trace-error";
+import { rootSpanName } from "../../utils/root-span-name";
 
 export function Pill({
   trace,
@@ -23,6 +24,12 @@ export function Pill({
 
   const isError = trace && isTraceError(trace);
 
+  const displayName = trace
+    ? rootSpanName({
+        trace,
+      })
+    : "";
+
   return (
     <div
       id={IDS.trace.pill}
@@ -30,7 +37,7 @@ export function Pill({
     >
       <p className="font-semibold">
         <span className={`underline ${isError ? "text-error-red" : ""}`}>
-          {trace?.rootSpan?.name}
+          {displayName}
         </span>
         {` - ${traceDurationSIUnits?.value.toFixed(
           2,

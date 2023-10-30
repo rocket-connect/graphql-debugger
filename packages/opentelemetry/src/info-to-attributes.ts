@@ -1,5 +1,5 @@
 import { AttributeNames } from "@graphql-debugger/types";
-import { safeJson } from "@graphql-debugger/utils";
+import { isGraphQLInfoRoot, safeJson } from "@graphql-debugger/utils";
 
 import { GraphQLResolveInfo, print } from "graphql";
 
@@ -8,25 +8,33 @@ export function infoToAttributes({
   schemaHash,
   args,
   context,
-  isRoot,
 }: {
   info: GraphQLResolveInfo;
   schemaHash?: string;
   args?: any;
   context?: any;
-  isRoot?: boolean;
 }): Record<string, any> {
   const _args = args || info.variableValues;
+  const isRoot = isGraphQLInfoRoot({ info });
 
   const attributes = {
     [AttributeNames.OPERATION_NAME]: info.fieldName,
-    [AttributeNames.OPERATION_TYPE]: info.operation.operation.toLowerCase(),
     [AttributeNames.OPERATION_RETURN_TYPE]: info.returnType.toString(),
     [AttributeNames.SCHEMA_HASH]: schemaHash,
     ...(isRoot
       ? {
           [AttributeNames.OPERATION_ROOT]: true,
           [AttributeNames.DOCUMENT]: print(info.operation),
+          [AttributeNames.OPERATION_TYPE]:
+            info.operation.operation.toLowerCase(),
+
+          ...(info.operation.name?.value
+            ? {
+                [AttributeNames.OPERATION_ROOT_NAME]:
+                  info.operation.name?.value,
+              }
+            : {}),
+
           ...(_args
             ? {
                 [AttributeNames.OPERATION_ARGS]: safeJson({

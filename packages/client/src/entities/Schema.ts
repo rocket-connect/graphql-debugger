@@ -37,7 +37,7 @@ export class Schema {
     TSchema[]
   > {
     const query = /* GraphQL */ `
-      query ($where: ListSchemasWhere) {
+      query ListSchemas($where: ListSchemasWhere) {
         listSchemas(where: $where) {
           schemas {
             id
