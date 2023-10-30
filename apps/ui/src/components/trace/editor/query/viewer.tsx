@@ -39,7 +39,7 @@ export function QueryViewer({ trace }: { trace: Trace }) {
                 <div className="flex items-center">
                   <span className="text-neutral-100">
                     <span className="text-graphiql-pink">{kind}</span>
-                    {operationName ? <span> {operationName} </span> : <></>}
+                    {operationName ? <span> {operationName}</span> : <></>}
                     {variableDefinitions?.length ? (
                       <span className="text-neutral-100">
                         {" "}
