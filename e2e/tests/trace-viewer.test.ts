@@ -25,21 +25,29 @@ describe("trace-viewer", () => {
     await browser.close();
   });
 
-  test("should load a trace viewer correctly", async () => {
-    const randomFieldName = faker.string.alpha(8);
+  const randomFieldName = faker.string.alpha(8);
 
-    const variants = [
-      {
-        shouldError: false,
-        randomFieldName,
-      },
-      {
-        shouldError: true,
-        randomFieldName,
-      },
-    ];
+  const variants = [
+    {
+      name: "should load a success trace viewer correctly",
+      shouldError: false,
+      randomFieldName,
+    },
+    {
+      name: "should load a error trace viewer correctly",
+      shouldError: true,
+      randomFieldName,
+    },
+    {
+      name: "should load a named query in the trace viewer correctly",
+      shouldError: false,
+      randomFieldName,
+      shouldNameQuery: true,
+    },
+  ];
 
-    for (const variant of variants) {
+  for (const variant of variants) {
+    test(variant.name, async () => {
       const { dbSchema, schema, query } = await createTestSchema(variant);
       const page = await getPage({ browser });
       const dashboardPage = new Dashboard({
@@ -102,6 +110,8 @@ describe("trace-viewer", () => {
       await traceViewerComponent.assert();
       await sleep(200);
 
+      const rootSpan = trace?.spans.find((span) => span.isGraphQLRootSpan);
+
       for (const isExpanded of [
         false,
         ...(process.env.SKIP_MODAL ? [] : [true]),
@@ -110,7 +120,13 @@ describe("trace-viewer", () => {
           await traceViewerComponent.expand();
 
           const pillComponent = await traceViewerComponent.getPill();
-          expect(pillComponent.name).toBeTruthy();
+          if (variant.shouldNameQuery) {
+            expect(pillComponent.name).toBe(
+              `${rootSpan?.graphqlOperationType} ${variant.randomFieldName}`,
+            );
+          } else {
+            expect(pillComponent.name).toBe(rootSpan?.name);
+          }
 
           const colorToExpect = variant.shouldError
             ? colors.red_text
@@ -138,6 +154,6 @@ describe("trace-viewer", () => {
           expect(uiSpan?.time).toBe(`${value.toFixed(2)} ${unit}`);
         }
       }
-    }
-  });
+    });
+  }
 });

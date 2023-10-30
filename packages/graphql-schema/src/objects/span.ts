@@ -21,6 +21,12 @@ export const SpanObject: ObjectRef<Span> = builder.objectType("Span", {
     graphqlVariables: t.exposeString("graphqlVariables", { nullable: true }),
     graphqlResult: t.exposeString("graphqlResult", { nullable: true }),
     graphqlContext: t.exposeString("graphqlContext", { nullable: true }),
+    graphqlOperationName: t.exposeString("graphqlOperationName", {
+      nullable: true,
+    }),
+    graphqlOperationType: t.exposeString("graphqlOperationType", {
+      nullable: true,
+    }),
     errorMessage: t.exposeString("errorMessage", { nullable: true }),
     errorStack: t.exposeString("errorStack", { nullable: true }),
     createdAt: t.exposeString("createdAt"),

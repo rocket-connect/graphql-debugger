@@ -59,6 +59,8 @@ export class Trace {
         graphqlVariables
         graphqlResult
         graphqlContext
+        graphqlOperationName
+        graphqlOperationType
       }
     `;
 

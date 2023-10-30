@@ -29,6 +29,15 @@ export function extractSpans({
         const graphqlSchemaHash = attributes[AttributeNames.SCHEMA_HASH] as
           | string
           | undefined;
+
+        const graphqlOperationName = attributes[
+          AttributeNames.OPERATION_ROOT_NAME
+        ] as string | undefined;
+
+        const graphqlOperationType = attributes[
+          AttributeNames.OPERATION_TYPE
+        ] as string | undefined;
+
         let graphqlDocument: string | undefined;
         let graphqlVariables: string | undefined;
         let graphqlResult: string | undefined;
@@ -83,7 +92,8 @@ export function extractSpans({
               key !== AttributeNames.DOCUMENT &&
               key !== AttributeNames.OPERATION_ARGS &&
               key !== AttributeNames.OPERATION_RESULT &&
-              key !== AttributeNames.OPERATION_CONTEXT
+              key !== AttributeNames.OPERATION_CONTEXT &&
+              key !== AttributeNames.OPERATION_ROOT_NAME
             ) {
               acc[key] = value;
             }
@@ -120,6 +130,8 @@ export function extractSpans({
           attributes: remainingAttributes,
           graphqlSchemaHash,
           graphqlDocument,
+          graphqlOperationName,
+          graphqlOperationType,
           graphqlVariables,
           graphqlResult,
           graphqlContext,

@@ -1,3 +1,7 @@
+import { prisma } from "@graphql-debugger/data-access";
+
+import { faker } from "@faker-js/faker";
+
 import { Favourites } from "./components/favourites";
 import { Schemas } from "./components/schemas";
 import { Traces } from "./components/traces";
@@ -18,99 +22,98 @@ describe("favourites", () => {
     await browser.close();
   });
 
-  test("should add traces to favourites and remove them", async () => {
-    const page = await getPage({ browser });
+  const randomFieldName = faker.string.alpha(8);
 
-    const dashboardPage = new Dashboard({
-      browser,
-      page,
-    });
-
-    const sidebar = await dashboardPage.getSidebar();
-    await sidebar.toggleView("schemas");
-
-    const schemasComponent = new Schemas({
-      browser,
-      page: dashboardPage,
-    });
-
-    const { dbSchema, schema, query, randomFieldName } =
-      await createTestSchema();
-
-    const { schema: failSchema } = await createTestSchema({
+  const variants = [
+    {
+      name: "should add a successful trace to favourites and remove it",
+      shouldError: false,
       randomFieldName,
+    },
+    {
+      name: "should add an error trace to favourites and remove it",
       shouldError: true,
+      randomFieldName,
+    },
+    {
+      name: "should add a named query trace to favourites and remove it",
+      shouldError: false,
+      shouldNameQuery: true,
+      randomFieldName,
+    },
+  ];
+
+  for (const variant of variants) {
+    test(variant.name, async () => {
+      const page = await getPage({ browser });
+      const dashboardPage = new Dashboard({ browser, page });
+      const sidebar = await dashboardPage.getSidebar();
+      await sidebar.toggleView("schemas");
+
+      const schemasComponent = new Schemas({ browser, page: dashboardPage });
+      const { dbSchema, schema, query } = await createTestSchema(variant);
+
+      await schemasComponent.clickSchema(dbSchema);
+
+      const response = await querySchema({ schema, query });
+
+      if (variant.shouldError) {
+        expect(response.errors).toBeDefined();
+      } else {
+        expect(response.errors).toBeUndefined();
+      }
+
+      await page.reload();
+      await sleep(200);
+
+      const traces = await prisma.traceGroup.findMany({
+        where: {
+          schemaId: dbSchema.id,
+        },
+        include: {
+          spans: true,
+        },
+      });
+
+      const tracesComponent = new Traces({ browser, page: dashboardPage });
+      const uiTraces = await tracesComponent.getUITraces();
+      expect(uiTraces.length).toEqual(1);
+
+      const uiTrace = uiTraces[0];
+      const trace = traces[0];
+      const rootSpan = trace.spans.find((span) => span.isGraphQLRootSpan);
+
+      expect(uiTrace).toBeDefined();
+      expect(trace).toBeDefined();
+
+      await tracesComponent.toggleFavouriteTrace({ traceId: uiTrace.id });
+      await sidebar.toggleView("favourites");
+
+      const favouritesComponent = new Favourites({
+        browser,
+        page: dashboardPage,
+      });
+      await favouritesComponent.assert();
+
+      const [uiFavouriteTrace] = await favouritesComponent.getUITraces();
+
+      if (rootSpan?.graphqlOperationName) {
+        expect(uiTrace?.name).toBe(
+          `${rootSpan?.graphqlOperationType} ${variant.randomFieldName}`,
+        );
+      } else {
+        expect(uiTrace?.name).toEqual(rootSpan?.name);
+      }
+
+      expect(uiFavouriteTrace.name).toEqual(uiTrace.name);
+      expect(uiFavouriteTrace.start).toEqual(`- ${uiTrace.start}`);
+
+      await favouritesComponent.assertLink({ traceId: uiFavouriteTrace.id });
+
+      await tracesComponent.toggleFavouriteTrace({ traceId: uiTrace.id });
+
+      const newUiTraces = await favouritesComponent.getUITraces();
+      expect(newUiTraces.length).toEqual(0);
     });
-
-    await schemasComponent.clickSchema(dbSchema);
-
-    const responses = await Promise.all([
-      querySchema({
-        schema: schema,
-        query: query,
-      }),
-      querySchema({
-        schema: failSchema,
-        query: query,
-      }),
-    ]);
-
-    expect(responses[0].errors).toBeUndefined();
-    expect(responses[1].errors).toBeDefined();
-
-    await page.reload();
-    await sleep(200);
-
-    const tracesComponent = new Traces({
-      browser,
-      page: dashboardPage,
-    });
-
-    const uiTraces = await tracesComponent.getUITraces();
-    expect(uiTraces.length).toEqual(2);
-
-    const uiTrace1 = uiTraces[0];
-    const uiTrace2 = uiTraces[1];
-
-    await tracesComponent.toggleFavouriteTrace({
-      traceId: uiTrace1.id,
-    });
-    await tracesComponent.toggleFavouriteTrace({
-      traceId: uiTrace2.id,
-    });
-
-    await sidebar.toggleView("favourites");
-
-    const favouritesComponent = new Favourites({
-      browser,
-      page: dashboardPage,
-    });
-    await favouritesComponent.assert();
-
-    const [uiFavouriteTrace1, uiFavouriteTrace2] =
-      await favouritesComponent.getUITraces();
-
-    expect(uiFavouriteTrace2.name).toEqual(uiTrace1.name);
-    expect(uiFavouriteTrace2.start).toEqual(`- ${uiTrace1.start}`);
-
-    expect(uiFavouriteTrace1.name).toEqual(uiTrace2.name);
-    expect(uiFavouriteTrace1.start).toEqual(`- ${uiTrace2.start}`);
-
-    await favouritesComponent.assertLink({
-      traceId: uiFavouriteTrace1.id,
-    });
-    await favouritesComponent.assertLink({
-      traceId: uiFavouriteTrace2.id,
-    });
-
-    await tracesComponent.toggleFavouriteTrace({
-      traceId: uiTrace1.id,
-    });
-    await tracesComponent.toggleFavouriteTrace({
-      traceId: uiTrace2.id,
-    });
-
-    const newUiTraces = await favouritesComponent.getUITraces();
-    expect(newUiTraces.length).toEqual(0);
-  });
+  }
 });

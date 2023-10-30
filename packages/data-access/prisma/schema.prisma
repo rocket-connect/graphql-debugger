@@ -20,29 +20,31 @@ model TraceGroup {
 }
 
 model Span {
-  id                String      @id @default(uuid())
-  spanId            String
-  parentSpanId      String?
-  traceId           String
-  name              String
-  kind              String
-  startTimeUnixNano BigInt
-  endTimeUnixNano   BigInt
-  durationNano      BigInt
-  isForeign         Boolean     @default(true)
-  isGraphQLRootSpan Boolean     @default(false)
-  graphqlDocument   String?
-  graphqlVariables  String?
-  graphqlResult     String?
-  graphqlContext    String?
-  graphqlSchemaHash String?
-  attributes        String?
-  errorMessage      String?
-  errorStack        String?
-  createdAt         DateTime    @default(now())
-  updatedAt         DateTime    @updatedAt
-  traceGroup        TraceGroup? @relation(fields: [traceGroupId], references: [id])
-  traceGroupId      String?
+  id                   String      @id @default(uuid())
+  spanId               String
+  parentSpanId         String?
+  traceId              String
+  name                 String
+  kind                 String
+  startTimeUnixNano    BigInt
+  endTimeUnixNano      BigInt
+  durationNano         BigInt
+  isForeign            Boolean     @default(true)
+  isGraphQLRootSpan    Boolean     @default(false)
+  graphqlOperationName String?
+  graphqlOperationType String?
+  graphqlDocument      String?
+  graphqlVariables     String?
+  graphqlResult        String?
+  graphqlContext       String?
+  graphqlSchemaHash    String?
+  attributes           String?
+  errorMessage         String?
+  errorStack           String?
+  createdAt            DateTime    @default(now())
+  updatedAt            DateTime    @updatedAt
+  traceGroup           TraceGroup? @relation(fields: [traceGroupId], references: [id])
+  traceGroupId         String?
 }
 
 model Schema {
