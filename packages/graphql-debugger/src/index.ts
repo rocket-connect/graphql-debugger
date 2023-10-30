@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { BACKEND_PORT } from "@graphql-debugger/backend";
 
 import axios from "axios";
