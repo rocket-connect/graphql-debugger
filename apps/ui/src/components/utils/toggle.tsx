@@ -47,6 +47,7 @@ export function Toggle({
       className={classNames("flex flex-col gap-2", {
         "opacity-60 ": disabled,
       })}
+      data-testid="toggle"
     >
       <div className="flex items-center gap-0.5">
         <label
@@ -72,7 +73,9 @@ export function Toggle({
         </label>
 
         <div className="flex items-center gap-2">
-          <span className="font-bold italic text-sm">{label}</span>
+          <span className="font-bold italic text-sm" data-testid="label">
+            {label}
+          </span>
           {Number(callout?.length) > 0 && (
             <span className="text-sm">{callout}</span>
           )}
