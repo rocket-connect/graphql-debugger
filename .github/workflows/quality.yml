@@ -75,7 +75,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-project
-      - name: graphql-debugger/trace-directive
+      - name: graphql-debugger/ui
         run: cd ./apps/ui && pnpm run test
 
   test-client:
