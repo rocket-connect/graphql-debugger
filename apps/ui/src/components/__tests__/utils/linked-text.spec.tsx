@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import { fireEvent, render } from "@testing-library/react";
+import { render } from "@testing-library/react";
 
 import { LinkedText } from "../../utils/linked-text";
 
