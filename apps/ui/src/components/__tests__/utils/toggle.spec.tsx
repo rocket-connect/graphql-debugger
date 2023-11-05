@@ -15,7 +15,7 @@ describe("toggle", () => {
     const toggle = screen.getByTestId("toggle-wrapper");
     expect(toggle).toBeInTheDocument();
   });
-  it("should render toggle component with any label", () => {
+  it("should render any label that is passed as prop", () => {
     render(
       <Toggle
         initialState={false}
@@ -28,7 +28,7 @@ describe("toggle", () => {
     expect(toggleLabel).toHaveTextContent("toggle modal");
   });
 
-  it("should toggle successfully", () => {
+  it("should toggle the checkbox and call the onToggle function with the correct value", () => {
     const onToggleMock = jest.fn();
 
     const { getByTestId } = render(
@@ -48,7 +48,7 @@ describe("toggle", () => {
     expect(onToggleMock).toHaveBeenCalledWith(false);
   });
 
-  it('should not toggle with "alwaysEnabled" prop', () => {
+  it('should maintain an enabled state when "alwaysEnabled" prop is true', () => {
     const onToggleMock = jest.fn();
 
     const { getByTestId } = render(
