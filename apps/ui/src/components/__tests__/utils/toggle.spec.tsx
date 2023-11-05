@@ -1,12 +1,72 @@
 import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 
 import { Toggle } from "../../utils/toggle";
 
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
 describe("toggle", () => {
   it("should render toggle component successfully", () => {
-    render(<Toggle label="test" onToggle={() => void 0} />);
-    const toggle = screen.getByTestId("toggle");
+    render(
+      <Toggle label="test" initialState={false} onToggle={() => void 0} />,
+    );
+    const toggle = screen.getByTestId("toggle-wrapper");
     expect(toggle).toBeInTheDocument();
+  });
+  it("should render toggle component with any label", () => {
+    render(
+      <Toggle
+        initialState={false}
+        label="toggle modal"
+        onToggle={() => void 0}
+      />,
+    );
+
+    const toggleLabel = screen.getByTestId("label");
+    expect(toggleLabel).toHaveTextContent("toggle modal");
+  });
+
+  it("should toggle successfully", () => {
+    const onToggleMock = jest.fn();
+
+    const { getByTestId } = render(
+      <Toggle label="toggle modal" onToggle={onToggleMock} />,
+    );
+
+    const checkBoxElement = getByTestId("checkbox");
+
+    fireEvent.click(checkBoxElement);
+
+    expect(onToggleMock).toHaveBeenCalledWith(true);
+    expect(checkBoxElement).toHaveProperty("checked", true);
+
+    fireEvent.click(checkBoxElement);
+
+    expect(checkBoxElement).toHaveProperty("checked", false);
+    expect(onToggleMock).toHaveBeenCalledWith(false);
+  });
+
+  it('should not toggle with "alwaysEnabled" prop', () => {
+    const onToggleMock = jest.fn();
+
+    const { getByTestId } = render(
+      <Toggle label="always enabled" onToggle={onToggleMock} alwaysEnabled />,
+    );
+
+    const toggle = getByTestId("toggle-wrapper");
+    const checkbox = getByTestId("checkbox");
+
+    expect(toggle).toBeInTheDocument();
+    expect(checkbox).toBeInTheDocument();
+
+    fireEvent.click(checkbox);
+
+    expect(checkbox).toHaveProperty("checked", true);
+
+    fireEvent.click(checkbox);
+
+    expect(checkbox).toHaveProperty("checked", true);
   });
 });

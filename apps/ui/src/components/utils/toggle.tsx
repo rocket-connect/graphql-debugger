@@ -23,7 +23,9 @@ export function Toggle({
   alwaysEnabled,
   blueToggle,
 }: ToggleProps) {
-  const [checked, setChecked] = useState(initialState);
+  const [checked, setChecked] = useState(
+    (initialState || alwaysEnabled) ?? false,
+  );
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (alwaysEnabled || disabled) {
@@ -47,7 +49,7 @@ export function Toggle({
       className={classNames("flex flex-col gap-2", {
         "opacity-60 ": disabled,
       })}
-      data-testid="toggle"
+      data-testid="toggle-wrapper"
     >
       <div className="flex items-center gap-0.5">
         <label
@@ -57,6 +59,7 @@ export function Toggle({
             type="checkbox"
             className="sr-only peer"
             checked={checked}
+            data-testid="checkbox"
             onChange={handleChange}
             onClick={handleAlwaysEnabled}
             readOnly
