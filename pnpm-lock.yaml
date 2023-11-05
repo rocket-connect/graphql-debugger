@@ -332,6 +332,9 @@ importers:
       jest-environment-jsdom:
         specifier: ^29.7.0
         version: 29.7.0
+      jest-transformer-svg:
+        specifier: ^2.0.1
+        version: 2.0.1(jest@29.7.0)(react@18.2.0)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -7536,6 +7539,19 @@ packages:
       semver: 7.5.4
     transitivePeerDependencies:
       - supports-color
+
+  /jest-transformer-svg@2.0.1(jest@29.7.0)(react@18.2.0):
+    resolution: {integrity: sha512-L3j70WjfQtAYXjZi/vyKW8A5pcEUnv7mR0cugSyP6Kqee+fjsMzUHs5UPbnLKH+y7lfSpOjXijMbfEcjLqCuaw==}
+    peerDependencies:
+      jest: '>= 28.1.0'
+      react: ^17.0.0 || ^18.0.0
+    peerDependenciesMeta:
+      jest:
+        optional: true
+    dependencies:
+      jest: 29.7.0(@types/node@20.8.9)(ts-node@10.9.1)
+      react: 18.2.0
+    dev: false
 
   /jest-util@29.7.0:
     resolution: {integrity: sha512-z6EbKajIpqGKU56y5KBUgy1dt1ihhQJgWzUlZHArA/+X2ad7Cb5iF+AK1EWVL/Bo7Rz9uurpqw6SiBCefUbCGA==}
