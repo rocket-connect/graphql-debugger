@@ -351,6 +351,9 @@ importers:
         specifier: ^9.0.1
         version: 9.0.1
     devDependencies:
+      '@faker-js/faker':
+        specifier: 8.2.0
+        version: 8.2.0
       '@graphql-debugger/types':
         specifier: workspace:^
         version: link:../../packages/types
