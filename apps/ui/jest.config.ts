@@ -6,8 +6,6 @@ const config: Config.InitialOptions = {
     "^.+\\.tsx?$": "ts-jest",
   },
   testEnvironment: "jest-environment-jsdom",
-  //   collectCoverage: true,
-  //   coverageDirectory: "./src/tests/coverage",
 };
 
 export default config;
