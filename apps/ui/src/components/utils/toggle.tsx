@@ -23,7 +23,9 @@ export function Toggle({
   alwaysEnabled,
   blueToggle,
 }: ToggleProps) {
-  const [checked, setChecked] = useState(initialState);
+  const [checked, setChecked] = useState(
+    (initialState || alwaysEnabled) ?? false,
+  );
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (alwaysEnabled || disabled) {
@@ -47,6 +49,7 @@ export function Toggle({
       className={classNames("flex flex-col gap-2", {
         "opacity-60 ": disabled,
       })}
+      data-testid="toggle-wrapper"
     >
       <div className="flex items-center gap-0.5">
         <label
@@ -56,6 +59,7 @@ export function Toggle({
             type="checkbox"
             className="sr-only peer"
             checked={checked}
+            data-testid="checkbox"
             onChange={handleChange}
             onClick={handleAlwaysEnabled}
             readOnly
@@ -72,7 +76,9 @@ export function Toggle({
         </label>
 
         <div className="flex items-center gap-2">
-          <span className="font-bold italic text-sm">{label}</span>
+          <span className="font-bold italic text-sm" data-testid="label">
+            {label}
+          </span>
           {Number(callout?.length) > 0 && (
             <span className="text-sm">{callout}</span>
           )}

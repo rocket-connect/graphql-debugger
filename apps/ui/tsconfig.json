@@ -17,5 +17,5 @@
     "outDir": "build",
     "noEmit": false
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "src/**/*.spec.ts", "src/**/*.spec.tsx"]
 }
