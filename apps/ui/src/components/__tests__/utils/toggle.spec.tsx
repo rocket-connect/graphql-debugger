@@ -3,10 +3,6 @@ import { fireEvent, render, screen } from "@testing-library/react";
 
 import { Toggle } from "../../utils/toggle";
 
-afterEach(() => {
-  jest.clearAllMocks();
-});
-
 describe("toggle", () => {
   it("should render toggle component successfully", () => {
     render(

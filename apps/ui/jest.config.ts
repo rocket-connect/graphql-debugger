@@ -7,6 +7,7 @@ const config: Config.InitialOptions = {
     "^.+\\.svg$": "jest-transformer-svg",
   },
   testEnvironment: "jest-environment-jsdom",
+  setupFilesAfterEnv: ["./setup.ts"],
 };
 
 export default config;

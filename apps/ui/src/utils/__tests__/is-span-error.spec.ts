@@ -1,10 +1,10 @@
-import { ListTraceGroupsResponse } from "@graphql-debugger/types";
+import type { Span } from "@graphql-debugger/types";
 
 import { faker } from "@faker-js/faker";
 
 import { isSpanError } from "../is-trace-error";
 
-const span: ListTraceGroupsResponse["traces"][0]["spans"][0] = {
+const span: Span = {
   createdAt: faker.date.recent().toISOString(),
   durationNano: faker.date.recent().toISOString(),
   endTimeUnixNano: faker.date.recent().toISOString(),

@@ -1,4 +1,4 @@
-import { ListTraceGroupsResponse } from "@graphql-debugger/types";
+import type { Trace } from "@graphql-debugger/types";
 
 import { faker } from "@faker-js/faker";
 import "@testing-library/jest-dom";
@@ -8,7 +8,7 @@ import { isTraceError } from "../is-trace-error";
 const traceId = faker.database.mongodbObjectId();
 const spanId = faker.database.mongodbObjectId();
 
-const trace: ListTraceGroupsResponse["traces"][0] = {
+const trace: Trace = {
   id: faker.database.mongodbObjectId(),
   spans: [
     {

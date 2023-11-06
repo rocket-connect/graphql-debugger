@@ -1,14 +1,10 @@
-import { ListTraceGroupsResponse } from "@graphql-debugger/types";
+import type { Span, Trace } from "@graphql-debugger/types";
 
-export function isSpanError(
-  span: ListTraceGroupsResponse["traces"][0]["spans"][0],
-): boolean {
+export function isSpanError(span: Span): boolean {
   return Boolean(span.errorStack || span.errorMessage);
 }
 
-export function isTraceError(
-  tracegroup: ListTraceGroupsResponse["traces"][0],
-): boolean {
+export function isTraceError(tracegroup: Trace): boolean {
   const isError =
     (tracegroup.spans || []).some((span) => {
       return isSpanError(span);
