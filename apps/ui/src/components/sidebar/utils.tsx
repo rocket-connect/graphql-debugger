@@ -99,8 +99,7 @@ export const configs = [
   {
     name: "Dark Mode",
     description: "Toggle between light and dark mode",
-    callout: "(Comming Soon)",
-    enabled: false,
+    enabled: true,
   },
   {
     name: "Cookies",
