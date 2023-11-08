@@ -45,7 +45,7 @@ export function ModalWindow({
         ref={ref}
         id={id}
         className={classNames(
-          "fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-100 rounded-lg shadow-lg p-10 transition-all duration-500 overflow-hidden",
+          "fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-primary-background rounded-lg shadow-lg p-10 transition-all duration-500 overflow-hidden",
           {
             "w-11/12 h-5/6": type === "full-screen",
             "w-1/2 h-1/2": type === "small",

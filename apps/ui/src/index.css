@@ -11,6 +11,7 @@
     /** Background Colors*/
     --primary-background: 210 40% 98% / 1;
     --secondary-background: 219 28% 32% / 0.07;
+    --background: 219 28% 32% / 0.6;
     --text-primary: 218 28% 32% / 1;
     --accent: 218 28% 32% / 0.15;
 
@@ -26,7 +27,6 @@
 
   html[data-theme="dark"] {
     /** Background Colors*/
-
     --primary-background: 218, 24%, 21%, 1;
     --secondary-background: 218 27% 14% /1;
     --text-primary: 219 29% 78% / 1;

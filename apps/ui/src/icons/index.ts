@@ -1,2 +1,2 @@
 export * from "./history";
-export * from "./arrows";
+export * from "./docs";
