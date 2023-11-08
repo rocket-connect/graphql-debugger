@@ -8,7 +8,7 @@ import { rootSpanName } from "../../utils/root-span-name";
 
 export function Pill({
   trace,
-  bg = "white-100",
+  bg = "primary-background",
 }: {
   trace?: Trace;
   bg?: string;

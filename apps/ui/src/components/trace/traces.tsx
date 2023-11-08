@@ -93,7 +93,7 @@ export function SchemaTraces() {
 
   return (
     <div
-      className="bg-white-100 flex-grow rounded-2xl divide-y-2 divide-neutral/10"
+      className="bg-primary-background flex-grow rounded-2xl divide-y-2 divide-neutral/10"
       id={IDS.trace_list.view}
     >
       <div className="flex items-center p-5 justify-between text-neutral-100">

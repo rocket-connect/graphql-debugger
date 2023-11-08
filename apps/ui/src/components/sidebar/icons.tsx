@@ -29,7 +29,7 @@ export function SideBarIcons() {
   return (
     <div
       id={IDS.sidebar.icons.view}
-      className="flex flex-col items-center gap-8 border-r-2 border-neutral-100/15 p-4 h-screen"
+      className="flex flex-col items-center gap-8 border-r-2 border-r-accent p-4 h-screen bg-primary-background"
     >
       <div className="flex flex-col justify-between h-full">
         <div className="flex flex-col gap-5 mx-auto w-8">

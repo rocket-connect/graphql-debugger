@@ -7,16 +7,40 @@
 }
 
 @layer base {
-  :root {
-    --primary: 320, 95%, 43%;
-    --neutral: 219 28% 32%;
-    --secondary-purple: 242, 51%, 61%;
-    --secondary-blue: 208, 100%, 46%;
-    --secondary-ochre: 36, 79%, 47%;
-    --secondary-red: 13, 93%, 58%;
-    --secondary-green: 158, 60%, 42%;
-    --neutral-100: 219, 28%, 32%;
-    --white-100: 210, 40%, 98%;
+  html[data-theme="light"] {
+    /** Background Colors*/
+    --primary-background: 210 40% 98% / 1;
+    --secondary-background: 219 28% 32% / 0.07;
+    --text-primary: 218 28% 32% / 1;
+    --accent: 218 28% 32% / 0.15;
+
+    /**  Text Colors*/
+    --secondary-purple: 242 51% 61%;
+    --secondary-blue: 208 100% 46%;
+    --secondary-ochre: 36 79% 47%;
+    --secondary-red: 13 93% 58%;
+    --secondary-green: 158 60% 42%;
+    --neutral-100: 218 28% 32% / 1;
+    --white-100: 210 40% 98%;
+  }
+
+  html[data-theme="dark"] {
+    /** Background Colors*/
+
+    --primary-background: 218, 24%, 21%, 1;
+    --secondary-background: 218 27% 14% /1;
+    --text-primary: 219 29% 78% / 1;
+    --accent: 218 26% 37% / 0.3;
+
+    /**  Text Colors*/
+    --secondary-purple: 242 51% 61%;
+    --secondary-blue: 208 100% 46%;
+    --secondary-ochre: 36 79% 47%;
+    --secondary-red: 13 93% 58%;
+    --secondary-green: 158 60% 42%;
+    --neutral-100: 219 29% 78% /1;
+
+    --white-100: 218 25% 18%;
   }
 }
 
