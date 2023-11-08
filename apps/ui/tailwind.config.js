@@ -8,7 +8,7 @@ module.exports = {
       colors: {
         "primary-background": "hsla(var(--primary-background))",
         "secondary-background": "hsla(var(--secondary-background))",
-        // "text-primary": "hsla(var(--text-primary))",
+        "text-primary": "hsla(var(--text-primary))",
         accent: "hsla(var(--accent))",
         background: "hsla(var(--background))",
         ["neutral"]: "hsla(var(--neutral) / <alpha-value>)",

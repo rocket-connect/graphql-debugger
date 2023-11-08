@@ -1,8 +1,8 @@
 import { useContext } from "react";
 
 import { SideBarContext, type SideBarViewTypes } from "../../context/sidebar";
-import { InfoFilled, InfoStroke } from "../../icons/info";
-import { githubDark, npmDark } from "../../images";
+import { GithubIcon, NpmIcon } from "../../icons";
+import { Info, InfoFilled } from "../../icons/info";
 import { IDS } from "../../testing";
 import { iconsMapper } from "./utils";
 
@@ -54,7 +54,7 @@ export function SideBarIcons() {
             className="flex items-center"
           >
             <span className="w-8">
-              <img src={npmDark} alt="npm" />
+              <NpmIcon width={40} />
             </span>
           </a>
           <a
@@ -62,9 +62,7 @@ export function SideBarIcons() {
             href="https://github.com/rocket-connect/graphql-debugger"
             className="flex items-center"
           >
-            <span className="w-8">
-              <img src={githubDark} alt="github" />
-            </span>
+            <GithubIcon />
           </a>
 
           <button
@@ -72,7 +70,7 @@ export function SideBarIcons() {
             className="w-8"
             onClick={() => handleRouteChange("info")}
           >
-            {activeRoute("info") ? <InfoFilled /> : <InfoStroke />}
+            {activeRoute("info") ? <InfoFilled /> : <Info />}
           </button>
         </div>
       </div>

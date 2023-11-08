@@ -20,7 +20,7 @@ export function History() {
   return (
     <div
       id={IDS.sidebar.views.history}
-      className="flex w-full flex-col gap-3 divide-y-2 divide-neutral/10"
+      className="flex w-full flex-col gap-3 divide-y-2 divide-accent"
     >
       {sortedHistoryTraces.map(({ schemaId, trace, uniqueId }) => {
         const durationUnixNano = UnixNanoTimeStamp.fromString(
@@ -63,7 +63,7 @@ export function History() {
                 2,
               )} ${unit}`}</span>
               <button onClick={() => handleDeleteHistoryTrace(uniqueId ?? "")}>
-                <Delete color="error-red" size="1.5em" />
+                <Delete className="fill-red-400" height={20} width={20} />
               </button>
             </div>
           </div>

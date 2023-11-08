@@ -20,7 +20,7 @@ export function Favourites() {
   return (
     <div
       id={IDS.sidebar.views.favourites}
-      className="flex w-full flex-col gap-3 divide-y-2 divide-neutral/10"
+      className="flex w-full flex-col gap-3 divide-y-2 divide-accent"
     >
       {sortedfavourites.map(({ schemaId, trace }) => {
         const durationUnixNano = UnixNanoTimeStamp.fromString(
@@ -65,7 +65,7 @@ export function Favourites() {
               <button
                 onClick={() => handleDeleteFavouriteTrace(trace.id ?? "")}
               >
-                <Delete color="error-red" size="1.5em" />
+                <Delete className="fill-red-400" height={20} width={20} />
               </button>
             </div>
           </div>
