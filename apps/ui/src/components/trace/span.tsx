@@ -76,7 +76,7 @@ export function Span({
           <div className="py-4 hover:cursor-pointer hover:underline">
             {displyInfo}
             <div
-              className={`absolute h-4 bg-neutral/30 rounded-2xl w-full`}
+              className={`absolute h-4 bg-background rounded-2xl w-full`}
             ></div>
             <div
               data-line="span-line"
@@ -86,7 +86,7 @@ export function Span({
           </div>
         </OpenModal>
         <ModalWindow name="single-trace" type="small" title={displyInfo}>
-          <div className="flex flex-col gap-5 text-neutral-300 text-md divide-y-2 divide-neutral/10">
+          <div className="flex flex-col gap-5 text-neutral-300 text-md divide-y-2 divide-accent">
             <JsonViewer
               json={JSON.stringify(
                 {

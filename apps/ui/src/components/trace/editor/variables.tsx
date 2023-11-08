@@ -1,10 +1,10 @@
 import { Trace } from "@graphql-debugger/types";
 import { printTraceErrors } from "@graphql-debugger/utils";
 
-import classNames from "classnames";
 import { useState } from "react";
 
 import { IDS } from "../../../testing";
+import { cn } from "../../../utils/cn";
 import {
   jsonMapper,
   metaMapper,
@@ -45,7 +45,7 @@ export function Variables({ trace }: { trace?: Trace }) {
               onClick={(event) =>
                 handleMetaClick(event.target as HTMLDivElement)
               }
-              className={classNames("text-neutral-100 ", {
+              className={cn("text-neutral-100 ", {
                 ["font-semibold"]: selectedMeta === variable.toLowerCase(),
               })}
               role="button"

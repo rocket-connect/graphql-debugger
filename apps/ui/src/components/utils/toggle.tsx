@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import { ChangeEvent, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -48,7 +47,7 @@ export function Toggle({
   };
   return (
     <div
-      className={classNames("flex flex-col gap-2", {
+      className={cn("flex flex-col gap-2", {
         "opacity-60 ": disabled,
       })}
       data-testid="toggle-wrapper"
