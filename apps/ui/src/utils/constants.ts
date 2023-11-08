@@ -1,6 +1,4 @@
-import type { Theme } from "../store/useThemeStore";
-
-export const THEME_TYPE: Record<Theme, Theme> = {
+export const THEME_TYPE = {
   light: "light",
   dark: "dark",
-};
+} as const;
