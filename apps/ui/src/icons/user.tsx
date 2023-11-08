@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { twMerge } from "tailwind-merge";
 
 import type { IconProps, IconRef } from "./types";
 
@@ -6,7 +7,7 @@ export const User = forwardRef((props: IconProps, ref: IconRef) => (
   <svg
     viewBox="0 0 512 512"
     width={props.width || 30}
-    className={props.className || "fill-neutral-100"}
+    className={twMerge("fill-neutral-100", props.className)}
     ref={ref}
     {...props}
   >
@@ -18,7 +19,7 @@ export const UserFilled = forwardRef((props: IconProps, ref: IconRef) => (
   <svg
     viewBox="0 0 512 512"
     width={props.width || 30}
-    className={props.className || "fill-neutral-100"}
+    className={twMerge("fill-neutral-100", props.className)}
     ref={ref}
     {...props}
   >

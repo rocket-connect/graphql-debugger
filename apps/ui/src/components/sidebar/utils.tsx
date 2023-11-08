@@ -8,14 +8,6 @@ import {
 } from "../../icons";
 import { History, HistoryActive as HistoryFilled } from "../../icons/history";
 import { Star, StarFilled } from "../../icons/star";
-import {
-  configFilled,
-  configStroke,
-  folderFilled,
-  folderStroke,
-  loginFilled,
-  loginStroke,
-} from "../../images";
 import { IDS } from "../../testing";
 import { SchemaViewer } from "../schema/viewer";
 import { Config } from "./views/config";

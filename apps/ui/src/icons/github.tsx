@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { twMerge } from "tailwind-merge";
 
 import type { IconProps, IconRef } from "./types";
 
@@ -8,7 +9,7 @@ export const GithubIcon = forwardRef((props: IconProps, ref: IconRef) => (
     height={props.height || 30}
     ref={ref}
     width={props.width || 30}
-    className={props.className || "fill-neutral-100"}
+    className={twMerge("fill-neutral-100", props.className)}
     {...props}
   >
     <path

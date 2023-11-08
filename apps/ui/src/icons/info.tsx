@@ -1,15 +1,16 @@
 import { forwardRef } from "react";
+import { twMerge } from "tailwind-merge";
 
 import { IconProps, IconRef } from "./types";
 
 export const Info = forwardRef((props: IconProps, ref: IconRef) => (
   <svg
-    className="text-neutral-100 "
+    className={twMerge("text-neutral-100 ", props.className)}
     height={props.height || 30}
     ref={ref}
     width={props.width || 30}
-    xmlns="http://www.w3.org/2000/svg"
     fill="none"
+    {...props}
     viewBox="0 0 20 20"
   >
     <path
@@ -27,7 +28,7 @@ export const InfoFilled = forwardRef((props: IconProps, ref: IconRef) => (
     ref={ref}
     height={props.height || 30}
     width={props.width || 30}
-    className={props.className || "fill-neutral-100 text-neutral-100"}
+    className={twMerge("fill-neutral-100 text-neutral-100", props.className)}
     {...props}
     viewBox="0 0 20 20"
   >
