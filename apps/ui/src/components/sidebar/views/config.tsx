@@ -25,6 +25,11 @@ export function Config() {
       toggleTheme(THEME_TYPE.dark);
     }
   };
+
+  const initialState = (configName: string): boolean | undefined => {
+    return context?.routes.includes(configName.toLowerCase());
+  };
+
   return (
     <div id={IDS.sidebar.views.config} className="flex flex-col gap-5">
       <div className="flex flex-col gap-1">
@@ -34,25 +39,14 @@ export function Config() {
 
       <div className="flex flex-col gap-10 text-netural-100 text-xs pl-3">
         {configs.map((config) => {
-          let initialState = context?.routes.includes(
-            config.name.toLowerCase(),
-          );
-
-          let disabled = !config.enabled;
-
-          if (config.alwaysEnabled) {
-            initialState = true;
-            disabled = true;
-          }
-
           return (
             <Toggle
-              initialState={initialState}
+              initialState={initialState(config.name)}
               label={config.name}
               key={config.name}
               onToggle={(check) => handleToggle(check, config.name)}
               description={config.description}
-              disabled={disabled}
+              disabled={!config.enabled}
               alwaysEnabled={config.alwaysEnabled}
             />
           );
