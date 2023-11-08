@@ -4,49 +4,33 @@ import { IconProps, IconRef } from "./types";
 
 export const Info = forwardRef((props: IconProps, ref: IconRef) => (
   <svg
-    viewBox="64 64 368 368"
+    className="text-neutral-100 "
     height={props.height || 30}
     ref={ref}
     width={props.width || 30}
-    className={props.className || "fill-neutral-100"}
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 20 20"
   >
     <path
-      fill="none"
-      className={props.className || "stroke-neutral-100"}
-      strokeMiterlimit={10}
-      strokeWidth={32}
-      d="M248 64C146.39 64 64 146.39 64 248s82.39 184 184 184 184-82.39 184-184S349.61 64 248 64z"
-    />
-    <path
-      fill="none"
       className={props.className || "stroke-neutral-100"}
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={32}
-      d="M220 220h32v116"
+      strokeWidth="1.5"
+      d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
     />
-    <path
-      fill="none"
-      stroke="currentColor"
-      className={props.className || "stroke-neutral-100"}
-      strokeLinecap="round"
-      strokeMiterlimit={10}
-      strokeWidth={32}
-      d="M208 340h88"
-    />
-    <path d="M248 130a26 26 0 1026 26 26 26 0 00-26-26z" />
   </svg>
 ));
 
 export const InfoFilled = forwardRef((props: IconProps, ref: IconRef) => (
   <svg
-    viewBox="56 56 400 400"
     ref={ref}
     height={props.height || 30}
     width={props.width || 30}
-    className={props.className || "fill-neutral-100"}
+    className={props.className || "fill-neutral-100 text-neutral-100"}
     {...props}
+    viewBox="0 0 20 20"
   >
-    <path d="M256 56C145.72 56 56 145.72 56 256s89.72 200 200 200 200-89.72 200-200S366.28 56 256 56zm0 82a26 26 0 11-26 26 26 26 0 0126-26zm64 226H200v-32h44v-88h-32v-32h64v120h44z" />
+    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
   </svg>
 ));

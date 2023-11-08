@@ -2,7 +2,6 @@ import { Trace } from "@graphql-debugger/types";
 import { getTraceStart, sumTraceTime } from "@graphql-debugger/utils";
 
 import { useQuery } from "@tanstack/react-query";
-import classNames from "classnames";
 import { useContext } from "react";
 import toast from "react-hot-toast";
 import {
@@ -18,6 +17,7 @@ import { Modal } from "../../context/modal";
 import { Star, StarFilled } from "../../icons/star";
 import { refresh, searchFilled } from "../../images";
 import { IDS } from "../../testing";
+import { cn } from "../../utils/cn";
 import { isTraceError } from "../../utils/is-trace-error";
 import { rootSpanName } from "../../utils/root-span-name";
 import { OpenModal } from "../modal/open";
@@ -93,7 +93,7 @@ export function SchemaTraces() {
 
   return (
     <div
-      className="bg-primary-background flex-grow rounded-2xl divide-y-2 divide-neutral/10"
+      className="bg-primary-background flex-grow rounded-2xl divide-y-2 divide-accent"
       id={IDS.trace_list.view}
     >
       <div className="flex items-center p-5 justify-between text-neutral-100">
@@ -178,7 +178,7 @@ export function SchemaTraces() {
                         <tr
                           data-traceid={trace?.id}
                           key={trace.id}
-                          className={`border-b-2 border-graphiql-neutral/10 text-neutral-100 hover:cursor-pointer`}
+                          className={`border-b-2 border-b-accent text-neutral-100 hover:cursor-pointer`}
                         >
                           <th
                             className={`py-4 ${
@@ -187,7 +187,7 @@ export function SchemaTraces() {
                             role="button"
                           >
                             <Link
-                              className={classNames(
+                              className={cn(
                                 `px-6 py-4 whitespace-nowrap font-medium ${
                                   isSelected(trace.id)
                                     ? "underline"
@@ -220,9 +220,9 @@ export function SchemaTraces() {
                           <td className="px-6 py-4">
                             <button onClick={() => handleAddTrace(trace)}>
                               {isFavourite(trace.id) ? (
-                                <Star size={"1.5em"} />
+                                <Star height={20} width={20} />
                               ) : (
-                                <StarFilled size={"1.5em"} />
+                                <StarFilled height={20} width={20} />
                               )}
                             </button>
                           </td>

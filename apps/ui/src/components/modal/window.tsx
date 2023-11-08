@@ -1,9 +1,9 @@
-import classNames from "classnames";
 import { ReactElement, useContext, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 import { ModalContext } from "../../context/modal";
 import { IDS } from "../../testing";
+import { cn } from "../../utils/cn";
 
 export interface WindowModalProps {
   children: ReactElement;
@@ -44,7 +44,7 @@ export function ModalWindow({
       <div
         ref={ref}
         id={id}
-        className={classNames(
+        className={cn(
           "fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-primary-background rounded-lg shadow-lg p-10 transition-all duration-500 overflow-hidden",
           {
             "w-11/12 h-5/6": type === "full-screen",

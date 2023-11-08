@@ -1,6 +1,7 @@
-import classNames from "classnames";
 import { useCallback } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+
+import { cn } from "../../utils/cn";
 
 export interface FieldNameProps {
   parentName: string;
@@ -28,7 +29,7 @@ export function FieldName({ name, parentName, type }: FieldNameProps) {
   return (
     <div className="flex items-center gap-2 text-s">
       <span
-        className={classNames("text-md text-neutral-100 hover:cursor-pointer", {
+        className={cn("text-md text-neutral-100 hover:cursor-pointer", {
           "font-medium decoration-graphiql-pink":
             rootSpanName === fieldQueryName,
           "hover:cursor-default": !["query", "mutation"].includes(parentName),
