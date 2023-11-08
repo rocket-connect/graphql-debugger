@@ -8,7 +8,15 @@
 
 @layer base {
   :root {
+    --primary: 320, 95%, 43%;
     --neutral: 219 28% 32%;
+    --secondary-purple: 242, 51%, 61%;
+    --secondary-blue: 208, 100%, 46%;
+    --secondary-ochre: 36, 79%, 47%;
+    --secondary-red: 13, 93%, 58%;
+    --secondary-green: 158, 60%, 42%;
+    --neutral-100: 219, 28%, 32%;
+    --white-100: 210, 40%, 98%;
   }
 }
 
