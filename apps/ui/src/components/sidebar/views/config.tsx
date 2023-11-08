@@ -2,14 +2,29 @@ import { useContext } from "react";
 import toast from "react-hot-toast";
 
 import { ConfigContext } from "../../../context/config";
+import { useThemeStore } from "../../../store/useThemeStore";
 import { IDS } from "../../../testing";
+import { THEME_TYPE } from "../../../utils/constants";
 import { Toggle } from "../../utils/toggle";
 import { configs } from "../utils";
 import { Backend } from "./backend";
 
 export function Config() {
   const context = useContext(ConfigContext);
+  const { toggleTheme } = useThemeStore();
 
+  const handleToggle = (check: boolean, configName: string) => {
+    if (check) {
+      toast.success(`${configName} enabled`);
+      context?.handleEnableRoute(configName.toLowerCase());
+      toggleTheme(THEME_TYPE.light);
+    }
+    if (!check) {
+      toast.error(`${configName} disabled`);
+      context?.handleDisableRoute(configName.toLowerCase());
+      toggleTheme(THEME_TYPE.dark);
+    }
+  };
   return (
     <div id={IDS.sidebar.views.config} className="flex flex-col gap-5">
       <div className="flex flex-col gap-1">
@@ -35,17 +50,7 @@ export function Config() {
               initialState={initialState}
               label={config.name}
               key={config.name}
-              onToggle={(check) => {
-                if (check) {
-                  toast.success(`${config.name} enabled`);
-                  context?.handleEnableRoute(config.name.toLowerCase());
-                }
-                if (!check) {
-                  toast.error(`${config.name} disabled`);
-                  context?.handleDisableRoute(config.name.toLowerCase());
-                }
-              }}
-              callout={config.callout}
+              onToggle={(check) => handleToggle(check, config.name)}
               description={config.description}
               disabled={disabled}
               alwaysEnabled={config.alwaysEnabled}
