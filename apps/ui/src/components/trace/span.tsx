@@ -76,7 +76,7 @@ export function Span({
           <div className="py-4 hover:cursor-pointer hover:underline">
             {displyInfo}
             <div
-              className={`absolute h-4 bg-background rounded-2xl w-full`}
+              className={`absolute h-4 bg-primary-background rounded-2xl w-full`}
             ></div>
             <div
               data-line="span-line"
@@ -106,7 +106,7 @@ export function Span({
         </ModalWindow>
       </Modal>
 
-      <div className="text-neutral-100 flex flex-col p-0 m-0 pl-10 border-l-2 hover:border-neutral/20">
+      <div className="text-neutral-100 flex flex-col p-0 m-0 pl-10 border-l-2 border-l-accent">
         {Array.isArray(data.children)
           ? data.children.map((child) => (
               <Span

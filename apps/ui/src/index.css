@@ -7,11 +7,13 @@
 }
 
 @layer base {
+  body * {
+    @apply ease-in-out duration-[0.02s];
+  }
   html[data-theme="light"] {
     /** Background Colors*/
     --primary-background: 210 40% 98% / 1;
     --secondary-background: 219 28% 32% / 0.07;
-    --background: 219 28% 32% / 0.6;
     --text-primary: 218 28% 32% / 1;
     --accent: 218 28% 32% / 0.15;
 
@@ -46,6 +48,10 @@
   }
 }
 
+/** 
+  Workaround for disappearing toaster messages. Limit is 2 toasters at a time.
+  reference: https://github.com/timolins/react-hot-toast/issues/31
+*/
 .toaster-wrapper > div {
   display: none !important;
 }
@@ -53,8 +59,5 @@
   display: flex !important;
 }
 .toaster-wrapper > div:nth-child(2) {
-  display: flex !important;
-}
-.toaster-wrapper > div:nth-child(3) {
   display: flex !important;
 }

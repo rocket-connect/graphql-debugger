@@ -12,7 +12,7 @@ export function Login() {
           <input
             type="text"
             id="username"
-            className="border rounded w-full p-2"
+            className="border  w-full p-2 bg-primary-background  border-accent rounded-md"
             placeholder="Username"
             disabled
           />
@@ -24,7 +24,7 @@ export function Login() {
           <input
             type="password"
             id="password"
-            className="border rounded w-full p-2"
+            className="border bg-primary-background  border-accent rounded-md w-full p-2"
             placeholder="******************"
             disabled
           />
