@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import toast from "react-hot-toast";
+import { useShallow } from "zustand/react/shallow";
 
 import { ConfigContext } from "../../../context/config";
 import { useThemeStore } from "../../../store/useThemeStore";
@@ -11,18 +12,18 @@ import { Backend } from "./backend";
 
 export function Config() {
   const context = useContext(ConfigContext);
-  const { toggleTheme } = useThemeStore();
+  const toggleTheme = useThemeStore(useShallow((state) => state.toggleTheme));
 
   const handleToggle = (check: boolean, configName: string) => {
     if (check) {
+      toggleTheme(THEME_TYPE.dark);
       toast.success(`${configName} enabled`);
       context?.handleEnableRoute(configName.toLowerCase());
-      toggleTheme(THEME_TYPE.light);
     }
     if (!check) {
+      toggleTheme(THEME_TYPE.light);
       toast.error(`${configName} disabled`);
       context?.handleDisableRoute(configName.toLowerCase());
-      toggleTheme(THEME_TYPE.dark);
     }
   };
 
