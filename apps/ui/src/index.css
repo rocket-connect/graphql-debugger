@@ -7,9 +7,6 @@
 }
 
 @layer base {
-  body * {
-    @apply ease-in-out duration-[0.02s];
-  }
   html[data-theme="light"] {
     /** Background Colors*/
     --primary-background: 210 40% 98% / 1;
@@ -49,15 +46,12 @@
 }
 
 /** 
-  Workaround for disappearing toaster messages. Limit is 2 toasters at a time.
+  Workaround for disappearing toaster messages. Limit is 1 toaster at a time.
   reference: https://github.com/timolins/react-hot-toast/issues/31
 */
 .toaster-wrapper > div {
   display: none !important;
 }
 .toaster-wrapper > div:nth-child(1) {
-  display: flex !important;
-}
-.toaster-wrapper > div:nth-child(2) {
   display: flex !important;
 }

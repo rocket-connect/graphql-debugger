@@ -11,24 +11,21 @@ import { configs } from "../utils";
 import { Backend } from "./backend";
 
 export function Config() {
-  const context = useContext(ConfigContext);
-  const toggleTheme = useThemeStore(useShallow((state) => state.toggleTheme));
+  const { theme, toggleTheme } = useThemeStore();
 
   const handleToggle = (check: boolean, configName: string) => {
     if (check) {
       toggleTheme(THEME_TYPE.dark);
-      toast.success(`${configName} enabled`);
-      context?.handleEnableRoute(configName.toLowerCase());
+      toast.success(`${configName} enabled`, {
+        icon: "🌙",
+      });
     }
     if (!check) {
       toggleTheme(THEME_TYPE.light);
-      toast.error(`${configName} disabled`);
-      context?.handleDisableRoute(configName.toLowerCase());
+      toast.success(`Light mode enabled`, {
+        icon: "🌞",
+      });
     }
-  };
-
-  const initialState = (configName: string): boolean | undefined => {
-    return context?.routes.includes(configName.toLowerCase());
   };
 
   return (
@@ -42,7 +39,7 @@ export function Config() {
         {configs.map((config) => {
           return (
             <Toggle
-              initialState={initialState(config.name)}
+              initialState={theme === THEME_TYPE.dark}
               label={config.name}
               key={config.name}
               onToggle={(check) => handleToggle(check, config.name)}
