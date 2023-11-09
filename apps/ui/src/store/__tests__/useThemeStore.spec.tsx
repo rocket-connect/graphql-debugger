@@ -3,8 +3,8 @@ import { act, render, renderHook } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 
 import "../../__mocks__/matchMedia";
-import { Page } from "../../components/utils/page";
 import { Toggle } from "../../components/utils/toggle";
+import { useTheme } from "../../hooks/useTheme";
 import { THEME_TYPE } from "../../utils/constants";
 import { useThemeStore } from "../useThemeStore";
 
@@ -29,6 +29,7 @@ describe("useThemeStore", () => {
 
   it("should toggle when user clicks toggle button", async () => {
     const { result } = renderHook(() => useThemeStore());
+    renderHook(() => useTheme());
     expect(result.current.theme).toBe("light");
 
     const { getByTestId } = render(
@@ -45,12 +46,20 @@ describe("useThemeStore", () => {
       />,
     );
 
+    expect(document.documentElement).toHaveAttribute("data-theme", "light");
+
     expect(getByTestId("toggle-wrapper")).toBeInTheDocument();
 
     await userEvent.click(getByTestId("checkbox"));
+
     expect(result.current.theme).toBe(THEME_TYPE.dark);
 
+    expect(document.documentElement).toHaveAttribute("data-theme", "dark");
+
     await userEvent.click(getByTestId("checkbox"));
+
     expect(result.current.theme).toBe(THEME_TYPE.light);
+
+    expect(document.documentElement).toHaveAttribute("data-theme", "light");
   });
 });
