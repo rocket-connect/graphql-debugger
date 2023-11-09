@@ -11,7 +11,8 @@ import { configs } from "../utils";
 import { Backend } from "./backend";
 
 export function Config() {
-  const { theme, toggleTheme } = useThemeStore();
+  const isDarkMode = useThemeStore((state) => state.theme === THEME_TYPE.dark);
+  const toggleTheme = useThemeStore((state) => state.toggleTheme);
 
   const handleToggle = (check: boolean, configName: string) => {
     if (check) {
@@ -39,7 +40,7 @@ export function Config() {
         {configs.map((config) => {
           return (
             <Toggle
-              initialState={theme === THEME_TYPE.dark}
+              initialState={isDarkMode}
               label={config.name}
               key={config.name}
               onToggle={(check) => handleToggle(check, config.name)}

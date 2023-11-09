@@ -1,11 +1,21 @@
 import { useEffect } from "react";
 
-import { type Theme, useThemeStore } from "../store/useThemeStore";
+import { useThemeStore } from "../store/useThemeStore";
+import { THEME_TYPE } from "../utils/constants";
 
 export const useTheme = () => {
-  const theme: Theme = useThemeStore((state) => state.theme);
+  const { theme, toggleTheme } = useThemeStore();
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
+    const htmlTag = document.documentElement;
+    const systemPreference = window.matchMedia("(prefers-color-scheme: dark");
+
+    htmlTag.setAttribute("data-theme", theme);
+
+    systemPreference.addEventListener("change", (event) => {
+      toggleTheme(event.matches ? THEME_TYPE.dark : THEME_TYPE.light);
+    });
+
+    return () => removeEventListener("change", () => {});
   }, [theme]);
 };

@@ -12,7 +12,7 @@ describe("useTheme", () => {
 
     expect(htmlTag).toHaveAttribute("data-theme", "light");
   });
-  it('should toggle data-theme to dark when theme is "dark"', () => {
+  it('should toggle data-theme to dark when theme is "light"', () => {
     renderHook(() => useTheme());
     const htmlElement = document.documentElement;
 
