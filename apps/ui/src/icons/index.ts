@@ -5,5 +5,4 @@ export * from "./settings";
 export * from "./star";
 export * from "./delete";
 export * from "./user";
-export * from "./npm";
 export * from "./github";

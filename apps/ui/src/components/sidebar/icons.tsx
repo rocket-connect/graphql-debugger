@@ -1,7 +1,7 @@
 import { useContext } from "react";
 
 import { SideBarContext, type SideBarViewTypes } from "../../context/sidebar";
-import { GithubIcon, NpmIcon } from "../../icons";
+import { GithubIcon } from "../../icons";
 import { Info, InfoFilled } from "../../icons/info";
 import { IDS } from "../../testing";
 import { iconsMapper } from "./utils";
@@ -48,15 +48,6 @@ export function SideBarIcons() {
         </div>
 
         <div className="flex flex-col gap-5 mx-auto">
-          <a
-            id={IDS.sidebar.icons.npm}
-            href="https://www.npmjs.com/search?q=graphql-debugger"
-            className="flex items-center"
-          >
-            <span className="w-8">
-              <NpmIcon width={40} />
-            </span>
-          </a>
           <a
             id={IDS.sidebar.icons.github}
             href="https://github.com/rocket-connect/graphql-debugger"

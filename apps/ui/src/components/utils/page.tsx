@@ -6,6 +6,7 @@ export function Page({ id, children }: { id: string; children: ReactNode }) {
   return (
     <div
       id={id}
+      role="main"
       className="h-screen w-full flex items-center gap-8 py-4 overflow-hidden text-neutral-100 bg-primary-background"
     >
       <SideBarView />
