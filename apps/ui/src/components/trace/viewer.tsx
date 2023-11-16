@@ -48,7 +48,7 @@ export function TraceModalHeader({
 }) {
   return (
     <div className="flex flex-row justify-between gap-5 text-sm">
-      <Pill trace={trace} bg="neutral/10" />
+      <Pill trace={trace} />
       <div className="my-auto mr-5">
         <Toggle
           label="Show foreign spans"

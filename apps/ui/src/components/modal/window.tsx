@@ -39,29 +39,31 @@ export function ModalWindow({
   if (name !== context?.openName) return null;
 
   return createPortal(
-    <div className="text-neutral-100">
+    <div className="text-neutral-100 transition  duration-300 ease-in-out">
       <div className="fixed top-0 left-0 w-full h-full bg-black opacity-50"></div>
       <div
         ref={ref}
         id={id}
         className={cn(
-          "fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-primary-background rounded-lg shadow-lg p-10 transition-all duration-500 overflow-hidden",
+          "fixed top-1/2 bg-white left-1/2 transform -translate-x-1/2 -translate-y-1/2  rounded-lg overflow-hidden",
           {
             "w-11/12 h-5/6": type === "full-screen",
             "w-1/2 h-1/2": type === "small",
           },
         )}
       >
-        <button
-          id={IDS.modal.close}
-          onClick={context.close}
-          className="bg-none border-none p-2 rounded-sm transform translate-x-4 transition-all duration-200 absolute top-3 right-6 hover:bg-gray-200"
-        >
-          <div className="w-6 h-6 text-gray-500">X</div>
-        </button>
-        <h2 className="text-bold text-xl mb-3">{title}</h2>
-        <div className="h-full w-full overflow-scroll custom-scrollbar">
-          {children}
+        <div className={" h-full w-full bg-secondary-background p-10"}>
+          <button
+            id={IDS.modal.close}
+            onClick={context.close}
+            className="bg-none border-none p-2 rounded-sm transform translate-x-4 transition-all duration-200 absolute top-3 right-6 hover:bg-gray-200"
+          >
+            <div className="w-6 h-6 text-gray-500">X</div>
+          </button>
+          <h2 className="text-bold text-xl mb-3">{title}</h2>
+          <div className="h-full w-full overflow-scroll custom-scrollbar">
+            {children}
+          </div>
         </div>
       </div>
     </div>,
