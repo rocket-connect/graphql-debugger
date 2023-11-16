@@ -2,7 +2,7 @@ import { Trace } from "@graphql-debugger/types";
 import { getTraceStart, sumTraceTime } from "@graphql-debugger/utils";
 
 import { useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import {
   Link,
@@ -12,16 +12,14 @@ import {
 } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
+import { Modal } from "../../components/modal/modal";
 import { ClientContext } from "../../context/client";
-import { Modal } from "../../context/modal";
 import { Star, StarFilled } from "../../icons/star";
 import { refresh, searchFilled } from "../../images";
 import { IDS } from "../../testing";
 import { cn } from "../../utils/cn";
 import { isTraceError } from "../../utils/is-trace-error";
 import { rootSpanName } from "../../utils/root-span-name";
-import { OpenModal } from "../modal/open";
-import { ModalWindow } from "../modal/window";
 import { Spinner } from "../utils/spinner";
 import { Search } from "./search";
 
@@ -36,6 +34,7 @@ export function SchemaTraces() {
   const navigate = useNavigate();
   const params = useParams();
   const [searchParams] = useSearchParams();
+  const [searchModal, setSearchModal] = useState(false);
 
   const { data: traces, isLoading } = useQuery({
     queryKey: ["traces", params.schemaId, searchParams.get("rootSpanName")],
@@ -102,20 +101,20 @@ export function SchemaTraces() {
           <p className="text-sm">List of the latest GraphQL queries.</p>
         </div>
         <div className="flex items-center gap-10 text-sm">
-          <Modal key="search-full-screen">
-            <OpenModal id={"open-search"} opens="full-screen-search">
-              <button className="flex gap-3 hover:underline" onClick={() => {}}>
-                <img className="w-6" src={searchFilled} />
-                <p>Search</p>
-              </button>
-            </OpenModal>
-            <ModalWindow
-              name="full-screen-search"
-              type="small"
-              title={<div className="text-neutral-100 font-bold">Search</div>}
-            >
-              <Search />
-            </ModalWindow>
+          <button
+            className="flex gap-3 hover:underline"
+            onClick={() => setSearchModal(true)}
+          >
+            <img className="w-6" src={searchFilled} />
+            <p>Search</p>
+          </button>
+          <Modal
+            type="small"
+            title={<div className="text-neutral-100 font-bold">Search</div>}
+            open={searchModal}
+            onClose={() => setSearchModal(false)}
+          >
+            <Search />
           </Modal>
 
           <button

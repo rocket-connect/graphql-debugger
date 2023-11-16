@@ -1,8 +1,5 @@
-import { useContext } from "react";
 import toast from "react-hot-toast";
-import { useShallow } from "zustand/react/shallow";
 
-import { ConfigContext } from "../../../context/config";
 import { useThemeStore } from "../../../store/useThemeStore";
 import { IDS } from "../../../testing";
 import { THEME_TYPE } from "../../../utils/constants";

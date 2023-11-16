@@ -1,10 +1,10 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 
-import { Modal } from "../../context/modal";
+import { useState } from "react";
+
+import { Modal } from "../../components/modal/modal";
 import { RenderTree } from "../../utils/create-tree-data";
 import { isSpanError } from "../../utils/is-trace-error";
-import { OpenModal } from "../modal/open";
-import { ModalWindow } from "../modal/window";
 import { JsonViewer } from "./editor/json/viewer";
 
 export function Span({
@@ -16,6 +16,7 @@ export function Span({
   minTimestamp: UnixNanoTimeStamp;
   maxTimestamp: UnixNanoTimeStamp;
 }) {
+  const [modal, setModal] = useState(false);
   const durationNano = UnixNanoTimeStamp.fromString(data.durationNano);
   const startTimeUnixNano = UnixNanoTimeStamp.fromString(
     data.startTimeUnixNano,
@@ -71,39 +72,43 @@ export function Span({
       data-traceviewspanid={data.id}
       className="relative overflow-hidden flex flex-col gap-1 text-xs"
     >
-      <Modal>
-        <OpenModal id={`trace-open-modal-${data.id}`} opens="single-trace">
-          <div className="py-4 hover:cursor-pointer hover:underline">
-            {displyInfo}
-            <div
-              className={`absolute h-4 bg-primary-background rounded-2xl w-full`}
-            ></div>
-            <div
-              data-line="span-line"
-              className={spanClasses}
-              style={{ width, left: offset }}
-            ></div>
-          </div>
-        </OpenModal>
-        <ModalWindow name="single-trace" type="small" title={displyInfo}>
-          <div className="flex flex-col gap-5 text-neutral-300 text-md divide-y-2 divide-accent">
-            <JsonViewer
-              json={JSON.stringify(
-                {
-                  ...data,
-                  children: undefined,
-                  errorMessage: undefined,
-                  errorStack: undefined,
-                  ...(data.attributes
-                    ? { attributes: JSON.parse(data.attributes) }
-                    : { attributes: undefined }),
-                },
-                null,
-                2,
-              )}
-            />
-          </div>
-        </ModalWindow>
+      <div
+        className="py-4 hover:cursor-pointer hover:underline"
+        onClick={() => setModal(true)}
+      >
+        {displyInfo}
+        <div
+          className={`absolute h-4 bg-primary-background rounded-2xl w-full`}
+        ></div>
+        <div
+          data-line="span-line"
+          className={spanClasses}
+          style={{ width, left: offset }}
+        ></div>
+      </div>
+      <Modal
+        type="small"
+        open={modal}
+        onClose={() => setModal(false)}
+        title={displyInfo}
+      >
+        <div className="flex flex-col gap-5 text-neutral-300 text-md divide-y-2 divide-accent">
+          <JsonViewer
+            json={JSON.stringify(
+              {
+                ...data,
+                children: undefined,
+                errorMessage: undefined,
+                errorStack: undefined,
+                ...(data.attributes
+                  ? { attributes: JSON.parse(data.attributes) }
+                  : { attributes: undefined }),
+              },
+              null,
+              2,
+            )}
+          />
+        </div>
       </Modal>
 
       <div className="text-neutral-100 flex flex-col p-0 m-0 pl-10 border-l-2 border-l-accent">

@@ -36,7 +36,7 @@ export function Pill({
       className={`py-2 px-4 bg-${bg} rounded-2xl text-neutral-100`}
     >
       <p className="font-semibold">
-        <span className={`underline ${isError ? "text-error-red" : ""}`}>
+        <span className={`${isError ? "text-error-red" : ""}`}>
           {displayName}
         </span>
         {` - ${traceDurationSIUnits?.value.toFixed(
