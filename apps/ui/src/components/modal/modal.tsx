@@ -39,6 +39,7 @@ export function Modal({
       id="modal"
       onClick={onClose}
       className="fixed top-0 left-0 w-full h-screen bg-black/50 backdrop-filter backdrop-blur-sm z-50"
+      data-testid="modalWrapper"
     >
       <div
         onClick={(e) => e.stopPropagation()}
@@ -53,11 +54,20 @@ export function Modal({
         <button
           onClick={onClose}
           className="absolute top-3 right-3 text-text-primary"
+          data-testid="modalCloseButton"
         >
           X
         </button>
-        <h2 className="text-bold text-xl text-text-primary mb-3">{title}</h2>
-        <div className="custom-scrollbar max-h-[92%] overflow-scroll">
+        <h2
+          className="text-bold text-xl text-text-primary mb-3"
+          data-testid="modalTitle"
+        >
+          {title}
+        </h2>
+        <div
+          className="custom-scrollbar max-h-[92%] overflow-scroll"
+          data-testid="modalContent"
+        >
           {children}
         </div>
       </div>

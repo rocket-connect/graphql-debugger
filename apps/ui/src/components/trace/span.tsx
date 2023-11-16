@@ -3,6 +3,7 @@ import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import { useState } from "react";
 
 import { Modal } from "../../components/modal/modal";
+import { cn } from "../../utils/cn";
 import { RenderTree } from "../../utils/create-tree-data";
 import { isSpanError } from "../../utils/is-trace-error";
 import { JsonViewer } from "./editor/json/viewer";
@@ -30,22 +31,11 @@ export function Span({
 
   const { value, unit } = durationNano.toSIUnits();
 
-  let spanClasses = "absolute h-4";
-  if (isSpanError(data)) {
-    spanClasses += " bg-red-500";
-  } else {
-    if (data.isForeign) {
-      spanClasses += " bg-app-blue";
-    } else {
-      spanClasses += " bg-graphql-otel-green";
-    }
-  }
-
   const displyInfo = (
     <p
-      className={`tracking-widest ${
-        data.errorMessage || data.errorStack ? "text-red-500" : {}
-      } py-2`}
+      className={cn("tracking-widest py-2", {
+        "text-red-500": data.errorMessage || data.errorStack,
+      })}
       data-info="span-info"
     >
       <span className="font-bold" data-name="span-name">
@@ -77,14 +67,15 @@ export function Span({
         onClick={() => setModal(true)}
       >
         {displyInfo}
-        <div
-          className={`absolute h-4 bg-primary-background rounded-2xl w-full`}
-        ></div>
-        <div
-          data-line="span-line"
-          className={spanClasses}
-          style={{ width, left: offset }}
-        ></div>
+        <div className="relative h-4 rounded-md bg-accent-2">
+          <div
+            className={cn("absolute rounded-md h-4 bg-secondary-green", {
+              "bg-primary": data.isForeign,
+              "bg-red-500": isSpanError(data),
+            })}
+            style={{ width, left: offset }}
+          ></div>
+        </div>
       </div>
       <Modal
         type="small"
