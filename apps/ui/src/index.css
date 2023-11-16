@@ -6,11 +6,15 @@
   @apply [&::-webkit-scrollbar]:w-0;
 }
 
+body {
+  font-family: "Rubik", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 @layer base {
   :root {
     /** Background Colors*/
     --primary-background: 210 40% 98% / 1;
-    --secondary-background: 219 28% 32% / 0.07;
+    --secondary-background: 219 28% 32% / 1;
     --text-primary: 218 28% 32% / 1;
     --accent: 218 28% 32% / 0.15;
 
@@ -45,8 +49,8 @@
 
   html[data-theme="dark"] {
     /** Background Colors*/
-    --primary-background: 218, 24%, 21%, 1;
-    --secondary-background: 218 27% 14% /1;
+    --primary-background: 218 24% 21% / 1;
+    --secondary-background: 218 27% 14% / 1;
     --text-primary: 219 29% 78% / 1;
     --accent: 218 26% 37% / 0.3;
 
@@ -60,10 +64,6 @@
     --neutral-100: 219 29% 78% /1;
 
     --white-100: 218 25% 18%;
-  }
-
-  html {
-    @apply transition-all duration-300 ease-in-out;
   }
 }
 
