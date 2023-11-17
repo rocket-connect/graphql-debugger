@@ -63,14 +63,14 @@ export function Span({
       className="relative overflow-hidden flex flex-col gap-1 text-xs"
     >
       <div
-        className="py-4 hover:cursor-pointer hover:underline"
+        className="py-1.5 hover:cursor-pointer hover:underline"
         onClick={() => setModal(true)}
       >
         {displyInfo}
-        <div className="relative h-4 rounded-md bg-accent-2">
+        <div className="relative h-4 rounded-md bg-gray-400">
           <div
             className={cn("absolute rounded-md h-4 bg-secondary-green", {
-              "bg-primary": data.isForeign,
+              "bg-sky-800": data.isForeign,
               "bg-red-500": isSpanError(data),
             })}
             style={{ width, left: offset }}

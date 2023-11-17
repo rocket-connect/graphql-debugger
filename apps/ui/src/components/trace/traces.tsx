@@ -92,7 +92,7 @@ export function SchemaTraces() {
 
   return (
     <div
-      className="bg-primary-background flex-grow rounded-2xl divide-y-2 divide-accent"
+      className="bg-primary-background flex-grow flex-shrink-0 basis-1/3 rounded-2xl divide-y-2 divide-accent"
       id={IDS.trace_list.view}
     >
       <div className="flex items-center p-5 justify-between text-neutral-100">
@@ -132,7 +132,7 @@ export function SchemaTraces() {
         </div>
       </div>
       <div className="p-5">
-        <div className="h-96 overflow-y-scroll custom-scrollbar w-full">
+        <div className="max-h-[245px] overflow-y-scroll custom-scrollbar w-full">
           {isLoading ? (
             <div className="flex align-center justify-center mx-auto mt-20">
               <Spinner />

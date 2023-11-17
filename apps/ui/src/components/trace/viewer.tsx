@@ -72,7 +72,7 @@ export function TraceViewer({ trace }: { trace?: Trace }) {
   return (
     <div
       id={IDS.trace_viewer.view}
-      className="overflow-y-scroll basis-3/4 h-full custom-scrollbar"
+      className="overflow-y-scroll basis-1/2 flex-shrink-0 flex-grow-0 h-full custom-scrollbar"
     >
       {trace ? (
         <button
