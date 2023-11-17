@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 
@@ -35,43 +36,48 @@ export function Modal({
   if (!open) return null;
 
   return createPortal(
-    <div
-      id="modal"
-      onClick={onClose}
-      className="fixed top-0 left-0 w-full h-screen bg-black/50 backdrop-filter backdrop-blur-sm z-50"
-      data-testid="modalWrapper"
-    >
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className={cn(
-          "p-6 shadow-sm fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-text-primary rounded-xl bg-secondary-background transition-all",
-          {
-            "w-11/12 h-5/6": type === "full-screen",
-            "w-1/2 h-1/2": type === "small",
-          },
-        )}
+    <AnimatePresence mode="sync">
+      <motion.div
+        key={title?.toString()}
+        onClick={onClose}
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.1 }}
+        className="fixed top-0 left-0 w-full h-screen bg-black/50 backdrop-filter backdrop-blur-sm z-50"
+        data-testid="modalWrapper"
       >
-        <button
-          onClick={onClose}
-          className="absolute top-3 right-3 text-text-primary"
-          data-testid="modalCloseButton"
-        >
-          X
-        </button>
-        <h2
-          className="text-bold text-xl text-text-primary mb-3"
-          data-testid="modalTitle"
-        >
-          {title}
-        </h2>
         <div
-          className="custom-scrollbar max-h-[92%] overflow-scroll"
-          data-testid="modalContent"
+          onClick={(e) => e.stopPropagation()}
+          className={cn(
+            "p-6 shadow-sm fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-text-primary rounded-xl bg-secondary-background transition-all",
+            {
+              "w-11/12 h-5/6": type === "full-screen",
+              "w-1/2 h-1/2": type === "small",
+            },
+          )}
         >
-          {children}
+          <button
+            onClick={onClose}
+            className="absolute top-3 right-3 text-text-primary"
+            data-testid="modalCloseButton"
+          >
+            X
+          </button>
+          <h2
+            className="text-bold text-xl text-text-primary mb-3"
+            data-testid="modalTitle"
+          >
+            {title}
+          </h2>
+          <div
+            className="custom-scrollbar max-h-[92%] overflow-scroll"
+            data-testid="modalContent"
+          >
+            {children}
+          </div>
         </div>
-      </div>
-    </div>,
-    document.body,
+      </motion.div>
+    </AnimatePresence>,
+    document.getElementById("portals") as HTMLElement,
   );
 }

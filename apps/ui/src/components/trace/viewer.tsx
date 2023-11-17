@@ -4,7 +4,7 @@ import type { Span as TSpan, Trace } from "@graphql-debugger/types";
 import { useState } from "react";
 
 import { Modal } from "../../components/modal/modal";
-import { expand } from "../../images";
+import { ExpandIcon } from "../../icons/expand";
 import { IDS } from "../../testing";
 import { createTreeData } from "../../utils/create-tree-data";
 import { Toggle } from "../utils/toggle";
@@ -77,9 +77,9 @@ export function TraceViewer({ trace }: { trace?: Trace }) {
       {trace ? (
         <button
           onClick={() => setShowFullScreen(true)}
-          className="flex flex-row gap-3 text-neutral-100 text-sm hover:underline"
+          className="flex flex-row items-center gap-3 text-neutral-100 text-sm hover:underline"
         >
-          <img className="w-6" src={expand} />
+          <ExpandIcon height={25} width={25} />
           <p className="my-auto">Expand</p>
         </button>
       ) : (

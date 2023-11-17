@@ -14,8 +14,9 @@ import { v4 as uuidv4 } from "uuid";
 
 import { Modal } from "../../components/modal/modal";
 import { ClientContext } from "../../context/client";
+import { RefreshIcon } from "../../icons/refresh";
+import { Search as SearchIcon } from "../../icons/search";
 import { Star, StarFilled } from "../../icons/star";
-import { refresh, searchFilled } from "../../images";
 import { IDS } from "../../testing";
 import { cn } from "../../utils/cn";
 import { isTraceError } from "../../utils/is-trace-error";
@@ -102,10 +103,10 @@ export function SchemaTraces() {
         </div>
         <div className="flex items-center gap-10 text-sm">
           <button
-            className="flex gap-3 hover:underline"
+            className="flex gap-3 items-center hover:underline"
             onClick={() => setSearchModal(true)}
           >
-            <img className="w-6" src={searchFilled} />
+            <SearchIcon height={25} width={25} />
             <p>Search</p>
           </button>
           <Modal
@@ -118,7 +119,7 @@ export function SchemaTraces() {
           </Modal>
 
           <button
-            className="flex gap-3 hover:underline"
+            className="flex gap-3 items-center  hover:underline"
             onClick={() => {
               navigate({
                 pathname: `/schema/${params.schemaId}`,
@@ -126,7 +127,7 @@ export function SchemaTraces() {
               });
             }}
           >
-            <img className="w-6" src={refresh} />
+            <RefreshIcon height={25} width={25} />
             <p>Refresh</p>
           </button>
         </div>
