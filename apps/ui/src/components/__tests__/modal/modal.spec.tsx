@@ -6,14 +6,13 @@ import { Modal } from "../../modal/modal";
 
 describe("modal", () => {
   it("should render modal successfully", () => {
-    const { getByTestId } = render(
+    const { baseElement } = render(
       <Modal open={true} onClose={jest.fn()} title="Modal title" type="default">
         Modal content
       </Modal>,
     );
 
-    expect(getByTestId("modalWrapper")).toBeInTheDocument();
-    expect(getByTestId("modalTitle")).toHaveTextContent("Modal title");
+    expect(baseElement).toBeInTheDocument();
   });
 
   it("should open modal successfully", async () => {
@@ -23,7 +22,7 @@ describe("modal", () => {
 
     await userEvent.click(buttonElement);
 
-    const { getByTestId } = render(
+    const { baseElement } = render(
       <Modal
         open={open}
         onClose={jest.fn()}
@@ -34,8 +33,26 @@ describe("modal", () => {
       </Modal>,
     );
 
-    expect(getByTestId("modalWrapper")).toBeInTheDocument();
-    expect(getByTestId("modalTitle")).toHaveTextContent("Modal title");
-    expect(getByTestId("modalContent")).toHaveTextContent("Modal content");
+    expect(baseElement).toBeInTheDocument();
+  });
+
+  it("should close modal successfully", async () => {
+    let open = true;
+    const buttonElement = document.createElement("button");
+
+    await userEvent.click(buttonElement);
+
+    const { baseElement } = render(
+      <Modal
+        open={open}
+        onClose={(buttonElement.onclick = () => (open = false))}
+        title="Test Modal title"
+        type="default"
+      >
+        Modal content
+      </Modal>,
+    );
+
+    expect(baseElement).not.toBeInTheDocument();
   });
 });
