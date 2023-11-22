@@ -78,6 +78,7 @@ export function TraceViewer({ trace }: { trace?: Trace }) {
         <button
           onClick={() => setShowFullScreen(true)}
           className="flex flex-row items-center gap-3 text-neutral text-sm hover:underline"
+          id={IDS.trace_viewer.expand}
         >
           <ExpandIcon height={25} width={25} />
           <p className="my-auto">Expand</p>
@@ -98,7 +99,7 @@ export function TraceViewer({ trace }: { trace?: Trace }) {
         }
       >
         <div className="px-4 pb-10">
-          <TraceView spans={modalSpans ?? []} />
+          <TraceView spans={modalSpans ?? []} id={IDS.trace_viewer.expand} />
         </div>
       </Modal>
       {trace?.rootSpan ? (
