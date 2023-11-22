@@ -1,7 +1,5 @@
 import "@testing-library/jest-dom";
-import { getByTestId, render, screen, within } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { createPortal } from "react-dom";
+import { render, within } from "@testing-library/react";
 
 import { Modal } from "../../modal/modal";
 

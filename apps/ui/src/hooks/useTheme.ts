@@ -21,5 +21,6 @@ export const useTheme = () => {
     return () => {
       systemPreference.removeEventListener("change", handleSystemPreference);
     };
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme]);
 };
