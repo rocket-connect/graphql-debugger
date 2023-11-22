@@ -24,7 +24,7 @@ body {
     --neutral: 218 28% 32%;
     --pink: 320 95% 43%;
     --purple: 242 51% 61%;
-    --blue: 208 100% 46%;
+    --blue: 208 100 46%;
     --ochre: 36 79% 47%;
     --red: 0 84% 60%;
     --dark-green: 114 56% 33%;
@@ -33,7 +33,7 @@ body {
 
   html[data-theme="dark"] {
     /** Background Colors*/
-    --primary-background: 218 23% 20%;
+    --primary-background: 217 25% 18%;
     --secondary-background: 217 26% 13%;
 
     /**  Accent Colors*/
@@ -42,8 +42,8 @@ body {
     /**  Text Colors*/
     --neutral: 219 29% 78%;
     --pink: 320 95% 43%;
-    --purple: 243 100% 77%;
-    --blue: 208 100% 46%;
+    --purple: 242 100% 77%;
+    --blue: 208 100% 72%;
     --ochre: 36 79% 47%;
     --red: 0 84% 60%;
     --dark-green: 114 56% 33%;

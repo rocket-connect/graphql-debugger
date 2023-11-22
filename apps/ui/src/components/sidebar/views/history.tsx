@@ -63,7 +63,7 @@ export function History() {
                 2,
               )} ${unit}`}</span>
               <button onClick={() => handleDeleteHistoryTrace(uniqueId ?? "")}>
-                <Delete className="fill-red-400" height={20} width={20} />
+                <Delete className="fill-red" height={20} width={20} />
               </button>
             </div>
           </div>

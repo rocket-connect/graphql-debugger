@@ -34,7 +34,7 @@ export function Span({
   const displyInfo = (
     <p
       className={cn("tracking-widest py-2", {
-        "text-red-500": data.errorMessage || data.errorStack,
+        "text-red": data.errorMessage || data.errorStack,
       })}
       data-info="span-info"
     >

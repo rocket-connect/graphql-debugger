@@ -65,7 +65,7 @@ export function Favourites() {
               <button
                 onClick={() => handleDeleteFavouriteTrace(trace.id ?? "")}
               >
-                <Delete className="fill-red-400" height={20} width={20} />
+                <Delete className="fill-red" height={20} width={20} />
               </button>
             </div>
           </div>
