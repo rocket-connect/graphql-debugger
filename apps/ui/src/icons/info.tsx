@@ -5,7 +5,7 @@ import { IconProps, IconRef } from "./types";
 
 export const Info = forwardRef((props: IconProps, ref: IconRef) => (
   <svg
-    className={twMerge("text-neutral-100 ", props.className)}
+    className={twMerge("text-neutral ", props.className)}
     height={props.height || 30}
     ref={ref}
     width={props.width || 30}
@@ -14,7 +14,7 @@ export const Info = forwardRef((props: IconProps, ref: IconRef) => (
     viewBox="0 0 20 20"
   >
     <path
-      className={props.className || "stroke-neutral-100"}
+      className={props.className || "stroke-neutral"}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="1.5"
@@ -28,7 +28,7 @@ export const InfoFilled = forwardRef((props: IconProps, ref: IconRef) => (
     ref={ref}
     height={props.height || 30}
     width={props.width || 30}
-    className={twMerge("fill-neutral-100 text-neutral-100", props.className)}
+    className={twMerge("fill-neutral text-neutral", props.className)}
     {...props}
     viewBox="0 0 20 20"
   >

@@ -16,7 +16,7 @@ export function StatsDetails({ statsType, statsDetails }: StatsDetailsProps) {
 
       <span
         className={cn("font-bold", {
-          ["text-error-red"]: statsType === "Error Count",
+          ["text-red"]: statsType === "Error Count",
         })}
       >
         {statsDetails} {statsType === "Average Duration" && `ms`}

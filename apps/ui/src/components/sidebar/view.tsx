@@ -31,7 +31,7 @@ export function SideBarView() {
   return (
     <div
       id={IDS.sidebar.view}
-      className="h-screen border-l-2 border-l-accent flex flex-col items-start w-2/6 max-w-2/6 p-5 text-neutral-100 overflow-scroll gap-5 custom-scrollbar"
+      className="h-screen border-l-2 border-l-accent flex flex-col items-start w-2/6 max-w-2/6 p-5 text-neutral overflow-scroll gap-5 custom-scrollbar"
     >
       {shouldDisplayLogo ? (
         <div className="mx-auto">

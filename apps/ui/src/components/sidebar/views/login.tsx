@@ -31,7 +31,7 @@ export function Login() {
         </div>
         <button
           type="button"
-          className="rounded bg-graphql-otel-green text-white font-bold p-2 w-1/3 opacity-50"
+          className="rounded bg-dark-green text-white font-bold p-2 w-1/3 opacity-50"
           disabled
         >
           Sign In

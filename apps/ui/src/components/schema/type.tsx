@@ -21,9 +21,9 @@ export function Type({ schemaId, type }: TypeProps) {
   return (
     <div className="flex flex-col text-sm">
       <p className="flex gap-1">
-        <span className="text-primary">{kindKeywordMapper[type.kind]}</span>
-        <span className="text-secondary-purple">{type.name}</span>
-        <span className="text-neutral-100/70">{`{`}</span>
+        <span className="text-pink">{kindKeywordMapper[type.kind]}</span>
+        <span className="text-purple">{type.name}</span>
+        <span className="text-neutral/70">{`{`}</span>
       </p>
       <div>
         <ul className="flex flex-col">
@@ -38,7 +38,7 @@ export function Type({ schemaId, type }: TypeProps) {
           ))}
         </ul>
       </div>
-      <span className="text-neutral-100/70">{`}`}</span>
+      <span className="text-neutral/70">{`}`}</span>
     </div>
   );
 }

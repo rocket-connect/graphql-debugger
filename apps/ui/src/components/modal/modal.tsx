@@ -49,7 +49,7 @@ export function Modal({
         <div
           onClick={(e) => e.stopPropagation()}
           className={cn(
-            "p-6 shadow-sm fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-text-primary rounded-xl bg-secondary-background transition-all",
+            "p-6 shadow-sm fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-neutral rounded-xl bg-secondary-background transition-all",
             {
               "w-11/12 h-5/6": type === "full-screen",
               "w-1/2 h-1/2": type === "small",
@@ -59,13 +59,13 @@ export function Modal({
         >
           <button
             onClick={onClose}
-            className="absolute top-3 right-3 text-text-primary"
+            className="absolute top-3 right-3 text-neutral"
             data-testid="modal-close"
           >
             X
           </button>
           <h2
-            className="text-bold text-xl text-text-primary mb-3"
+            className="text-bold text-xl text-neutral mb-3"
             data-testid="modal-title"
           >
             {title}

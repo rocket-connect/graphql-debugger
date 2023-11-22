@@ -35,7 +35,7 @@ export function Variables({ trace }: { trace?: Trace }) {
   return (
     <div
       id={IDS.trace.variables}
-      className="flex p-4 flex-col gap-2 justify-between text-neutral-100"
+      className="flex p-4 flex-col gap-2 justify-between text-neutral"
     >
       <div className="flex items-center justify-between">
         <div className="flex gap-2 items-center">
@@ -45,7 +45,7 @@ export function Variables({ trace }: { trace?: Trace }) {
               onClick={(event) =>
                 handleMetaClick(event.target as HTMLDivElement)
               }
-              className={cn("text-neutral-100 ", {
+              className={cn("text-neutral ", {
                 ["font-semibold"]: selectedMeta === variable.toLowerCase(),
               })}
               role="button"

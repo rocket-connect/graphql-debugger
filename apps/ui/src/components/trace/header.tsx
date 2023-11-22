@@ -13,7 +13,7 @@ export function TraceHeader({ trace }: { trace?: Trace }) {
   return (
     <div
       id={IDS.trace.header}
-      className="flex items-center justify-between gap-2 text-sm text-neutral-100"
+      className="flex items-center justify-between gap-2 text-sm text-neutral"
     >
       <Pill trace={trace} />
       <a
@@ -24,7 +24,7 @@ export function TraceHeader({ trace }: { trace?: Trace }) {
         }}
       >
         <img className="w-10 my-auto" src={logo}></img>
-        <p className="my-auto text-xl text-neutral-100 font-bold">
+        <p className="my-auto text-xl text-neutral font-bold">
           GraphQL Debugger
         </p>
       </a>

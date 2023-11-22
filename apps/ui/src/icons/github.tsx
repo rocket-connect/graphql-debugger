@@ -9,7 +9,7 @@ export const GithubIcon = forwardRef((props: IconProps, ref: IconRef) => (
     height={props.height || 30}
     ref={ref}
     width={props.width || 30}
-    className={twMerge("fill-neutral-100", props.className)}
+    className={twMerge("fill-neutral", props.className)}
     {...props}
   >
     <path

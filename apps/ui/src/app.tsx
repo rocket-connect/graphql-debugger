@@ -39,7 +39,7 @@ export function App() {
         gutter={8}
         containerClassName="toaster-wrapper"
         toastOptions={{
-          className: `text-text-primary bg-primary-background`,
+          className: `text-neutral bg-primary-background`,
           duration: 5000,
         }}
       />

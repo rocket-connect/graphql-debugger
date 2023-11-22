@@ -6,7 +6,7 @@ import type { IconProps, IconRef } from "./types";
 export const Settings = forwardRef((props: IconProps, ref: IconRef) => (
   <svg
     viewBox="0 0 512 512"
-    className={twMerge("text-neutral-100 fill-neutral-100", props.className)}
+    className={twMerge("text-neutral fill-neutral", props.className)}
     height={props.height || 30}
     width={props.width || 30}
     {...props}
@@ -26,7 +26,7 @@ export const Settings = forwardRef((props: IconProps, ref: IconRef) => (
 export const SettingsFilled = forwardRef((props: IconProps, ref: IconRef) => (
   <svg
     viewBox="0 0 512 512"
-    className={twMerge("text-neutral-100 fill-neutral-100", props.className)}
+    className={twMerge("text-neutral fill-neutral", props.className)}
     height={props.height || 30}
     width={props.width || 30}
     {...props}

@@ -33,12 +33,10 @@ export function Pill({
   return (
     <div
       id={IDS.trace.pill}
-      className={`py-2 px-4 bg-${bg} rounded-2xl text-neutral-100`}
+      className={`py-2 px-4 bg-${bg} rounded-2xl text-neutral`}
     >
       <p className="font-semibold">
-        <span className={`${isError ? "text-error-red" : ""}`}>
-          {displayName}
-        </span>
+        <span className={`${isError ? "text-red" : ""}`}>{displayName}</span>
         {` - ${traceDurationSIUnits?.value.toFixed(
           2,
         )} ${traceDurationSIUnits?.unit} `}

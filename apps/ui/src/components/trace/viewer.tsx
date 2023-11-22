@@ -22,7 +22,7 @@ function TraceView({ id, spans }: { id?: string; spans: TSpan[] }) {
   );
 
   return (
-    <div id={id} className="text-neutral-100 flex flex-col">
+    <div id={id} className="text-neutral flex flex-col">
       {treeData.map((treeItem) => (
         <Span
           key={treeItem.spanId}
@@ -77,7 +77,7 @@ export function TraceViewer({ trace }: { trace?: Trace }) {
       {trace ? (
         <button
           onClick={() => setShowFullScreen(true)}
-          className="flex flex-row items-center gap-3 text-neutral-100 text-sm hover:underline"
+          className="flex flex-row items-center gap-3 text-neutral text-sm hover:underline"
         >
           <ExpandIcon height={25} width={25} />
           <p className="my-auto">Expand</p>
@@ -106,7 +106,7 @@ export function TraceViewer({ trace }: { trace?: Trace }) {
       ) : (
         <div
           id={IDS.trace_viewer.not_found}
-          className="mx-auto text-center text-neutral-100 font-bold"
+          className="mx-auto text-center text-neutral font-bold"
         >
           <p className="mt-20">No Trace Selected</p>
         </div>

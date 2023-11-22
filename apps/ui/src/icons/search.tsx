@@ -7,7 +7,7 @@ export const Search = forwardRef((props: IconProps, ref: IconRef) => (
   <svg
     fill="none"
     viewBox="0 0 24 24"
-    className={twMerge("text-neutral-100 fill-neutral-100", props.className)}
+    className={twMerge("text-neutral fill-neutral", props.className)}
     height={props.height || 30}
     width={props.width || 30}
     {...props}

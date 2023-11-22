@@ -7,7 +7,7 @@ export const User = forwardRef((props: IconProps, ref: IconRef) => (
   <svg
     viewBox="0 0 512 512"
     width={props.width || 30}
-    className={twMerge("fill-neutral-100", props.className)}
+    className={twMerge("fill-neutral", props.className)}
     ref={ref}
     {...props}
   >
@@ -19,7 +19,7 @@ export const UserFilled = forwardRef((props: IconProps, ref: IconRef) => (
   <svg
     viewBox="0 0 512 512"
     width={props.width || 30}
-    className={twMerge("fill-neutral-100", props.className)}
+    className={twMerge("fill-neutral", props.className)}
     ref={ref}
     {...props}
   >

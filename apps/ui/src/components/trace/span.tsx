@@ -69,7 +69,7 @@ export function Span({
         {displyInfo}
         <div className="relative h-4 rounded-md bg-gray-400">
           <div
-            className={cn("absolute rounded-md h-4 bg-secondary-green", {
+            className={cn("absolute rounded-md h-4 bg-light-green", {
               "bg-indigo-600": data.isForeign,
               "bg-red-500": isSpanError(data),
             })}
@@ -102,7 +102,7 @@ export function Span({
         </div>
       </Modal>
 
-      <div className="text-neutral-100 flex flex-col p-0 m-0 pl-10 border-l-2 border-l-accent">
+      <div className="text-neutral flex flex-col p-0 m-0 pl-10 border-l-2 border-l-accent">
         {Array.isArray(data.children)
           ? data.children.map((child) => (
               <Span

@@ -39,7 +39,7 @@ export function History() {
 
         return (
           <div
-            className="text-xs text-neutral-100 flex items-center justify-between pt-3"
+            className="text-xs text-neutral flex items-center justify-between pt-3"
             role="button"
             key={uniqueId}
             data-historytraceid={trace.id}
@@ -48,7 +48,7 @@ export function History() {
               <Link
                 to={`/schema/${schemaId}/trace/${trace.id}`}
                 className={`font-semibold ${isSelected ? "underline" : ""} ${
-                  isError ? "text-error-red" : ""
+                  isError ? "text-red" : ""
                 }`}
               >
                 {rootSpanName({ trace })}

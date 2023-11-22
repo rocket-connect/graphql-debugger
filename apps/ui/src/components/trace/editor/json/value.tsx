@@ -1,7 +1,7 @@
 export function JsonValue({ value }: { value: any }): JSX.Element {
   if (Array.isArray(value)) {
     return (
-      <span className="text-neutral-100">
+      <span className="text-neutral">
         {"["}
         <ul className={`pl-3`}>
           {value.map((item, index) => (
@@ -20,11 +20,11 @@ export function JsonValue({ value }: { value: any }): JSX.Element {
     const entries = Object.entries(value);
     return (
       <span>
-        <span className="text-neutral-100">{"{"}</span>
+        <span className="text-neutral">{"{"}</span>
         <ul className={`pl-3`}>
           {entries.map(([key, nestedValue], index) => (
             <li key={index}>
-              <span className="text-graphql-otel-green">"{key}":</span>{" "}
+              <span className="text-dark-green">"{key}":</span>{" "}
               <JsonValue value={nestedValue} />
               {index !== entries.length - 1 && ","}
             </li>

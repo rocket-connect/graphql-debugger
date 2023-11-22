@@ -26,7 +26,7 @@ export function QueryViewer({ trace }: { trace: Trace }) {
             const variableDefinitions = def.variableDefinitions
               ? def.variableDefinitions.map((varDef) => (
                   <div key={varDef.variable.name.value}>
-                    <span className="text-graphql-otel-green">
+                    <span className="text-dark-green">
                       ${varDef.variable.name.value}
                     </span>
                     : <QueryType type={varDef.type} />
@@ -37,11 +37,11 @@ export function QueryViewer({ trace }: { trace: Trace }) {
             return (
               <div key={index} className="flex flex-col">
                 <div className="flex items-center">
-                  <span className="text-neutral-100">
-                    <span className="text-graphiql-pink">{kind}</span>
+                  <span className="text-neutral">
+                    <span className="text-pink">{kind}</span>
                     {operationName ? <span> {operationName}</span> : <></>}
                     {variableDefinitions?.length ? (
-                      <span className="text-neutral-100">
+                      <span className="text-neutral">
                         {" "}
                         {"("}
                         <div className="flex flex-col ml-3">
@@ -69,7 +69,7 @@ export function QueryViewer({ trace }: { trace: Trace }) {
                   </ul>
                 </div>
 
-                <span className="text-neutral-100">{" }"}</span>
+                <span className="text-neutral">{" }"}</span>
               </div>
             );
           }

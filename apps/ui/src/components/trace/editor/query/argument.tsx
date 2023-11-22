@@ -35,7 +35,7 @@ export function Argument({
     ));
 
     return (
-      <span className="text-graphql-otel-green">
+      <span className="text-dark-green">
         [<div className="ml-2">{items}</div>
         {indent}]
       </span>
@@ -45,7 +45,7 @@ export function Argument({
   if (value.kind === Kind.OBJECT) {
     const properties = value.fields.map((field, i) => (
       <div key={field.name.value}>
-        <span className="text-graphiql-light">
+        <span className="text-neutral">
           {indent}
           {field.name.value}:{" "}
         </span>
@@ -55,18 +55,19 @@ export function Argument({
     ));
 
     return (
-      <span className="text-graphiql-highlight">
-        {"{"}
-        <div className="ml-2">{properties}</div>
-        {indent}
-        {"}"}
-      </span>
+      <div>ffff</div>
+      // <span className="text-graphiql-highlight">
+      //   {"{"}
+      //   <div className="ml-2">{properties}</div>
+      //   {indent}
+      //   {"}"}
+      // </span>
     );
   }
 
   if (value.kind === Kind.VARIABLE) {
-    return <span className="text-graphql-otel-green">${value.name.value}</span>;
+    return <span className="text-dark-green">${value.name.value}</span>;
   }
 
-  return <span className="text-graphql-otel-gray">[Unsupported Value]</span>;
+  return <span className="text-gray-500">[Unsupported Value]</span>;
 }

@@ -96,7 +96,7 @@ export function SchemaTraces() {
       className="bg-primary-background flex-grow flex-shrink-0 basis-1/3 rounded-2xl divide-y-2 divide-accent"
       id={IDS.trace_list.view}
     >
-      <div className="flex items-center p-5 justify-between text-neutral-100">
+      <div className="flex items-center p-5 justify-between text-neutral">
         <div className="flex flex-col">
           <p className="text-md font-bold">Traces</p>
           <p className="text-sm">List of the latest GraphQL queries.</p>
@@ -111,7 +111,7 @@ export function SchemaTraces() {
           </button>
           <Modal
             type="small"
-            title={<div className="text-neutral-100 font-bold">Search</div>}
+            title={<div className="text-neutral font-bold">Search</div>}
             open={searchModal}
             onClose={() => setSearchModal(false)}
           >
@@ -143,7 +143,7 @@ export function SchemaTraces() {
               {traces?.length === 0 ? (
                 <div
                   id={IDS.trace_list.not_found}
-                  className="mx-auto text-center text-neutral-100 font-bold"
+                  className="mx-auto text-center text-neutral font-bold"
                 >
                   <p className="mt-20">No Traces Found</p>
                 </div>
@@ -178,11 +178,11 @@ export function SchemaTraces() {
                         <tr
                           data-traceid={trace?.id}
                           key={trace.id}
-                          className={`border-b-2 border-b-accent text-neutral-100 hover:cursor-pointer`}
+                          className={`border-b-2 border-b-accent text-neutral hover:cursor-pointer`}
                         >
                           <th
                             className={`py-4 ${
-                              isError ? "text-error-red" : ""
+                              isError ? "text-red" : ""
                             } text-left`}
                             role="button"
                           >
