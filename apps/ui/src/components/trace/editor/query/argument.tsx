@@ -55,13 +55,12 @@ export function Argument({
     ));
 
     return (
-      <div>ffff</div>
-      // <span className="text-graphiql-highlight">
-      //   {"{"}
-      //   <div className="ml-2">{properties}</div>
-      //   {indent}
-      //   {"}"}
-      // </span>
+      <span className="text-graphiql-highlight">
+        {"{"}
+        <div className="ml-2">{properties}</div>
+        {indent}
+        {"}"}
+      </span>
     );
   }
 

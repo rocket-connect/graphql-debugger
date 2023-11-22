@@ -71,7 +71,7 @@ export function Span({
           <div
             className={cn("absolute rounded-md h-4 bg-light-green", {
               "bg-indigo-600": data.isForeign,
-              "bg-red-500": isSpanError(data),
+              "bg-red": isSpanError(data),
             })}
             style={{ width, left: offset }}
           ></div>
