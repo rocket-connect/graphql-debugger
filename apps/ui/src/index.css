@@ -34,7 +34,7 @@ body {
   html[data-theme="dark"] {
     /** Background Colors*/
     --primary-background: 218 23% 20%;
-    --secondary-background: 218 25% 13%;
+    --secondary-background: 217 26% 13%;
 
     /**  Accent Colors*/
     --accent: 218 26% 37% / 0.3;
@@ -42,7 +42,7 @@ body {
     /**  Text Colors*/
     --neutral: 219 29% 78%;
     --pink: 320 95% 43%;
-    --purple: 242 51% 61%;
+    --purple: 243 100% 77%;
     --blue: 208 100% 46%;
     --ochre: 36 79% 47%;
     --red: 0 84% 60%;
