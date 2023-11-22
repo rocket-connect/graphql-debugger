@@ -44,7 +44,7 @@ export function Modal({
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.1 }}
         className="fixed top-0 left-0 w-full h-screen bg-black/50 backdrop-filter backdrop-blur-sm z-50"
-        data-testid="modalWrapper"
+        data-testid="modal"
       >
         <div
           onClick={(e) => e.stopPropagation()}
@@ -55,23 +55,24 @@ export function Modal({
               "w-1/2 h-1/2": type === "small",
             },
           )}
+          data-testid="modal-wrapper"
         >
           <button
             onClick={onClose}
             className="absolute top-3 right-3 text-text-primary"
-            data-testid="modalCloseButton"
+            data-testid="modal-close"
           >
             X
           </button>
           <h2
             className="text-bold text-xl text-text-primary mb-3"
-            data-testid="modalTitle"
+            data-testid="modal-title"
           >
             {title}
           </h2>
           <div
             className="custom-scrollbar max-h-[92%] overflow-scroll"
-            data-testid="modalContent"
+            data-testid="modal-content"
           >
             {children}
           </div>

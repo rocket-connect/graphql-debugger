@@ -1,58 +1,86 @@
 import "@testing-library/jest-dom";
-import { render } from "@testing-library/react";
+import { getByTestId, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { createPortal } from "react-dom";
 
 import { Modal } from "../../modal/modal";
 
 describe("modal", () => {
+  beforeEach(() => {
+    const container = document.createElement("div");
+    container.setAttribute("id", "portals");
+    document.body.appendChild(container);
+  });
   it("should render modal successfully", () => {
-    const { baseElement } = render(
-      <Modal open={true} onClose={jest.fn()} title="Modal title" type="default">
-        Modal content
+    const { getByTestId } = within(
+      document.getElementById("portals") as HTMLElement,
+    );
+
+    render(
+      <Modal open={true} onClose={jest.fn()} title="Modal title" type="small">
+        <div>Modal content</div>
       </Modal>,
     );
 
-    expect(baseElement).toBeInTheDocument();
+    expect(getByTestId("modal")).toBeInTheDocument();
   });
 
-  it("should open modal successfully", async () => {
-    let open = false;
-    const buttonElement = document.createElement("button");
-    buttonElement.onclick = () => (open = true);
+  it('should render modal with title "Modal title"', () => {
+    const { getByTestId } = within(
+      document.getElementById("portals") as HTMLElement,
+    );
 
-    await userEvent.click(buttonElement);
-
-    const { baseElement } = render(
-      <Modal
-        open={open}
-        onClose={jest.fn()}
-        title="Test Modal title"
-        type="default"
-      >
-        Modal content
+    render(
+      <Modal open={true} onClose={jest.fn()} title="Modal title" type="small">
+        <div>Modal content</div>
       </Modal>,
     );
 
-    expect(baseElement).toBeInTheDocument();
+    expect(getByTestId("modal")).toBeInTheDocument();
+    expect(getByTestId("modal-title")).toHaveTextContent("Modal title");
   });
 
-  it("should close modal successfully", async () => {
-    let open = true;
-    const buttonElement = document.createElement("button");
+  it('should render modal with content "Modal content"', () => {
+    const { getByTestId } = within(
+      document.getElementById("portals") as HTMLElement,
+    );
 
-    await userEvent.click(buttonElement);
-
-    const { baseElement } = render(
-      <Modal
-        open={open}
-        onClose={(buttonElement.onclick = () => (open = false))}
-        title="Test Modal title"
-        type="default"
-      >
-        Modal content
+    render(
+      <Modal open={true} onClose={jest.fn()} title="Modal title" type="small">
+        <div>Modal content</div>
       </Modal>,
     );
 
-    expect(baseElement).not.toBeInTheDocument();
+    expect(getByTestId("modal")).toBeInTheDocument();
+    expect(getByTestId("modal-content")).toHaveTextContent("Modal content");
+  });
+
+  it('should render with correct size when type is "small"', () => {
+    const { getByTestId } = within(
+      document.getElementById("portals") as HTMLElement,
+    );
+
+    render(
+      <Modal open={true} onClose={jest.fn()} title="Modal title" type="small">
+        <div>Modal content</div>
+      </Modal>,
+    );
+
+    expect(getByTestId("modal")).toBeInTheDocument();
+    expect(getByTestId("modal-wrapper")).toHaveClass("w-1/2 h-1/2");
+  });
+
+  it(`shouldn't render modal when open is false`, () => {
+    const { queryByTestId } = within(
+      document.getElementById("portals") as HTMLElement,
+    );
+
+    render(
+      <Modal open={false} onClose={jest.fn()} title="Modal title" type="small">
+        <div>Modal content</div>
+      </Modal>,
+    );
+
+    expect(queryByTestId("modal")).not.toBeInTheDocument();
   });
 });
