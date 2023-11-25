@@ -12,7 +12,7 @@ export function Login() {
           <input
             type="text"
             id="username"
-            className="border rounded w-full p-2"
+            className="border  w-full p-2 bg-primary-background  border-accent rounded-md"
             placeholder="Username"
             disabled
           />
@@ -24,14 +24,14 @@ export function Login() {
           <input
             type="password"
             id="password"
-            className="border rounded w-full p-2"
+            className="border bg-primary-background  border-accent rounded-md w-full p-2"
             placeholder="******************"
             disabled
           />
         </div>
         <button
           type="button"
-          className="rounded bg-graphql-otel-green text-white font-bold p-2 w-1/3 opacity-50"
+          className="rounded bg-dark-green text-white font-bold p-2 w-1/3 opacity-50"
           disabled
         >
           Sign In

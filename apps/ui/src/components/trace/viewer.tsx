@@ -3,12 +3,10 @@ import type { Span as TSpan, Trace } from "@graphql-debugger/types";
 
 import { useState } from "react";
 
-import { Modal } from "../../context/modal";
-import { expand } from "../../images";
+import { Modal } from "../../components/modal/modal";
+import { ExpandIcon } from "../../icons/expand";
 import { IDS } from "../../testing";
 import { createTreeData } from "../../utils/create-tree-data";
-import { OpenModal } from "../modal/open";
-import { ModalWindow } from "../modal/window";
 import { Toggle } from "../utils/toggle";
 import { Pill } from "./pill";
 import { Span } from "./span";
@@ -24,7 +22,7 @@ function TraceView({ id, spans }: { id?: string; spans: TSpan[] }) {
   );
 
   return (
-    <div id={id} className="text-neutral-100 flex flex-col">
+    <div id={id} className="text-neutral flex flex-col">
       {treeData.map((treeItem) => (
         <Span
           key={treeItem.spanId}
@@ -48,7 +46,7 @@ export function TraceModalHeader({
 }) {
   return (
     <div className="flex flex-row justify-between gap-5 text-sm">
-      <Pill trace={trace} bg="neutral/10" />
+      <Pill trace={trace} />
       <div className="my-auto mr-5">
         <Toggle
           label="Show foreign spans"
@@ -63,6 +61,7 @@ export function TraceModalHeader({
 
 export function TraceViewer({ trace }: { trace?: Trace }) {
   const [showForeignTraces, setShowForeignTraces] = useState(true);
+  const [showFullScreen, setShowFullScreen] = useState(false);
 
   const spans = trace?.spans || [];
   let modalSpans = spans;
@@ -73,43 +72,42 @@ export function TraceViewer({ trace }: { trace?: Trace }) {
   return (
     <div
       id={IDS.trace_viewer.view}
-      className="overflow-y-scroll basis-3/4 h-full custom-scrollbar"
+      className="overflow-y-scroll basis-1/2 flex-shrink-0 flex-grow-0 h-full custom-scrollbar"
     >
-      <Modal key="trace-full-screen">
-        <OpenModal id={IDS.trace_viewer.expand} opens="full-screen-trace">
-          {trace ? (
-            <button className="flex flex-row gap-3 text-neutral-100 text-sm hover:underline">
-              <img className="w-6" src={expand} />
-              <p className="my-auto">Expand</p>
-            </button>
-          ) : (
-            <></>
-          )}
-        </OpenModal>
-        <ModalWindow
-          id={IDS.trace_viewer.full_screen}
-          name="full-screen-trace"
-          type="full-screen"
-          title={
-            <TraceModalHeader
-              trace={trace}
-              setShowForeignTraces={setShowForeignTraces}
-              showForeignTraces={showForeignTraces}
-            />
-          }
+      {trace ? (
+        <button
+          onClick={() => setShowFullScreen(true)}
+          className="flex flex-row items-center gap-3 text-neutral text-sm hover:underline"
+          id={IDS.trace_viewer.expand}
         >
-          <div className="px-4 pb-10">
-            <TraceView spans={modalSpans ?? []} />
-          </div>
-        </ModalWindow>
+          <ExpandIcon height={25} width={25} />
+          <p className="my-auto">Expand</p>
+        </button>
+      ) : (
+        <></>
+      )}
+      <Modal
+        type="full-screen"
+        onClose={() => setShowFullScreen(false)}
+        open={showFullScreen}
+        title={
+          <TraceModalHeader
+            trace={trace}
+            setShowForeignTraces={setShowForeignTraces}
+            showForeignTraces={showForeignTraces}
+          />
+        }
+      >
+        <div className="px-4 pb-10">
+          <TraceView spans={modalSpans ?? []} id={IDS.trace_viewer.expand} />
+        </div>
       </Modal>
-
       {trace?.rootSpan ? (
         <TraceView id={IDS.trace_viewer.default} spans={spans} />
       ) : (
         <div
           id={IDS.trace_viewer.not_found}
-          className="mx-auto text-center text-neutral-100 font-bold"
+          className="mx-auto text-center text-neutral font-bold"
         >
           <p className="mt-20">No Trace Selected</p>
         </div>

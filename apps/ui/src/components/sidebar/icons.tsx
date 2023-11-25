@@ -1,8 +1,8 @@
 import { useContext } from "react";
 
 import { SideBarContext, type SideBarViewTypes } from "../../context/sidebar";
-import { InfoFilled, InfoStroke } from "../../icons/info";
-import { githubDark, npmDark } from "../../images";
+import { GithubIcon } from "../../icons";
+import { Info, InfoFilled } from "../../icons/info";
 import { IDS } from "../../testing";
 import { iconsMapper } from "./utils";
 
@@ -29,11 +29,11 @@ export function SideBarIcons() {
   return (
     <div
       id={IDS.sidebar.icons.view}
-      className="flex flex-col items-center gap-8 border-r-2 border-neutral-100/15 p-4 h-screen"
+      className="flex flex-col items-center gap-8  p-4 h-screen bg-primary-background"
     >
       <div className="flex flex-col justify-between h-full">
         <div className="flex flex-col gap-5 mx-auto w-8">
-          {Object.values(iconsMapper()).map((icon) => {
+          {Object.values(iconsMapper).map((icon) => {
             return (
               <button
                 id={icon.id}
@@ -49,22 +49,11 @@ export function SideBarIcons() {
 
         <div className="flex flex-col gap-5 mx-auto">
           <a
-            id={IDS.sidebar.icons.npm}
-            href="https://www.npmjs.com/search?q=graphql-debugger"
-            className="flex items-center"
-          >
-            <span className="w-8">
-              <img src={npmDark} alt="npm" />
-            </span>
-          </a>
-          <a
             id={IDS.sidebar.icons.github}
             href="https://github.com/rocket-connect/graphql-debugger"
             className="flex items-center"
           >
-            <span className="w-8">
-              <img src={githubDark} alt="github" />
-            </span>
+            <GithubIcon />
           </a>
 
           <button
@@ -72,7 +61,7 @@ export function SideBarIcons() {
             className="w-8"
             onClick={() => handleRouteChange("info")}
           >
-            {activeRoute("info") ? <InfoFilled /> : <InfoStroke />}
+            {activeRoute("info") ? <InfoFilled /> : <Info />}
           </button>
         </div>
       </div>

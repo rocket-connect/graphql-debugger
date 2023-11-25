@@ -9,7 +9,7 @@ export function JsonViewer({ json }: { json: string }) {
   }
 
   return (
-    <div id={IDS.trace.json_viewer} className="flex-1 text-neutral-100">
+    <div id={IDS.trace.json_viewer} className=" p-4 lex-1 text-neutral">
       <pre className="text-xs flex flex-col gap-5">
         <JsonValue value={data} />
       </pre>

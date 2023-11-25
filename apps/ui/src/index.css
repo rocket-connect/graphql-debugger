@@ -6,21 +6,58 @@
   @apply [&::-webkit-scrollbar]:w-0;
 }
 
+body {
+  font-family: "Rubik", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 @layer base {
   :root {
-    --neutral: 219 28% 32%;
+    /** Background Colors*/
+    --primary-background: 210 40% 98%;
+    --secondary-background: 214 20% 93%;
+
+    /**  Accent Colors*/
+    --accent: 218 28% 32% / 0.15;
+
+    /**  Text Colors*/
+
+    --neutral: 218 28% 32%;
+    --pink: 320 95% 43%;
+    --purple: 242 51% 61%;
+    --blue: 208 100 46%;
+    --ochre: 36 79% 47%;
+    --red: 0 84% 60%;
+    --dark-green: 114 56% 33%;
+    --light-green: 158 60% 42%;
+  }
+
+  html[data-theme="dark"] {
+    /** Background Colors*/
+    --primary-background: 217 25% 18%;
+    --secondary-background: 217 26% 13%;
+
+    /**  Accent Colors*/
+    --accent: 218 26% 37% / 0.3;
+
+    /**  Text Colors*/
+    --neutral: 219 29% 78%;
+    --pink: 320 95% 43%;
+    --purple: 242 100% 77%;
+    --blue: 208 100% 72%;
+    --ochre: 36 79% 47%;
+    --red: 0 84% 60%;
+    --dark-green: 114 56% 33%;
+    --light-green: 157 59% 41%;
   }
 }
 
+/** 
+  Workaround for disappearing toaster messages. Limit is 1 toaster at a time.
+  reference: https://github.com/timolins/react-hot-toast/issues/31
+*/
 .toaster-wrapper > div {
   display: none !important;
 }
 .toaster-wrapper > div:nth-child(1) {
-  display: flex !important;
-}
-.toaster-wrapper > div:nth-child(2) {
-  display: flex !important;
-}
-.toaster-wrapper > div:nth-child(3) {
   display: flex !important;
 }

@@ -9,8 +9,8 @@ export function Spinner({
     <svg
       aria-hidden="true"
       data-testid="spinner"
-      className={`w-${size} h-${size} text-gray-300 animate-spin fill-graphql-otel-green ${
-        isError ? "fill-error-red" : ""
+      className={`w-${size} h-${size} text-gray-300 animate-spin fill-dark-green ${
+        isError ? "fill-red" : ""
       }`}
       viewBox="0 0 100 101"
       fill="none"

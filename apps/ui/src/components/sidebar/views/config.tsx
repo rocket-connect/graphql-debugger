@@ -1,14 +1,30 @@
-import { useContext } from "react";
 import toast from "react-hot-toast";
 
-import { ConfigContext } from "../../../context/config";
+import { useThemeStore } from "../../../store/useThemeStore";
 import { IDS } from "../../../testing";
+import { THEME_TYPE } from "../../../utils/constants";
 import { Toggle } from "../../utils/toggle";
 import { configs } from "../utils";
 import { Backend } from "./backend";
 
 export function Config() {
-  const context = useContext(ConfigContext);
+  const isDarkMode = useThemeStore((state) => state.theme === THEME_TYPE.dark);
+  const toggleTheme = useThemeStore((state) => state.toggleTheme);
+
+  const handleToggle = (check: boolean, configName: string) => {
+    if (check) {
+      toggleTheme(THEME_TYPE.dark);
+      toast.success(`${configName} enabled`, {
+        icon: "🌙",
+      });
+    }
+    if (!check) {
+      toggleTheme(THEME_TYPE.light);
+      toast.success(`Light mode enabled`, {
+        icon: "🌞",
+      });
+    }
+  };
 
   return (
     <div id={IDS.sidebar.views.config} className="flex flex-col gap-5">
@@ -19,35 +35,14 @@ export function Config() {
 
       <div className="flex flex-col gap-10 text-netural-100 text-xs pl-3">
         {configs.map((config) => {
-          let initialState = context?.routes.includes(
-            config.name.toLowerCase(),
-          );
-
-          let disabled = !config.enabled;
-
-          if (config.alwaysEnabled) {
-            initialState = true;
-            disabled = true;
-          }
-
           return (
             <Toggle
-              initialState={initialState}
+              initialState={isDarkMode}
               label={config.name}
               key={config.name}
-              onToggle={(check) => {
-                if (check) {
-                  toast.success(`${config.name} enabled`);
-                  context?.handleEnableRoute(config.name.toLowerCase());
-                }
-                if (!check) {
-                  toast.error(`${config.name} disabled`);
-                  context?.handleDisableRoute(config.name.toLowerCase());
-                }
-              }}
-              callout={config.callout}
+              onToggle={(check) => handleToggle(check, config.name)}
               description={config.description}
-              disabled={disabled}
+              disabled={!config.enabled}
               alwaysEnabled={config.alwaysEnabled}
             />
           );

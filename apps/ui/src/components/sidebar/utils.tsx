@@ -1,13 +1,13 @@
+import {
+  Docs,
+  DocsFilled,
+  Settings,
+  SettingsFilled,
+  User,
+  UserFilled,
+} from "../../icons";
 import { History, HistoryActive as HistoryFilled } from "../../icons/history";
 import { Star, StarFilled } from "../../icons/star";
-import {
-  configFilled,
-  configStroke,
-  folderFilled,
-  folderStroke,
-  loginFilled,
-  loginStroke,
-} from "../../images";
 import { IDS } from "../../testing";
 import { SchemaViewer } from "../schema/viewer";
 import { Config } from "./views/config";
@@ -21,7 +21,7 @@ interface SideBar {
   component: JSX.Element;
 }
 
-export const iconsMapper = (): Record<
+export const iconsMapper: Record<
   string,
   {
     active: React.ReactNode;
@@ -30,38 +30,38 @@ export const iconsMapper = (): Record<
     type: string;
     id: string;
   }
-> => ({
+> = {
   schema: {
     id: IDS.sidebar.icons.schemas,
     type: "schema",
-    active: <img className="w-8" src={folderFilled} />,
-    inactive: <img className="w-8" src={folderStroke} />,
+    active: <DocsFilled />,
+    inactive: <Docs />,
   },
   config: {
     id: IDS.sidebar.icons.config,
     type: "config",
-    active: <img className="w-8" src={configFilled} />,
-    inactive: <img className="w-8" src={configStroke} />,
+    active: <SettingsFilled height={35} width={35} />,
+    inactive: <Settings height={35} width={35} />,
   },
   login: {
     id: IDS.sidebar.icons.login,
     type: "login",
-    active: <img className="w-8" src={loginFilled} />,
-    inactive: <img className="w-8" src={loginStroke} />,
+    active: <UserFilled />,
+    inactive: <User />,
   },
   history: {
     id: IDS.sidebar.icons.history,
     type: "history",
-    active: <HistoryFilled size={"35"} color="#3b4b68" />,
-    inactive: <History size={"35"} color="#3b4b68" />,
+    active: <HistoryFilled />,
+    inactive: <History />,
   },
   favourites: {
     id: IDS.sidebar.icons.favourites,
     type: "favourites",
-    active: <Star size={"35"} color="#3b4b68" />,
-    inactive: <StarFilled size={"35"} color="#3b4b68" />,
+    active: <Star />,
+    inactive: <StarFilled />,
   },
-});
+};
 
 export const sideBarComponentMapper = (
   currentSchema?: boolean,
@@ -99,8 +99,7 @@ export const configs = [
   {
     name: "Dark Mode",
     description: "Toggle between light and dark mode",
-    callout: "(Comming Soon)",
-    enabled: false,
+    enabled: true,
   },
   {
     name: "Cookies",

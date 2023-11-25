@@ -21,5 +21,5 @@ export function QueryType({ type }: { type: TypeNode }) {
     );
   }
 
-  return <span className="text-graphql-otel-gray">[Unsupported Type]</span>;
+  return <span className="text-gray-500">[Unsupported Type]</span>;
 }

@@ -1,27 +1,28 @@
+/** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
+        /** Background Colors */
+        ["primary-background"]: "hsl(var(--primary-background))",
+        ["secondary-background"]: "hsl(var(--secondary-background))",
+
+        /** Accent Colors */
+        ["accent"]: "hsl(var(--accent))",
+
+        /** Text Colors */
         ["neutral"]: "hsla(var(--neutral) / <alpha-value>)",
-        ["primary"]: "#d60690",
-        ["secondary-purple"]: "#6e6acf",
-        ["secondary-blue"]: "#007eea",
-        ["secondary-ochre"]: "#d78b19",
-        ["secondary-red"]: "#f85b30",
-        ["secondary-green"]: "#2bab7c",
-        ["neutral-100"]: "#3b4b68",
-        ["white-100"]: "#F8FAFC",
-        ["graphql-otel-dark"]: "#221F20",
-        ["graphql-otel-green"]: "#2F8525",
-        ["graphiql-dark"]: "#202A3B",
-        ["graphiql-medium"]: "#2D3648",
-        ["graphiql-light"]: "#B7C2D7",
-        ["graphiql-border"]: "#3B4355",
-        ["graphiql-pink"]: "#FF5794",
+        ["pink"]: "hsl(var(--pink))",
+        ["purple"]: "hsla(var(--purple) / <alpha-value>)",
+        ["blue"]: "hsla(var(--blue) / <alpha-value>)",
+        ["ochre"]: "hsla(var(--ochre) / <alpha-value>)",
+        ["red"]: "hsla(var(--red) / <alpha-value>)",
+        ["light-green"]: "hsla(var(--light-green) / <alpha-value>)",
+        ["dark-green"]: "hsla(var(--dark-green) / <alpha-value>)",
         ["graphiql-highlight"]: "#444D60",
-        ["app-blue"]: "#3A4B68",
-        ["error-red"]: "#EF4444",
       },
     },
   },

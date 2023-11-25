@@ -19,7 +19,7 @@ export function Backend() {
         <input
           type="text"
           id="username"
-          className="border rounded w-full p-2 mt-3 font-bold tracking-widest text-xs outline-none"
+          className="border bg-primary-background  border-accent rounded-md w-full p-2 mt-3 font-bold tracking-widest text-xs outline-none"
           placeholder="http://localhost:16686"
           value={configContext?.backendURL}
           onChange={handleChange}

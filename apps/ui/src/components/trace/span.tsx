@@ -1,10 +1,11 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 
-import { Modal } from "../../context/modal";
+import { useState } from "react";
+
+import { Modal } from "../../components/modal/modal";
+import { cn } from "../../utils/cn";
 import { RenderTree } from "../../utils/create-tree-data";
 import { isSpanError } from "../../utils/is-trace-error";
-import { OpenModal } from "../modal/open";
-import { ModalWindow } from "../modal/window";
 import { JsonViewer } from "./editor/json/viewer";
 
 export function Span({
@@ -16,6 +17,7 @@ export function Span({
   minTimestamp: UnixNanoTimeStamp;
   maxTimestamp: UnixNanoTimeStamp;
 }) {
+  const [modal, setModal] = useState(false);
   const durationNano = UnixNanoTimeStamp.fromString(data.durationNano);
   const startTimeUnixNano = UnixNanoTimeStamp.fromString(
     data.startTimeUnixNano,
@@ -29,22 +31,11 @@ export function Span({
 
   const { value, unit } = durationNano.toSIUnits();
 
-  let spanClasses = "absolute h-4";
-  if (isSpanError(data)) {
-    spanClasses += " bg-red-500";
-  } else {
-    if (data.isForeign) {
-      spanClasses += " bg-app-blue";
-    } else {
-      spanClasses += " bg-graphql-otel-green";
-    }
-  }
-
   const displyInfo = (
     <p
-      className={`tracking-widest ${
-        data.errorMessage || data.errorStack ? "text-red-500" : {}
-      } py-2`}
+      className={cn("tracking-widest py-2", {
+        "text-red": data.errorMessage || data.errorStack,
+      })}
       data-info="span-info"
     >
       <span className="font-bold" data-name="span-name">
@@ -71,42 +62,47 @@ export function Span({
       data-traceviewspanid={data.id}
       className="relative overflow-hidden flex flex-col gap-1 text-xs"
     >
-      <Modal>
-        <OpenModal id={`trace-open-modal-${data.id}`} opens="single-trace">
-          <div className="py-4 hover:cursor-pointer hover:underline">
-            {displyInfo}
-            <div
-              className={`absolute h-4 bg-neutral/30 rounded-2xl w-full`}
-            ></div>
-            <div
-              data-line="span-line"
-              className={spanClasses}
-              style={{ width, left: offset }}
-            ></div>
-          </div>
-        </OpenModal>
-        <ModalWindow name="single-trace" type="small" title={displyInfo}>
-          <div className="flex flex-col gap-5 text-neutral-300 text-md divide-y-2 divide-neutral/10">
-            <JsonViewer
-              json={JSON.stringify(
-                {
-                  ...data,
-                  children: undefined,
-                  errorMessage: undefined,
-                  errorStack: undefined,
-                  ...(data.attributes
-                    ? { attributes: JSON.parse(data.attributes) }
-                    : { attributes: undefined }),
-                },
-                null,
-                2,
-              )}
-            />
-          </div>
-        </ModalWindow>
+      <div
+        className="py-1.5 hover:cursor-pointer hover:underline"
+        onClick={() => setModal(true)}
+      >
+        {displyInfo}
+        <div className="relative h-4 rounded-md bg-gray-400">
+          <div
+            className={cn("absolute rounded-md h-4 bg-light-green", {
+              "bg-indigo-600": data.isForeign,
+              "bg-red": isSpanError(data),
+            })}
+            style={{ width, left: offset }}
+          ></div>
+        </div>
+      </div>
+      <Modal
+        type="small"
+        open={modal}
+        onClose={() => setModal(false)}
+        title={displyInfo}
+      >
+        <div className="flex flex-col gap-5 text-neutral-300 text-md divide-y-2 divide-accent">
+          <JsonViewer
+            json={JSON.stringify(
+              {
+                ...data,
+                children: undefined,
+                errorMessage: undefined,
+                errorStack: undefined,
+                ...(data.attributes
+                  ? { attributes: JSON.parse(data.attributes) }
+                  : { attributes: undefined }),
+              },
+              null,
+              2,
+            )}
+          />
+        </div>
       </Modal>
 
-      <div className="text-neutral-100 flex flex-col p-0 m-0 pl-10 border-l-2 hover:border-neutral/20">
+      <div className="text-neutral flex flex-col p-0 m-0 pl-10 border-l-2 border-l-accent">
         {Array.isArray(data.children)
           ? data.children.map((child) => (
               <Span

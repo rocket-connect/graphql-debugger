@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import { cn } from "../../utils/cn";
 
 export interface StatsDetailsProps {
   statsType:
@@ -15,8 +15,8 @@ export function StatsDetails({ statsType, statsDetails }: StatsDetailsProps) {
       <span>{statsType}:</span>
 
       <span
-        className={classNames("font-bold", {
-          ["text-error-red"]: statsType === "Error Count",
+        className={cn("font-bold", {
+          ["text-red"]: statsType === "Error Count",
         })}
       >
         {statsDetails} {statsType === "Average Duration" && `ms`}

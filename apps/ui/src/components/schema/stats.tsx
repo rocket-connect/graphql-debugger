@@ -39,7 +39,7 @@ export function Stats({ field, parentName }: StatsProps) {
   const hasResolved = lastResolveUnixNano.toString() !== "0";
 
   return (
-    <div className="flex flex-col gap-1 text-neutral-100/80 pl-4 text-xs">
+    <div className="flex flex-col gap-1 text-neutral/80 pl-4 text-xs">
       <StatsDetails
         statsType="Resolve Count"
         statsDetails={aggregate?.resolveCount}

@@ -17,7 +17,7 @@ export function QueryField({
   const args = field.arguments
     ? field.arguments.map((arg, argIndex) => (
         <div key={argIndex}>
-          <span className="text-graphql-otel-green">{arg.name.value}</span>:{" "}
+          <span className="text-dark-green">{arg.name.value}</span>:{" "}
           <span>
             <Argument value={arg.value} />
           </span>
@@ -30,7 +30,7 @@ export function QueryField({
   );
 
   return (
-    <div className="text-neutral-100 pl-2">
+    <div className="text-neutral pl-2">
       <span>{name}</span>
       {args && args.length > 0 && <span className="ml-1">{"("}</span>}
       {args && args.length > 0 && <div className="ml-3">{args}</div>}

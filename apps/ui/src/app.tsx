@@ -5,6 +5,7 @@ import { ClientProvider } from "./context/client";
 import { ConfigProvider } from "./context/config";
 import { SchemasProvider } from "./context/schemas";
 import { SideBar } from "./context/sidebar";
+import { useTheme } from "./hooks/useTheme";
 import { Router } from "./pages/router";
 
 export function App() {
@@ -17,6 +18,7 @@ export function App() {
       },
     },
   });
+  useTheme();
 
   return (
     <div>
@@ -37,7 +39,7 @@ export function App() {
         gutter={8}
         containerClassName="toaster-wrapper"
         toastOptions={{
-          className: "text-neutral-100 bg-white",
+          className: `text-neutral bg-primary-background`,
           duration: 5000,
         }}
       />

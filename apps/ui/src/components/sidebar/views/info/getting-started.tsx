@@ -19,12 +19,12 @@ export function GettingStarted() {
         </div>
         <p>
           The debugger is waiting for a{" "}
-          <HighlightedText text="POST" spacing="'" color="graphql-otel-green" />{" "}
-          event to be sent to collector{" "}
+          <HighlightedText text="POST" spacing="'" color="dark-green" /> event
+          to be sent to collector{" "}
           <HighlightedText
             text="/api/vi/schema"
             spacing="'"
-            color="graphql-otel-green"
+            color="dark-green"
           />{" "}
           endpoint.
         </p>
@@ -35,11 +35,7 @@ export function GettingStarted() {
         <p>
           The uploading of the schema is usually done automatically when you use
           the{" "}
-          <HighlightedText
-            text="traceSchema"
-            spacing="'"
-            color="graphql-otel-green"
-          />{" "}
+          <HighlightedText text="traceSchema" spacing="'" color="dark-green" />{" "}
           method from the{" "}
           <LinkedText
             href="https://www.npmjs.com/package/@graphql-debugger/trace-schema"
@@ -52,7 +48,7 @@ export function GettingStarted() {
           <HighlightedText
             text="DebuggerClient"
             spacing="'"
-            color="graphql-otel-green"
+            color="dark-green"
           />{" "}
           exported from the{" "}
           <LinkedText

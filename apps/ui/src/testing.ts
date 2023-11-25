@@ -47,7 +47,6 @@ export const IDS = {
       login: "sidebar-login",
       history: "sidebar-history",
       favourites: "sidebar-favourites",
-      npm: "sidebar-npm",
       github: "sidebar-github",
       info: "sidebar-info",
     },

@@ -32,7 +32,7 @@ export function Dashboard() {
 
   return (
     <Page id={IDS.dashboard.page}>
-      <div className="rounded-2xl py-10 px-28 mx-auto my-auto shadow bg-white">
+      <div className="rounded-2xl py-10 px-28 mx-auto my-auto shadow bg-primary-background">
         <InfoLogo id={IDS.dashboard.logo} />
       </div>
     </Page>

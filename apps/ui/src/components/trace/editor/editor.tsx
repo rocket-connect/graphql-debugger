@@ -34,7 +34,7 @@ export function Editor() {
   return (
     <div
       id={IDS.trace.editor}
-      className="flex flex-col h-full justify-between basis-5/12 bg-white-100 divide-y-2 divide-neutral/10 w-5/12 rounded-2xl"
+      className="flex flex-col h-full justify-between basis-5/12 bg-primary-background divide-y-2 divide-accent w-5/12 rounded-2xl"
     >
       <Query trace={trace} />
       <Variables trace={trace} />
