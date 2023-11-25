@@ -646,8 +646,8 @@ importers:
         specifier: 4.1.10
         version: 4.1.10
       '@types/safe-json-stringify':
-        specifier: 1.1.4
-        version: 1.1.4
+        specifier: 1.1.5
+        version: 1.1.5
 
   plugins/express:
     dependencies:
@@ -3476,8 +3476,8 @@ packages:
     resolution: {integrity: sha512-wWKOClTTiizcZhXnPY4wikVAwmdYHp8q6DmC+EJUzAMsycb7HB32Kh9RN4+0gExjmPmZSAQjgURXIGATPegAvA==}
     dev: true
 
-  /@types/safe-json-stringify@1.1.4:
-    resolution: {integrity: sha512-SnWINyZ9DfbyXffywkR/2jyFo5n64z2HSVF2GBDEFWMlM7OvdiQuFi9yYSH9O4MOqPfA/IN5Tv97LLOhLaAb6Q==}
+  /@types/safe-json-stringify@1.1.5:
+    resolution: {integrity: sha512-wQ1unJoajjDOP7bkg7FHOYelVp6BSsuBIFSvifNKeiMHegXWa6vddoqM/dHTVkX8bn9fJcor4Hukff9AtFybcA==}
     dev: true
 
   /@types/scheduler@0.16.5:

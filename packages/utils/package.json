@@ -29,6 +29,6 @@
   "devDependencies": {
     "@graphql-debugger/types": "workspace:^",
     "@types/debug": "4.1.10",
-    "@types/safe-json-stringify": "1.1.4"
+    "@types/safe-json-stringify": "1.1.5"
   }
 }
