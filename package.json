@@ -16,7 +16,7 @@
   "devDependencies": {
     "@babel/core": "7.23.2",
     "@babel/preset-env": "7.23.2",
-    "@babel/preset-typescript": "7.23.2",
+    "@babel/preset-typescript": "7.23.3",
     "@jest/globals": "29.7.0",
     "@jest/types": "29.6.3",
     "@trivago/prettier-plugin-sort-imports": "4.2.1",
