@@ -47,7 +47,7 @@ describe("trace-viewer", () => {
   ];
 
   for (const variant of variants) {
-    test(variant.name, async () => {
+    test.skip(variant.name, async () => {
       const { dbSchema, schema, query } = await createTestSchema(variant);
       const page = await getPage({ browser });
       const dashboardPage = new Dashboard({

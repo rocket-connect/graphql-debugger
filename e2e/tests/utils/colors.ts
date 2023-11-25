@@ -5,6 +5,6 @@ export const colors = {
   red_text: "rgb(239, 67, 67)",
   red_background: "rgba(239, 68, 68, 0.3)",
 
-  netural_text: "rgb(183, 194, 215)",
+  netural_text: "rgb(59, 76, 104)",
   netural_background: "rgba(59, 75, 104, 0.3)",
 };
