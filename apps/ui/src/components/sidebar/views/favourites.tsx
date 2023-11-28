@@ -1,6 +1,5 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 
-import { fa } from "@faker-js/faker";
 import { useContext, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
