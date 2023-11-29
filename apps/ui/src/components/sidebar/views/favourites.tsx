@@ -1,6 +1,6 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 
-import { useContext, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import { SearchBox } from "../../../components/search-box";
@@ -16,17 +16,30 @@ export function Favourites() {
   const { favourites, handleDeleteFavouriteTrace } = useContext(ClientContext);
   const [searchFavourites, setSearchFavourites] = useState("");
 
-  const sortedfavourites = favourites.sort((a, b) => {
-    return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
-  });
+  const sortedfavourites = useMemo(
+    () =>
+      favourites.sort((a, b) => {
+        return (
+          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+        );
+      }),
+    [favourites],
+  );
 
-  const filteredFavourites = sortedfavourites.filter((favourite) =>
-    traceNameIncludes(favourite.trace, searchFavourites),
+  const filteredFavourites = useMemo(
+    () =>
+      sortedfavourites.filter((favourite) =>
+        traceNameIncludes(favourite.trace, searchFavourites),
+      ),
+    [sortedfavourites, searchFavourites],
   );
 
   return (
     <>
-      <SearchBox handleSearch={(value) => setSearchFavourites(value)} />
+      <SearchBox
+        handleSearch={(value) => setSearchFavourites(value)}
+        searchValue={searchFavourites}
+      />
 
       <div
         id={IDS.sidebar.views.favourites}

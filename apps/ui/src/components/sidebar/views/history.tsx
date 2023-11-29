@@ -1,6 +1,6 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 
-import { useContext, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import { SearchBox } from "../../../components/search-box";
@@ -16,17 +16,29 @@ export function History() {
   const { historyTraces, handleDeleteHistoryTrace } = useContext(ClientContext);
   const [searchHistory, setSearchHistory] = useState("");
 
-  const sortedHistoryTraces = historyTraces.sort((a, b) => {
-    return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
-  });
-
-  const filteredHistoryTraces = sortedHistoryTraces.filter((historyTrace) =>
-    traceNameIncludes(historyTrace.trace, searchHistory),
+  const sortedHistoryTraces = useMemo(
+    () =>
+      historyTraces.sort((a, b) => {
+        return (
+          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+        );
+      }),
+    [historyTraces],
+  );
+  const filteredHistoryTraces = useMemo(
+    () =>
+      sortedHistoryTraces.filter((historyTrace) =>
+        traceNameIncludes(historyTrace.trace, searchHistory),
+      ),
+    [sortedHistoryTraces, searchHistory],
   );
 
   return (
     <>
-      <SearchBox handleSearch={(value) => setSearchHistory(value)} />
+      <SearchBox
+        handleSearch={(value) => setSearchHistory(value)}
+        searchValue={searchHistory}
+      />
       <div
         id={IDS.sidebar.views.history}
         className="flex w-full flex-col gap-3 divide-y-2 divide-accent"
