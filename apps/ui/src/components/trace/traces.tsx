@@ -2,7 +2,7 @@ import { Trace } from "@graphql-debugger/types";
 import { getTraceStart, sumTraceTime } from "@graphql-debugger/utils";
 
 import { useQuery } from "@tanstack/react-query";
-import { useContext, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import {
   Link,
@@ -52,8 +52,9 @@ export function SchemaTraces() {
     },
   });
 
-  const filteredTraces = traces?.filter((trace) =>
-    traceNameIncludes(trace, search),
+  const filteredTraces = useMemo(
+    () => traces?.filter((trace) => traceNameIncludes(trace, search)),
+    [traces, search],
   );
 
   const isFavourite = (traceId: string): boolean => {
@@ -105,7 +106,10 @@ export function SchemaTraces() {
           <p className="text-sm">List of the latest GraphQL queries.</p>
         </div>
         <div className="flex items-center gap-5 text-sm">
-          <SearchBox handleSearch={(value) => setSearch(value)} />
+          <SearchBox
+            handleSearch={(value) => setSearch(value)}
+            searchValue={search}
+          />
           <button
             className="flex gap-3 items-center  hover:underline"
             onClick={() => {
