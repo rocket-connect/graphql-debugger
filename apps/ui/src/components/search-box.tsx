@@ -18,7 +18,7 @@ export function SearchBox({
         type="text"
         data-testid="search-box"
         className="bg-transparent focus:outline-none"
-        placeholder={placeholder || "Search..."}
+        placeholder={placeholder ?? "Search..."}
         value={searchValue}
         onChange={({ target: { value } }) => handleSearch(value)}
       />

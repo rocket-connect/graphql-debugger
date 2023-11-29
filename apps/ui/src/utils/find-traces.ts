@@ -1,4 +1,4 @@
-import { Trace } from "@graphql-debugger/types";
+import type { Trace } from "@graphql-debugger/types";
 
 import { rootSpanName } from "./root-span-name";
 
