@@ -31,55 +31,59 @@ export function History() {
         id={IDS.sidebar.views.history}
         className="flex w-full flex-col gap-3 divide-y-2 divide-accent"
       >
-        {filteredHistoryTraces.map(({ schemaId, trace, uniqueId }) => {
-          const durationUnixNano = UnixNanoTimeStamp.fromString(
-            trace.rootSpan?.durationNano || "0",
-          );
+        {filteredHistoryTraces.length === 0 ? (
+          <div>No traces found</div>
+        ) : (
+          filteredHistoryTraces.map(({ schemaId, trace, uniqueId }) => {
+            const durationUnixNano = UnixNanoTimeStamp.fromString(
+              trace.rootSpan?.durationNano || "0",
+            );
 
-          const startTimeUnixNano = UnixNanoTimeStamp.fromString(
-            trace.rootSpan?.startTimeUnixNano || "0",
-          );
+            const startTimeUnixNano = UnixNanoTimeStamp.fromString(
+              trace.rootSpan?.startTimeUnixNano || "0",
+            );
 
-          const { value, unit } = durationUnixNano.toSIUnits();
+            const { value, unit } = durationUnixNano.toSIUnits();
 
-          const isSelected = params.traceId === trace.id;
+            const isSelected = params.traceId === trace.id;
 
-          const isError = isTraceError(trace);
+            const isError = isTraceError(trace);
 
-          return (
-            <div
-              className="text-xs text-neutral flex items-center justify-between pt-3"
-              role="button"
-              key={uniqueId}
-              data-historytraceid={trace.id}
-            >
-              <div className="flex flex-col gap-1">
-                <Link
-                  to={`/schema/${schemaId}/trace/${trace.id}`}
-                  className={`font-semibold ${isSelected ? "underline" : ""} ${
-                    isError ? "text-red" : ""
-                  }`}
-                >
-                  {rootSpanName({ trace })}
-                </Link>
-                <p className="ml-5 text-xs">
-                  - {startTimeUnixNano.formatUnixNanoTimestamp()}
-                </p>
+            return (
+              <div
+                className="text-xs text-neutral flex items-center justify-between pt-3"
+                role="button"
+                key={uniqueId}
+                data-historytraceid={trace.id}
+              >
+                <div className="flex flex-col gap-1">
+                  <Link
+                    to={`/schema/${schemaId}/trace/${trace.id}`}
+                    className={`font-semibold ${
+                      isSelected ? "underline" : ""
+                    } ${isError ? "text-red" : ""}`}
+                  >
+                    {rootSpanName({ trace })}
+                  </Link>
+                  <p className="ml-5 text-xs">
+                    - {startTimeUnixNano.formatUnixNanoTimestamp()}
+                  </p>
+                </div>
+
+                <div className="flex justify-center items-center gap-5">
+                  <span className="self-end font-normal">{`${value.toFixed(
+                    2,
+                  )} ${unit}`}</span>
+                  <button
+                    onClick={() => handleDeleteHistoryTrace(uniqueId ?? "")}
+                  >
+                    <Delete className="fill-red" height={20} width={20} />
+                  </button>
+                </div>
               </div>
-
-              <div className="flex justify-center items-center gap-5">
-                <span className="self-end font-normal">{`${value.toFixed(
-                  2,
-                )} ${unit}`}</span>
-                <button
-                  onClick={() => handleDeleteHistoryTrace(uniqueId ?? "")}
-                >
-                  <Delete className="fill-red" height={20} width={20} />
-                </button>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
     </>
   );
