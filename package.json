@@ -50,7 +50,7 @@
     "node-polyfill-webpack-plugin": "2.0.1",
     "postcss": "8.4.31",
     "postcss-loader": "7.3.3",
-    "prettier": "^3.0.3",
+    "prettier": "^3.1.0",
     "style-loader": "3.3.3",
     "supertest": "6.3.3",
     "svg-url-loader": "8.0.0",
