@@ -22,7 +22,9 @@ export function SearchBox({
         value={searchValue}
         onChange={({ target: { value } }) => handleSearch(value)}
       />
-      <button onClick={() => handleSearch("")}>X</button>
+      <button className="text-xs font-medium" onClick={() => handleSearch("")}>
+        X
+      </button>
     </div>
   );
 }
