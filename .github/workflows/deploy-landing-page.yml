@@ -13,6 +13,7 @@ jobs:
       - name: SSH and deploy node app
         uses: appleboy/ssh-action@master
         with:
+          timeout: 60s
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
