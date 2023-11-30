@@ -1,3 +1,4 @@
+import { Cancel } from "../icons/cancel";
 import { Search } from "../icons/search";
 
 interface SearchBoxProps {
@@ -23,7 +24,7 @@ export function SearchBox({
         onChange={({ target: { value } }) => handleSearch(value)}
       />
       <button className="text-xs font-medium" onClick={() => handleSearch("")}>
-        X
+        <Cancel width={10} height={10} />
       </button>
     </div>
   );

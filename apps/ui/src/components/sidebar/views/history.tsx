@@ -18,7 +18,7 @@ export function History() {
 
   const sortedHistoryTraces = useMemo(
     () =>
-      historyTraces.sort((a, b) => {
+      [...historyTraces].sort((a, b) => {
         return (
           new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
         );

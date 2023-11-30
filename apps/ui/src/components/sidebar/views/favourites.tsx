@@ -18,7 +18,7 @@ export function Favourites() {
 
   const sortedfavourites = useMemo(
     () =>
-      favourites.sort((a, b) => {
+      [...favourites].sort((a, b) => {
         return (
           new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
         );
