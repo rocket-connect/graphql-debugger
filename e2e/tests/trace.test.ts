@@ -53,7 +53,7 @@ describe("trace", () => {
   ];
 
   for (const variant of variants) {
-    test.skip(variant.name, async () => {
+    test(variant.name, async () => {
       const page = await getPage({ browser });
       const { dbSchema, schema, query } = await createTestSchema(variant);
 

@@ -99,7 +99,10 @@ export function TraceViewer({ trace }: { trace?: Trace }) {
         }
       >
         <div className="px-4 pb-10">
-          <TraceView spans={modalSpans ?? []} id={IDS.trace_viewer.expand} />
+          <TraceView
+            spans={modalSpans ?? []}
+            id={IDS.trace_viewer.full_screen}
+          />
         </div>
       </Modal>
       {trace?.rootSpan ? (

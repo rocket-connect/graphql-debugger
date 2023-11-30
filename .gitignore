@@ -135,3 +135,4 @@ dev.db
 schema.graphql
 *.cookie
 dev.db-journal
+.DS_Store
