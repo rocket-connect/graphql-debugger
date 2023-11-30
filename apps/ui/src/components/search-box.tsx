@@ -13,7 +13,10 @@ export function SearchBox({
   searchValue,
 }: SearchBoxProps) {
   return (
-    <div className="flex items-center gap-2 border border-accent  py-1 px-2 rounded-md">
+    <div
+      className="flex items-center gap-2 border border-accent  py-1 px-2 rounded-md"
+      data-testid="search-wrapper"
+    >
       <Search width={15} height={15} />
       <input
         type="text"
@@ -23,7 +26,11 @@ export function SearchBox({
         value={searchValue}
         onChange={({ target: { value } }) => handleSearch(value)}
       />
-      <button className="text-xs font-medium" onClick={() => handleSearch("")}>
+      <button
+        className="text-xs font-medium"
+        data-testid="clear-search"
+        onClick={() => handleSearch("")}
+      >
         <Cancel width={10} height={10} />
       </button>
     </div>
