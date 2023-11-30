@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 
+import { Cancel } from "../../icons/cancel";
 import { cn } from "../../utils/cn";
 
 type ModalType = "full-screen" | "small" | "default";
@@ -62,7 +63,7 @@ export function Modal({
             className="absolute top-3 right-3 text-neutral"
             data-testid="modal-close"
           >
-            X
+            <Cancel height={12} width={12} />
           </button>
           <h2
             className="text-bold text-xl text-neutral mb-3"
