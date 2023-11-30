@@ -1,76 +1,104 @@
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 
-import { useContext } from "react";
+import { useContext, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
+import { SearchBox } from "../../../components/search-box";
 import { ClientContext } from "../../../context/client";
 import { Delete } from "../../../icons/delete";
 import { IDS } from "../../../testing";
+import { traceNameIncludes } from "../../../utils/find-traces";
 import { isTraceError } from "../../../utils/is-trace-error";
 import { rootSpanName } from "../../../utils/root-span-name";
 
 export function Favourites() {
   const params = useParams<{ traceId: string }>();
   const { favourites, handleDeleteFavouriteTrace } = useContext(ClientContext);
+  const [searchFavourites, setSearchFavourites] = useState("");
 
-  const sortedfavourites = favourites.sort((a, b) => {
-    return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
-  });
+  const sortedfavourites = useMemo(
+    () =>
+      [...favourites].sort((a, b) => {
+        return (
+          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+        );
+      }),
+    [favourites],
+  );
+
+  const filteredFavourites = useMemo(
+    () =>
+      sortedfavourites.filter((favourite) =>
+        traceNameIncludes(favourite.trace, searchFavourites),
+      ),
+    [sortedfavourites, searchFavourites],
+  );
 
   return (
-    <div
-      id={IDS.sidebar.views.favourites}
-      className="flex w-full flex-col gap-3 divide-y-2 divide-accent"
-    >
-      {sortedfavourites.map(({ schemaId, trace }) => {
-        const durationUnixNano = UnixNanoTimeStamp.fromString(
-          trace.rootSpan?.durationNano || "0",
-        );
+    <>
+      <SearchBox
+        handleSearch={(value) => setSearchFavourites(value)}
+        searchValue={searchFavourites}
+      />
 
-        const startTimeUnixNano = UnixNanoTimeStamp.fromString(
-          trace.rootSpan?.startTimeUnixNano || "0",
-        );
+      <div
+        id={IDS.sidebar.views.favourites}
+        className="flex w-full flex-col gap-3 divide-y-2 divide-accent"
+      >
+        {filteredFavourites.length === 0 ? (
+          <div>No traces found</div>
+        ) : (
+          filteredFavourites.map(({ schemaId, trace }) => {
+            const durationUnixNano = UnixNanoTimeStamp.fromString(
+              trace.rootSpan?.durationNano || "0",
+            );
 
-        const { value, unit } = durationUnixNano.toSIUnits();
+            const startTimeUnixNano = UnixNanoTimeStamp.fromString(
+              trace.rootSpan?.startTimeUnixNano || "0",
+            );
 
-        const isSelected = params.traceId === trace.id;
+            const { value, unit } = durationUnixNano.toSIUnits();
 
-        const isError = isTraceError(trace);
+            const isSelected = params.traceId === trace.id;
 
-        return (
-          <div
-            className="text-xs text-neutral flex items-center justify-between pt-3"
-            role="button"
-            data-favouritestraceid={trace.id}
-            key={trace.id}
-          >
-            <div className="flex flex-col gap-1">
-              <Link
-                to={`/schema/${schemaId}/trace/${trace.id}`}
-                className={`font-semibold ${isSelected ? "underline" : ""} ${
-                  isError ? "text-red" : ""
-                }`}
+            const isError = isTraceError(trace);
+
+            return (
+              <div
+                className="text-xs text-neutral flex items-center justify-between pt-3"
+                role="button"
+                data-favouritestraceid={trace.id}
+                key={trace.id}
               >
-                {rootSpanName({ trace })}
-              </Link>
-              <p className="ml-5 text-xs">
-                - {startTimeUnixNano.formatUnixNanoTimestamp()}
-              </p>
-            </div>
+                <div className="flex flex-col gap-1">
+                  <Link
+                    to={`/schema/${schemaId}/trace/${trace.id}`}
+                    className={`font-semibold ${
+                      isSelected ? "underline" : ""
+                    } ${isError ? "text-red" : ""}`}
+                  >
+                    {rootSpanName({ trace })}
+                  </Link>
+                  <p className="ml-5 text-xs">
+                    - {startTimeUnixNano.formatUnixNanoTimestamp()}
+                  </p>
+                </div>
 
-            <div className="flex justify-center items-center gap-5">
-              <span className="self-end font-normal">{`${value.toFixed(
-                2,
-              )} ${unit}`}</span>
-              <button
-                onClick={() => handleDeleteFavouriteTrace(trace.id ?? "")}
-              >
-                <Delete className="fill-red" height={20} width={20} />
-              </button>
-            </div>
-          </div>
-        );
-      })}
-    </div>
+                <div className="flex justify-center items-center gap-5">
+                  <span className="self-end font-normal">{`${value.toFixed(
+                    2,
+                  )} ${unit}`}</span>
+                  <button
+                    onClick={() => handleDeleteFavouriteTrace(trace.id ?? "")}
+                  >
+                    <Delete className="fill-red" height={20} width={20} />
+                  </button>
+                </div>
+              </div>
+            );
+          })
+        )}
+      </div>
+    </>
   );
 }

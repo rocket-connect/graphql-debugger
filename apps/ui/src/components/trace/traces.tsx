@@ -2,7 +2,7 @@ import { Trace } from "@graphql-debugger/types";
 import { getTraceStart, sumTraceTime } from "@graphql-debugger/utils";
 
 import { useQuery } from "@tanstack/react-query";
-import { useContext, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import {
   Link,
@@ -12,17 +12,16 @@ import {
 } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
-import { Modal } from "../../components/modal/modal";
 import { ClientContext } from "../../context/client";
 import { RefreshIcon } from "../../icons/refresh";
-import { Search as SearchIcon } from "../../icons/search";
 import { Star, StarFilled } from "../../icons/star";
 import { IDS } from "../../testing";
 import { cn } from "../../utils/cn";
+import { traceNameIncludes } from "../../utils/find-traces";
 import { isTraceError } from "../../utils/is-trace-error";
 import { rootSpanName } from "../../utils/root-span-name";
+import { SearchBox } from "../search-box";
 import { Spinner } from "../utils/spinner";
-import { Search } from "./search";
 
 export function SchemaTraces() {
   const {
@@ -35,7 +34,7 @@ export function SchemaTraces() {
   const navigate = useNavigate();
   const params = useParams();
   const [searchParams] = useSearchParams();
-  const [searchModal, setSearchModal] = useState(false);
+  const [search, setSearch] = useState("");
 
   const { data: traces, isLoading } = useQuery({
     queryKey: ["traces", params.schemaId, searchParams.get("rootSpanName")],
@@ -52,6 +51,11 @@ export function SchemaTraces() {
       return traces;
     },
   });
+
+  const filteredTraces = useMemo(
+    () => traces?.filter((trace) => traceNameIncludes(trace, search)),
+    [traces, search],
+  );
 
   const isFavourite = (traceId: string): boolean => {
     return (
@@ -101,23 +105,11 @@ export function SchemaTraces() {
           <p className="text-md font-bold">Traces</p>
           <p className="text-sm">List of the latest GraphQL queries.</p>
         </div>
-        <div className="flex items-center gap-10 text-sm">
-          <button
-            className="flex gap-3 items-center hover:underline"
-            onClick={() => setSearchModal(true)}
-          >
-            <SearchIcon height={25} width={25} />
-            <p>Search</p>
-          </button>
-          <Modal
-            type="small"
-            title={<div className="text-neutral font-bold">Search</div>}
-            open={searchModal}
-            onClose={() => setSearchModal(false)}
-          >
-            <Search />
-          </Modal>
-
+        <div className="flex items-center gap-5 text-sm">
+          <SearchBox
+            handleSearch={(value) => setSearch(value)}
+            searchValue={search}
+          />
           <button
             className="flex gap-3 items-center  hover:underline"
             onClick={() => {
@@ -127,7 +119,7 @@ export function SchemaTraces() {
               });
             }}
           >
-            <RefreshIcon height={25} width={25} />
+            <RefreshIcon height={20} width={20} />
             <p>Refresh</p>
           </button>
         </div>
@@ -140,7 +132,7 @@ export function SchemaTraces() {
             </div>
           ) : (
             <>
-              {traces?.length === 0 ? (
+              {filteredTraces?.length === 0 ? (
                 <div
                   id={IDS.trace_list.not_found}
                   className="mx-auto text-center text-neutral font-bold"
@@ -162,7 +154,7 @@ export function SchemaTraces() {
                   </thead>
 
                   <tbody>
-                    {traces?.map((trace) => {
+                    {filteredTraces?.map((trace) => {
                       const startTimeUnixNano = getTraceStart(trace);
                       const traceDurationUnixNano =
                         trace && sumTraceTime(trace);
