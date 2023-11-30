@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { BACKEND_PORT } from "@graphql-debugger/backend";
 
 import puppeteer, { Browser, Page } from "puppeteer";
@@ -7,14 +8,24 @@ export { Browser } from "puppeteer";
 export async function getPage(options: { browser: Browser }): Promise<Page> {
   const page = await options.browser.newPage();
 
-  await page.goto(`http://localhost:${BACKEND_PORT}`);
+  await page.evaluateOnNewDocument(
+    (theme) => {
+      // @ts-ignore
+      localStorage.setItem("theme", theme);
+    },
+    // TODO - test dark mode https://github.com/rocket-connect/graphql-debugger/issues/151
+    JSON.stringify({ state: { theme: "light" }, version: 0 }),
+  );
+
+  await page.goto(`http://localhost:${BACKEND_PORT}`, {
+    waitUntil: "load",
+  });
 
   return page;
 }
 
 export async function getBrowser() {
   const browser = await puppeteer.launch({
-    // headless: false,
     headless: process.env.HEADLESS ? false : "new",
     defaultViewport: null,
     args: ["--disable-web-security"],
