@@ -69,6 +69,7 @@ export function Span({
         {displyInfo}
         <div className="relative h-4 rounded-md bg-gray-400">
           <div
+            data-line="span-line"
             className={cn("absolute rounded-md h-4 bg-light-green", {
               "bg-indigo-600": data.isForeign,
               "bg-red": isSpanError(data),
