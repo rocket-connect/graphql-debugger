@@ -1,0 +1,29 @@
+{
+  "name": "@graphql-debugger/graphql-yoga",
+  "version": "0.0.0-alpha.72",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rocket-connect/graphql-debugger.git"
+  },
+  "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "peerDependencies": {
+    "graphql": "^16.0.0 || ^17.0.0"
+  },
+  "dependencies": {
+    "@graphql-debugger/trace-schema": "workspace:^",
+    "@graphql-tools/schema": "10.0.0",
+    "@graphql-tools/utils": "10.0.8",
+    "graphql-yoga": "5.0.0"
+  },
+  "devDependencies": {}
+}
