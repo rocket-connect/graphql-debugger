@@ -688,6 +688,16 @@ importers:
       graphql-yoga:
         specifier: 5.0.0
         version: 5.0.0(graphql@16.0.0)
+    devDependencies:
+      '@graphql-debugger/opentelemetry':
+        specifier: workspace:^
+        version: link:../../packages/opentelemetry
+      express:
+        specifier: 4.18.2
+        version: 4.18.2
+      supertest:
+        specifier: 6.3.3
+        version: 6.3.3
 
 packages:
 
