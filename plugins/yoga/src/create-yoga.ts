@@ -15,6 +15,7 @@ import {
 interface DebuggerYogaOptions<TServerContext, TUserContext>
   extends YogaServerOptions<TServerContext, TUserContext> {
   debugger?: Omit<TraceSchemaInput, "schema"> & {
+    shouldDisable?: boolean;
     GraphQLOTELContextOptions?: GraphQLOTELContextOptions;
   };
   schema: GraphQLSchema;
@@ -58,13 +59,15 @@ export function createYoga<
     };
   }
 
-  const tracedSchema = traceSchema({
-    schema: options.schema,
-  });
+  const schema = options.debugger?.shouldDisable
+    ? options.schema
+    : traceSchema({
+        schema: options.schema,
+      });
 
   const yoga = originalCreateYoga<TServerContext, TUserContext>({
     ...options,
-    schema: tracedSchema,
+    schema,
   });
 
   return yoga;
