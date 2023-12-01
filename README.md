@@ -105,6 +105,24 @@ const tracedSchema = traceSchema({
 
 GraphQL debugger supports plugins. Plugins can be used to add additional spans to a trace.
 
+#### Yoga
+
+GraphQL Yoga integration for GraphQL Debugger.
+
+```ts
+import { schema } from "@graphql-tools/schema";
+import { createYoga } from "@graphql-debugger/graphql-yoga";
+
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers,
+});
+
+const yoga = createYoga({
+  schema,
+});
+```
+
 #### Express
 
 The express plugin will add a span at the root of the trace for each http request to your GraphQL server.

@@ -24,7 +24,7 @@ Run in a seperate terminal window:
 npx graphql-debugger
 ```
 
-### Running GraphQL Yoga
+### Tracing GraphQL Yoga
 
 ```ts
 import { schema } from "@graphql-tools/schema";
