@@ -21,10 +21,6 @@ interface DebuggerYogaOptions<TServerContext, TUserContext>
   context?: (req: any) => Promise<TUserContext>;
 }
 
-/*
- * This is a wrapper of createYoga function from graphql-yoga
- * with the addition of the traceSchema function. This function modifies the context.
- */
 export function createYoga<
   TServerContext extends Record<string, any> = {},
   TUserContext extends Record<string, any> & {
