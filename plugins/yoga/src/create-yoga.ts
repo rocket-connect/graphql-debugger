@@ -16,8 +16,8 @@ interface DebuggerYogaOptions<TServerContext, TUserContext>
   extends YogaServerOptions<TServerContext, TUserContext> {
   debugger?: Omit<TraceSchemaInput, "schema"> & {
     shouldDisable?: boolean;
-    GraphQLOTELContextOptions?: GraphQLOTELContextOptions;
-    TraceSchemaOptions?: Omit<TraceSchemaInput, "schema">;
+    otelContextOptions?: GraphQLOTELContextOptions;
+    traceSchemaOptions?: Omit<TraceSchemaInput, "schema">;
   };
   schema: GraphQLSchema;
   context?: (req: any) => Promise<TUserContext>;
@@ -39,7 +39,7 @@ export function createYoga<
     const contextOverride = async (): Promise<TUserContext> => {
       return {
         GraphQLOTELContext: new GraphQLOTELContext(
-          options?.debugger?.GraphQLOTELContextOptions,
+          options?.debugger?.otelContextOptions,
         ),
       } as unknown as TUserContext;
     };
@@ -53,7 +53,7 @@ export function createYoga<
       const contextObject = await originalContextFunction(...args);
 
       contextObject.GraphQLOTELContext = new GraphQLOTELContext(
-        options?.debugger?.GraphQLOTELContextOptions,
+        options?.debugger?.otelContextOptions,
       );
 
       return contextObject;
@@ -64,7 +64,7 @@ export function createYoga<
     ? options.schema
     : traceSchema({
         schema: options.schema,
-        ...options.debugger?.TraceSchemaOptions,
+        ...options.debugger?.traceSchemaOptions,
       });
 
   const yoga = originalCreateYoga<TServerContext, TUserContext>({
