@@ -1,5 +1,6 @@
 import {
   InMemorySpanExporter,
+  TRACER_NAME,
   setupOtel,
 } from "@graphql-debugger/opentelemetry";
 
@@ -56,5 +57,7 @@ describe("plugin-graphql-yoga", () => {
 
     const span = spans[0];
     expect(span.name).toBe("query hello");
+    expect(span.instrumentationLibrary.name).toBe(TRACER_NAME);
+    expect(span.attributes["graphql.operation.root"]).toEqual(true);
   });
 });
