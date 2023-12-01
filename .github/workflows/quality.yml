@@ -94,6 +94,14 @@ jobs:
       - name: graphql-debugger/plugin-express
         run: cd ./plugins/express && pnpm run test
 
+  test-plugin-graphql-yoga:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: graphql-debugger/plugin-yoga
+        run: cd ./plugins/yoga && pnpm run test
+
   lint:
     runs-on: ubuntu-latest
     steps:
