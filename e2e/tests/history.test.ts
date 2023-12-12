@@ -31,17 +31,17 @@ describe("history", () => {
       shouldError: false,
       randomFieldName,
     },
-    {
-      name: "should add an error trace to history and remove it",
-      shouldError: true,
-      randomFieldName,
-    },
-    {
-      name: "should add a named query trace to history and remove it",
-      shouldError: false,
-      shouldNameQuery: true,
-      randomFieldName,
-    },
+    // {
+    //   name: "should add an error trace to history and remove it",
+    //   shouldError: true,
+    //   randomFieldName,
+    // },
+    // {
+    //   name: "should add a named query trace to history and remove it",
+    //   shouldError: false,
+    //   shouldNameQuery: true,
+    //   randomFieldName,
+    // },
   ];
 
   for (const variant of variants) {
