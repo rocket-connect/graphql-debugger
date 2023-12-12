@@ -59,7 +59,7 @@
     "ts-jest": "29.1.1",
     "ts-loader": "9.5.0",
     "ts-node": "10.9.1",
-    "turbo": "1.10.16",
+    "turbo": "1.11.1",
     "typescript": "5.2.2",
     "url-loader": "4.1.1",
     "webpack": "5.89.0",
