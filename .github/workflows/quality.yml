@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-project
       - name: Install puppeteer
-        run: npm i -g puppeteer@21.4.1
+        run: npm i -g puppeteer@21.6.0
       - name: graphql-debugger/e2e
         run: cd ./e2e && pnpm run test
         env:
