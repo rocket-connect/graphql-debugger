@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/graphql-schema",
-  "version": "0.0.0-alpha.72",
+  "version": "0.0.0-alpha.73",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -29,7 +29,7 @@
     "@graphql-debugger/utils": "workspace:^",
     "@graphql-tools/schema": "10.0.0",
     "@graphql-tools/utils": "10.0.8",
-    "@pothos/core": "3.38.0",
+    "@pothos/core": "3.40.0",
     "dataloader": "2.2.2",
     "graphql-yoga": "5.0.0"
   },
