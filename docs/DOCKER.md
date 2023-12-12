@@ -10,3 +10,9 @@ Then if you want to run you can run the following command:
 ```bash
 docker run --name graphql-debugger -p 16686:16686 -p 4318:4318 graphql-debugger
 ```
+
+You can add the DEBUG env to the docker run command if you wish to debug things: 
+
+```
+docker run ..... -e DEBUG="*" graphql-debugger
+```
