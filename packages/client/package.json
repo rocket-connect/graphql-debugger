@@ -22,11 +22,11 @@
   },
   "dependencies": {
     "@graphql-debugger/utils": "workspace:^",
-    "axios": "1.6.0"
+    "axios": "1.6.2"
   },
   "devDependencies": {
     "@graphql-debugger/types": "workspace:^",
-    "@graphql-tools/schema": "10.0.0",
-    "@graphql-tools/utils": "10.0.8"
+    "@graphql-tools/schema": "10.0.2",
+    "@graphql-tools/utils": "10.0.11"
   }
 }

@@ -25,7 +25,7 @@
     "@graphql-debugger/trace-directive": "workspace:^",
     "@graphql-debugger/types": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
-    "@graphql-tools/schema": "10.0.0",
-    "@graphql-tools/utils": "10.0.8"
+    "@graphql-tools/schema": "10.0.2",
+    "@graphql-tools/utils": "10.0.11"
   }
 }
