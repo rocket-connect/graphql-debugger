@@ -11,6 +11,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
+app.use(express.static(path.join(config.STATIC_FOLDER)));
 
 async function main() {
   await app.listen(config.HTTP_PORT);
