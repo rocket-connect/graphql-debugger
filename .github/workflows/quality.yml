@@ -22,6 +22,28 @@ jobs:
           SLOW_MO: "150"
           SKIP_MODAL: "true"
 
+  test-e2e-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: Set up Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install docker-ce docker-ce-cli containerd.io
+      - name: Build Docker Image
+        run: docker build . -t graphql-debugger -f docker/Dockerfile
+      - name: Run Docker Image
+        run: docker run --name graphql-debugger -p 16686:16686 -p 4318:4318 -d graphql-debugger
+      - name: Install puppeteer
+        run: npm i -g puppeteer@21.6.0
+      - name: graphql-debugger/e2e
+        run: cd ./e2e && pnpm run test
+        env:
+          SLOW_MO: "150"
+          SKIP_MODAL: "true"
+          E2E_IN_DOCKER: "true"
+
   test-collector-proxy:
     runs-on: ubuntu-latest
     steps:
@@ -84,7 +106,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-project
       - name: graphql-debugger/trace-client
-        run: cd ./packages/client && pnpm run test
+        run: cd ./packages/client and pnpm run test
 
   test-plugin-express:
     runs-on: ubuntu-latest
