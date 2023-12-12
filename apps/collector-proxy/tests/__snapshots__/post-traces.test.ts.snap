@@ -52,38 +52,6 @@ exports[`POST /v1/traces should throw span validation error when not sent correc
   },
   {
     "code": "invalid_type",
-    "expected": "object",
-    "received": "undefined",
-    "path": [
-      "body",
-      "resourceSpans",
-      0,
-      "scopeSpans",
-      0,
-      "spans",
-      0,
-      "startTimeUnixNano"
-    ],
-    "message": "Required"
-  },
-  {
-    "code": "invalid_type",
-    "expected": "object",
-    "received": "undefined",
-    "path": [
-      "body",
-      "resourceSpans",
-      0,
-      "scopeSpans",
-      0,
-      "spans",
-      0,
-      "endTimeUnixNano"
-    ],
-    "message": "Required"
-  },
-  {
-    "code": "invalid_type",
     "expected": "array",
     "received": "undefined",
     "path": [
@@ -113,6 +81,122 @@ exports[`POST /v1/traces should throw span validation error when not sent correc
       "status"
     ],
     "message": "Required"
+  },
+  {
+    "code": "invalid_union",
+    "unionErrors": [
+      {
+        "issues": [
+          {
+            "code": "invalid_type",
+            "expected": "string",
+            "received": "undefined",
+            "path": [
+              "body",
+              "resourceSpans",
+              0,
+              "scopeSpans",
+              0,
+              "spans",
+              0,
+              "startTimeUnixNano"
+            ],
+            "message": "Required"
+          }
+        ],
+        "name": "ZodError"
+      },
+      {
+        "issues": [
+          {
+            "code": "invalid_type",
+            "expected": "object",
+            "received": "undefined",
+            "path": [
+              "body",
+              "resourceSpans",
+              0,
+              "scopeSpans",
+              0,
+              "spans",
+              0,
+              "startTimeUnixNano"
+            ],
+            "message": "Required"
+          }
+        ],
+        "name": "ZodError"
+      }
+    ],
+    "path": [
+      "body",
+      "resourceSpans",
+      0,
+      "scopeSpans",
+      0,
+      "spans",
+      0,
+      "startTimeUnixNano"
+    ],
+    "message": "Invalid input"
+  },
+  {
+    "code": "invalid_union",
+    "unionErrors": [
+      {
+        "issues": [
+          {
+            "code": "invalid_type",
+            "expected": "string",
+            "received": "undefined",
+            "path": [
+              "body",
+              "resourceSpans",
+              0,
+              "scopeSpans",
+              0,
+              "spans",
+              0,
+              "endTimeUnixNano"
+            ],
+            "message": "Required"
+          }
+        ],
+        "name": "ZodError"
+      },
+      {
+        "issues": [
+          {
+            "code": "invalid_type",
+            "expected": "object",
+            "received": "undefined",
+            "path": [
+              "body",
+              "resourceSpans",
+              0,
+              "scopeSpans",
+              0,
+              "spans",
+              0,
+              "endTimeUnixNano"
+            ],
+            "message": "Required"
+          }
+        ],
+        "name": "ZodError"
+      }
+    ],
+    "path": [
+      "body",
+      "resourceSpans",
+      0,
+      "scopeSpans",
+      0,
+      "spans",
+      0,
+      "endTimeUnixNano"
+    ],
+    "message": "Invalid input"
   }
 ]"
 `;
