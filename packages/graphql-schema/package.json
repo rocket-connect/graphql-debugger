@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/graphql-schema",
-  "version": "0.0.0-alpha.74",
+  "version": "0.0.0-alpha.75",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
