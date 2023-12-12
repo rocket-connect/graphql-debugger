@@ -40,7 +40,8 @@ jobs:
       - name: graphql-debugger/e2e
         run: cd ./e2e && pnpm run test history
         env:
-          SLOW_MO: "150"
+          DEBUG: "*"
+          SLOW_MO: "200"
           SKIP_MODAL: "true"
           E2E_IN_DOCKER: "true"
 
