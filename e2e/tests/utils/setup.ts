@@ -2,10 +2,10 @@ import { clearDB } from "@graphql-debugger/data-access";
 
 import * as backend from "./backend";
 
-const shouldSpawnBacked = process.env.E2E_IN_DOCKER !== "true";
+const shouldSpawnBackend = process.env.E2E_IN_DOCKER !== "true";
 
 beforeAll(async () => {
-  if (shouldSpawnBacked) {
+  if (shouldSpawnBackend) {
     await backend.listen();
   }
 });
@@ -16,7 +16,7 @@ beforeEach(async () => {
 });
 
 afterAll(async () => {
-  if (shouldSpawnBacked) {
+  if (shouldSpawnBackend) {
     await backend.close();
   }
 });
