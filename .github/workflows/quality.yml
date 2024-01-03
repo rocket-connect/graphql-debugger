@@ -19,7 +19,7 @@ jobs:
       - name: graphql-debugger/e2e
         run: cd ./e2e && pnpm run test
         env:
-          SLOW_MO: "150"
+          SLOW_MO: "100"
           SKIP_MODAL: "true"
 
   test-e2e-docker:
@@ -34,13 +34,13 @@ jobs:
       - name: Build Docker Image
         run: docker build . -t graphql-debugger -f docker/Dockerfile
       - name: Run Docker Image
-        run: docker run --name graphql-debugger -p 16686:16686 -p 4318:4318 -v $(pwd)/packages/data-access/prisma/dev.db:/usr/src/app/packages/data-access/prisma/dev.db -d -e DEBUG="@graphql-debugger:*" graphql-debugger
+        run: docker run --name graphql-debugger -p 16686:16686 -p 4318:4318 -v $(pwd)/packages/data-access/prisma/dev.db:/usr/src/app/packages/data-access/prisma/dev.db -d graphql-debugger
       - name: Install puppeteer
         run: npm i -g puppeteer@21.6.0
       - name: graphql-debugger/e2e
         run: cd ./e2e && pnpm run test
         env:
-          SLOW_MO: "200"
+          SLOW_MO: "100"
           SKIP_MODAL: "true"
           E2E_IN_DOCKER: "true"
 
