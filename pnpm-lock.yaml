@@ -126,8 +126,8 @@ importers:
         specifier: 8.0.0
         version: 8.0.0(webpack@5.89.0)
       tailwindcss:
-        specifier: 3.3.6
-        version: 3.3.6(ts-node@10.9.2)
+        specifier: 3.4.0
+        version: 3.4.0(ts-node@10.9.2)
       ts-jest:
         specifier: 29.1.1
         version: 29.1.1(@babel/core@7.23.6)(@jest/types@29.6.3)(jest@29.7.0)(typescript@5.3.3)
@@ -9773,8 +9773,8 @@ packages:
       '@babel/runtime': 7.23.6
     dev: false
 
-  /tailwindcss@3.3.6(ts-node@10.9.2):
-    resolution: {integrity: sha512-AKjF7qbbLvLaPieoKeTjG1+FyNZT6KaJMJPFeQyLfIp7l82ggH1fbHJSsYIvnbTFQOlkh+gBYpyby5GT1LIdLw==}
+  /tailwindcss@3.4.0(ts-node@10.9.2):
+    resolution: {integrity: sha512-VigzymniH77knD1dryXbyxR+ePHihHociZbXnLZHUyzf2MMs2ZVqlUrZ3FvpXP8pno9JzmILt1sZPD19M3IxtA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
