@@ -523,8 +523,8 @@ importers:
         specifier: 1.18.1
         version: 1.18.1(@opentelemetry/api@1.7.0)
       '@opentelemetry/semantic-conventions':
-        specifier: 1.18.1
-        version: 1.18.1
+        specifier: 1.19.0
+        version: 1.19.0
       graphql:
         specifier: ^16.0.0 || ^17.0.0
         version: 16.0.0
