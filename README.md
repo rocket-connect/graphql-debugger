@@ -4,15 +4,13 @@
 
 <h1>GraphQL Debugger</h1>
 
-<p>Debug your GraphQL server locally.</p>
+<p>Debug your GraphQL server.</p>
 
 [![npm version](https://badge.fury.io/js/graphql-debugger.svg)](https://badge.fury.io/js/graphql-debugger) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 [![](./docs/screenshot.png)](https://www.graphql-debugger.com/)
 
 <div style="display: flex; text-align: center; justify-content: center" align="center">
-<img src="./docs/screenshot-error.png" width="30%" alt="GraphQL Debugger">
-<img src="./docs/screenshot-trace-viewer.png" width="30%" alt="GraphQL Debugger">
 </div>
 </div>
 
