@@ -9,7 +9,7 @@ export function Home() {
           <div className="flex flex-col gap-20">
             <h1 className="flex flex-col text-left font-bold text-center md:text-left mx-auto md:m-0 text-4xl xl:text-6xl">
               <span>Debug your GraphQL</span>
-              <span>server locally.</span>
+              <span>server.</span>
             </h1>
 
             <a

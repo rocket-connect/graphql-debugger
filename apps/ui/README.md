@@ -8,8 +8,6 @@
 
 This is the user interface for the GraphQL Debugger collector.
 
-It is designed to be used locally during development.
-
 ## License
 
 MIT - Rocket Connect - https://github.com/rocket-connect
