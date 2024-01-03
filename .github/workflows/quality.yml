@@ -38,7 +38,7 @@ jobs:
       - name: Install puppeteer
         run: npm i -g puppeteer@21.6.0
       - name: graphql-debugger/e2e
-        run: cd ./e2e && DEBUG="@graphql-debugger:*" pnpm run test history
+        run: cd ./e2e && DEBUG="@graphql-debugger:*" pnpm run test
         env:
           SLOW_MO: "200"
           SKIP_MODAL: "true"
