@@ -248,8 +248,8 @@ importers:
         specifier: 1.5.1
         version: 1.5.1
       prism-react-renderer:
-        specifier: 2.3.0
-        version: 2.3.0(react@18.2.0)
+        specifier: 2.3.1
+        version: 2.3.1(react@18.2.0)
       prism-themes:
         specifier: 1.9.0
         version: 1.9.0
@@ -8700,8 +8700,8 @@ packages:
       ansi-styles: 5.2.0
       react-is: 18.2.0
 
-  /prism-react-renderer@2.3.0(react@18.2.0):
-    resolution: {integrity: sha512-UYRg2TkVIaI6tRVHC5OJ4/BxqPUxJkJvq/odLT/ykpt1zGYXooNperUxQcCvi87LyRnR4nCh81ceOA+e7nrydg==}
+  /prism-react-renderer@2.3.1(react@18.2.0):
+    resolution: {integrity: sha512-Rdf+HzBLR7KYjzpJ1rSoxT9ioO85nZngQEoFIhL07XhtJHlCU3SOz0GJ6+qvMyQe0Se+BV3qpe6Yd/NmQF5Juw==}
     peerDependencies:
       react: '>=16.0.0'
     dependencies:
