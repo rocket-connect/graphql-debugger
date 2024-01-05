@@ -15,6 +15,7 @@ export async function foreignTracesWorker(
     const spanIds = spans.map((s) => s.spanId);
     const traceIds = spans.map((s) => s.traceId);
 
+    // TODO - unify client reads
     const [existingSpans, traceGroups] = await Promise.all([
       prisma.span.findMany({ where: { spanId: { in: spanIds } } }),
       prisma.traceGroup.findMany({ where: { traceId: { in: traceIds } } }),
@@ -35,6 +36,7 @@ export async function foreignTracesWorker(
           traceGroupId = foundTraceGroup?.id;
         } else {
           try {
+            // TODO - unify client reads
             const foundTraceGroup = await prisma.traceGroup.findFirst({
               where: {
                 traceId: span.traceId,

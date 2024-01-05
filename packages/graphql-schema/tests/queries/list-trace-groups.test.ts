@@ -92,6 +92,7 @@ describe("queries/list-trace-groups", () => {
     expect(testSchemaResponse.errors).toBeUndefined();
     await sleep(500);
 
+    // TODO - unify client reads
     const traces = await prisma.traceGroup.findMany({
       where: {
         schemaId: testSchema.dbSchema.id,
@@ -136,6 +137,7 @@ describe("queries/list-trace-groups", () => {
     expect(testSchemaResponse.errors).toBeUndefined();
     await sleep(500);
 
+    // TODO - unify client reads
     const traces = await prisma.traceGroup.findMany({
       where: {
         schemaId: testSchema.dbSchema.id,

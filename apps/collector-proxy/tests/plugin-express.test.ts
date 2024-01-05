@@ -188,6 +188,7 @@ describe("plugin express", () => {
 
     await sleep(2000); // backoff the writes using sqlite
 
+    // TODO - unify client reads
     const traceGroup = await prisma.traceGroup.findFirst({
       where: {
         traceId: expressScopeSpan.spans[0].traceId,

@@ -79,6 +79,7 @@ describe("POST /v1/schema", () => {
       }),
     );
 
+    // TODO - unify client reads
     const foundSchema = await prisma.schema.findFirst({
       where: {
         hash,

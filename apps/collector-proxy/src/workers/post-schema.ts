@@ -18,6 +18,7 @@ export async function postSchemaWorker(data: PostSchema["body"]) {
 
     const hash = hashSchema(executableSchema);
 
+    // TODO - unify client reads
     const foundSchema = await prisma.schema.findFirst({
       where: {
         hash,

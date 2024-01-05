@@ -77,6 +77,7 @@ builder.queryField("listTraceGroups", (t) =>
         AND: whereConditions,
       };
 
+      // TODO - unify client reads
       const traces = await prisma.traceGroup.findMany({
         orderBy: { createdAt: "desc" },
         where,

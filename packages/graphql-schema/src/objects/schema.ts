@@ -16,6 +16,7 @@ export const SchemaObject: ObjectRef<Schema> = builder.objectType("Schema", {
     traceGroups: t.field({
       type: [TraceObject],
       resolve: async (root) => {
+        // TODO - unify client reads
         const traceGroups = await prisma.traceGroup.findMany({
           where: {
             schemaId: root.id,

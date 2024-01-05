@@ -332,6 +332,7 @@ describe("POST /v1/traces", () => {
 
     await sleep(2000); // backoff the writes using sqlite
 
+    // TODO - unify client reads
     const traceGroup = await prisma.traceGroup.findFirst({
       where: {
         traceId: payload.resourceSpans[0].scopeSpans[0].spans[0].traceId,

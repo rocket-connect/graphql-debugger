@@ -7,6 +7,7 @@ import DataLoader from "dataloader";
 export function rootSpanLoader() {
   return new DataLoader(
     async (traceIds: readonly string[]): Promise<(Span | undefined)[]> => {
+      // TODO - unify client reads
       const spans = await prisma.span.findMany({
         where: {
           traceGroupId: {
@@ -32,6 +33,7 @@ export function rootSpanLoader() {
 export function spanLoader() {
   return new DataLoader(
     async (traceIds: readonly string[]): Promise<Span[][]> => {
+      // TODO - unify client reads
       const spans = await prisma.span.findMany({
         where: {
           traceGroupId: {

@@ -66,6 +66,7 @@ describe("favourites", () => {
       await page.reload();
       await sleep(200);
 
+      // TODO - unify client reads
       const traces = await prisma.traceGroup.findMany({
         where: {
           schemaId: dbSchema.id,

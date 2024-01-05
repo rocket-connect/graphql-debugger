@@ -36,6 +36,7 @@ describe("issues 109", () => {
       page,
     });
 
+    // TODO - unify client reads
     const traces = await prisma.traceGroup.findMany({
       where: {
         schemaId: dbSchema.id,

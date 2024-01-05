@@ -41,6 +41,7 @@ builder.queryField("listSchemas", (t) =>
         ...(args.where?.id ? { id: args.where.id } : {}),
       };
 
+      // TODO - unify client reads
       const schemas = await prisma.schema.findMany({
         orderBy: { createdAt: "desc" },
         where,

@@ -85,6 +85,7 @@ builder.queryField("aggregateSpans", (t) =>
       }),
     },
     resolve: async (root, args) => {
+      // TODO - unify client reads
       const spans = await prisma.span.findMany({
         where: {
           traceGroup: {
