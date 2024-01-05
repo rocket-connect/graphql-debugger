@@ -1,3 +1,4 @@
+import { ProxyAdapter } from "@graphql-debugger/adapter-proxy";
 import { DebuggerClient } from "@graphql-debugger/client";
 import type { Trace } from "@graphql-debugger/types";
 
@@ -55,7 +56,9 @@ export function ClientProvider({
 
   const [client, setClient] = useState(
     new DebuggerClient({
-      backendUrl: configContext?.backendURL,
+      adapter: new ProxyAdapter({
+        apiURL: configContext?.backendURL as unknown as string,
+      }),
     }),
   );
 
@@ -97,7 +100,9 @@ export function ClientProvider({
   const handleSetClient = (url: string) => {
     setClient(
       new DebuggerClient({
-        backendUrl: url,
+        adapter: new ProxyAdapter({
+          apiURL: url,
+        }),
       }),
     );
   };
@@ -105,7 +110,9 @@ export function ClientProvider({
   useEffect(() => {
     setClient(
       new DebuggerClient({
-        backendUrl: configContext?.backendURL,
+        adapter: new ProxyAdapter({
+          apiURL: configContext?.backendURL as unknown as string,
+        }),
       }),
     );
   }, [setClient, configContext?.backendURL]);

@@ -1,3 +1,4 @@
+import { ProxyAdapter } from "@graphql-debugger/adapter-proxy";
 import { DebuggerClient } from "@graphql-debugger/client";
 import { SetupOtelInput } from "@graphql-debugger/opentelemetry";
 import { PostSchema } from "@graphql-debugger/types";
@@ -28,8 +29,13 @@ export class SchemaExporer {
     const sortedSchema = lexicographicSortSchema(this.schema);
     this.schemaString = printSchema(sortedSchema);
 
-    this.client = new DebuggerClient({
+    const adapter = new ProxyAdapter({
+      backendUrl: "not-used",
       collectorUrl: stripURL(this.url),
+    });
+
+    this.client = new DebuggerClient({
+      adapter,
     });
   }
 
@@ -46,7 +52,10 @@ export class SchemaExporer {
           };
 
           const response = await this.client.schema.createOne({
-            data: body,
+            data: {
+              hash: "not-used",
+              schema: body.schema,
+            },
           });
 
           if (response) {

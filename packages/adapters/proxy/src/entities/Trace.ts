@@ -1,24 +1,26 @@
-import { Trace as TTrace } from "@graphql-debugger/types";
+import { BaseTrace } from "@graphql-debugger/adapter-base";
+import { ListTraceGroupsWhere, Trace } from "@graphql-debugger/types";
 
-import {
-  ClientOptions,
-  ListTraceGroupsDataResponse,
-  ListTraceGroupsVariables,
-} from "../types";
+import { ProxyAdapterOptions } from "..";
 import { executeGraphQLRequest } from "../utils";
 
-export class Trace {
-  private clientOptions: ClientOptions;
+export class ProxyTrace extends BaseTrace {
+  public options: ProxyAdapterOptions;
 
-  constructor(clientOptions: ClientOptions) {
-    this.clientOptions = clientOptions;
+  constructor(options: ProxyAdapterOptions) {
+    super();
+    this.options = options;
   }
 
   public async findMany({
     where,
-    includeSpans = false,
-    includeRootSpan = false,
-  }: ListTraceGroupsVariables = {}): Promise<TTrace[]> {
+    includeSpans,
+    includeRootSpan,
+  }: {
+    where: ListTraceGroupsWhere;
+    includeSpans?: boolean;
+    includeRootSpan?: boolean;
+  }): Promise<Trace[]> {
     const query = /* GraphQL */ `
       query (
         $where: ListTraceGroupsWhere
@@ -65,8 +67,16 @@ export class Trace {
     `;
 
     const { data, errors } = await executeGraphQLRequest<
-      ListTraceGroupsDataResponse,
-      ListTraceGroupsVariables
+      {
+        listTraceGroups: {
+          traces: Trace[];
+        };
+      },
+      {
+        where: ListTraceGroupsWhere;
+        includeSpans?: boolean;
+        includeRootSpan?: boolean;
+      }
     >({
       query,
       variables: {
@@ -74,7 +84,7 @@ export class Trace {
         includeSpans,
         includeRootSpan,
       },
-      url: this.clientOptions.backendUrl as string,
+      url: this.options.backendUrl,
     });
 
     if (errors && errors?.length > 0) {

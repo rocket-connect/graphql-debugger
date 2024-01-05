@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@graphql-debugger/client": "workspace:^",
+    "@graphql-debugger/adapter-proxy": "workspace:^",
     "@graphql-debugger/opentelemetry": "workspace:^",
     "@graphql-debugger/trace-directive": "workspace:^",
     "@graphql-debugger/types": "workspace:^",

@@ -1,0 +1,30 @@
+{
+  "name": "@graphql-debugger/adapter-proxy",
+  "version": "0.0.0-alpha.77",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rocket-connect/graphql-debugger.git"
+  },
+  "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/index.js",
+    "test": "jest --runInBand --forceExit"
+  },
+  "peerDependencies": {
+    "graphql": "^16.0.0 || ^17.0.0"
+  },
+  "dependencies": {
+    "@graphql-debugger/adapter-base": "workspace:^",
+    "axios": "1.6.2"
+  },
+  "devDependencies": {
+    "@graphql-debugger/types": "workspace:^"
+  }
+}

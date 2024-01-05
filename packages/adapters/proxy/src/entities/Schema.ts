@@ -1,4 +1,7 @@
+import { BaseSchema } from "@graphql-debugger/adapter-base";
 import {
+  FindFirstSchemaResponse,
+  FindFirstSchemaWhere,
   ListSchemasResponse,
   ListSchemasWhere,
   PostSchema,
@@ -7,19 +10,20 @@ import {
 
 import axios from "axios";
 
-import { ClientOptions } from "../types";
+import { ProxyAdapterOptions } from "..";
 import { executeGraphQLRequest } from "../utils";
 
-export class Schema {
-  private clientOptions: ClientOptions;
+export class ProxySchema extends BaseSchema {
+  public options: ProxyAdapterOptions;
 
-  constructor(clientOptions: ClientOptions) {
-    this.clientOptions = clientOptions;
+  constructor(options: ProxyAdapterOptions) {
+    super();
+    this.options = options;
   }
 
   public async createOne({ data }: { data: PostSchema["body"] }) {
     const repsonse = await axios.post(
-      `${this.clientOptions.collectorUrl}/v1/schema`,
+      `${this.options.collectorUrl}/v1/schema`,
       data,
       {
         headers: { "Content-Type": "application/json" },
@@ -57,7 +61,7 @@ export class Schema {
       variables: {
         where,
       },
-      url: this.clientOptions.backendUrl as string,
+      url: this.options.backendUrl,
     });
 
     if (errors && errors?.length > 0) {
@@ -65,5 +69,41 @@ export class Schema {
     }
 
     return data.listSchemas.schemas;
+  }
+
+  public async findFirst({
+    where,
+  }: {
+    where: FindFirstSchemaWhere;
+  }): Promise<TSchema | null> {
+    const query = /* GraphQL */ `
+      query FindFirstSchema($where: FirstFirstSchemaWhere) {
+        findFirstSchema(where: $where) {
+          schema {
+            id
+            name
+            hash
+            typeDefs
+            createdAt
+          }
+        }
+      }
+    `;
+
+    const { data, errors } = await executeGraphQLRequest<{
+      findFirstSchema: FindFirstSchemaResponse;
+    }>({
+      query,
+      variables: {
+        where,
+      },
+      url: this.options.backendUrl,
+    });
+
+    if (errors && errors?.length > 0) {
+      throw new Error(errors.map((e) => e.message).join("\n"));
+    }
+
+    return data.findFirstSchema.schema || null;
   }
 }

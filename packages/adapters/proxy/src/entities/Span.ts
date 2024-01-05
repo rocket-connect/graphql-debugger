@@ -1,16 +1,18 @@
+import { BaseSpan } from "@graphql-debugger/adapter-base";
 import {
   AggregateSpansResponse,
   AggregateSpansWhere,
 } from "@graphql-debugger/types";
 
-import { ClientOptions } from "../types";
+import { ProxyAdapterOptions } from "..";
 import { executeGraphQLRequest } from "../utils";
 
-export class Span {
-  private clientOptions: ClientOptions;
+export class ProxySpan extends BaseSpan {
+  public options: ProxyAdapterOptions;
 
-  constructor(clientOptions: ClientOptions) {
-    this.clientOptions = clientOptions;
+  constructor(options: ProxyAdapterOptions) {
+    super();
+    this.options = options;
   }
 
   public async aggregate({
@@ -36,7 +38,7 @@ export class Span {
       variables: {
         where,
       },
-      url: this.clientOptions.backendUrl as string,
+      url: this.options.backendUrl,
     });
 
     if (errors && errors?.length > 0) {

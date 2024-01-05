@@ -1,6 +1,8 @@
 import {
   AggregateSpansResponse,
   AggregateSpansWhere,
+  FindFirstSchemaResponse,
+  FindFirstSchemaWhere,
   ListSchemasResponse,
   ListSchemasWhere,
   ListTraceGroupsResponse,
@@ -20,4 +22,6 @@ export interface Objects {
   ListTraceGroupsResponse: ListTraceGroupsResponse;
   AggregateSpansWhere: AggregateSpansWhere;
   AggregateSpansResponse: AggregateSpansResponse;
+  FindFirstSchemaResponse: FindFirstSchemaResponse;
+  FindFirstSchemaWhere: FindFirstSchemaWhere;
 }
