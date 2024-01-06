@@ -1,4 +1,3 @@
-import { prisma } from "@graphql-debugger/data-access";
 import { ListSchemasResponse, ListSchemasWhere } from "@graphql-debugger/types";
 
 import { InputRef, ObjectRef } from "@pothos/core";
@@ -36,26 +35,17 @@ builder.queryField("listSchemas", (t) =>
         required: false,
       }),
     },
-    resolve: async (root, args) => {
+    resolve: async (root, args, context) => {
       const where = {
         ...(args.where?.id ? { id: args.where.id } : {}),
       };
 
-      // TODO - unify client reads
-      const schemas = await prisma.schema.findMany({
-        orderBy: { createdAt: "desc" },
+      const schemas = await context.client.schema.findMany({
         where,
       });
 
       return {
-        schemas: schemas.map((schema) => ({
-          id: schema.id,
-          name: schema.name as string | undefined,
-          hash: schema.hash,
-          typeDefs: schema.typeDefs,
-          traceGroups: [],
-          createdAt: schema.createdAt.toISOString(),
-        })),
+        schemas,
       };
     },
   }),

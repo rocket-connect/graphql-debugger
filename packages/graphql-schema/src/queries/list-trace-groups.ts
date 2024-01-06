@@ -51,13 +51,7 @@ builder.queryField("listTraceGroups", (t) =>
       });
 
       return {
-        traces: traces.map((trace) => {
-          return {
-            id: trace.id,
-            traceId: trace.traceId,
-            spans: [],
-          };
-        }),
+        traces,
       };
     },
   }),

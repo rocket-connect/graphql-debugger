@@ -11,7 +11,7 @@ export abstract class BaseSchema {
   public abstract createOne({
     data,
   }: {
-    data: PostSchema["body"] & { hash: string };
+    data: PostSchema["body"] & { hash?: string };
   }): Promise<boolean>;
 
   public abstract findMany({

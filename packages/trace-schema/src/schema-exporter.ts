@@ -53,7 +53,6 @@ export class SchemaExporer {
 
           const response = await this.client.schema.createOne({
             data: {
-              hash: "not-used",
               schema: body.schema,
             },
           });

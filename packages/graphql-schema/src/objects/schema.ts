@@ -1,4 +1,3 @@
-import { prisma } from "@graphql-debugger/data-access";
 import { Schema } from "@graphql-debugger/types";
 
 import { ObjectRef } from "@pothos/core";
@@ -15,19 +14,14 @@ export const SchemaObject: ObjectRef<Schema> = builder.objectType("Schema", {
     createdAt: t.exposeString("createdAt"),
     traceGroups: t.field({
       type: [TraceObject],
-      resolve: async (root) => {
-        // TODO - unify client reads
-        const traceGroups = await prisma.traceGroup.findMany({
+      resolve: async (root, args, context) => {
+        const traceGroups = await context.client.trace.findMany({
           where: {
             schemaId: root.id,
           },
         });
 
-        return traceGroups.map((traceGroup) => ({
-          id: traceGroup.id,
-          traceId: traceGroup.traceId,
-          spans: [],
-        }));
+        return traceGroups;
       },
     }),
   }),
