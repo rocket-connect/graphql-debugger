@@ -434,6 +434,9 @@ importers:
       '@graphql-debugger/time':
         specifier: workspace:^
         version: link:../../time
+      '@graphql-debugger/utils':
+        specifier: workspace:^
+        version: link:../../utils
     devDependencies:
       '@graphql-debugger/types':
         specifier: workspace:^
