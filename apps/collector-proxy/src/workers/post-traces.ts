@@ -7,6 +7,7 @@ import {
   PostTraces,
 } from "@graphql-debugger/types";
 
+import { client } from "../client";
 import { debug } from "../debug";
 import { foreignTracesQueue } from "../index";
 
@@ -24,8 +25,8 @@ export async function postTracesWorker(data: PostTraces["body"]) {
       .map((s) => s.graphqlSchemaHash)
       .filter(Boolean) as string[];
 
-    const [existingSpans, traceGroups, schemas] = await Promise.all([
-      prisma.span.findMany({ where: { spanId: { in: spanIds } } }),
+    const [{ spans: existingSpans }, traceGroups, schemas] = await Promise.all([
+      client.span.findMany({ where: { spanIds } }),
       prisma.traceGroup.findMany({ where: { traceId: { in: traceIds } } }),
       prisma.schema.findMany({ where: { hash: { in: schemaHashes } } }),
     ]);
