@@ -1,5 +1,3 @@
-import { prisma } from "@graphql-debugger/data-access";
-import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import type { ForeignTraces } from "@graphql-debugger/types";
 
 import { client } from "../client";
@@ -56,27 +54,14 @@ export async function foreignTracesWorker(
           }
         }
 
-        const startTimeUnixNano = UnixNanoTimeStamp.fromString(
-          span.startTimeUnixNano,
-        );
-        const endTimeUnixNano = UnixNanoTimeStamp.fromString(
-          span.endTimeUnixNano,
-        );
-        const durationNano = UnixNanoTimeStamp.duration(
-          startTimeUnixNano,
-          endTimeUnixNano,
-        );
-
-        // TODO - unify client
-        await prisma.span.create({
-          data: {
+        await client.span.createOne({
+          input: {
             spanId: span.spanId,
             parentSpanId: span.parentSpanId,
             name: span.name,
-            kind: span.kind.toString(),
-            startTimeUnixNano: startTimeUnixNano.toStorage(),
-            endTimeUnixNano: endTimeUnixNano.toStorage(),
-            durationNano: durationNano.toStorage(),
+            kind: span.kind,
+            startTimeUnixNano: span.startTimeUnixNano,
+            endTimeUnixNano: span.endTimeUnixNano,
             traceId: span.traceId,
             traceGroupId,
             errorMessage: span.errorMessage,

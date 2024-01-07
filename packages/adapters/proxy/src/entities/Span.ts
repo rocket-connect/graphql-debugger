@@ -2,6 +2,8 @@ import { BaseSpan } from "@graphql-debugger/adapter-base";
 import {
   AggregateSpansResponse,
   AggregateSpansWhere,
+  CreateSpanInput,
+  CreateSpanResponse,
   ListSpansResponse,
   ListSpansWhere,
 } from "@graphql-debugger/types";
@@ -98,5 +100,35 @@ export class ProxySpan extends BaseSpan {
     }
 
     return data.aggregateSpans;
+  }
+
+  public async createOne({
+    input,
+  }: {
+    input: CreateSpanInput;
+  }): Promise<CreateSpanResponse> {
+    const query = /* GraphQL */ `
+      mutation ($input: CreateSpanInput!) {
+        createSpan(input: $input) {
+          id
+        }
+      }
+    `;
+
+    const { data, errors } = await executeGraphQLRequest<{
+      createSpan: CreateSpanResponse;
+    }>({
+      query,
+      variables: {
+        input,
+      },
+      url: this.options.backendUrl,
+    });
+
+    if (errors && errors?.length > 0) {
+      throw new Error(errors.map((e) => e.message).join("\n"));
+    }
+
+    return data.createSpan;
   }
 }

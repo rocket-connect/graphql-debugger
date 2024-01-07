@@ -28,7 +28,6 @@ export async function postSchemaWorker(data: PostSchema["body"]) {
       return;
     }
 
-    // TODO - unify client
     await client.schema.createOne({
       data: {
         hash,
