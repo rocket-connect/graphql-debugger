@@ -1,5 +1,9 @@
 import { BaseTrace } from "@graphql-debugger/adapter-base";
-import { ListTraceGroupsWhere, Trace } from "@graphql-debugger/types";
+import {
+  FindFirstTraceWhere,
+  ListTraceGroupsWhere,
+  Trace,
+} from "@graphql-debugger/types";
 
 import { ProxyAdapterOptions } from "..";
 import { executeGraphQLRequest } from "../utils";
@@ -10,6 +14,42 @@ export class ProxyTrace extends BaseTrace {
   constructor(options: ProxyAdapterOptions) {
     super();
     this.options = options;
+  }
+
+  public async findFirst({
+    where,
+  }: {
+    where: FindFirstTraceWhere;
+  }): Promise<Trace | null> {
+    const query = /* GraphQL */ `
+      query ($where: FindFirstTraceWhere) {
+        findFirstTrace(where: $where) {
+          id
+          traceId
+        }
+      }
+    `;
+
+    const { data, errors } = await executeGraphQLRequest<
+      {
+        findFirstTrace: Trace | null;
+      },
+      {
+        where: FindFirstTraceWhere;
+      }
+    >({
+      query,
+      variables: {
+        where,
+      },
+      url: this.options.backendUrl,
+    });
+
+    if (errors && errors?.length > 0) {
+      throw new Error(errors.map((e) => e.message).join("\n"));
+    }
+
+    return data.findFirstTrace;
   }
 
   public async findMany({

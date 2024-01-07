@@ -20,7 +20,7 @@ const FindFirstSchemaWhereInput: InputRef<FindFirstSchemaWhere> =
 const FindFirstSchemaResponseObject: ObjectRef<FindFirstSchemaResponse> =
   builder.objectType("FindFirstSchemaResponse", {
     fields: (t) => ({
-      schemas: t.field({
+      schema: t.field({
         type: SchemaObject,
         nullable: true,
         resolve: (root) => root.schema,

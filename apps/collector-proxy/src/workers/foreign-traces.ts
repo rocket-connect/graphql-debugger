@@ -2,6 +2,7 @@ import { prisma } from "@graphql-debugger/data-access";
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import type { ForeignTraces } from "@graphql-debugger/types";
 
+import { client } from "../client";
 import { debug } from "../debug";
 
 export async function foreignTracesWorker(
@@ -15,11 +16,9 @@ export async function foreignTracesWorker(
     const spanIds = spans.map((s) => s.spanId);
     const traceIds = spans.map((s) => s.traceId);
 
-    const [existingSpans, traceGroups] = await Promise.all([
-      // TODO - unify client
-      prisma.span.findMany({ where: { spanId: { in: spanIds } } }),
-      // TODO - unify client
-      prisma.traceGroup.findMany({ where: { traceId: { in: traceIds } } }),
+    const [{ spans: existingSpans }, traceGroups] = await Promise.all([
+      client.span.findMany({ where: { spanIds } }),
+      client.trace.findMany({ where: { traceIds } }),
     ]);
 
     const spansToBeCreated = spans.filter(
@@ -37,8 +36,7 @@ export async function foreignTracesWorker(
           traceGroupId = foundTraceGroup?.id;
         } else {
           try {
-            // TODO - unify client
-            const foundTraceGroup = await prisma.traceGroup.findFirst({
+            const foundTraceGroup = await client.trace.findFirst({
               where: {
                 traceId: span.traceId,
               },

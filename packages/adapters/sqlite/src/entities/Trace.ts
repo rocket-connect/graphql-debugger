@@ -1,10 +1,36 @@
 import { BaseTrace } from "@graphql-debugger/adapter-base";
 import { prisma } from "@graphql-debugger/data-access";
-import { ListTraceGroupsWhere, Trace } from "@graphql-debugger/types";
+import {
+  FindFirstTraceWhere,
+  ListTraceGroupsWhere,
+  Trace,
+} from "@graphql-debugger/types";
 
 export class SQLiteTrace extends BaseTrace {
   constructor() {
     super();
+  }
+
+  public async findFirst({
+    where,
+  }: {
+    where: FindFirstTraceWhere;
+  }): Promise<Trace | null> {
+    const trace = await prisma.traceGroup.findFirst({
+      where: {
+        traceId: where.traceId,
+      },
+    });
+
+    if (!trace) {
+      return null;
+    }
+
+    return {
+      id: trace.id,
+      traceId: trace.traceId,
+      spans: [],
+    };
   }
 
   public async findMany(args: {
