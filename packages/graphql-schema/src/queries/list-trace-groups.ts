@@ -20,6 +20,9 @@ const ListTraceGroupsWhereInput: InputRef<ListTraceGroupsWhere> =
       rootSpanName: t.string({
         required: false,
       }),
+      traceIds: t.stringList({
+        required: false,
+      }),
     }),
   });
 
@@ -47,6 +50,7 @@ builder.queryField("listTraceGroups", (t) =>
           id: args.where?.id,
           schemaId: args.where?.schemaId,
           rootSpanName: args.where?.rootSpanName,
+          traceIds: args.where?.traceIds,
         },
       });
 

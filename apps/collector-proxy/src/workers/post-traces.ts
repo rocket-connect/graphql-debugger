@@ -27,7 +27,8 @@ export async function postTracesWorker(data: PostTraces["body"]) {
 
     const [{ spans: existingSpans }, traceGroups, schemas] = await Promise.all([
       client.span.findMany({ where: { spanIds } }),
-      prisma.traceGroup.findMany({ where: { traceId: { in: traceIds } } }),
+      client.trace.findMany({ where: { traceIds } }),
+      // TODO - unify client
       prisma.schema.findMany({ where: { hash: { in: schemaHashes } } }),
     ]);
 
@@ -63,6 +64,7 @@ export async function postTracesWorker(data: PostTraces["body"]) {
           traceGroupId = foundTraceGroup?.id;
         } else {
           try {
+            // TODO - unify client
             const createdTraceGroup = await prisma.traceGroup.create({
               data: {
                 traceId: span.traceId,
@@ -75,6 +77,7 @@ export async function postTracesWorker(data: PostTraces["body"]) {
                 (s) => s.hash === span.graphqlSchemaHash,
               );
               if (schema) {
+                // TODO - unify client
                 await prisma.traceGroup.update({
                   where: {
                     id: traceGroupId,
@@ -86,7 +89,7 @@ export async function postTracesWorker(data: PostTraces["body"]) {
               }
             }
           } catch (error) {
-            // TODO - unify client reads
+            // TODO - unify client
             const foundTraceGroup = await prisma.traceGroup.findFirst({
               where: {
                 traceId: span.traceId,
@@ -111,6 +114,7 @@ export async function postTracesWorker(data: PostTraces["body"]) {
           endTimeUnixNano,
         );
 
+        // TODO - unify client
         await prisma.span.create({
           data: {
             spanId: span.spanId,

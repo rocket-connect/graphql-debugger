@@ -75,7 +75,7 @@ describe("trace-viewer", () => {
       }
       await sleep(200);
 
-      // TODO - unify client reads
+      // TODO - unify client
       const traces = await prisma.traceGroup.findMany({
         where: {
           schemaId: dbSchema.id,

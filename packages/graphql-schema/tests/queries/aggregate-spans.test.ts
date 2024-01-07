@@ -83,7 +83,7 @@ describe("queries/aggregate-spans", () => {
 
     await sleep(2000); // wait for collector to injest the traces
 
-    // TODO - unify client reads
+    // TODO - unify client
     // The first schema as we clearDB before each test
     const schema = await prisma.schema.findFirst({
       include: { traceGroups: true },

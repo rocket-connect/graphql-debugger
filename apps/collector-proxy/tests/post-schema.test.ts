@@ -45,6 +45,7 @@ describe("POST /v1/schema", () => {
 
     const hash = hashSchema(executableSchema);
 
+    // TODO - unify client
     await prisma.schema.create({
       data: {
         hash,
@@ -79,7 +80,7 @@ describe("POST /v1/schema", () => {
       }),
     );
 
-    // TODO - unify client reads
+    // TODO - unify client
     const foundSchema = await prisma.schema.findFirst({
       where: {
         hash,

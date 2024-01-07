@@ -42,6 +42,10 @@ export class SQLiteTrace extends BaseTrace {
       });
     }
 
+    if (args.where?.traceIds) {
+      whereConditions.push({ traceId: { in: args.where.traceIds } });
+    }
+
     const where = {
       AND: whereConditions,
     };

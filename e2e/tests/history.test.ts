@@ -72,6 +72,7 @@ describe("history", () => {
       await page.reload();
       await sleep(200);
 
+      // TODO - unify client
       const traces = await prisma.traceGroup.findMany({
         where: {
           schemaId: dbSchema.id,
