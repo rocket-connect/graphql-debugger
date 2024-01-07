@@ -20,6 +20,11 @@ export class SQLiteTrace extends BaseTrace {
       where: {
         traceId: where.traceId,
       },
+      include: {
+        ...(where.includeSpans && {
+          spans: true,
+        }),
+      },
     });
 
     if (!trace) {

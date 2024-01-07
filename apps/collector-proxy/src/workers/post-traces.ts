@@ -89,8 +89,7 @@ export async function postTracesWorker(data: PostTraces["body"]) {
               }
             }
           } catch (error) {
-            // TODO - unify client
-            const foundTraceGroup = await prisma.traceGroup.findFirst({
+            const foundTraceGroup = await client.trace.findFirst({
               where: {
                 traceId: span.traceId,
               },

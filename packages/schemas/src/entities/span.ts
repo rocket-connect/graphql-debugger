@@ -20,6 +20,7 @@ export const SpanSchema = z.object({
   graphqlContext: z.string().optional().nullable(),
   graphqlOperationName: z.string().optional().nullable(),
   graphqlOperationType: z.string().optional().nullable(),
+  isGraphQLRootSpan: z.boolean().optional().nullable(),
   createdAt: z.string(),
   updatedAt: z.string(),
 });

@@ -1,4 +1,3 @@
-import { prisma } from "@graphql-debugger/data-access";
 import type { PostSchema } from "@graphql-debugger/types";
 import { hashSchema } from "@graphql-debugger/utils";
 
@@ -19,8 +18,7 @@ export async function postSchemaWorker(data: PostSchema["body"]) {
 
     const hash = hashSchema(executableSchema);
 
-    // TODO - unify client
-    const foundSchema = await prisma.schema.findFirst({
+    const foundSchema = await client.schema.findFirst({
       where: {
         hash,
       },
