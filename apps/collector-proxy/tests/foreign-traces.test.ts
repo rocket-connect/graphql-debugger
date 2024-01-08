@@ -219,6 +219,8 @@ describe("foreign traces", () => {
     const traceGroup = await client.trace.findFirst({
       where: {
         traceId: payload.resourceSpans[0].scopeSpans[0].spans[0].traceId,
+      },
+      options: {
         includeSpans: true,
       },
     });

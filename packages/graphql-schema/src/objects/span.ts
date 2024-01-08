@@ -27,6 +27,7 @@ export const SpanObject: ObjectRef<Span> = builder.objectType("Span", {
     graphqlOperationType: t.exposeString("graphqlOperationType", {
       nullable: true,
     }),
+    graphqlSchemaHash: t.exposeString("graphqlSchemaHash", { nullable: true }),
     errorMessage: t.exposeString("errorMessage", { nullable: true }),
     errorStack: t.exposeString("errorStack", { nullable: true }),
     createdAt: t.exposeString("createdAt"),

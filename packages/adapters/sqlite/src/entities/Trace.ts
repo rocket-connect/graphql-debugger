@@ -3,6 +3,7 @@ import { prisma } from "@graphql-debugger/data-access";
 import {
   CreateTraceInput,
   CreateTraceResponse,
+  FindFirstTraceOptions,
   FindFirstTraceWhere,
   ListTraceGroupsWhere,
   Trace,
@@ -10,6 +11,7 @@ import {
   UpdateTraceResponse,
   UpdateTraceWhere,
 } from "@graphql-debugger/types";
+import { dbSpanToNetwork } from "@graphql-debugger/utils";
 
 export class SQLiteTrace extends BaseTrace {
   constructor() {
@@ -18,17 +20,21 @@ export class SQLiteTrace extends BaseTrace {
 
   public async findFirst({
     where,
+    options,
   }: {
     where: FindFirstTraceWhere;
+    options?: FindFirstTraceOptions;
   }): Promise<Trace | null> {
     const trace = await prisma.traceGroup.findFirst({
       where: {
         traceId: where.traceId,
       },
       include: {
-        ...(where.includeSpans && {
-          spans: true,
-        }),
+        ...(options?.includeSpans
+          ? {
+              spans: true,
+            }
+          : {}),
       },
     });
 
@@ -39,7 +45,15 @@ export class SQLiteTrace extends BaseTrace {
     return {
       id: trace.id,
       traceId: trace.traceId,
-      spans: [],
+      ...(options?.includeSpans
+        ? {
+            spans: trace?.spans?.map((span) => {
+              return dbSpanToNetwork(span);
+            }),
+          }
+        : {
+            spans: [],
+          }),
     };
   }
 

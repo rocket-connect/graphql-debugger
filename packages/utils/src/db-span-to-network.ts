@@ -28,5 +28,6 @@ export function dbSpanToNetwork(dbSpan: DBSpan): NetworkSpan {
     isForeign: dbSpan.isForeign,
     attributes: dbSpan.attributes as string,
     isGraphQLRootSpan: dbSpan.isGraphQLRootSpan,
+    graphqlSchemaHash: dbSpan.graphqlSchemaHash,
   };
 }

@@ -1,6 +1,7 @@
 import {
   CreateTraceInput,
   CreateTraceResponse,
+  FindFirstTraceOptions,
   FindFirstTraceWhere,
   ListTraceGroupsWhere,
   Trace,
@@ -16,6 +17,7 @@ export abstract class BaseTrace {
     where,
   }: {
     where: FindFirstTraceWhere;
+    options?: FindFirstTraceOptions;
   }): Promise<Trace | null>;
 
   public abstract findMany({

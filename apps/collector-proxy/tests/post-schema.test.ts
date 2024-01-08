@@ -1,4 +1,3 @@
-import { prisma } from "@graphql-debugger/data-access";
 import { hashSchema } from "@graphql-debugger/utils";
 
 import { faker } from "@faker-js/faker";
@@ -6,6 +5,7 @@ import { makeExecutableSchema } from "@graphql-tools/schema";
 import { describe, expect, test } from "@jest/globals";
 import { parse, print } from "graphql";
 
+import { client } from "../src/client";
 import { request } from "./utils";
 
 describe("POST /v1/schema", () => {
@@ -45,11 +45,10 @@ describe("POST /v1/schema", () => {
 
     const hash = hashSchema(executableSchema);
 
-    // TODO - unify client
-    await prisma.schema.create({
+    await client.schema.createOne({
       data: {
         hash,
-        typeDefs: print(parse(schema)),
+        schema: print(parse(schema)),
       },
     });
 
@@ -80,8 +79,7 @@ describe("POST /v1/schema", () => {
       }),
     );
 
-    // TODO - unify client
-    const foundSchema = await prisma.schema.findFirst({
+    const foundSchema = await client.schema.findFirst({
       where: {
         hash,
       },

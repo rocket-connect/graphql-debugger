@@ -2,6 +2,7 @@ import { BaseTrace } from "@graphql-debugger/adapter-base";
 import {
   CreateTraceInput,
   CreateTraceResponse,
+  FindFirstTraceOptions,
   FindFirstTraceWhere,
   ListTraceGroupsWhere,
   Trace,
@@ -23,12 +24,14 @@ export class ProxyTrace extends BaseTrace {
 
   public async findFirst({
     where,
+    options,
   }: {
     where: FindFirstTraceWhere;
+    options?: FindFirstTraceOptions;
   }): Promise<Trace | null> {
     const query = /* GraphQL */ `
-      query ($where: FindFirstTraceWhere) {
-        findFirstTrace(where: $where) {
+      query ($where: FindFirstTraceWhere, $options: FindFirstTraceOptions) {
+        findFirstTrace(where: $where, options: $options) {
           id
           traceId
         }
@@ -41,11 +44,13 @@ export class ProxyTrace extends BaseTrace {
       },
       {
         where: FindFirstTraceWhere;
+        options?: FindFirstTraceOptions;
       }
     >({
       query,
       variables: {
         where,
+        options,
       },
       url: this.options.backendUrl,
     });
