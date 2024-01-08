@@ -8,7 +8,7 @@ export const adapterType = "proxy";
 
 export interface ProxyAdapterOptions {
   backendUrl: string;
-  collectorUrl: string;
+  collectorUrl?: string;
 }
 
 export class ProxyAdapter extends BaseAdapter {
