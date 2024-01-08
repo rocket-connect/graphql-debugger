@@ -24,6 +24,9 @@ export abstract class BaseAdapter {
     this.trace = trace;
     this.adapterType = adapterType;
   }
+
+  // TODO - this should be removed or restricted to testing only
+  public abstract clearDB(): Promise<boolean>;
 }
 
 export { BaseSchema, BaseSpan, BaseTrace };

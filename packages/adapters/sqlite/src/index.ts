@@ -1,4 +1,5 @@
 import { BaseAdapter } from "@graphql-debugger/adapter-base";
+import { clearDB } from "@graphql-debugger/data-access";
 
 import { SQLiteSchema } from "./entities/Schema";
 import { SQLiteSpan } from "./entities/Span";
@@ -26,5 +27,11 @@ export class SQLiteAdapter extends BaseAdapter {
     this.schema = schema;
     this.span = span;
     this.trace = trace;
+  }
+
+  public async clearDB(): Promise<boolean> {
+    await clearDB();
+
+    return true;
   }
 }

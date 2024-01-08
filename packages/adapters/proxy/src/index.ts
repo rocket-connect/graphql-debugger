@@ -34,4 +34,9 @@ export class ProxyAdapter extends BaseAdapter {
     this.span = span;
     this.trace = trace;
   }
+
+  public async clearDB(): Promise<boolean> {
+    console.warn("clearDB not implemented for proxy adapter");
+    return Promise.resolve(true);
+  }
 }

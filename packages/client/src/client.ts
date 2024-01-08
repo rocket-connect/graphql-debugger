@@ -7,7 +7,7 @@ export const DEFAULT_BACKEND_URL = "http://localhost:16686";
 export const DEFAULT_COLLECTOR_URL = "http://localhost:4318";
 
 export class DebuggerClient {
-  private adapter: BaseAdapter;
+  public adapter: BaseAdapter;
 
   constructor(clientOptions: ClientOptions = {}) {
     const adapter = clientOptions.adapter || new SQLiteAdapter();

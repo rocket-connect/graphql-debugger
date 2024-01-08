@@ -1,5 +1,5 @@
-import { clearDB } from "@graphql-debugger/data-access";
+import { client } from "../src/client";
 
 beforeEach(async () => {
-  await clearDB();
+  await client.adapter.clearDB();
 });
