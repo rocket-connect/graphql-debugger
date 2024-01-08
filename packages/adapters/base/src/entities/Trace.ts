@@ -4,6 +4,7 @@ import {
   FindFirstTraceOptions,
   FindFirstTraceWhere,
   ListTraceGroupsWhere,
+  Span,
   Trace,
   UpdateTraceInput,
   UpdateTraceResponse,
@@ -28,7 +29,7 @@ export abstract class BaseTrace {
     where: ListTraceGroupsWhere;
     includeSpans?: boolean;
     includeRootSpan?: boolean;
-  }): Promise<Trace[]>;
+  }): Promise<(Trace & { spans: Span[] })[]>;
 
   public abstract createOne({
     input,

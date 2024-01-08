@@ -5,6 +5,7 @@ import {
   FindFirstTraceOptions,
   FindFirstTraceWhere,
   ListTraceGroupsWhere,
+  Span,
   Trace,
   UpdateTraceInput,
   UpdateTraceResponse,
@@ -70,7 +71,7 @@ export class ProxyTrace extends BaseTrace {
     where: ListTraceGroupsWhere;
     includeSpans?: boolean;
     includeRootSpan?: boolean;
-  }): Promise<Trace[]> {
+  }): Promise<(Trace & { spans: Span[] })[]> {
     const query = /* GraphQL */ `
       query (
         $where: ListTraceGroupsWhere

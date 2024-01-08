@@ -1,6 +1,4 @@
-import { prisma } from "@graphql-debugger/data-access";
 import {
-  dbSpanToNetwork,
   getTraceStart,
   isTraceError,
   sumTraceTime,
@@ -8,6 +6,7 @@ import {
 
 import { faker } from "@faker-js/faker";
 
+import { client } from "../src/client";
 import { Schemas } from "./components/schemas";
 import { Traces } from "./components/traces";
 import { Dashboard } from "./pages/dashboard";
@@ -82,14 +81,11 @@ describe("traces", () => {
       await page.reload();
       await sleep(500);
 
-      // TODO - unify client
-      const traces = await prisma.traceGroup.findMany({
+      const traces = await client.trace.findMany({
         where: {
           schemaId: dbSchema.id,
         },
-        include: {
-          spans: true,
-        },
+        includeSpans: true,
       });
 
       const tracesComponent = new Traces({
@@ -118,7 +114,7 @@ describe("traces", () => {
         const duration = sumTraceTime({
           id: trace.id,
           traceId: trace.traceId,
-          spans: trace.spans.map((span) => dbSpanToNetwork(span)),
+          spans: trace.spans,
         });
 
         const traceDurationSIUnits = duration?.toSIUnits();
@@ -128,7 +124,7 @@ describe("traces", () => {
         const startTimeUnixNano = getTraceStart({
           id: trace.id,
           traceId: trace.traceId,
-          spans: trace.spans.map((span) => dbSpanToNetwork(span)),
+          spans: trace.spans,
         });
         expect(uiTrace?.start).toEqual(
           startTimeUnixNano.formatUnixNanoTimestamp(),

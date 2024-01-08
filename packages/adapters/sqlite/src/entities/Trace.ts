@@ -6,6 +6,7 @@ import {
   FindFirstTraceOptions,
   FindFirstTraceWhere,
   ListTraceGroupsWhere,
+  Span,
   Trace,
   UpdateTraceInput,
   UpdateTraceResponse,
@@ -61,7 +62,7 @@ export class SQLiteTrace extends BaseTrace {
     where: ListTraceGroupsWhere;
     includeSpans?: boolean;
     includeRootSpan?: boolean;
-  }): Promise<Trace[]> {
+  }): Promise<(Trace & { spans: Span[] })[]> {
     const whereConditions: any = [
       {
         spans: {

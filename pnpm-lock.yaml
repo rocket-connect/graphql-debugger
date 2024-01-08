@@ -363,9 +363,15 @@ importers:
 
   e2e:
     dependencies:
+      '@graphql-debugger/adapter-sqlite':
+        specifier: workspace:^
+        version: link:../packages/adapters/sqlite
       '@graphql-debugger/backend':
         specifier: workspace:^
         version: link:../apps/backend
+      '@graphql-debugger/client':
+        specifier: workspace:^
+        version: link:../packages/client
       '@graphql-debugger/collector-proxy':
         specifier: workspace:^
         version: link:../apps/collector-proxy

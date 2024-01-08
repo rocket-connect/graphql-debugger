@@ -1,7 +1,6 @@
-import { prisma } from "@graphql-debugger/data-access";
-
 import { faker } from "@faker-js/faker";
 
+import { client } from "../src/client";
 import { Favourites } from "./components/favourites";
 import { Schemas } from "./components/schemas";
 import { Traces } from "./components/traces";
@@ -66,14 +65,11 @@ describe("favourites", () => {
       await page.reload();
       await sleep(200);
 
-      // TODO - unify client
-      const traces = await prisma.traceGroup.findMany({
+      const traces = await client.trace.findMany({
         where: {
           schemaId: dbSchema.id,
         },
-        include: {
-          spans: true,
-        },
+        includeSpans: true,
       });
 
       const tracesComponent = new Traces({ browser, page: dashboardPage });
