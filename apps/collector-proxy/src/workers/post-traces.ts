@@ -27,8 +27,7 @@ export async function postTracesWorker(data: PostTraces["body"]) {
     const [{ spans: existingSpans }, traceGroups, schemas] = await Promise.all([
       client.span.findMany({ where: { spanIds } }),
       client.trace.findMany({ where: { traceIds } }),
-      // TODO - unify client
-      prisma.schema.findMany({ where: { hash: { in: schemaHashes } } }),
+      client.schema.findMany({ where: { schemaHashes } }),
     ]);
 
     const isExistingSpan = (span: ExtractedSpan) => {

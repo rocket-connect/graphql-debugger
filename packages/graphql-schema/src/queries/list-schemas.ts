@@ -12,6 +12,9 @@ const ListSchemasWhereInput: InputRef<ListSchemasWhere> = builder.inputType(
       id: t.string({
         required: false,
       }),
+      schemaHashes: t.stringList({
+        required: false,
+      }),
     }),
   },
 );
@@ -38,6 +41,9 @@ builder.queryField("listSchemas", (t) =>
     resolve: async (root, args, context) => {
       const where = {
         ...(args.where?.id ? { id: args.where.id } : {}),
+        ...(args.where?.schemaHashes
+          ? { schemaHashes: args.where.schemaHashes }
+          : {}),
       };
 
       const schemas = await context.client.schema.findMany({

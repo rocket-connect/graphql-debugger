@@ -32,6 +32,9 @@ export class SQLiteSchema extends BaseSchema {
   ): Promise<TSchema[]> {
     const where = {
       ...(args.where?.id ? { id: args.where.id } : {}),
+      ...(args.where?.schemaHashes
+        ? { hash: { in: args.where.schemaHashes } }
+        : {}),
     };
     const schemas = await prisma.schema.findMany({
       orderBy: { createdAt: "desc" },
