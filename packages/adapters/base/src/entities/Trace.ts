@@ -1,4 +1,6 @@
 import {
+  CreateTraceInput,
+  CreateTraceResponse,
   FindFirstTraceWhere,
   ListTraceGroupsWhere,
   Trace,
@@ -22,4 +24,10 @@ export abstract class BaseTrace {
     includeSpans?: boolean;
     includeRootSpan?: boolean;
   }): Promise<Trace[]>;
+
+  public abstract createOne({
+    input,
+  }: {
+    input: CreateTraceInput;
+  }): Promise<CreateTraceResponse>;
 }

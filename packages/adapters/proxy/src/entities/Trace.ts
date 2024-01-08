@@ -1,5 +1,7 @@
 import { BaseTrace } from "@graphql-debugger/adapter-base";
 import {
+  CreateTraceInput,
+  CreateTraceResponse,
   FindFirstTraceWhere,
   ListTraceGroupsWhere,
   Trace,
@@ -132,5 +134,43 @@ export class ProxyTrace extends BaseTrace {
     }
 
     return data.listTraceGroups.traces;
+  }
+
+  public async createOne({
+    input,
+  }: {
+    input: CreateTraceInput;
+  }): Promise<CreateTraceResponse> {
+    const query = /* GraphQL */ `
+      mutation ($input: CreateTraceInput!) {
+        createTrace(input: $input) {
+          trace {
+            id
+            traceId
+          }
+        }
+      }
+    `;
+
+    const { data, errors } = await executeGraphQLRequest<
+      {
+        createTrace: CreateTraceResponse;
+      },
+      {
+        input: CreateTraceInput;
+      }
+    >({
+      query,
+      variables: {
+        input,
+      },
+      url: this.options.backendUrl,
+    });
+
+    if (errors && errors?.length > 0) {
+      throw new Error(errors.map((e) => e.message).join("\n"));
+    }
+
+    return data.createTrace;
   }
 }

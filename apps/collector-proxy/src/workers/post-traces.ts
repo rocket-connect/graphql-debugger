@@ -62,13 +62,12 @@ export async function postTracesWorker(data: PostTraces["body"]) {
           traceGroupId = foundTraceGroup?.id;
         } else {
           try {
-            // TODO - unify client
-            const createdTraceGroup = await prisma.traceGroup.create({
-              data: {
+            const createdTraceGroup = await client.trace.createOne({
+              input: {
                 traceId: span.traceId,
               },
             });
-            traceGroupId = createdTraceGroup.id;
+            traceGroupId = createdTraceGroup.trace.id;
 
             if (span.graphqlSchemaHash) {
               const schema = schemas.find(

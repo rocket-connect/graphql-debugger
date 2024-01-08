@@ -3,6 +3,8 @@ import {
   AggregateSpansWhere,
   CreateSpanInput,
   CreateSpanResponse,
+  CreateTraceInput,
+  CreateTraceResponse,
   FindFirstSchemaResponse,
   FindFirstSchemaWhere,
   FindFirstTraceResponse,
@@ -36,4 +38,6 @@ export interface Objects {
   FindFirstTraceWhere: FindFirstTraceWhere;
   CreateSpanInput: CreateSpanInput;
   CreateSpanResponse: CreateSpanResponse;
+  CreateTraceInput: CreateTraceInput;
+  CreateTraceResponse: CreateTraceResponse;
 }

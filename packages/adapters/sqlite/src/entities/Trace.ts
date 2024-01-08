@@ -1,6 +1,8 @@
 import { BaseTrace } from "@graphql-debugger/adapter-base";
 import { prisma } from "@graphql-debugger/data-access";
 import {
+  CreateTraceInput,
+  CreateTraceResponse,
   FindFirstTraceWhere,
   ListTraceGroupsWhere,
   Trace,
@@ -94,5 +96,25 @@ export class SQLiteTrace extends BaseTrace {
         spans: [],
       };
     });
+  }
+
+  public async createOne({
+    input,
+  }: {
+    input: CreateTraceInput;
+  }): Promise<CreateTraceResponse> {
+    const trace = await prisma.traceGroup.create({
+      data: {
+        traceId: input.traceId,
+      },
+    });
+
+    return {
+      trace: {
+        id: trace.id,
+        traceId: trace.traceId,
+        spans: [],
+      },
+    };
   }
 }
