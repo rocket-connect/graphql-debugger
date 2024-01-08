@@ -4,6 +4,9 @@ import {
   FindFirstTraceWhere,
   ListTraceGroupsWhere,
   Trace,
+  UpdateTraceInput,
+  UpdateTraceResponse,
+  UpdateTraceWhere,
 } from "@graphql-debugger/types";
 
 export abstract class BaseTrace {
@@ -30,4 +33,12 @@ export abstract class BaseTrace {
   }: {
     input: CreateTraceInput;
   }): Promise<CreateTraceResponse>;
+
+  public abstract updateOne({
+    where,
+    input,
+  }: {
+    where: UpdateTraceWhere;
+    input: UpdateTraceInput;
+  }): Promise<UpdateTraceResponse>;
 }

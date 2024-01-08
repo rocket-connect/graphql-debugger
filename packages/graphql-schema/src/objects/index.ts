@@ -18,6 +18,9 @@ import {
   Schema,
   Span,
   Trace,
+  UpdateTraceInput,
+  UpdateTraceResponse,
+  UpdateTraceWhere,
 } from "@graphql-debugger/types";
 
 export interface Objects {
@@ -40,4 +43,7 @@ export interface Objects {
   CreateSpanResponse: CreateSpanResponse;
   CreateTraceInput: CreateTraceInput;
   CreateTraceResponse: CreateTraceResponse;
+  UpdateTraceInput: UpdateTraceInput;
+  UpdateTraceResponse: UpdateTraceResponse;
+  UpdateTraceWhere: UpdateTraceWhere;
 }

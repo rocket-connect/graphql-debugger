@@ -6,6 +6,9 @@ import {
   FindFirstTraceWhere,
   ListTraceGroupsWhere,
   Trace,
+  UpdateTraceInput,
+  UpdateTraceResponse,
+  UpdateTraceWhere,
 } from "@graphql-debugger/types";
 
 export class SQLiteTrace extends BaseTrace {
@@ -106,6 +109,31 @@ export class SQLiteTrace extends BaseTrace {
     const trace = await prisma.traceGroup.create({
       data: {
         traceId: input.traceId,
+      },
+    });
+
+    return {
+      trace: {
+        id: trace.id,
+        traceId: trace.traceId,
+        spans: [],
+      },
+    };
+  }
+
+  public async updateOne({
+    where,
+    input,
+  }: {
+    where: UpdateTraceWhere;
+    input: UpdateTraceInput;
+  }): Promise<UpdateTraceResponse> {
+    const trace = await prisma.traceGroup.update({
+      where: {
+        id: where.id,
+      },
+      data: {
+        schemaId: input.schemaId,
       },
     });
 

@@ -1,4 +1,3 @@
-import { prisma } from "@graphql-debugger/data-access";
 import { extractSpans } from "@graphql-debugger/opentelemetry";
 import {
   AttributeNames,
@@ -74,12 +73,11 @@ export async function postTracesWorker(data: PostTraces["body"]) {
                 (s) => s.hash === span.graphqlSchemaHash,
               );
               if (schema) {
-                // TODO - unify client
-                await prisma.traceGroup.update({
+                await client.trace.updateOne({
                   where: {
                     id: traceGroupId,
                   },
-                  data: {
+                  input: {
                     schemaId: schema.id,
                   },
                 });

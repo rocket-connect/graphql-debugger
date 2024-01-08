@@ -5,6 +5,9 @@ import {
   FindFirstTraceWhere,
   ListTraceGroupsWhere,
   Trace,
+  UpdateTraceInput,
+  UpdateTraceResponse,
+  UpdateTraceWhere,
 } from "@graphql-debugger/types";
 
 import { ProxyAdapterOptions } from "..";
@@ -172,5 +175,47 @@ export class ProxyTrace extends BaseTrace {
     }
 
     return data.createTrace;
+  }
+
+  public async updateOne({
+    where,
+    input,
+  }: {
+    where: UpdateTraceWhere;
+    input: UpdateTraceInput;
+  }): Promise<UpdateTraceResponse> {
+    const query = /* GraphQL */ `
+      mutation ($where: UpdateTraceWhere!, $input: UpdateTraceInput!) {
+        updateTrace(where: $where, input: $input) {
+          trace {
+            id
+            traceId
+          }
+        }
+      }
+    `;
+
+    const { data, errors } = await executeGraphQLRequest<
+      {
+        updateTrace: UpdateTraceResponse;
+      },
+      {
+        where: UpdateTraceWhere;
+        input: UpdateTraceInput;
+      }
+    >({
+      query,
+      variables: {
+        where,
+        input,
+      },
+      url: this.options.backendUrl,
+    });
+
+    if (errors && errors?.length > 0) {
+      throw new Error(errors.map((e) => e.message).join("\n"));
+    }
+
+    return data.updateTrace;
   }
 }
