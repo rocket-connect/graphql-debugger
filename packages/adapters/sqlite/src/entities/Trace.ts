@@ -124,6 +124,15 @@ export class SQLiteTrace extends BaseTrace {
     const trace = await prisma.traceGroup.create({
       data: {
         traceId: input.traceId,
+        ...(input.schemaId
+          ? {
+              schema: {
+                connect: {
+                  id: input.schemaId,
+                },
+              },
+            }
+          : {}),
       },
     });
 

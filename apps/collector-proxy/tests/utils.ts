@@ -1,17 +1,13 @@
 import supertest from "supertest";
 
-import {
-  app,
-  foreignTracesQueue,
-  postSchemaQueue,
-  postTracesQueue,
-} from "../src/index";
+import { client } from "../src/client";
+import { app, start } from "../src/index";
 
 export function request() {
   Promise.all([
-    postTracesQueue.start(),
-    postSchemaQueue.start(),
-    foreignTracesQueue.start(),
+    start({
+      client,
+    }),
   ])
     .then(() => {})
     .catch((e) => {

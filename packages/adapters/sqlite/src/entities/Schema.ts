@@ -1,6 +1,7 @@
 import { BaseSchema } from "@graphql-debugger/adapter-base";
 import { prisma } from "@graphql-debugger/data-access";
 import {
+  FindFirstSchemaOptions,
   FindFirstSchemaWhere,
   ListSchemasWhere,
   PostSchema,
@@ -56,12 +57,17 @@ export class SQLiteSchema extends BaseSchema {
 
   public async findFirst({
     where,
+    options,
   }: {
-    where: FindFirstSchemaWhere;
+    where?: FindFirstSchemaWhere;
+    options?: FindFirstSchemaOptions;
   }): Promise<TSchema | null> {
     const schema = await prisma.schema.findFirst({
       where: {
-        hash: where.hash,
+        ...(where?.hash ? { hash: where.hash } : {}),
+      },
+      include: {
+        ...(options?.includeTraces ? { traceGroups: true } : {}),
       },
     });
 
@@ -74,7 +80,12 @@ export class SQLiteSchema extends BaseSchema {
       name: schema.name as string | undefined,
       hash: schema.hash,
       typeDefs: schema.typeDefs,
-      traceGroups: [],
+      traceGroups: (schema.traceGroups || []).map((traceGroup) => ({
+        id: traceGroup.id,
+        schemaId: traceGroup.schemaId,
+        traceId: traceGroup.traceId,
+        spans: [],
+      })),
       createdAt: schema.createdAt.toISOString(),
     };
   }

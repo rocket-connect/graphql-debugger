@@ -1,8 +1,9 @@
-import { Schema, prisma } from "@graphql-debugger/data-access";
+import { DebuggerClient } from "@graphql-debugger/client";
 import {
   GraphQLOTELContext,
   traceSchema,
 } from "@graphql-debugger/trace-schema";
+import { Schema } from "@graphql-debugger/types";
 import { hashSchema } from "@graphql-debugger/utils";
 
 import { faker } from "@faker-js/faker";
@@ -21,12 +22,18 @@ export function request() {
   return supertest(app);
 }
 
-export async function createTestTraceGroup() {
-  const testSchema = await createTestSchema();
+export async function createTestTraceGroup({
+  client,
+}: {
+  client: DebuggerClient;
+}) {
+  const testSchema = await createTestSchema({
+    client,
+  });
   const traceId = faker.string.alpha(8);
 
-  const createdTraceGroup = await prisma.traceGroup.create({
-    data: {
+  const createdTraceGroup = await client.trace.createOne({
+    input: {
       traceId,
       schemaId: testSchema.dbSchema.id,
     },
@@ -36,15 +43,17 @@ export async function createTestTraceGroup() {
 }
 
 export async function createTestSchema({
+  client,
   shouldError,
   randomFieldName,
   shouldNameQuery,
 }: {
+  client: DebuggerClient;
   shouldError?: boolean;
   randomFieldName?: string;
   shouldNameQuery?: boolean;
   name?: string;
-} = {}): Promise<{
+}): Promise<{
   schema: GraphQLSchema;
   typeDefs: string;
   hash: string;
@@ -95,15 +104,14 @@ export async function createTestSchema({
 
   const hash = hashSchema(schema);
 
-  const dbSchema = await prisma.schema.upsert({
+  const dbSchema = await client.schema.upsert({
     where: {
       hash,
     },
-    create: {
+    input: {
       hash: hash,
       typeDefs: typeDefs,
     },
-    update: {},
   });
 
   return {

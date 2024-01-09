@@ -1,10 +1,10 @@
-import { prisma } from "@graphql-debugger/data-access";
 import { ListTraceGroupsResponseSchema } from "@graphql-debugger/schemas";
 import { ListTraceGroupsResponse } from "@graphql-debugger/types";
 
 import gql from "gql-tag";
 import util from "util";
 
+import { client } from "../client";
 import { createTestSchema, querySchema } from "../utils";
 import { request } from "../utils";
 
@@ -56,7 +56,9 @@ const query = gql`
 
 describe("queries/list-trace-groups", () => {
   test("should return a list of trace groups", async () => {
-    const testSchema = await createTestSchema();
+    const testSchema = await createTestSchema({
+      client,
+    });
 
     const testSchemaResponse = await querySchema({
       schema: testSchema.schema,
@@ -83,7 +85,9 @@ describe("queries/list-trace-groups", () => {
   });
 
   test("should return a list of trace groups filtered by id", async () => {
-    const testSchema = await createTestSchema();
+    const testSchema = await createTestSchema({
+      client,
+    });
 
     const testSchemaResponse = await querySchema({
       schema: testSchema.schema,
@@ -92,13 +96,10 @@ describe("queries/list-trace-groups", () => {
     expect(testSchemaResponse.errors).toBeUndefined();
     await sleep(500);
 
-    // TODO - unify client
-    const traces = await prisma.traceGroup.findMany({
+    const traces = await client.trace.findMany({
       where: {
         schemaId: testSchema.dbSchema.id,
-      },
-      include: {
-        spans: true,
+        includeSpans: true,
       },
     });
 
@@ -128,7 +129,9 @@ describe("queries/list-trace-groups", () => {
   });
 
   test("should return a list of trace groups filtered by schemaId", async () => {
-    const testSchema = await createTestSchema();
+    const testSchema = await createTestSchema({
+      client,
+    });
 
     const testSchemaResponse = await querySchema({
       schema: testSchema.schema,
@@ -137,13 +140,10 @@ describe("queries/list-trace-groups", () => {
     expect(testSchemaResponse.errors).toBeUndefined();
     await sleep(500);
 
-    // TODO - unify client
-    const traces = await prisma.traceGroup.findMany({
+    const traces = await client.trace.findMany({
       where: {
         schemaId: testSchema.dbSchema.id,
-      },
-      include: {
-        spans: true,
+        includeSpans: true,
       },
     });
 

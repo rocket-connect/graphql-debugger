@@ -1,53 +1,42 @@
-import { prisma } from "@graphql-debugger/data-access";
+import { DebuggerClient } from "@graphql-debugger/client";
 import { Span } from "@graphql-debugger/types";
-import { dbSpanToNetwork } from "@graphql-debugger/utils";
 
 import DataLoader from "dataloader";
 
-export function rootSpanLoader() {
+export function rootSpanLoader({ client }: { client: DebuggerClient }) {
   return new DataLoader(
     async (traceIds: readonly string[]): Promise<(Span | undefined)[]> => {
-      // TODO - unify client
-      const spans = await prisma.span.findMany({
+      const { spans } = await client.span.findMany({
         where: {
-          traceGroupId: {
-            in: traceIds as string[],
-          },
+          traceIds: [...traceIds],
           isGraphQLRootSpan: true,
         },
       });
 
       return traceIds.map((traceId) => {
         const span = spans.find((s) => s.traceGroupId === traceId);
-
         if (!span) {
           return undefined;
         }
 
-        return dbSpanToNetwork(span);
+        return span;
       });
     },
   );
 }
 
-export function spanLoader() {
+export function spanLoader({ client }: { client: DebuggerClient }) {
   return new DataLoader(
     async (traceIds: readonly string[]): Promise<Span[][]> => {
-      // TODO - unify client
-      const spans = await prisma.span.findMany({
+      const { spans } = await client.span.findMany({
         where: {
-          traceGroupId: {
-            in: traceIds as string[],
-          },
+          traceIds: [...traceIds],
         },
       });
 
       return traceIds.map((traceId) => {
         const _spans = spans.filter((s) => s.traceGroupId === traceId);
-
-        return _spans.map((span) => {
-          return dbSpanToNetwork(span);
-        });
+        return _spans;
       });
     },
   );

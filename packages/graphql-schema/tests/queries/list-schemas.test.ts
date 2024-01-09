@@ -3,6 +3,7 @@ import { ListSchemasResponse } from "@graphql-debugger/types";
 
 import gql from "gql-tag";
 
+import { client } from "../client";
 import { request } from "../utils";
 import { createTestSchema } from "../utils";
 
@@ -22,7 +23,9 @@ const query = gql`
 
 describe("queries/list-schemas", () => {
   test("should return a list of schemas", async () => {
-    const { dbSchema } = await createTestSchema();
+    const { dbSchema } = await createTestSchema({
+      client: client,
+    });
 
     const response = await request()
       .post("/graphql")
@@ -51,8 +54,12 @@ describe("queries/list-schemas", () => {
   });
 
   test("should return a schema by id", async () => {
-    const { dbSchema } = await createTestSchema();
-    await createTestSchema(); // create another so we exclude it
+    const { dbSchema } = await createTestSchema({
+      client,
+    });
+    await createTestSchema({
+      client,
+    }); // create another so we exclude it
 
     const response = await request()
       .post("/graphql")

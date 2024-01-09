@@ -1,3 +1,4 @@
+import { DebuggerClient } from "@graphql-debugger/client";
 import { Queue, QueueType } from "@graphql-debugger/queue";
 import { ForeignTraces } from "@graphql-debugger/types";
 
@@ -14,33 +15,52 @@ import { postTracesWorker } from "./workers/post-traces";
 export const app: Express = express();
 app.use(express.json({ limit: "500mb" }));
 
-app.post("/v1/traces", postTraces);
-export const postTracesQueue = new Queue({
-  type: QueueType.InMemory,
-  worker: postTracesWorker,
-});
-
-app.post("/v1/schema", postSchema);
-export const postSchemaQueue = new Queue({
-  type: QueueType.InMemory,
-  worker: postSchemaWorker,
-});
-
-export const foreignTracesQueue: Queue<ForeignTraces> = new Queue({
-  type: QueueType.InMemory,
-  worker: (data: ForeignTraces) =>
-    foreignTracesWorker(data, (d) => foreignTracesQueue.add(d)),
-});
-
-export async function start({ port }: { port: string }) {
+export async function start({
+  port,
+  client,
+}: {
+  port?: string;
+  client: DebuggerClient;
+}): Promise<{
+  server?: http.Server;
+}> {
   try {
     debug("Starting");
 
-    const server = await app.listen(port);
+    let server: http.Server | undefined = undefined;
+
+    if (port) {
+      server = await app.listen(port);
+    }
+
+    const postSchemaQueue = new Queue({
+      type: QueueType.InMemory,
+      worker: postSchemaWorker({ client }),
+    });
+
+    const foreignTracesQueue: Queue<ForeignTraces> = new Queue({
+      type: QueueType.InMemory,
+      worker: (data: ForeignTraces) =>
+        foreignTracesWorker({ client })(data, (d) => foreignTracesQueue.add(d)),
+    });
+
+    const postTracesQueue = new Queue({
+      type: QueueType.InMemory,
+      worker: postTracesWorker({ client, foreignTracesQueue }),
+    });
+
+    await Promise.all([
+      postSchemaQueue.start(),
+      foreignTracesQueue.start(),
+      postTracesQueue.start(),
+    ]);
 
     debug("Started");
 
-    return server;
+    app.post("/v1/traces", postTraces({ client, postTracesQueue }));
+    app.post("/v1/schema", postSchema({ client, postSchemaQueue }));
+
+    return { server };
   } catch (error) {
     debug("Failed to start", error);
     throw error;

@@ -1,5 +1,6 @@
 import { BaseSchema } from "@graphql-debugger/adapter-base";
 import {
+  FindFirstSchemaOptions,
   FindFirstSchemaResponse,
   FindFirstSchemaWhere,
   ListSchemasResponse,
@@ -77,7 +78,8 @@ export class ProxySchema extends BaseSchema {
   public async findFirst({
     where,
   }: {
-    where: FindFirstSchemaWhere;
+    where?: FindFirstSchemaWhere;
+    options?: FindFirstSchemaOptions;
   }): Promise<TSchema | null> {
     const query = /* GraphQL */ `
       query FindFirstSchema($where: FirstFirstSchemaWhere) {

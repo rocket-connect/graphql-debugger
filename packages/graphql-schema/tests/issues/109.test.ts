@@ -2,6 +2,7 @@ import { ListTraceGroupsResponse } from "@graphql-debugger/types";
 
 import gql from "gql-tag";
 
+import { client } from "../client";
 import { createTestTraceGroup } from "../utils";
 import { request } from "../utils";
 
@@ -17,7 +18,9 @@ const query = gql`
 
 describe("issues 109", () => {
   test("should not return a trace when there is no root graphql span", async () => {
-    await createTestTraceGroup();
+    await createTestTraceGroup({
+      client,
+    });
 
     const apiResponse = await request()
       .post("/graphql")

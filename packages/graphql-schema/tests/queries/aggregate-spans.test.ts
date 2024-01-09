@@ -1,4 +1,3 @@
-import { prisma } from "@graphql-debugger/data-access";
 import { AggregateSpansResponseSchema } from "@graphql-debugger/schemas";
 import {
   GraphQLOTELContext,
@@ -11,6 +10,7 @@ import gql from "gql-tag";
 import { graphql } from "graphql";
 import util from "util";
 
+import { client } from "../client";
 import { request } from "../utils";
 
 const sleep = util.promisify(setTimeout);
@@ -83,10 +83,8 @@ describe("queries/aggregate-spans", () => {
 
     await sleep(2000); // wait for collector to injest the traces
 
-    // TODO - unify client
-    // The first schema as we clearDB before each test
-    const schema = await prisma.schema.findFirst({
-      include: { traceGroups: true },
+    const schema = await client.schema.findFirst({
+      options: { includeTraces: true },
     });
 
     const response = await request()

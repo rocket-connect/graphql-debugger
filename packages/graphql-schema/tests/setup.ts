@@ -3,9 +3,10 @@ import {
   postSchemaQueue,
   postTracesQueue,
 } from "@graphql-debugger/collector-proxy";
-import { clearDB } from "@graphql-debugger/data-access";
 
 import { Server } from "http";
+
+import { client } from "./client";
 
 let server: Server;
 
@@ -16,7 +17,7 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
-  await clearDB();
+  await client.adapter.clearDB();
 });
 
 afterAll(async () => {

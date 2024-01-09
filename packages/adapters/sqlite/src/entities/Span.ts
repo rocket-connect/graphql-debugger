@@ -27,6 +27,15 @@ export class SQLiteSpan extends BaseSpan {
     if (where.spanIds) {
       _where = { ...where, ...{ spanId: { in: where.spanIds } } };
     }
+
+    if (where.traceIds) {
+      _where = { ...where, ...{ traceId: { in: where.traceIds } } };
+    }
+
+    if (where.isGraphQLRootSpan) {
+      _where = { ...where, ...{ isGraphQLRootSpan: true } };
+    }
+
     const spans = await prisma.span.findMany({
       where: _where,
     });

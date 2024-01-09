@@ -158,9 +158,12 @@ importers:
 
   apps/backend:
     dependencies:
-      '@graphql-debugger/data-access':
+      '@graphql-debugger/adapter-sqlite':
         specifier: workspace:^
-        version: link:../../packages/data-access
+        version: link:../../packages/adapters/sqlite
+      '@graphql-debugger/client':
+        specifier: workspace:^
+        version: link:../../packages/client
       '@graphql-debugger/graphql-schema':
         specifier: workspace:^
         version: link:../../packages/graphql-schema
@@ -508,9 +511,6 @@ importers:
       '@graphql-debugger/collector-proxy':
         specifier: workspace:^
         version: link:../../apps/collector-proxy
-      '@graphql-debugger/data-access':
-        specifier: workspace:^
-        version: link:../data-access
       '@graphql-debugger/schemas':
         specifier: workspace:^
         version: link:../schemas
