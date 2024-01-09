@@ -3,6 +3,8 @@ import {
   AggregateSpansWhere,
   CreateSpanInput,
   CreateSpanResponse,
+  DeleteSpanResponse,
+  DeleteSpanWhere,
   ListSpansResponse,
   ListSpansWhere,
 } from "@graphql-debugger/types";
@@ -27,4 +29,10 @@ export abstract class BaseSpan {
   }: {
     input: CreateSpanInput;
   }): Promise<CreateSpanResponse>;
+
+  public abstract deleteOne({
+    where,
+  }: {
+    where: DeleteSpanWhere;
+  }): Promise<DeleteSpanResponse>;
 }

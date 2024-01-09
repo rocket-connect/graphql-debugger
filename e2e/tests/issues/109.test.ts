@@ -1,5 +1,4 @@
-import { prisma } from "@graphql-debugger/data-access";
-
+import { client } from "../../src/client";
 import { Schemas } from "../components/schemas";
 import { Traces } from "../components/traces";
 import { Dashboard } from "../pages/dashboard";
@@ -36,27 +35,21 @@ describe("issues 109", () => {
       page,
     });
 
-    // TODO - unify client
-    const traces = await prisma.traceGroup.findMany({
+    const traces = await client.trace.findMany({
       where: {
         schemaId: dbSchema.id,
       },
-      include: {
-        spans: true,
-      },
+      includeRootSpan: true,
+      includeSpans: true,
     });
 
-    // TODO - unify client
-    await prisma.span.deleteMany({
+    const rootSpanId = traces[0]?.spans?.find((s) => s.isGraphQLRootSpan)
+      ?.id as unknown as string;
+    expect(rootSpanId).toBeDefined();
+
+    await client.span.deleteOne({
       where: {
-        AND: [
-          {
-            id: traces[0]?.spans?.find((s) => s.isGraphQLRootSpan)?.id,
-          },
-          {
-            isGraphQLRootSpan: true,
-          },
-        ],
+        id: rootSpanId,
       },
     });
 

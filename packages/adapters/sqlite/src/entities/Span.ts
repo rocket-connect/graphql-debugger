@@ -6,6 +6,8 @@ import {
   AggregateSpansWhere,
   CreateSpanInput,
   CreateSpanResponse,
+  DeleteSpanResponse,
+  DeleteSpanWhere,
   ListSpansResponse,
   ListSpansWhere,
 } from "@graphql-debugger/types";
@@ -99,6 +101,22 @@ export class SQLiteSpan extends BaseSpan {
 
     return {
       span: dbSpanToNetwork(span),
+    };
+  }
+
+  public async deleteOne({
+    where,
+  }: {
+    where: DeleteSpanWhere;
+  }): Promise<DeleteSpanResponse> {
+    await prisma.span.delete({
+      where: {
+        id: where.id,
+      },
+    });
+
+    return {
+      success: true,
     };
   }
 }

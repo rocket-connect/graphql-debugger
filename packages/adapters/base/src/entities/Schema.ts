@@ -25,4 +25,6 @@ export abstract class BaseSchema {
   }: {
     where: FindFirstSchemaWhere;
   }): Promise<TSchema | null>;
+
+  // upsert
 }

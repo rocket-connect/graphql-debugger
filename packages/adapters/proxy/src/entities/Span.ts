@@ -4,6 +4,8 @@ import {
   AggregateSpansWhere,
   CreateSpanInput,
   CreateSpanResponse,
+  DeleteSpanResponse,
+  DeleteSpanWhere,
   ListSpansResponse,
   ListSpansWhere,
 } from "@graphql-debugger/types";
@@ -130,5 +132,17 @@ export class ProxySpan extends BaseSpan {
     }
 
     return data.createSpan;
+  }
+
+  public async deleteOne({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    where,
+  }: {
+    where: DeleteSpanWhere;
+  }): Promise<DeleteSpanResponse> {
+    // TODO: implement
+    return {
+      success: false,
+    };
   }
 }
