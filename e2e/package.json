@@ -31,6 +31,7 @@
     "puppeteer": "21.6.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "8.3.1"
+    "@faker-js/faker": "8.3.1",
+    "@graphql-debugger/types": "workspace:^"
   }
 }
