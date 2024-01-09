@@ -14,6 +14,7 @@ describe("DebuggerClient.trace", () => {
       await simulateTrace();
       await sleep(2000); // wait for collector to injest the traces
 
+      // TODO change to client
       // The first schema as we clearDB before each test
       const schema = await prisma.schema.findFirst({
         include: { traceGroups: true },

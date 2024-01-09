@@ -66,6 +66,7 @@ export async function createTestSchema({
 
   const hash = hashSchema(schema);
 
+  // TODO - unify client
   const dbSchema = await prisma.schema.upsert({
     where: {
       hash,

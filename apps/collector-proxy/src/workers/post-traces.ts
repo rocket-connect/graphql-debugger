@@ -1,12 +1,11 @@
-import { prisma } from "@graphql-debugger/data-access";
 import { extractSpans } from "@graphql-debugger/opentelemetry";
-import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import {
   AttributeNames,
   ExtractedSpan,
   PostTraces,
 } from "@graphql-debugger/types";
 
+import { client } from "../client";
 import { debug } from "../debug";
 import { foreignTracesQueue } from "../index";
 
@@ -24,10 +23,10 @@ export async function postTracesWorker(data: PostTraces["body"]) {
       .map((s) => s.graphqlSchemaHash)
       .filter(Boolean) as string[];
 
-    const [existingSpans, traceGroups, schemas] = await Promise.all([
-      prisma.span.findMany({ where: { spanId: { in: spanIds } } }),
-      prisma.traceGroup.findMany({ where: { traceId: { in: traceIds } } }),
-      prisma.schema.findMany({ where: { hash: { in: schemaHashes } } }),
+    const [{ spans: existingSpans }, traceGroups, schemas] = await Promise.all([
+      client.span.findMany({ where: { spanIds } }),
+      client.trace.findMany({ where: { traceIds } }),
+      client.schema.findMany({ where: { schemaHashes } }),
     ]);
 
     const isExistingSpan = (span: ExtractedSpan) => {
@@ -62,30 +61,30 @@ export async function postTracesWorker(data: PostTraces["body"]) {
           traceGroupId = foundTraceGroup?.id;
         } else {
           try {
-            const createdTraceGroup = await prisma.traceGroup.create({
-              data: {
+            const createdTraceGroup = await client.trace.createOne({
+              input: {
                 traceId: span.traceId,
               },
             });
-            traceGroupId = createdTraceGroup.id;
+            traceGroupId = createdTraceGroup.trace.id;
 
             if (span.graphqlSchemaHash) {
               const schema = schemas.find(
                 (s) => s.hash === span.graphqlSchemaHash,
               );
               if (schema) {
-                await prisma.traceGroup.update({
+                await client.trace.updateOne({
                   where: {
                     id: traceGroupId,
                   },
-                  data: {
+                  input: {
                     schemaId: schema.id,
                   },
                 });
               }
             }
           } catch (error) {
-            const foundTraceGroup = await prisma.traceGroup.findFirst({
+            const foundTraceGroup = await client.trace.findFirst({
               where: {
                 traceId: span.traceId,
               },
@@ -98,26 +97,14 @@ export async function postTracesWorker(data: PostTraces["body"]) {
           }
         }
 
-        const startTimeUnixNano = UnixNanoTimeStamp.fromString(
-          span.startTimeUnixNano,
-        );
-        const endTimeUnixNano = UnixNanoTimeStamp.fromString(
-          span.endTimeUnixNano,
-        );
-        const durationNano = UnixNanoTimeStamp.duration(
-          startTimeUnixNano,
-          endTimeUnixNano,
-        );
-
-        await prisma.span.create({
-          data: {
+        await client.span.createOne({
+          input: {
             spanId: span.spanId,
             parentSpanId: span.parentSpanId,
             name: span.name,
-            kind: span.kind.toString(),
-            startTimeUnixNano: startTimeUnixNano.toStorage(),
-            endTimeUnixNano: endTimeUnixNano.toStorage(),
-            durationNano: durationNano.toStorage(),
+            kind: span.kind,
+            startTimeUnixNano: span.startTimeUnixNano,
+            endTimeUnixNano: span.endTimeUnixNano,
             traceId: span.traceId,
             traceGroupId,
             errorMessage: span.errorMessage,

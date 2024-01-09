@@ -21,6 +21,8 @@
   },
   "dependencies": {
     "@graphql-debugger/collector-proxy": "workspace:^",
+    "@graphql-debugger/adapter-sqlite": "workspace:^",
+    "@graphql-debugger/client": "workspace:^",
     "@graphql-debugger/data-access": "workspace:^",
     "@graphql-debugger/schemas": "workspace:^",
     "@graphql-debugger/time": "workspace:^",

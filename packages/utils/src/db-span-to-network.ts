@@ -27,5 +27,7 @@ export function dbSpanToNetwork(dbSpan: DBSpan): NetworkSpan {
     errorStack: dbSpan.errorStack,
     isForeign: dbSpan.isForeign,
     attributes: dbSpan.attributes as string,
+    isGraphQLRootSpan: dbSpan.isGraphQLRootSpan,
+    graphqlSchemaHash: dbSpan.graphqlSchemaHash,
   };
 }

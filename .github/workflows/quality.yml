@@ -116,6 +116,22 @@ jobs:
       - name: graphql-debugger/plugin-express
         run: cd ./plugins/express && pnpm run test
 
+  test-adapter-base:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: graphql-debugger/adapter-base
+        run: cd ./packages/adapters/base && pnpm run test
+
+  test-adapter-sqlite:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: graphql-debugger/adapter-base
+        run: cd ./packages/adapters/sqlite && pnpm run test
+
   lint:
     runs-on: ubuntu-latest
     steps:

@@ -1,7 +1,6 @@
-import { prisma } from "@graphql-debugger/data-access";
-import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import type { ForeignTraces } from "@graphql-debugger/types";
 
+import { client } from "../client";
 import { debug } from "../debug";
 
 export async function foreignTracesWorker(
@@ -15,9 +14,9 @@ export async function foreignTracesWorker(
     const spanIds = spans.map((s) => s.spanId);
     const traceIds = spans.map((s) => s.traceId);
 
-    const [existingSpans, traceGroups] = await Promise.all([
-      prisma.span.findMany({ where: { spanId: { in: spanIds } } }),
-      prisma.traceGroup.findMany({ where: { traceId: { in: traceIds } } }),
+    const [{ spans: existingSpans }, traceGroups] = await Promise.all([
+      client.span.findMany({ where: { spanIds } }),
+      client.trace.findMany({ where: { traceIds } }),
     ]);
 
     const spansToBeCreated = spans.filter(
@@ -35,7 +34,7 @@ export async function foreignTracesWorker(
           traceGroupId = foundTraceGroup?.id;
         } else {
           try {
-            const foundTraceGroup = await prisma.traceGroup.findFirst({
+            const foundTraceGroup = await client.trace.findFirst({
               where: {
                 traceId: span.traceId,
               },
@@ -55,26 +54,14 @@ export async function foreignTracesWorker(
           }
         }
 
-        const startTimeUnixNano = UnixNanoTimeStamp.fromString(
-          span.startTimeUnixNano,
-        );
-        const endTimeUnixNano = UnixNanoTimeStamp.fromString(
-          span.endTimeUnixNano,
-        );
-        const durationNano = UnixNanoTimeStamp.duration(
-          startTimeUnixNano,
-          endTimeUnixNano,
-        );
-
-        await prisma.span.create({
-          data: {
+        await client.span.createOne({
+          input: {
             spanId: span.spanId,
             parentSpanId: span.parentSpanId,
             name: span.name,
-            kind: span.kind.toString(),
-            startTimeUnixNano: startTimeUnixNano.toStorage(),
-            endTimeUnixNano: endTimeUnixNano.toStorage(),
-            durationNano: durationNano.toStorage(),
+            kind: span.kind,
+            startTimeUnixNano: span.startTimeUnixNano,
+            endTimeUnixNano: span.endTimeUnixNano,
             traceId: span.traceId,
             traceGroupId,
             errorMessage: span.errorMessage,
