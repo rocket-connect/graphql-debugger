@@ -12,11 +12,12 @@ import express from "express";
 import { GraphQLSchema, graphql } from "graphql";
 import supertest from "supertest";
 
-import { yoga } from "../src";
+import { createServer } from "../src";
+import { client } from "./client";
 
 const app = express();
 
-app.post("/graphql", yoga);
+app.post("/graphql", createServer({ client: client }));
 
 export function request() {
   return supertest(app);
