@@ -511,6 +511,9 @@ importers:
       '@graphql-debugger/collector-proxy':
         specifier: workspace:^
         version: link:../../apps/collector-proxy
+      '@graphql-debugger/data-access':
+        specifier: workspace:^
+        version: link:../data-access
       '@graphql-debugger/schemas':
         specifier: workspace:^
         version: link:../schemas
