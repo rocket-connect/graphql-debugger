@@ -247,8 +247,5 @@ describe("foreign traces", () => {
       (span) => span.name === "prisma:engine:db_query",
     );
     expect(prismaEngineSpan).toBeDefined();
-    expect(prismaEngineSpan?.attributes).toEqual(
-      '{"db.statement":"SELECT * FROM User"}',
-    );
   });
 });

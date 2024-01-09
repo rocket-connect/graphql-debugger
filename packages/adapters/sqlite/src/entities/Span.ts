@@ -25,15 +25,15 @@ export class SQLiteSpan extends BaseSpan {
   }): Promise<ListSpansResponse> {
     let _where = {};
     if (where.spanIds) {
-      _where = { ...where, ...{ spanId: { in: where.spanIds } } };
+      _where = { ..._where, ...{ spanId: { in: where.spanIds } } };
     }
 
     if (where.traceIds) {
-      _where = { ...where, ...{ traceId: { in: where.traceIds } } };
+      _where = { ..._where, ...{ traceId: { in: where.traceIds } } };
     }
 
     if (where.isGraphQLRootSpan) {
-      _where = { ...where, ...{ isGraphQLRootSpan: true } };
+      _where = { ..._where, ...{ isGraphQLRootSpan: true } };
     }
 
     const spans = await prisma.span.findMany({

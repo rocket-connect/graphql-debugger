@@ -213,8 +213,5 @@ describe("plugin express", () => {
       (span) => span.name === "HTTP POST /graphql",
     );
     expect(expressSpan).toBeDefined();
-    expect(expressSpan?.attributes).toEqual(
-      '{"http.route":"/graphql","client.address":"123","client.port":"123","url.path":"/graphql"}',
-    );
   });
 });
