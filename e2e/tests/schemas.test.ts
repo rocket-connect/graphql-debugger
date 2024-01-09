@@ -1,3 +1,4 @@
+import { client } from "../src/client";
 import { Schemas } from "./components/schemas";
 import { Dashboard } from "./pages/dashboard";
 import { createTestSchema } from "./utils/create-test-schema";
@@ -33,8 +34,12 @@ describe("schemas", () => {
   });
 
   test("should display a list of schemas", async () => {
-    const { dbSchema: schema1 } = await createTestSchema();
-    const { dbSchema: schema2 } = await createTestSchema();
+    const { dbSchema: schema1 } = await createTestSchema({
+      client,
+    });
+    const { dbSchema: schema2 } = await createTestSchema({
+      client,
+    });
     const page = await getPage({ browser });
 
     const dashboardPage = new Dashboard({
@@ -63,7 +68,9 @@ describe("schemas", () => {
   });
 
   test("should open and display a schema", async () => {
-    const { dbSchema } = await createTestSchema();
+    const { dbSchema } = await createTestSchema({
+      client,
+    });
     const page = await getPage({ browser });
 
     const dashboardPage = new Dashboard({

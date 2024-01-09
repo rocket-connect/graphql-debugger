@@ -4,7 +4,10 @@ import {
   FindFirstSchemaWhere,
   ListSchemasWhere,
   PostSchema,
+  Schema,
   Schema as TSchema,
+  UpsertSchemaInput,
+  UpsertSchemaWhere,
 } from "@graphql-debugger/types";
 
 export class SQLiteSchema extends BaseSchema {
@@ -65,6 +68,34 @@ export class SQLiteSchema extends BaseSchema {
     if (!schema) {
       return null;
     }
+
+    return {
+      id: schema.id,
+      name: schema.name as string | undefined,
+      hash: schema.hash,
+      typeDefs: schema.typeDefs,
+      traceGroups: [],
+      createdAt: schema.createdAt.toISOString(),
+    };
+  }
+
+  public async upsert({
+    where,
+    input,
+  }: {
+    where: UpsertSchemaWhere;
+    input: UpsertSchemaInput;
+  }): Promise<Schema> {
+    const schema = await prisma.schema.upsert({
+      where: {
+        hash: where.hash,
+      },
+      create: {
+        hash: input.hash,
+        typeDefs: input.typeDefs,
+      },
+      update: {},
+    });
 
     return {
       id: schema.id,

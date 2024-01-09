@@ -28,17 +28,20 @@ describe("favourites", () => {
       name: "should add a successful trace to favourites and remove it",
       shouldError: false,
       randomFieldName,
+      client,
     },
     {
       name: "should add an error trace to favourites and remove it",
       shouldError: true,
       randomFieldName,
+      client,
     },
     {
       name: "should add a named query trace to favourites and remove it",
       shouldError: false,
       shouldNameQuery: true,
       randomFieldName,
+      client,
     },
   ];
 

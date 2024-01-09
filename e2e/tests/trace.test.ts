@@ -37,17 +37,20 @@ describe("trace", () => {
       name: "should load a success trace correctly",
       shouldError: false,
       randomFieldName,
+      client,
     },
     {
       name: "should load an error trace correctly",
       shouldError: true,
       randomFieldName,
+      client,
     },
     {
       name: "should load a named query correctly",
       shouldError: false,
       randomFieldName,
       shouldNameQuery: true,
+      client,
     },
   ];
 

@@ -5,7 +5,10 @@ import {
   ListSchemasResponse,
   ListSchemasWhere,
   PostSchema,
+  Schema,
   Schema as TSchema,
+  UpsertSchemaInput,
+  UpsertSchemaWhere,
 } from "@graphql-debugger/types";
 
 import axios from "axios";
@@ -105,5 +108,47 @@ export class ProxySchema extends BaseSchema {
     }
 
     return data.findFirstSchema.schema || null;
+  }
+
+  public async upsert({
+    where,
+    input,
+  }: {
+    where: UpsertSchemaWhere;
+    input: UpsertSchemaInput;
+  }): Promise<Schema> {
+    const query = /* GraphQL */ `
+      mutation UpsertSchema(
+        $where: UpsertSchemaWhere
+        $input: UpsertSchemaInput
+      ) {
+        upsertSchema(where: $where, input: $input) {
+          schema {
+            id
+            name
+            hash
+            typeDefs
+            createdAt
+          }
+        }
+      }
+    `;
+
+    const { data, errors } = await executeGraphQLRequest<{
+      upsertSchema: { schema: Schema };
+    }>({
+      query,
+      variables: {
+        where,
+        input,
+      },
+      url: this.options.backendUrl,
+    });
+
+    if (errors && errors?.length > 0) {
+      throw new Error(errors.map((e) => e.message).join("\n"));
+    }
+
+    return data.upsertSchema.schema;
   }
 }

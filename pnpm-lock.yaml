@@ -375,9 +375,6 @@ importers:
       '@graphql-debugger/collector-proxy':
         specifier: workspace:^
         version: link:../apps/collector-proxy
-      '@graphql-debugger/data-access':
-        specifier: workspace:^
-        version: link:../packages/data-access
       '@graphql-debugger/trace-schema':
         specifier: workspace:^
         version: link:../packages/trace-schema

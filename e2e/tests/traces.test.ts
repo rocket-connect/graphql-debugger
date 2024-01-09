@@ -34,17 +34,20 @@ describe("traces", () => {
       name: "should load and display a list of success traces",
       shouldError: false,
       randomFieldName,
+      client,
     },
     {
       name: "should load and display a list of error traces",
       shouldError: true,
       randomFieldName,
+      client,
     },
     {
       name: "should load and display a list of named query traces",
       shouldError: false,
       randomFieldName,
       shouldNameQuery: true,
+      client,
     },
   ];
 

@@ -30,17 +30,20 @@ describe("history", () => {
       name: "should add a successful trace to history and remove it",
       shouldError: false,
       randomFieldName,
+      client,
     },
     {
       name: "should add an error trace to history and remove it",
       shouldError: true,
       randomFieldName,
+      client,
     },
     {
       name: "should add a named query trace to history and remove it",
       shouldError: false,
       shouldNameQuery: true,
       randomFieldName,
+      client,
     },
   ];
 

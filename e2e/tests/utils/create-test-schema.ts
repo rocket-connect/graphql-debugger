@@ -1,5 +1,6 @@
-import { Schema, prisma } from "@graphql-debugger/data-access";
+import { DebuggerClient } from "@graphql-debugger/client";
 import { traceSchema } from "@graphql-debugger/trace-schema";
+import { Schema } from "@graphql-debugger/types";
 import { hashSchema } from "@graphql-debugger/utils";
 
 import { faker } from "@faker-js/faker";
@@ -7,15 +8,17 @@ import { makeExecutableSchema } from "@graphql-tools/schema";
 import { GraphQLSchema } from "graphql";
 
 export async function createTestSchema({
+  client,
   shouldError,
   randomFieldName,
   shouldNameQuery,
 }: {
+  client: DebuggerClient;
   shouldError?: boolean;
   randomFieldName?: string;
   shouldNameQuery?: boolean;
   name?: string;
-} = {}): Promise<{
+}): Promise<{
   schema: GraphQLSchema;
   typeDefs: string;
   hash: string;
@@ -66,16 +69,14 @@ export async function createTestSchema({
 
   const hash = hashSchema(schema);
 
-  // TODO - unify client
-  const dbSchema = await prisma.schema.upsert({
+  const dbSchema = await client.schema.upsert({
     where: {
       hash,
     },
-    create: {
+    input: {
       hash: hash,
       typeDefs: typeDefs,
     },
-    update: {},
   });
 
   return {

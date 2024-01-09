@@ -32,17 +32,20 @@ describe("trace-viewer", () => {
       name: "should load a success trace viewer correctly",
       shouldError: false,
       randomFieldName,
+      client,
     },
     {
       name: "should load a error trace viewer correctly",
       shouldError: true,
       randomFieldName,
+      client,
     },
     {
       name: "should load a named query in the trace viewer correctly",
       shouldError: false,
       randomFieldName,
       shouldNameQuery: true,
+      client,
     },
   ];
 

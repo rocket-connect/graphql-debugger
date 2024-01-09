@@ -2,7 +2,9 @@ import {
   FindFirstSchemaWhere,
   ListSchemasWhere,
   PostSchema,
-  Schema as TSchema,
+  Schema,
+  UpsertSchemaInput,
+  UpsertSchemaWhere,
 } from "@graphql-debugger/types";
 
 export abstract class BaseSchema {
@@ -18,13 +20,19 @@ export abstract class BaseSchema {
     where,
   }: {
     where?: ListSchemasWhere;
-  }): Promise<TSchema[]>;
+  }): Promise<Schema[]>;
 
   public abstract findFirst({
     where,
   }: {
     where: FindFirstSchemaWhere;
-  }): Promise<TSchema | null>;
+  }): Promise<Schema | null>;
 
-  // upsert
+  public abstract upsert({
+    where,
+    input,
+  }: {
+    where: UpsertSchemaWhere;
+    input: UpsertSchemaInput;
+  }): Promise<Schema>;
 }

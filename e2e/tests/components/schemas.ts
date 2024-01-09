@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Schema as PSchema } from "@graphql-debugger/data-access";
+import { Schema } from "@graphql-debugger/types";
 import { IDS } from "@graphql-debugger/ui/src/testing";
 
 import { expect } from "@jest/globals";
@@ -41,7 +41,7 @@ export class Schemas extends BaseComponent {
     return uiSchemas;
   }
 
-  public async clickSchema(dbSchema: PSchema) {
+  public async clickSchema(dbSchema: Schema) {
     const page = this.page?.page as PPage;
 
     await page.waitForSelector(`#${IDS.sidebar.views.schemas}`);

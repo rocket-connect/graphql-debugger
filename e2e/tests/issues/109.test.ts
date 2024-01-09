@@ -20,7 +20,9 @@ describe("issues 109", () => {
 
   test("should not display a trace when there is no root graphql span", async () => {
     const page = await getPage({ browser });
-    const { dbSchema, schema, query } = await createTestSchema();
+    const { dbSchema, schema, query } = await createTestSchema({
+      client,
+    });
 
     const response = await querySchema({
       schema: schema,
