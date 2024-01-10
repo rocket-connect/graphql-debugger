@@ -52,6 +52,8 @@ builder.queryField("listTraceGroups", (t) =>
           rootSpanName: args.where?.rootSpanName,
           traceIds: args.where?.traceIds,
         },
+        includeRootSpan: true,
+        includeSpans: true,
       });
 
       return {

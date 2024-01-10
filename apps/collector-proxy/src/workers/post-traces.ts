@@ -68,20 +68,25 @@ export function postTracesWorker({
           );
           if (foundTraceGroup) {
             traceGroupId = foundTraceGroup?.id;
+            debug("Found trace group", traceGroupId);
           } else {
             try {
+              debug("Creating trace group");
               const createdTraceGroup = await client.trace.createOne({
                 input: {
                   traceId: span.traceId,
                 },
               });
               traceGroupId = createdTraceGroup.trace.id;
+              debug("Created trace group", traceGroupId);
 
               if (span.graphqlSchemaHash) {
                 const schema = schemas.find(
                   (s) => s.hash === span.graphqlSchemaHash,
                 );
                 if (schema) {
+                  debug("Updating trace group with schema");
+
                   await client.trace.updateOne({
                     where: {
                       id: traceGroupId,
@@ -90,6 +95,8 @@ export function postTracesWorker({
                       schemaId: schema.id,
                     },
                   });
+
+                  debug("Updated trace group with schema");
                 }
               }
             } catch (error) {

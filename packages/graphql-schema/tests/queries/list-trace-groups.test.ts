@@ -65,7 +65,7 @@ describe("queries/list-trace-groups", () => {
       query: testSchema.query,
     });
     expect(testSchemaResponse.errors).toBeUndefined();
-    await sleep(500);
+    await sleep(1000);
 
     const apiResponse = await request()
       .post("/graphql")

@@ -13,6 +13,13 @@ import {
 } from "@graphql-debugger/types";
 import { dbSpanToNetwork } from "@graphql-debugger/utils";
 
+import {
+  AggregateSpansResponseSchema,
+  CreateSpanResponseSchema,
+  DeleteSpanResponseSchema,
+  ListSpansResponseSchema,
+} from "../../../../schemas/build";
+
 export class SQLiteSpan extends BaseSpan {
   constructor() {
     super();
@@ -40,9 +47,13 @@ export class SQLiteSpan extends BaseSpan {
       where: _where,
     });
 
-    return {
+    const response = {
       spans: spans.map((span) => dbSpanToNetwork(span)),
     };
+
+    const parsed = ListSpansResponseSchema.parse(response);
+
+    return parsed;
   }
 
   public async aggregate({
@@ -59,13 +70,17 @@ export class SQLiteSpan extends BaseSpan {
       },
     });
 
-    return {
+    const response = {
       resolveCount: 0,
       errorCount: 0,
       averageDuration: "0",
       lastResolved: "0",
       spans: spans.map((span) => dbSpanToNetwork(span)),
     };
+
+    const parsed = AggregateSpansResponseSchema.parse(response);
+
+    return parsed;
   }
 
   public async createOne({
@@ -108,9 +123,13 @@ export class SQLiteSpan extends BaseSpan {
       },
     });
 
-    return {
+    const response = {
       span: dbSpanToNetwork(span),
     };
+
+    const parsed = CreateSpanResponseSchema.parse(response);
+
+    return parsed;
   }
 
   public async deleteOne({
@@ -124,8 +143,12 @@ export class SQLiteSpan extends BaseSpan {
       },
     });
 
-    return {
+    const response = {
       success: true,
     };
+
+    const parsed = DeleteSpanResponseSchema.parse(response);
+
+    return parsed;
   }
 }

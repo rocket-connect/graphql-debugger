@@ -14,6 +14,12 @@ import {
 } from "@graphql-debugger/types";
 import { dbSpanToNetwork } from "@graphql-debugger/utils";
 
+import {
+  CreateTraceResponseSchema,
+  TraceSchema,
+  UpdateTraceResponseSchema,
+} from "../../../../schemas/build";
+
 export class SQLiteTrace extends BaseTrace {
   constructor() {
     super();
@@ -43,7 +49,7 @@ export class SQLiteTrace extends BaseTrace {
       return null;
     }
 
-    return {
+    const response = {
       id: trace.id,
       traceId: trace.traceId,
       ...(options?.includeSpans
@@ -56,6 +62,10 @@ export class SQLiteTrace extends BaseTrace {
             spans: [],
           }),
     };
+
+    const parsed = TraceSchema.parse(response);
+
+    return parsed;
   }
 
   public async findMany(args: {
@@ -105,15 +115,29 @@ export class SQLiteTrace extends BaseTrace {
       orderBy: { createdAt: "desc" },
       where,
       take: 20,
+      include: {
+        ...(args.includeSpans
+          ? {
+              spans: true,
+            }
+          : {}),
+      },
     });
 
-    return traces.map((trace) => {
+    const response = traces.map((trace) => {
+      const spans = (trace?.spans || []).map((span) => dbSpanToNetwork(span));
+
       return {
         id: trace.id,
         traceId: trace.traceId,
-        spans: [],
+        spans,
+        rootSpan: spans.find((span) => span.isGraphQLRootSpan),
       };
     });
+
+    const parsed = TraceSchema.array().parse(response);
+
+    return parsed;
   }
 
   public async createOne({
@@ -136,13 +160,17 @@ export class SQLiteTrace extends BaseTrace {
       },
     });
 
-    return {
+    const response = {
       trace: {
         id: trace.id,
         traceId: trace.traceId,
         spans: [],
       },
     };
+
+    const parsed = CreateTraceResponseSchema.parse(response);
+
+    return parsed;
   }
 
   public async updateOne({
@@ -161,12 +189,16 @@ export class SQLiteTrace extends BaseTrace {
       },
     });
 
-    return {
+    const response = {
       trace: {
         id: trace.id,
         traceId: trace.traceId,
         spans: [],
       },
     };
+
+    const parsed = UpdateTraceResponseSchema.parse(response);
+
+    return parsed;
   }
 }

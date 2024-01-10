@@ -4,15 +4,17 @@ import { Server } from "http";
 
 import { client } from "./client";
 
-let server: Server;
+let server: Server | undefined = undefined;
 
 beforeAll(async () => {
-  const collectorInstance = await start({
-    port: "4318",
-    client,
-  });
+  if (!server) {
+    const collectorInstance = await start({
+      port: "4318",
+      client,
+    });
 
-  server = collectorInstance.server as Server;
+    server = collectorInstance.server as Server;
+  }
 });
 
 beforeEach(async () => {
@@ -20,5 +22,5 @@ beforeEach(async () => {
 });
 
 afterAll(async () => {
-  await server.close();
+  await server?.close();
 });

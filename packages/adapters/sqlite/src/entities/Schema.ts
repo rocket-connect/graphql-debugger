@@ -6,10 +6,11 @@ import {
   ListSchemasWhere,
   PostSchema,
   Schema,
-  Schema as TSchema,
   UpsertSchemaInput,
   UpsertSchemaWhere,
 } from "@graphql-debugger/types";
+
+import { SchemaSchema } from "../../../../schemas/build";
 
 export class SQLiteSchema extends BaseSchema {
   constructor() {
@@ -33,7 +34,7 @@ export class SQLiteSchema extends BaseSchema {
 
   public async findMany(
     args: { where?: ListSchemasWhere } = {},
-  ): Promise<TSchema[]> {
+  ): Promise<Schema[]> {
     const where = {
       ...(args.where?.id ? { id: args.where.id } : {}),
       ...(args.where?.schemaHashes
@@ -45,7 +46,7 @@ export class SQLiteSchema extends BaseSchema {
       where,
     });
 
-    return schemas.map((schema) => ({
+    const response = schemas.map((schema) => ({
       id: schema.id,
       name: schema.name as string | undefined,
       hash: schema.hash,
@@ -53,6 +54,10 @@ export class SQLiteSchema extends BaseSchema {
       traceGroups: [],
       createdAt: schema.createdAt.toISOString(),
     }));
+
+    const parsed = SchemaSchema.array().parse(response);
+
+    return parsed;
   }
 
   public async findFirst({
@@ -61,7 +66,7 @@ export class SQLiteSchema extends BaseSchema {
   }: {
     where?: FindFirstSchemaWhere;
     options?: FindFirstSchemaOptions;
-  }): Promise<TSchema | null> {
+  }): Promise<Schema | null> {
     const schema = await prisma.schema.findFirst({
       where: {
         ...(where?.hash ? { hash: where.hash } : {}),
@@ -75,7 +80,7 @@ export class SQLiteSchema extends BaseSchema {
       return null;
     }
 
-    return {
+    const response = {
       id: schema.id,
       name: schema.name as string | undefined,
       hash: schema.hash,
@@ -88,6 +93,10 @@ export class SQLiteSchema extends BaseSchema {
       })),
       createdAt: schema.createdAt.toISOString(),
     };
+
+    const parsed = SchemaSchema.parse(response);
+
+    return parsed;
   }
 
   public async upsert({
@@ -108,7 +117,7 @@ export class SQLiteSchema extends BaseSchema {
       update: {},
     });
 
-    return {
+    const response = {
       id: schema.id,
       name: schema.name as string | undefined,
       hash: schema.hash,
@@ -116,5 +125,9 @@ export class SQLiteSchema extends BaseSchema {
       traceGroups: [],
       createdAt: schema.createdAt.toISOString(),
     };
+
+    const parsed = SchemaSchema.parse(response);
+
+    return parsed;
   }
 }
