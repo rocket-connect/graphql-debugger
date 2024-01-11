@@ -54,12 +54,6 @@ export function ClientProvider({
     JSON.parse(localStorage.getItem("favourites") || "[]"),
   );
 
-  const c = new DebuggerClient({
-    adapter: new ProxyAdapter({
-      backendUrl: configContext?.backendURL as unknown as string,
-    }),
-  });
-
   const [client, setClient] = useState(
     new DebuggerClient({
       adapter: new ProxyAdapter({
