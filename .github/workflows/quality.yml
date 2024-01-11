@@ -129,8 +129,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-project
-      - name: graphql-debugger/adapter-base
+      - name: graphql-debugger/adapter-sqlite
         run: cd ./packages/adapters/sqlite && pnpm run test
+
+  test-adapter-proxy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: graphql-debugger/adapter-proxy
+        run: cd ./packages/adapters/proxy && pnpm run test
 
   lint:
     runs-on: ubuntu-latest
