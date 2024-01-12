@@ -21,7 +21,9 @@
   "dependencies": {
     "@graphql-debugger/backend": "workspace:^",
     "@graphql-debugger/client": "workspace:^",
+    "@graphql-debugger/adapter-base": "workspace:^",
     "@graphql-debugger/adapter-sqlite": "workspace:^",
+    "@graphql-debugger/adapter-proxy": "workspace:^",
     "@graphql-debugger/collector-proxy": "workspace:^",
     "@graphql-debugger/trace-schema": "workspace:^",
     "@graphql-debugger/ui": "workspace:^",
