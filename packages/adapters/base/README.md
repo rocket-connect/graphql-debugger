@@ -1,4 +1,4 @@
-# @graphql-debugger/adapters-base
+# @graphql-debugger/adapter-base
 
 - [graphql-debugger.com](http://www.graphql-debugger.com)
 
