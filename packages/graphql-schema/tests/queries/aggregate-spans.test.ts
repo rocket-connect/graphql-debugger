@@ -1,6 +1,6 @@
 import { AggregateSpansResponseSchema } from "@graphql-debugger/schemas";
 import {
-  GraphQLOTELContext,
+  GraphQLDebuggerContext,
   traceSchema,
 } from "@graphql-debugger/trace-schema";
 import { AggregateSpansResponse } from "@graphql-debugger/types";
@@ -69,7 +69,7 @@ describe("queries/aggregate-spans", () => {
             }
           `,
           contextValue: {
-            GraphQLOTELContext: new GraphQLOTELContext({
+            GraphQLDebuggerContext: new GraphQLDebuggerContext({
               includeResult: true,
               includeContext: true,
               includeVariables: true,

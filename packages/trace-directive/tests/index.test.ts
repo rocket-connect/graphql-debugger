@@ -5,7 +5,7 @@ describe("graphql-otel", () => {
     expect(pkg.traceDirective).toBeDefined();
   });
 
-  test("should export GraphQLOTELContext", () => {
-    expect(pkg.GraphQLOTELContext).toBeDefined();
+  test("should export GraphQLDebuggerContext", () => {
+    expect(pkg.GraphQLDebuggerContext).toBeDefined();
   });
 });

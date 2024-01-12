@@ -1,6 +1,6 @@
 import { DebuggerClient } from "@graphql-debugger/client";
 import {
-  GraphQLOTELContext,
+  GraphQLDebuggerContext,
   traceSchema,
 } from "@graphql-debugger/trace-schema";
 import { Schema } from "@graphql-debugger/types";
@@ -144,7 +144,7 @@ export async function querySchema({
     schema: schema,
     source: query,
     contextValue: {
-      GraphQLOTELContext: new GraphQLOTELContext({
+      GraphQLDebuggerContext: new GraphQLDebuggerContext({
         includeResult: true,
         includeContext: true,
         includeVariables: true,

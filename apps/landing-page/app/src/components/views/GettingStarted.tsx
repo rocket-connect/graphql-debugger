@@ -11,7 +11,7 @@ const tabs = [
     name: "yoga.ts",
     content: dedent`
       import {
-        GraphQLOTELContext,
+        GraphQLDebuggerContext,
         traceSchema,
       } from "@graphql-debugger/trace-schema";
       
@@ -34,7 +34,7 @@ const tabs = [
         context: (req) => {
           return {
             // Include variables, result and context in traces
-            GraphQLOTELContext: new GraphQLOTELContext(),
+            GraphQLDebuggerContext: new GraphQLDebuggerContext(),
           };
         },
       });

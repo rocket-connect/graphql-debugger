@@ -40,7 +40,7 @@ npm i graphql-debugger @graphql-debugger/trace-schema
 
 ```ts
 import {
-  GraphQLOTELContext,
+  GraphQLDebuggerContext,
   traceSchema,
 } from "@graphql-debugger/trace-schema";
 
@@ -62,7 +62,7 @@ const yoga = createYoga({
   schema: tracedSchema,
   context: (req) => {
     return {
-      GraphQLOTELContext: new GraphQLOTELContext(),
+      GraphQLDebuggerContext: new GraphQLDebuggerContext(),
     };
   },
 });

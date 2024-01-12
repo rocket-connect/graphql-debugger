@@ -18,7 +18,7 @@ Finally, it sets up the nessessary OpenTelemetry instrumentation packages and pr
 
 ```ts
 import {
-  GraphQLOTELContext,
+  GraphQLDebuggerContext,
   traceSchema,
 } from "@graphql-debugger/trace-schema";
 
@@ -41,7 +41,7 @@ const yoga = createYoga({
   context: (req) => {
     return {
       // Include variables, result and context in traces
-      GraphQLOTELContext: new GraphQLOTELContext({
+      GraphQLDebuggerContext: new GraphQLDebuggerContext({
         includeVariables: true,
         includeResult: true,
         includeContext: true,
