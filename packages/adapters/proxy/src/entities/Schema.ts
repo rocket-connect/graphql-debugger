@@ -121,8 +121,8 @@ export class ProxySchema extends BaseSchema {
   }): Promise<Schema> {
     const query = /* GraphQL */ `
       mutation UpsertSchema(
-        $where: UpsertSchemaWhere
-        $input: UpsertSchemaInput
+        $where: UpsertSchemaWhere!
+        $input: UpsertSchemaInput!
       ) {
         upsertSchema(where: $where, input: $input) {
           schema {

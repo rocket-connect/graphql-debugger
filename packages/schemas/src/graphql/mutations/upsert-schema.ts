@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { TraceSchema } from "../..";
+import { SchemaSchema } from "../..";
 
 export const UpsertSchemaWhereSchema = z.object({
   hash: z.string(),
@@ -12,5 +12,5 @@ export const UpsertSchemaInput = z.object({
 });
 
 export const UpsertSchemaResponseSchema = z.object({
-  trace: TraceSchema,
+  schema: SchemaSchema,
 });

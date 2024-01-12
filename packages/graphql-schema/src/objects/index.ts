@@ -21,6 +21,9 @@ import {
   UpdateTraceInput,
   UpdateTraceResponse,
   UpdateTraceWhere,
+  UpsertSchemaInput,
+  UpsertSchemaResponse,
+  UpsertSchemaWhere,
 } from "@graphql-debugger/types";
 
 export interface Objects {
@@ -46,4 +49,7 @@ export interface Objects {
   UpdateTraceInput: UpdateTraceInput;
   UpdateTraceResponse: UpdateTraceResponse;
   UpdateTraceWhere: UpdateTraceWhere;
+  UpsertSchemaInput: UpsertSchemaInput;
+  UpsertSchemaResponse: UpsertSchemaResponse;
+  UpsertSchemaWhere: UpsertSchemaWhere;
 }
