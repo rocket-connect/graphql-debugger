@@ -1,6 +1,7 @@
 import {
   AggregateSpansResponse,
   AggregateSpansWhere,
+  ClearDBResponse,
   CreateSpanInput,
   CreateSpanResponse,
   CreateTraceInput,
@@ -52,4 +53,5 @@ export interface Objects {
   UpsertSchemaInput: UpsertSchemaInput;
   UpsertSchemaResponse: UpsertSchemaResponse;
   UpsertSchemaWhere: UpsertSchemaWhere;
+  ClearDBResponse: ClearDBResponse;
 }
