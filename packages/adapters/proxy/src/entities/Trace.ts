@@ -53,7 +53,7 @@ export class ProxyTrace extends BaseTrace {
         where,
         options,
       },
-      url: this.options.backendUrl,
+      url: this.options.apiURL,
     });
 
     if (errors && errors?.length > 0) {
@@ -135,7 +135,7 @@ export class ProxyTrace extends BaseTrace {
         includeSpans,
         includeRootSpan,
       },
-      url: this.options.backendUrl,
+      url: this.options.apiURL,
     });
 
     if (errors && errors?.length > 0) {
@@ -173,7 +173,7 @@ export class ProxyTrace extends BaseTrace {
       variables: {
         input,
       },
-      url: this.options.backendUrl,
+      url: this.options.apiURL,
     });
 
     if (errors && errors?.length > 0) {
@@ -215,7 +215,7 @@ export class ProxyTrace extends BaseTrace {
         where,
         input,
       },
-      url: this.options.backendUrl,
+      url: this.options.apiURL,
     });
 
     if (errors && errors?.length > 0) {

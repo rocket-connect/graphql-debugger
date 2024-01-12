@@ -7,8 +7,8 @@ import { ProxyTrace } from "./entities/Trace";
 export const adapterType = "proxy";
 
 export interface ProxyAdapterOptions {
-  backendUrl: string;
-  collectorUrl?: string;
+  apiURL: string;
+  collectorURL: string;
 }
 
 export class ProxyAdapter extends BaseAdapter {

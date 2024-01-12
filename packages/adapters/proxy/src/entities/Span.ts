@@ -61,7 +61,7 @@ export class ProxySpan extends BaseSpan {
       variables: {
         where,
       },
-      url: this.options.backendUrl,
+      url: this.options.apiURL,
     });
 
     if (errors && errors?.length > 0) {
@@ -94,7 +94,7 @@ export class ProxySpan extends BaseSpan {
       variables: {
         where,
       },
-      url: this.options.backendUrl,
+      url: this.options.apiURL,
     });
 
     if (errors && errors?.length > 0) {
@@ -124,7 +124,7 @@ export class ProxySpan extends BaseSpan {
       variables: {
         input,
       },
-      url: this.options.backendUrl,
+      url: this.options.apiURL,
     });
 
     if (errors && errors?.length > 0) {

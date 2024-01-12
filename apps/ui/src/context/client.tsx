@@ -57,7 +57,7 @@ export function ClientProvider({
   const [client, setClient] = useState(
     new DebuggerClient({
       adapter: new ProxyAdapter({
-        backendUrl: configContext?.backendURL as unknown as string,
+        apiURL: configContext?.apiURL as unknown as string,
       }),
     }),
   );
@@ -101,7 +101,7 @@ export function ClientProvider({
     setClient(
       new DebuggerClient({
         adapter: new ProxyAdapter({
-          backendUrl: url,
+          apiURL: url,
         }),
       }),
     );
@@ -111,11 +111,11 @@ export function ClientProvider({
     setClient(
       new DebuggerClient({
         adapter: new ProxyAdapter({
-          backendUrl: configContext?.backendURL as unknown as string,
+          apiURL: configContext?.apiURL as unknown as string,
         }),
       }),
     );
-  }, [setClient, configContext?.backendURL]);
+  }, [setClient, configContext?.apiURL]);
 
   return (
     <ClientContext.Provider

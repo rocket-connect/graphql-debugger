@@ -7,11 +7,8 @@ import { GraphQLSchema, lexicographicSortSchema, printSchema } from "graphql";
 
 import { debug } from "./debug";
 
-const DEFAULT_URL = "http://localhost:4318/v1/traces";
-
-function stripURL(url: string) {
-  return url.replace("/v1/traces", "");
-}
+const DEFAULT_API_URL = "http://localhost:16686";
+const DEFAULT_COLLECTOR_URL = "http://localhost:4318";
 
 export class SchemaExporer {
   private schema: GraphQLSchema;
@@ -24,14 +21,14 @@ export class SchemaExporer {
     exporterConfig?: SetupOtelInput["exporterConfig"],
   ) {
     this.schema = schema;
-    this.url = exporterConfig?.url ?? DEFAULT_URL;
+    this.url = exporterConfig?.url ?? DEFAULT_COLLECTOR_URL;
 
     const sortedSchema = lexicographicSortSchema(this.schema);
     this.schemaString = printSchema(sortedSchema);
 
     const adapter = new ProxyAdapter({
-      backendUrl: "not-used",
-      collectorUrl: stripURL(this.url),
+      apiURL: DEFAULT_API_URL,
+      collectorURL: DEFAULT_COLLECTOR_URL,
     });
 
     this.client = new DebuggerClient({

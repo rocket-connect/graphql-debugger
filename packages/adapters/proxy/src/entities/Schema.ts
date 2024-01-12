@@ -27,7 +27,7 @@ export class ProxySchema extends BaseSchema {
 
   public async createOne({ data }: { data: PostSchema["body"] }) {
     const repsonse = await axios.post(
-      `${this.options.collectorUrl}/v1/schema`,
+      `${this.options.collectorURL}/v1/schema`,
       data,
       {
         headers: { "Content-Type": "application/json" },
@@ -65,7 +65,7 @@ export class ProxySchema extends BaseSchema {
       variables: {
         where,
       },
-      url: this.options.backendUrl,
+      url: this.options.apiURL,
     });
 
     if (errors && errors?.length > 0) {
@@ -102,7 +102,7 @@ export class ProxySchema extends BaseSchema {
       variables: {
         where,
       },
-      url: this.options.backendUrl,
+      url: this.options.apiURL,
     });
 
     if (errors && errors?.length > 0) {
@@ -144,7 +144,7 @@ export class ProxySchema extends BaseSchema {
         where,
         input,
       },
-      url: this.options.backendUrl,
+      url: this.options.apiURL,
     });
 
     if (errors && errors?.length > 0) {

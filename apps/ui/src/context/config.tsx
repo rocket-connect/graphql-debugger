@@ -1,8 +1,8 @@
 import { ReactNode, createContext, useState } from "react";
 
 export interface ConfigContextProps {
-  backendURL: string;
-  setBackendURL: (backendURL: string) => void;
+  apiURL: string;
+  setapiURL: (apiURL: string) => void;
   handleEnableRoute: (type: string) => void;
   handleDisableRoute: (type: string) => void;
   routes: string[];
@@ -17,8 +17,8 @@ export function ConfigProvider({
 }: {
   children: ReactNode;
 }): JSX.Element {
-  const [backendURL, setBackendURL] = useState(
-    localStorage.getItem("backendURL") || "http://localhost:16686",
+  const [apiURL, setapiURL] = useState(
+    localStorage.getItem("apiURL") || "http://localhost:16686",
   );
   const [routes, setRoutes] = useState<string[]>(
     JSON.parse(localStorage.getItem("routes") || "[]"),
@@ -39,16 +39,16 @@ export function ConfigProvider({
     });
   };
 
-  const handleSetBackendURL = (backendURL: string) => {
-    localStorage.setItem("backendURL", backendURL);
-    setBackendURL(backendURL);
+  const handleSetapiURL = (apiURL: string) => {
+    localStorage.setItem("apiURL", apiURL);
+    setapiURL(apiURL);
   };
 
   return (
     <ConfigContext.Provider
       value={{
-        backendURL: backendURL,
-        setBackendURL: handleSetBackendURL,
+        apiURL: apiURL,
+        setapiURL: handleSetapiURL,
         handleEnableRoute: handleEnableRoute,
         handleDisableRoute: handleDisableRoute,
         routes: routes,
