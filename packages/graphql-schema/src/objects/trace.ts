@@ -14,6 +14,7 @@ export const TraceObject: ObjectRef<Trace> = builder.objectType("Trace", {
       type: SpanObject,
       nullable: true,
       resolve: async (root, args, context) => {
+        // TODO: should not need to do this
         if (root.rootSpan) {
           return root.rootSpan;
         }
@@ -44,6 +45,7 @@ export const TraceObject: ObjectRef<Trace> = builder.objectType("Trace", {
     spans: t.field({
       type: [SpanObject],
       resolve: async (root, args, context) => {
+        // TODO: should not need to do this
         if (root.spans?.length) {
           return root.spans;
         }
