@@ -1,35 +1,34 @@
 import { faker } from "@faker-js/faker";
 
-import { prisma } from "../../../src/prisma";
-import { adapter } from "../../adapter";
+import { localAdapter, remoteAdapter } from "../../adapters";
 import { createFakeSchema, createFakeSpan } from "../../utils";
 
 describe("Span", () => {
   describe("aggregate", () => {
     test("should aggregate spans", async () => {
-      const traceId = faker.datatype.uuid();
+      const traceId = faker.string.uuid();
 
       const schema = await createFakeSchema({
-        hash: faker.datatype.uuid(),
-        schema: faker.datatype.uuid(),
+        hash: faker.string.uuid(),
+        schema: faker.string.uuid(),
       });
 
-      const createdTrace = await prisma.traceGroup.create({
-        data: {
+      const createdTrace = await localAdapter.trace.createOne({
+        input: {
           traceId,
-          schemaId: schema.id,
+          schemaId: schema?.id,
         },
       });
 
       const rootSpan = await createFakeSpan({
-        traceGroupId: createdTrace.id,
+        traceGroupId: createdTrace?.trace?.id,
         traceId,
         isRoot: true,
       });
 
-      const aggregateSpansResponse = await adapter.span.aggregate({
+      const aggregateSpansResponse = await remoteAdapter.span.aggregate({
         where: {
-          schemaId: schema.id,
+          schemaId: schema?.id as string,
           name: rootSpan.name,
         },
       });

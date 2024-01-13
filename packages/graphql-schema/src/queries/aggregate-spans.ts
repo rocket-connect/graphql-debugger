@@ -1,4 +1,3 @@
-import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import {
   AggregateSpansResponse,
   AggregateSpansWhere,
@@ -6,7 +5,6 @@ import {
 
 import { InputRef, ObjectRef } from "@pothos/core";
 
-import { SpanObject } from "../objects/span";
 import { builder } from "../schema";
 
 const AggregateSpansWhereInput: InputRef<AggregateSpansWhere> =
@@ -26,50 +24,19 @@ const AggregateSpansResponseObject: ObjectRef<AggregateSpansResponse> =
     fields: (t) => ({
       resolveCount: t.field({
         type: "Int",
-        resolve: (root) => root.spans.length,
+        resolve: (root) => root.resolveCount,
       }),
       errorCount: t.field({
         type: "Int",
-        resolve: (root) => {
-          return root.spans.filter((s) => s.errorMessage || s.errorStack)
-            .length;
-        },
+        resolve: (root) => root.errorCount,
       }),
       averageDuration: t.field({
         type: "String",
-        resolve: (root) => {
-          if (root.spans.length === 0) {
-            return "0";
-          }
-
-          const durations = root.spans.map(
-            (s) => new UnixNanoTimeStamp(BigInt(s.durationNano)),
-          );
-
-          const average = UnixNanoTimeStamp.average(durations);
-
-          return average.toString();
-        },
+        resolve: (root) => root.averageDuration,
       }),
       lastResolved: t.field({
         type: "String",
-        resolve: (root) => {
-          if (root.spans.length === 0) {
-            return "0";
-          }
-
-          const timestamps = root.spans.map(
-            (s) => new UnixNanoTimeStamp(BigInt(s.endTimeUnixNano)),
-          );
-
-          const max = UnixNanoTimeStamp.latest(timestamps);
-
-          return max.toString();
-        },
-      }),
-      spans: t.field({
-        type: [SpanObject],
-        resolve: (root) => root.spans,
+        resolve: (root) => root.lastResolved,
       }),
     }),
   });
@@ -84,14 +51,14 @@ builder.queryField("aggregateSpans", (t) =>
       }),
     },
     resolve: async (root, args, context) => {
-      const spans = await context.client.span.aggregate({
+      const aggregate = await context.client.span.aggregate({
         where: {
           schemaId: args.where.schemaId,
           name: args.where.name,
         },
       });
 
-      return spans;
+      return aggregate;
     },
   }),
 );

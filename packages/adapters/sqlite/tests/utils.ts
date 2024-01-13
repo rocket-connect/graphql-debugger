@@ -26,11 +26,13 @@ export async function createFakeSpan({
   traceId,
   isRoot,
   rootSpanName,
+  shouldError,
 }: {
   traceGroupId: string;
   traceId: string;
   isRoot?: boolean;
   rootSpanName?: string;
+  shouldError?: boolean;
 }): Promise<Span> {
   const spanId = faker.datatype.uuid();
   const parentSpanId = faker.datatype.uuid();
@@ -38,8 +40,8 @@ export async function createFakeSpan({
   const kind = faker.random.word();
   const startTimeUnixNano = faker.datatype.number();
   const endTimeUnixNano = faker.datatype.number();
-  const errorMessage = faker.random.words();
-  const errorStack = faker.random.words();
+  const errorMessage = shouldError ? faker.random.words() : undefined;
+  const errorStack = shouldError ? faker.random.words() : undefined;
   const graphqlDocument = faker.random.words();
   const graphqlVariables = faker.random.words();
   const graphqlResult = faker.random.words();

@@ -70,12 +70,38 @@ export class SQLiteSpan extends BaseSpan {
       },
     });
 
+    const _spans = spans.map((span) => dbSpanToNetwork(span));
+
     const response = {
-      resolveCount: 0,
-      errorCount: 0,
-      averageDuration: "0",
-      lastResolved: "0",
-      spans: spans.map((span) => dbSpanToNetwork(span)),
+      resolveCount: _spans.length,
+      errorCount: _spans.filter((s) => s.errorMessage || s.errorStack).length,
+      averageDuration: (() => {
+        if (_spans.length === 0) {
+          return "0";
+        }
+
+        const durations = _spans.map(
+          (s) => new UnixNanoTimeStamp(BigInt(s.durationNano)),
+        );
+
+        const average = UnixNanoTimeStamp.average(durations);
+
+        return average.toString();
+      })(),
+      lastResolved: (() => {
+        if (_spans.length === 0) {
+          return "0";
+        }
+
+        const timestamps = _spans.map(
+          (s) => new UnixNanoTimeStamp(BigInt(s.endTimeUnixNano)),
+        );
+
+        const max = UnixNanoTimeStamp.latest(timestamps);
+
+        return max.toString();
+      })(),
+      spans: _spans,
     };
 
     const parsed = AggregateSpansResponseSchema.parse(response);
