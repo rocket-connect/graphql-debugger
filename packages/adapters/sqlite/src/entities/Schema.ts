@@ -22,14 +22,28 @@ export class SQLiteSchema extends BaseSchema {
   }: {
     data: PostSchema["body"] & { hash: string };
   }) {
-    await prisma.schema.create({
-      data: {
-        hash: data.hash,
-        typeDefs: data.schema,
-      },
+    const result = await prisma.$transaction(async () => {
+      const schema = await prisma.schema.findFirst({
+        where: {
+          hash: data.hash,
+        },
+      });
+
+      if (schema) {
+        return false;
+      }
+
+      await prisma.schema.create({
+        data: {
+          hash: data.hash,
+          typeDefs: data.schema,
+        },
+      });
+
+      return true;
     });
 
-    return true;
+    return result;
   }
 
   public async findMany(

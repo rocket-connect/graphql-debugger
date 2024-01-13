@@ -62,7 +62,6 @@ export class SQLiteTrace extends BaseTrace {
           }
         : {
             spans: [],
-            rootSpan: null,
           }),
     };
 
