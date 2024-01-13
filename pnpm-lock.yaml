@@ -547,18 +547,9 @@ importers:
 
   packages/graphql-schema:
     dependencies:
-      '@graphql-debugger/adapter-sqlite':
-        specifier: workspace:^
-        version: link:../adapters/sqlite
       '@graphql-debugger/client':
         specifier: workspace:^
         version: link:../client
-      '@graphql-debugger/collector-proxy':
-        specifier: workspace:^
-        version: link:../../apps/collector-proxy
-      '@graphql-debugger/data-access':
-        specifier: workspace:^
-        version: link:../data-access
       '@graphql-debugger/schemas':
         specifier: workspace:^
         version: link:../schemas
@@ -568,9 +559,6 @@ importers:
       '@graphql-debugger/trace-schema':
         specifier: workspace:^
         version: link:../trace-schema
-      '@graphql-debugger/types':
-        specifier: workspace:^
-        version: link:../types
       '@graphql-debugger/utils':
         specifier: workspace:^
         version: link:../utils
@@ -593,6 +581,21 @@ importers:
         specifier: 5.0.2
         version: 5.0.2(graphql@16.0.0)
     devDependencies:
+      '@graphql-debugger/adapter-sqlite':
+        specifier: workspace:^
+        version: link:../adapters/sqlite
+      '@graphql-debugger/collector-proxy':
+        specifier: workspace:^
+        version: link:../../apps/collector-proxy
+      '@graphql-debugger/data-access':
+        specifier: workspace:^
+        version: link:../data-access
+      '@graphql-debugger/graphql-fragments':
+        specifier: workspace:^
+        version: link:../graphql-fragments
+      '@graphql-debugger/types':
+        specifier: workspace:^
+        version: link:../types
       express:
         specifier: 4.18.2
         version: 4.18.2

@@ -1,3 +1,4 @@
+import { SchemaFragment } from "@graphql-debugger/graphql-fragments";
 import { ListSchemasResponseSchema } from "@graphql-debugger/schemas";
 import { ListSchemasResponse } from "@graphql-debugger/types";
 
@@ -11,14 +12,12 @@ const query = gql`
   query ($where: ListSchemasWhere) {
     listSchemas(where: $where) {
       schemas {
-        id
-        hash
-        name
-        typeDefs
-        createdAt
+        ...SchemaFragment
       }
     }
   }
+
+  ${SchemaFragment}
 `;
 
 describe("queries/list-schemas", () => {

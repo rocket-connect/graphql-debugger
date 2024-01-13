@@ -1,3 +1,7 @@
+import {
+  SpanFragment,
+  TraceFragment,
+} from "@graphql-debugger/graphql-fragments";
 import { ListTraceGroupsResponseSchema } from "@graphql-debugger/schemas";
 import { ListTraceGroupsResponse } from "@graphql-debugger/types";
 
@@ -14,44 +18,19 @@ const query = gql`
   query {
     listTraceGroups {
       traces {
-        id
-        traceId
-        firstSpanErrorMessage
-        firstSpanErrorStack
-        firstSpanErrorMessage
-        firstSpanErrorStack
+        ...TraceFragment
         spans {
-          ...SpanObject
+          ...SpanFragment
         }
         rootSpan {
-          ...SpanObject
+          ...SpanFragment
         }
       }
     }
   }
 
-  fragment SpanObject on Span {
-    id
-    spanId
-    traceId
-    parentSpanId
-    name
-    kind
-    errorMessage
-    errorStack
-    endTimeUnixNano
-    startTimeUnixNano
-    durationNano
-    graphqlDocument
-    graphqlVariables
-    graphqlResult
-    graphqlContext
-    graphqlOperationName
-    graphqlOperationType
-    createdAt
-    updatedAt
-    isForeign
-  }
+  ${TraceFragment}
+  ${SpanFragment}
 `;
 
 describe("queries/list-trace-groups", () => {
