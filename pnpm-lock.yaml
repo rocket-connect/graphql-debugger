@@ -437,6 +437,9 @@ importers:
       '@graphql-debugger/client':
         specifier: workspace:^
         version: link:../../client
+      '@graphql-debugger/collector-proxy':
+        specifier: workspace:^
+        version: link:../../../apps/collector-proxy
       '@graphql-debugger/graphql-schema':
         specifier: workspace:^
         version: link:../../graphql-schema
