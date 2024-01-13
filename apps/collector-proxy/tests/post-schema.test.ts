@@ -22,6 +22,7 @@ describe("POST /v1/schema", () => {
   test("should throw an error when parsing the schema", async () => {
     const response = await request().post("/v1/schema").send({
       schema: "invalid schema",
+      hash: faker.string.uuid(),
     });
 
     expect(response.status).toBe(400);
@@ -54,6 +55,7 @@ describe("POST /v1/schema", () => {
 
     const response = await request().post("/v1/schema").send({
       schema,
+      hash,
     });
 
     expect(response.status).toBe(200);
@@ -66,18 +68,19 @@ describe("POST /v1/schema", () => {
       }
     `;
 
+    const executableSchema = makeExecutableSchema({
+      typeDefs: schema,
+      noLocation: true,
+    });
+
+    const hash = hashSchema(executableSchema);
+
     const response = await request().post("/v1/schema").send({
       schema,
+      hash,
     });
 
     expect(response.status).toBe(200);
-
-    const hash = hashSchema(
-      makeExecutableSchema({
-        typeDefs: schema,
-        noLocation: true,
-      }),
-    );
 
     const foundSchema = await client.schema.findFirst({
       where: {
