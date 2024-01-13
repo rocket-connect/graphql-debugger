@@ -107,21 +107,16 @@ describe("Trace", () => {
         },
       });
 
-      console.log("createdTrace", createdTrace);
       const rootSpan = await createFakeSpan({
         traceGroupId: createdTrace.trace.id,
         traceId,
         isRoot: true,
       });
 
-      console.log("rootSpan", rootSpan);
-
       const otherSpan = await createFakeSpan({
         traceGroupId: createdTrace.trace.id,
         traceId,
       });
-
-      console.log("otherSpan", otherSpan);
 
       const foundTrace = await remoteAdapter.trace.findFirst({
         where: {
@@ -131,8 +126,6 @@ describe("Trace", () => {
           includeSpans: true,
         },
       });
-
-      console.log("foundTrace", foundTrace);
 
       const parsed = TraceSchema.parse(foundTrace);
 
