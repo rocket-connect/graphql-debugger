@@ -176,6 +176,16 @@ export class SQLiteTrace extends BaseTrace {
     where: UpdateTraceWhere;
     input: UpdateTraceInput;
   }): Promise<UpdateTraceResponse> {
+    const schema = await prisma.schema.findFirst({
+      where: {
+        id: input.schemaId,
+      },
+    });
+
+    if (!schema) {
+      throw new Error("Schema not found");
+    }
+
     const trace = await prisma.traceGroup.update({
       where: {
         id: where.id,
@@ -185,10 +195,15 @@ export class SQLiteTrace extends BaseTrace {
       },
     });
 
+    if (!trace) {
+      throw new Error("Trace not found");
+    }
+
     const response = {
       trace: {
         id: trace.id,
         traceId: trace.traceId,
+        schemaId: trace.schemaId,
         spans: [],
       },
     };
