@@ -95,7 +95,9 @@ export class ProxySpan extends BaseSpan {
     const query = /* GraphQL */ `
       mutation ($input: CreateSpanInput!) {
         createSpan(input: $input) {
-          ...SpanFragment
+          span {
+            ...SpanFragment
+          }
         }
       }
 

@@ -15,8 +15,8 @@ const CreateSpanInputObject: InputRef<CreateSpanInput> = builder.inputType(
       spanId: t.string({
         required: true,
       }),
-      parentId: t.id({
-        required: true,
+      parentSpanId: t.string({
+        required: false,
       }),
       name: t.string({
         required: true,
