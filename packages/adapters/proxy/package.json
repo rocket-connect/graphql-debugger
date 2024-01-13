@@ -26,12 +26,14 @@
     "axios": "1.6.2"
   },
   "devDependencies": {
-    "@graphql-debugger/client": "workspace:^",
     "@graphql-debugger/adapter-sqlite": "workspace:^",
-    "@graphql-debugger/graphql-fragments": "workspace:^",
+    "@graphql-debugger/client": "workspace:^",
+    "@graphql-debugger/utils": "workspace:^",
     "@graphql-debugger/collector-proxy": "workspace:^",
-    "@graphql-debugger/types": "workspace:^",
+    "@graphql-debugger/graphql-fragments": "workspace:^",
     "@graphql-debugger/graphql-schema": "workspace:^",
+    "@graphql-debugger/types": "workspace:^",
+    "@graphql-tools/schema": "10.0.2",
     "cors": "2.8.5",
     "express": "4.18.2"
   }

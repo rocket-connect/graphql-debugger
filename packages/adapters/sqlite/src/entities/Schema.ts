@@ -17,11 +17,7 @@ export class SQLiteSchema extends BaseSchema {
     super();
   }
 
-  public async createOne({
-    data,
-  }: {
-    data: PostSchema["body"] & { hash: string };
-  }) {
+  public async createOne({ data }: { data: PostSchema["body"] }) {
     const result = await prisma.$transaction(async () => {
       const schema = await prisma.schema.findFirst({
         where: {

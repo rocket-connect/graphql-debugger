@@ -14,6 +14,7 @@ import {
 } from "@graphql-debugger/types";
 
 import axios from "axios";
+import { AxiosError } from "axios";
 
 import { ProxyAdapterOptions } from "..";
 import { executeGraphQLRequest } from "../utils";
@@ -27,19 +28,27 @@ export class ProxySchema extends BaseSchema {
   }
 
   public async createOne({ data }: { data: PostSchema["body"] }) {
-    const repsonse = await axios.post(
-      `${this.options.collectorURL}/v1/schema`,
-      data,
-      {
-        headers: { "Content-Type": "application/json" },
-      },
-    );
+    try {
+      const repsonse = await axios.post(
+        `${this.options.collectorURL}/v1/schema`,
+        data,
+        {
+          headers: { "Content-Type": "application/json" },
+        },
+      );
 
-    if (repsonse.status !== 200) {
-      throw new Error("Failed to create schema");
+      if (repsonse.status !== 200) {
+        throw new Error("Failed to create schema");
+      }
+
+      return true;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        throw new Error(error.response?.data?.message);
+      }
+
+      throw error;
     }
-
-    return true;
   }
 
   public async findMany({ where }: { where?: ListSchemasWhere } = {}): Promise<

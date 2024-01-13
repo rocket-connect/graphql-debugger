@@ -35,12 +35,13 @@ export class SchemaExporer {
 
           const body: PostSchema["body"] = {
             schema: this.schemaString,
+            hash: this.schemaHash,
           };
 
           const response = await this.client.schema.createOne({
             data: {
               schema: body.schema,
-              hash: this.schemaHash,
+              hash: body.hash,
             },
           });
 
