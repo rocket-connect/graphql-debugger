@@ -2,9 +2,9 @@ import { Span } from "@graphql-debugger/data-access";
 
 import { faker } from "@faker-js/faker";
 
-import { TraceSchema } from "../../../../schemas/build";
-import { prisma } from "../../src/prisma";
-import { adapter } from "../adapter";
+import { TraceSchema } from "../../../../../schemas/build";
+import { prisma } from "../../../src/prisma";
+import { adapter } from "../../adapter";
 
 async function createFakeSpan({
   traceGroupId,
