@@ -28,7 +28,7 @@ const FindFirstSchemaResponseObject: ObjectRef<FindFirstSchemaResponse> =
     }),
   });
 
-builder.queryField("FindFirstSchema", (t) =>
+builder.queryField("findFirstSchema", (t) =>
   t.field({
     type: FindFirstSchemaResponseObject,
     args: {
@@ -40,7 +40,7 @@ builder.queryField("FindFirstSchema", (t) =>
     resolve: async (root, args, context) => {
       const schema = await context.client.schema.findFirst({
         where: {
-          hash: args.where.hash,
+          ...(args.where?.hash ? { hash: args.where.hash } : {}),
         },
       });
 

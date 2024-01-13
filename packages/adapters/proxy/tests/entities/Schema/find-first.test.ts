@@ -1,45 +1,36 @@
+import {
+  createFakeSchema,
+  createFakeSpan,
+} from "@graphql-debugger/adapter-sqlite/tests/utils";
+
 import { faker } from "@faker-js/faker";
 
-import { adapter } from "../../adapter";
-import { createFakeSchema, createFakeSpan } from "../../utils";
+import { localAdapter, remoteAdapter } from "../../adapters";
 
 describe("Schema", () => {
   describe("findFirst", () => {
     test("should return no schemas on empty database", async () => {
-      const foundSchema = await adapter.schema.findFirst({
+      const foundSchema = await remoteAdapter.schema.findFirst({
         where: {
-          hash: faker.datatype.uuid(),
+          hash: faker.string.uuid(),
         },
       });
 
       expect(foundSchema).toEqual(null);
     });
 
-    test("should return first schema", async () => {
-      const fakeSchema = await createFakeSchema({
-        hash: faker.datatype.uuid(),
-        schema: faker.datatype.uuid(),
-      });
-
-      const foundSchema = await adapter.schema.findFirst({
-        where: {},
-      });
-
-      expect(foundSchema?.hash).toEqual(fakeSchema.hash);
-    });
-
     test("should find schema by hash", async () => {
       const fakeSchema1 = await createFakeSchema({
-        hash: faker.datatype.uuid(),
-        schema: faker.datatype.uuid(),
+        hash: faker.string.uuid(),
+        schema: faker.string.uuid(),
       });
 
       await createFakeSchema({
-        hash: faker.datatype.uuid(),
-        schema: faker.datatype.uuid(),
+        hash: faker.string.uuid(),
+        schema: faker.string.uuid(),
       });
 
-      const foundSchema = await adapter.schema.findFirst({
+      const foundSchema = await remoteAdapter.schema.findFirst({
         where: {
           hash: fakeSchema1.hash,
         },
@@ -49,14 +40,14 @@ describe("Schema", () => {
     });
 
     test("should find schema and include traces", async () => {
-      const traceId = faker.datatype.uuid();
+      const traceId = faker.string.uuid();
 
       const fakeSchema = await createFakeSchema({
-        hash: faker.datatype.uuid(),
-        schema: faker.datatype.uuid(),
+        hash: faker.string.uuid(),
+        schema: faker.string.uuid(),
       });
 
-      const createdTrace = await adapter.trace.createOne({
+      const createdTrace = await localAdapter.trace.createOne({
         input: {
           traceId,
           schemaId: fakeSchema.id,
@@ -69,7 +60,7 @@ describe("Schema", () => {
         isRoot: true,
       });
 
-      const foundSchema = await adapter.schema.findFirst({
+      const foundSchema = await remoteAdapter.schema.findFirst({
         where: {
           hash: fakeSchema.hash,
         },

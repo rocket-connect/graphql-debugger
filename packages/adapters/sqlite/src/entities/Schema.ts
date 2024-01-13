@@ -74,7 +74,7 @@ export class SQLiteSchema extends BaseSchema {
     where,
     options,
   }: {
-    where?: FindFirstSchemaWhere;
+    where: FindFirstSchemaWhere;
     options?: FindFirstSchemaOptions;
   }): Promise<Schema | null> {
     const schema = await prisma.schema.findFirst({

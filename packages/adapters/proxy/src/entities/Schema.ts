@@ -1,5 +1,8 @@
 import { BaseSchema } from "@graphql-debugger/adapter-base";
-import { SchemaFragment } from "@graphql-debugger/graphql-fragments";
+import {
+  SchemaFragment,
+  TraceFragment,
+} from "@graphql-debugger/graphql-fragments";
 import {
   FindFirstSchemaOptions,
   FindFirstSchemaResponse,
@@ -85,19 +88,30 @@ export class ProxySchema extends BaseSchema {
 
   public async findFirst({
     where,
+    options,
   }: {
-    where?: FindFirstSchemaWhere;
+    where: FindFirstSchemaWhere;
     options?: FindFirstSchemaOptions;
   }): Promise<TSchema | null> {
     const query = /* GraphQL */ `
-      query FindFirstSchema($where: FirstFirstSchemaWhere) {
+      query FindFirstSchema($where: FindFirstSchemaWhere!) {
         findFirstSchema(where: $where) {
           schema {
+            ${
+              options?.includeTraces
+                ? /* GraphQL */ `
+                  traceGroups {
+                    ...TraceFragment
+                  }
+                `
+                : ``
+            }
             ...SchemaFragment
           }
         }
       }
 
+      ${options?.includeTraces ? TraceFragment : ``}
       ${SchemaFragment}
     `;
 

@@ -26,7 +26,7 @@ export abstract class BaseSchema {
   public abstract findFirst({
     where,
   }: {
-    where?: FindFirstSchemaWhere;
+    where: FindFirstSchemaWhere;
     options?: FindFirstSchemaOptions;
   }): Promise<Schema | null>;
 
