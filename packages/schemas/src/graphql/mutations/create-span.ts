@@ -10,7 +10,7 @@ export const CreateSpanInput = z.object({
   startTimeUnixNano: z.string(),
   endTimeUnixNano: z.string(),
   traceId: z.string(),
-  traceGroupId: z.string().optional().nullable(),
+  traceGroupId: z.string(),
   errorMessage: z.string().optional().nullable(),
   errorStack: z.string().optional().nullable(),
   graphqlDocument: z.string().optional().nullable(),

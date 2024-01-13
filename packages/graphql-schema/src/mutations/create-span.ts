@@ -34,7 +34,7 @@ const CreateSpanInputObject: InputRef<CreateSpanInput> = builder.inputType(
         required: true,
       }),
       traceGroupId: t.string({
-        required: false,
+        required: true,
       }),
       errorMessage: t.string({
         required: false,

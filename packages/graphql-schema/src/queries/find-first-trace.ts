@@ -28,7 +28,7 @@ const FindFirstTraceResponseObject: ObjectRef<FindFirstTraceResponse> =
     }),
   });
 
-builder.queryField("FindFirstTrace", (t) =>
+builder.queryField("findFirstTrace", (t) =>
   t.field({
     type: FindFirstTraceResponseObject,
     args: {
@@ -41,6 +41,9 @@ builder.queryField("FindFirstTrace", (t) =>
       const trace = await context.client.trace.findFirst({
         where: {
           traceId: args.where.traceId,
+        },
+        options: {
+          includeSpans: true,
         },
       });
 

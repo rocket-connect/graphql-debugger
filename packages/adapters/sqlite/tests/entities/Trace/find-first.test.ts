@@ -107,9 +107,6 @@ describe("Trace", () => {
         data: {
           traceId,
         },
-        include: {
-          spans: true,
-        },
       });
 
       const rootSpan = await createFakeSpan({

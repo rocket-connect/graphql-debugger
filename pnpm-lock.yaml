@@ -424,6 +424,9 @@ importers:
       '@graphql-debugger/adapter-base':
         specifier: workspace:^
         version: link:../base
+      '@graphql-debugger/schemas':
+        specifier: workspace:^
+        version: link:../../schemas
       axios:
         specifier: 1.6.2
         version: 1.6.2
@@ -440,6 +443,9 @@ importers:
       '@graphql-debugger/collector-proxy':
         specifier: workspace:^
         version: link:../../../apps/collector-proxy
+      '@graphql-debugger/graphql-fragments':
+        specifier: workspace:^
+        version: link:../../graphql-fragments
       '@graphql-debugger/graphql-schema':
         specifier: workspace:^
         version: link:../../graphql-schema
@@ -529,6 +535,15 @@ importers:
       axios:
         specifier: 1.6.2
         version: 1.6.2
+
+  packages/graphql-fragments:
+    dependencies:
+      gql-tag:
+        specifier: 1.0.1
+        version: 1.0.1
+      graphql:
+        specifier: ^16.0.0 || ^17.0.0
+        version: 16.0.0
 
   packages/graphql-schema:
     dependencies:
@@ -6636,7 +6651,6 @@ packages:
 
   /gql-tag@1.0.1:
     resolution: {integrity: sha512-eVxldTiOtJJ3ySNgYbfRwyIyDDMATJ/ykojlQng5ihX1V0Xpr4C7ZXSZuWo7tg+kf+GS8lzhlbZmKSDjbYGhyA==}
-    dev: true
 
   /graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}

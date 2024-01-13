@@ -21,8 +21,8 @@ export async function listen() {
         client: localClient,
       }),
     );
-
     backendServer = await backend.listen(BACKEND_PORT);
+
     const collectorInstance = await collector.start({
       port: collector.COLLECTOR_PORT,
       client: localClient,

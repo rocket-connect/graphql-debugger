@@ -107,7 +107,11 @@ export class SQLiteSpan extends BaseSpan {
         endTimeUnixNano: endTimeUnixNano.toStorage(),
         durationNano: durationNano.toStorage(),
         traceId: input.traceId,
-        traceGroupId: input.traceGroupId,
+        traceGroup: {
+          connect: {
+            id: input.traceGroupId,
+          },
+        },
         errorMessage: input.errorMessage,
         errorStack: input.errorStack,
         graphqlDocument: input.graphqlDocument,

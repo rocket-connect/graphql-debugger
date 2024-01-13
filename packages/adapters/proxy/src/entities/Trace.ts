@@ -1,8 +1,10 @@
 import { BaseTrace } from "@graphql-debugger/adapter-base";
+import { SpanFragment } from "@graphql-debugger/graphql-fragments";
 import {
   CreateTraceInput,
   CreateTraceResponse,
   FindFirstTraceOptions,
+  FindFirstTraceResponse,
   FindFirstTraceWhere,
   ListTraceGroupsWhere,
   Span,
@@ -31,27 +33,41 @@ export class ProxyTrace extends BaseTrace {
     options?: FindFirstTraceOptions;
   }): Promise<Trace | null> {
     const query = /* GraphQL */ `
-      query ($where: FindFirstTraceWhere, $options: FindFirstTraceOptions) {
-        findFirstTrace(where: $where, options: $options) {
-          id
-          traceId
+      query ($where: FindFirstTraceWhere!) {
+        findFirstTrace(where: $where) {
+          trace {
+            id
+            traceId
+            ${
+              options?.includeSpans
+                ? /* GraphQL */ `
+                  spans { 
+                    ...SpanFragment
+                  }
+                  rootSpan {
+                    ...SpanFragment
+                  }
+                `
+                : ""
+            }
+          }
         }
       }
+
+      ${SpanFragment}
     `;
 
     const { data, errors } = await executeGraphQLRequest<
       {
-        findFirstTrace: Trace | null;
+        findFirstTrace: FindFirstTraceResponse;
       },
       {
         where: FindFirstTraceWhere;
-        options?: FindFirstTraceOptions;
       }
     >({
       query,
       variables: {
         where,
-        options,
       },
       url: this.options.apiURL,
     });
@@ -60,7 +76,11 @@ export class ProxyTrace extends BaseTrace {
       throw new Error(errors.map((e) => e.message).join("\n"));
     }
 
-    return data.findFirstTrace;
+    if (!data.findFirstTrace?.trace) {
+      return null;
+    }
+
+    return data.findFirstTrace.trace;
   }
 
   public async findMany({
@@ -85,36 +105,16 @@ export class ProxyTrace extends BaseTrace {
             firstSpanErrorMessage
             firstSpanErrorStack
             spans @include(if: $includeSpans) {
-              ...SpanObject
+              ...SpanFragment
             }
             rootSpan @include(if: $includeRootSpan) {
-              ...SpanObject
+              ...SpanFragment
             }
           }
         }
       }
 
-      fragment SpanObject on Span {
-        id
-        spanId
-        traceId
-        parentSpanId
-        name
-        kind
-        isForeign
-        attributes
-        errorMessage
-        errorStack
-        endTimeUnixNano
-        startTimeUnixNano
-        durationNano
-        graphqlDocument
-        graphqlVariables
-        graphqlResult
-        graphqlContext
-        graphqlOperationName
-        graphqlOperationType
-      }
+      ${SpanFragment}
     `;
 
     const { data, errors } = await executeGraphQLRequest<
