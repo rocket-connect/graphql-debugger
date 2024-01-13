@@ -1,5 +1,8 @@
 import { BaseTrace } from "@graphql-debugger/adapter-base";
-import { SpanFragment } from "@graphql-debugger/graphql-fragments";
+import {
+  SpanFragment,
+  TraceFragment,
+} from "@graphql-debugger/graphql-fragments";
 import {
   CreateTraceInput,
   CreateTraceResponse,
@@ -100,10 +103,7 @@ export class ProxyTrace extends BaseTrace {
       ) {
         listTraceGroups(where: $where) {
           traces {
-            id
-            traceId
-            firstSpanErrorMessage
-            firstSpanErrorStack
+            ...TraceFragment
             spans @include(if: $includeSpans) {
               ...SpanFragment
             }
@@ -114,6 +114,7 @@ export class ProxyTrace extends BaseTrace {
         }
       }
 
+      ${TraceFragment}
       ${SpanFragment}
     `;
 
@@ -154,11 +155,12 @@ export class ProxyTrace extends BaseTrace {
       mutation ($input: CreateTraceInput!) {
         createTrace(input: $input) {
           trace {
-            id
-            traceId
+            ...TraceFragment
           }
         }
       }
+
+      ${TraceFragment}
     `;
 
     const { data, errors } = await executeGraphQLRequest<
@@ -194,11 +196,12 @@ export class ProxyTrace extends BaseTrace {
       mutation ($where: UpdateTraceWhere!, $input: UpdateTraceInput!) {
         updateTrace(where: $where, input: $input) {
           trace {
-            id
-            traceId
+            ...TraceFragment
           }
         }
       }
+
+      ${TraceFragment}
     `;
 
     const { data, errors } = await executeGraphQLRequest<

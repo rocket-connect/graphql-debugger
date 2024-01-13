@@ -1,4 +1,5 @@
 import { BaseSchema } from "@graphql-debugger/adapter-base";
+import { SchemaFragment } from "@graphql-debugger/graphql-fragments";
 import {
   FindFirstSchemaOptions,
   FindFirstSchemaResponse,
@@ -48,14 +49,12 @@ export class ProxySchema extends BaseSchema {
       query ListSchemas($where: ListSchemasWhere) {
         listSchemas(where: $where) {
           schemas {
-            id
-            name
-            hash
-            typeDefs
-            createdAt
+            ...SchemaFragment
           }
         }
       }
+
+      ${SchemaFragment}
     `;
 
     const { data, errors } = await executeGraphQLRequest<{
@@ -85,14 +84,12 @@ export class ProxySchema extends BaseSchema {
       query FindFirstSchema($where: FirstFirstSchemaWhere) {
         findFirstSchema(where: $where) {
           schema {
-            id
-            name
-            hash
-            typeDefs
-            createdAt
+            ...SchemaFragment
           }
         }
       }
+
+      ${SchemaFragment}
     `;
 
     const { data, errors } = await executeGraphQLRequest<{
@@ -126,14 +123,12 @@ export class ProxySchema extends BaseSchema {
       ) {
         upsertSchema(where: $where, input: $input) {
           schema {
-            id
-            name
-            hash
-            typeDefs
-            createdAt
+            ...SchemaFragment
           }
         }
       }
+
+      ${SchemaFragment}
     `;
 
     const { data, errors } = await executeGraphQLRequest<{

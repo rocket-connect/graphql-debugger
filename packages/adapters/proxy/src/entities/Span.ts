@@ -1,4 +1,5 @@
 import { BaseSpan } from "@graphql-debugger/adapter-base";
+import { SpanFragment } from "@graphql-debugger/graphql-fragments";
 import {
   AggregateSpansResponse,
   AggregateSpansWhere,
@@ -29,29 +30,11 @@ export class ProxySpan extends BaseSpan {
     const query = /* GraphQL */ `
       query ($where: ListSpansWhere!) {
         listSpans(where: $where) {
-          id
-          spanId
-          parentSpanId
-          traceId
-          name
-          kind
-          startTimeUnixNano
-          endTimeUnixNano
-          durationNano
-          graphqlDocument
-          graphqlVariables
-          graphqlResult
-          graphqlContext
-          graphqlOperationName
-          graphqlOperationType
-          createdAt
-          updatedAt
-          errorMessage
-          errorStack
-          isForeign
-          attributes
+          ...SpanFragment
         }
       }
+
+      ${SpanFragment}
     `;
 
     const { data, errors } = await executeGraphQLRequest<{
@@ -112,9 +95,11 @@ export class ProxySpan extends BaseSpan {
     const query = /* GraphQL */ `
       mutation ($input: CreateSpanInput!) {
         createSpan(input: $input) {
-          id
+          ...SpanFragment
         }
       }
+
+      ${SpanFragment}
     `;
 
     const { data, errors } = await executeGraphQLRequest<{

@@ -86,10 +86,12 @@ describe("queries/list-trace-groups", () => {
       query ($where: ListTraceGroupsWhere) {
         listTraceGroups(where: $where) {
           traces {
-            id
+            ...TraceFragment
           }
         }
       }
+
+      ${TraceFragment}
     `;
 
     const response = await request()
@@ -130,10 +132,12 @@ describe("queries/list-trace-groups", () => {
       query ($where: ListTraceGroupsWhere) {
         listTraceGroups(where: $where) {
           traces {
-            id
+            ...TraceFragment
           }
         }
       }
+
+      ${TraceFragment}
     `;
 
     const response = await request()

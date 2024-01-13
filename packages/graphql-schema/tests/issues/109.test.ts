@@ -1,3 +1,4 @@
+import { TraceFragment } from "@graphql-debugger/graphql-fragments";
 import { ListTraceGroupsResponse } from "@graphql-debugger/types";
 
 import gql from "gql-tag";
@@ -10,10 +11,12 @@ const query = gql`
   query {
     listTraceGroups {
       traces {
-        id
+        ...TraceFragment
       }
     }
   }
+
+  ${TraceFragment}
 `;
 
 describe("issues 109", () => {
