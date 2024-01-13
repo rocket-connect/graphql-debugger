@@ -10,6 +10,9 @@ export const TraceObject: ObjectRef<Trace> = builder.objectType("Trace", {
   fields: (t) => ({
     id: t.exposeString("id"),
     traceId: t.exposeString("traceId"),
+    schemaId: t.exposeString("schemaId", {
+      nullable: true,
+    }),
     rootSpan: t.field({
       type: SpanObject,
       nullable: true,

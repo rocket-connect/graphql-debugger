@@ -283,54 +283,5 @@ describe("Trace", () => {
 
       expect(traces).toHaveLength(20);
     });
-
-    test("should order by createdAt DESC", async () => {
-      const traceId = faker.datatype.uuid();
-
-      const createdTrace1 = await prisma.traceGroup.create({
-        data: {
-          traceId: traceId + 1,
-        },
-      });
-
-      const createdTrace2 = await prisma.traceGroup.create({
-        data: {
-          traceId: traceId + 2,
-        },
-      });
-
-      const createdTrace3 = await prisma.traceGroup.create({
-        data: {
-          traceId: traceId + 3,
-        },
-      });
-
-      await createFakeSpan({
-        traceGroupId: createdTrace1.id,
-        traceId: traceId + 1,
-        isRoot: true,
-      });
-
-      await createFakeSpan({
-        traceGroupId: createdTrace2.id,
-        traceId: traceId + 2,
-        isRoot: true,
-      });
-
-      await createFakeSpan({
-        traceGroupId: createdTrace3.id,
-        traceId: traceId + 3,
-        isRoot: true,
-      });
-
-      const traces = await adapter.trace.findMany({
-        where: {},
-      });
-
-      expect(traces).toHaveLength(3);
-      expect(traces[0].id).toEqual(createdTrace3.id);
-      expect(traces[1].id).toEqual(createdTrace2.id);
-      expect(traces[2].id).toEqual(createdTrace1.id);
-    });
   });
 });

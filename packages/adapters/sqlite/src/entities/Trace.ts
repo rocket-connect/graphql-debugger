@@ -132,6 +132,7 @@ export class SQLiteTrace extends BaseTrace {
       return {
         id: trace.id,
         traceId: trace.traceId,
+        schemaId: trace.schemaId,
         spans,
         rootSpan: spans.find((span) => span.isGraphQLRootSpan),
       };
@@ -150,22 +151,15 @@ export class SQLiteTrace extends BaseTrace {
     const trace = await prisma.traceGroup.create({
       data: {
         traceId: input.traceId,
-        ...(input.schemaId
-          ? {
-              schema: {
-                connect: {
-                  id: input.schemaId,
-                },
-              },
-            }
-          : {}),
+        schemaId: input.schemaId,
       },
     });
 
-    const response = {
+    const response: CreateTraceResponse = {
       trace: {
         id: trace.id,
         traceId: trace.traceId,
+        schemaId: trace.schemaId,
         spans: [],
       },
     };

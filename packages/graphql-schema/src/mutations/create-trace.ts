@@ -15,6 +15,9 @@ const CreateTraceInputObject: InputRef<CreateTraceInput> = builder.inputType(
       traceId: t.string({
         required: true,
       }),
+      schemaId: t.string({
+        required: false,
+      }),
     }),
   },
 );

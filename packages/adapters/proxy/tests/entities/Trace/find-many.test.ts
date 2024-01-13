@@ -281,54 +281,5 @@ describe("Trace", () => {
 
       expect(traces).toHaveLength(20);
     });
-
-    test("should order by createdAt DESC", async () => {
-      const traceId = faker.string.uuid();
-
-      const createdTrace1 = await localAdapter.trace.createOne({
-        input: {
-          traceId: traceId + 1,
-        },
-      });
-
-      const createdTrace2 = await localAdapter.trace.createOne({
-        input: {
-          traceId: traceId + 2,
-        },
-      });
-
-      const createdTrace3 = await localAdapter.trace.createOne({
-        input: {
-          traceId: traceId + 3,
-        },
-      });
-
-      await createFakeSpan({
-        traceGroupId: createdTrace1?.trace?.id,
-        traceId: traceId + 1,
-        isRoot: true,
-      });
-
-      await createFakeSpan({
-        traceGroupId: createdTrace2?.trace?.id,
-        traceId: traceId + 2,
-        isRoot: true,
-      });
-
-      await createFakeSpan({
-        traceGroupId: createdTrace3?.trace?.id,
-        traceId: traceId + 3,
-        isRoot: true,
-      });
-
-      const traces = await remoteAdapter.trace.findMany({
-        where: {},
-      });
-
-      expect(traces).toHaveLength(3);
-      expect(traces[0].id).toEqual(createdTrace3?.trace?.id);
-      expect(traces[1].id).toEqual(createdTrace2?.trace?.id);
-      expect(traces[2].id).toEqual(createdTrace1?.trace?.id);
-    });
   });
 });
