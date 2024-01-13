@@ -450,6 +450,9 @@ importers:
         specifier: workspace:^
         version: link:../../utils
     devDependencies:
+      '@faker-js/faker':
+        specifier: 7.6.0
+        version: 7.6.0
       '@graphql-debugger/types':
         specifier: workspace:^
         version: link:../../types
@@ -2305,6 +2308,11 @@ packages:
   /@eslint/js@8.56.0:
     resolution: {integrity: sha512-gMsVel9D7f2HLkBma9VbtzZRehRogVRfbr++f06nL2vnCGCNlzOD+/MUov/F4p8myyAHspEhVobgjpX64q5m6A==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dev: true
+
+  /@faker-js/faker@7.6.0:
+    resolution: {integrity: sha512-XK6BTq1NDMo9Xqw/YkYyGjSsg44fbNwYRx7QK2CuoQgyy+f1rrTDHoExVM5PsyXCtfl2vs2vVJ0MN0yN6LppRw==}
+    engines: {node: '>=14.0.0', npm: '>=6.0.0'}
     dev: true
 
   /@faker-js/faker@8.3.1:

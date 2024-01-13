@@ -1,5 +1,4 @@
 import { BaseSpan } from "@graphql-debugger/adapter-base";
-import { prisma } from "@graphql-debugger/data-access";
 import { UnixNanoTimeStamp } from "@graphql-debugger/time";
 import {
   AggregateSpansResponse,
@@ -19,6 +18,7 @@ import {
   DeleteSpanResponseSchema,
   ListSpansResponseSchema,
 } from "../../../../schemas/build";
+import { prisma } from "../prisma";
 
 export class SQLiteSpan extends BaseSpan {
   constructor() {

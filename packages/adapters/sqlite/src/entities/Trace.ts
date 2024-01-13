@@ -1,5 +1,4 @@
 import { BaseTrace } from "@graphql-debugger/adapter-base";
-import { prisma } from "@graphql-debugger/data-access";
 import {
   CreateTraceInput,
   CreateTraceResponse,
@@ -19,6 +18,7 @@ import {
   TraceSchema,
   UpdateTraceResponseSchema,
 } from "../../../../schemas/build";
+import { prisma } from "../prisma";
 
 export class SQLiteTrace extends BaseTrace {
   constructor() {
@@ -49,17 +49,20 @@ export class SQLiteTrace extends BaseTrace {
       return null;
     }
 
+    const spans = (trace?.spans || []).map((span) => dbSpanToNetwork(span));
+    const rootSpan = spans.find((span) => span.isGraphQLRootSpan);
+
     const response = {
       id: trace.id,
       traceId: trace.traceId,
       ...(options?.includeSpans
         ? {
-            spans: trace?.spans?.map((span) => {
-              return dbSpanToNetwork(span);
-            }),
+            spans,
+            rootSpan,
           }
         : {
             spans: [],
+            rootSpan: null,
           }),
     };
 

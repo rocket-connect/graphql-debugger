@@ -1,5 +1,4 @@
 import { BaseSchema } from "@graphql-debugger/adapter-base";
-import { prisma } from "@graphql-debugger/data-access";
 import {
   FindFirstSchemaOptions,
   FindFirstSchemaWhere,
@@ -11,6 +10,7 @@ import {
 } from "@graphql-debugger/types";
 
 import { SchemaSchema } from "../../../../schemas/build";
+import { prisma } from "../prisma";
 
 export class SQLiteSchema extends BaseSchema {
   constructor() {

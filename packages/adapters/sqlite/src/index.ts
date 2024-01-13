@@ -1,9 +1,9 @@
 import { BaseAdapter } from "@graphql-debugger/adapter-base";
-import { clearDB } from "@graphql-debugger/data-access";
 
 import { SQLiteSchema } from "./entities/Schema";
 import { SQLiteSpan } from "./entities/Span";
 import { SQLiteTrace } from "./entities/Trace";
+import { clearDB } from "./prisma";
 
 export const adapterType = "sqlite";
 

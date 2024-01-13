@@ -19,11 +19,12 @@
   },
   "dependencies": {
     "@graphql-debugger/adapter-base": "workspace:^",
-    "@graphql-debugger/utils": "workspace:^",
     "@graphql-debugger/data-access": "workspace:^",
-    "@graphql-debugger/time": "workspace:^"
+    "@graphql-debugger/time": "workspace:^",
+    "@graphql-debugger/utils": "workspace:^"
   },
   "devDependencies": {
+    "@faker-js/faker": "7.6.0",
     "@graphql-debugger/types": "workspace:^"
   }
 }
