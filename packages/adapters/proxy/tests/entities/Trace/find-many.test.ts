@@ -1,35 +1,33 @@
 import { faker } from "@faker-js/faker";
 
-import { prisma } from "../../../src/prisma";
-import { adapter } from "../../adapter";
+import { localAdapter, remoteAdapter } from "../../adapters";
 import { createFakeSchema, createFakeSpan } from "../../utils";
 
 describe("Trace", () => {
   describe("findMany", () => {
     test("should return no traces on empty database", async () => {
-      const traces = await adapter.trace.findMany({
+      const traces = await remoteAdapter.trace.findMany({
         where: {},
       });
 
       expect(traces).toHaveLength(0);
-      expect(traces).toEqual([]);
     });
 
     test("should not return traces if there is no root span", async () => {
-      const traceId = faker.datatype.uuid();
+      const traceId = faker.string.uuid();
 
-      const createdTrace = await prisma.traceGroup.create({
-        data: {
+      const createdTrace = await localAdapter.trace.createOne({
+        input: {
           traceId,
         },
       });
 
       await createFakeSpan({
-        traceGroupId: createdTrace.id,
+        traceGroupId: createdTrace.trace.id,
         traceId,
       });
 
-      const traces = await adapter.trace.findMany({
+      const traces = await remoteAdapter.trace.findMany({
         where: {},
       });
 
@@ -38,192 +36,192 @@ describe("Trace", () => {
     });
 
     test("should return a single trace", async () => {
-      const traceId = faker.datatype.uuid();
+      const traceId = faker.string.uuid();
 
-      const createdTrace = await prisma.traceGroup.create({
-        data: {
+      const createdTrace = await localAdapter.trace.createOne({
+        input: {
           traceId,
         },
       });
 
       await createFakeSpan({
-        traceGroupId: createdTrace.id,
+        traceGroupId: createdTrace.trace.id,
         traceId,
         isRoot: true,
       });
 
-      const traces = await adapter.trace.findMany({
+      const traces = await remoteAdapter.trace.findMany({
         where: {},
       });
 
       expect(traces).toHaveLength(1);
-      expect(traces[0].id).toEqual(createdTrace.id);
+      expect(traces[0].id).toEqual(createdTrace.trace.id);
     });
 
     test("should return a single trace by id", async () => {
-      const traceId = faker.datatype.uuid();
-      const otherTraceId = faker.datatype.uuid();
+      const traceId = faker.string.uuid();
+      const otherTraceId = faker.string.uuid();
 
-      const createdTrace = await prisma.traceGroup.create({
-        data: {
+      const createdTrace = await localAdapter.trace.createOne({
+        input: {
           traceId,
         },
       });
 
-      const otherTrace = await prisma.traceGroup.create({
-        data: {
+      const otherTrace = await localAdapter.trace.createOne({
+        input: {
           traceId: otherTraceId,
         },
       });
 
       await createFakeSpan({
-        traceGroupId: createdTrace.id,
+        traceGroupId: createdTrace.trace.id,
         traceId,
         isRoot: true,
       });
 
       await createFakeSpan({
-        traceGroupId: otherTrace.id,
+        traceGroupId: otherTrace.trace.id,
         traceId: otherTraceId,
         isRoot: true,
       });
 
-      const traces = await adapter.trace.findMany({
+      const traces = await remoteAdapter.trace.findMany({
         where: {
-          id: createdTrace.id,
+          id: createdTrace.trace.id,
         },
       });
 
       expect(traces).toHaveLength(1);
-      expect(traces[0].id).toEqual(createdTrace.id);
+      expect(traces[0].id).toEqual(createdTrace.trace.id);
     });
 
     test("should return a single trace by schemaId", async () => {
-      const traceId = faker.datatype.uuid();
-      const otherTraceId = faker.datatype.uuid();
+      const traceId = faker.string.uuid();
+      const otherTraceId = faker.string.uuid();
 
       const fakeSchema = await createFakeSchema({
-        hash: faker.datatype.uuid(),
-        schema: faker.datatype.uuid(),
+        hash: faker.string.uuid(),
+        schema: faker.string.uuid(),
       });
 
-      const createdTrace = await prisma.traceGroup.create({
-        data: {
+      const createdTrace = await localAdapter.trace.createOne({
+        input: {
           traceId,
-          schemaId: fakeSchema.id,
+          schemaId: fakeSchema?.id,
         },
       });
 
-      const otherTrace = await prisma.traceGroup.create({
-        data: {
+      const otherTrace = await localAdapter.trace.createOne({
+        input: {
           traceId: otherTraceId,
         },
       });
 
       await createFakeSpan({
-        traceGroupId: createdTrace.id,
+        traceGroupId: createdTrace?.trace?.id,
         traceId,
         isRoot: true,
       });
 
       await createFakeSpan({
-        traceGroupId: otherTrace.id,
+        traceGroupId: otherTrace?.trace?.id,
         traceId: otherTraceId,
         isRoot: true,
       });
 
-      const traces = await adapter.trace.findMany({
+      const traces = await remoteAdapter.trace.findMany({
         where: {
-          schemaId: fakeSchema.id,
+          schemaId: fakeSchema?.id,
         },
       });
 
       expect(traces).toHaveLength(1);
-      expect(traces[0].id).toEqual(createdTrace.id);
+      expect(traces[0].id).toEqual(createdTrace?.trace?.id);
     });
 
     test("should return a single trace by rootSpanName", async () => {
-      const traceId = faker.datatype.uuid();
-      const otherTraceId = faker.datatype.uuid();
-      const rootSpanName = faker.random.word();
+      const traceId = faker.string.uuid();
+      const otherTraceId = faker.string.uuid();
+      const rootSpanName = faker.lorem.word();
 
-      const createdTrace = await prisma.traceGroup.create({
-        data: {
+      const createdTrace = await localAdapter.trace.createOne({
+        input: {
           traceId,
         },
       });
 
-      const otherTrace = await prisma.traceGroup.create({
-        data: {
+      const otherTrace = await localAdapter.trace.createOne({
+        input: {
           traceId: otherTraceId,
         },
       });
 
       await createFakeSpan({
-        traceGroupId: createdTrace.id,
+        traceGroupId: createdTrace.trace?.id,
         traceId,
         isRoot: true,
         rootSpanName,
       });
 
       await createFakeSpan({
-        traceGroupId: otherTrace.id,
+        traceGroupId: otherTrace?.trace?.id,
         traceId: otherTraceId,
         isRoot: true,
       });
 
-      const traces = await adapter.trace.findMany({
+      const traces = await remoteAdapter.trace.findMany({
         where: {
           rootSpanName: rootSpanName,
         },
       });
 
       expect(traces).toHaveLength(1);
-      expect(traces[0].id).toEqual(createdTrace.id);
+      expect(traces[0].id).toEqual(createdTrace?.trace?.id);
     });
 
     test("should return traces by traceIds", async () => {
-      const traceId1 = faker.datatype.uuid();
-      const traceId2 = faker.datatype.uuid();
-      const traceId3 = faker.datatype.uuid();
+      const traceId1 = faker.string.uuid();
+      const traceId2 = faker.string.uuid();
+      const traceId3 = faker.string.uuid();
 
-      const createdTrace1 = await prisma.traceGroup.create({
-        data: {
+      const createdTrace1 = await localAdapter.trace.createOne({
+        input: {
           traceId: traceId1,
         },
       });
 
-      const createdTrace2 = await prisma.traceGroup.create({
-        data: {
+      const createdTrace2 = await localAdapter.trace.createOne({
+        input: {
           traceId: traceId2,
         },
       });
 
-      const createdTrace3 = await prisma.traceGroup.create({
-        data: {
+      const createdTrace3 = await localAdapter.trace.createOne({
+        input: {
           traceId: traceId3,
         },
       });
 
       await createFakeSpan({
-        traceGroupId: createdTrace1.id,
+        traceGroupId: createdTrace1?.trace?.id,
         traceId: traceId1,
         isRoot: true,
       });
 
       await createFakeSpan({
-        traceGroupId: createdTrace2.id,
+        traceGroupId: createdTrace2?.trace?.id,
         traceId: traceId2,
         isRoot: true,
       });
 
       await createFakeSpan({
-        traceGroupId: createdTrace3.id,
+        traceGroupId: createdTrace3?.trace?.id,
         traceId: traceId3,
         isRoot: true,
       });
 
-      const traces = await adapter.trace.findMany({
+      const traces = await remoteAdapter.trace.findMany({
         where: {
           traceIds: [traceId1, traceId2],
         },
@@ -233,51 +231,51 @@ describe("Trace", () => {
     });
 
     test("should include spans", async () => {
-      const traceId = faker.datatype.uuid();
+      const traceId = faker.string.uuid();
 
-      const createdTrace = await prisma.traceGroup.create({
-        data: {
+      const createdTrace = await localAdapter.trace.createOne({
+        input: {
           traceId,
         },
       });
 
       await createFakeSpan({
-        traceGroupId: createdTrace.id,
+        traceGroupId: createdTrace?.trace?.id,
         traceId,
         isRoot: true,
       });
 
-      const traces = await adapter.trace.findMany({
+      const traces = await remoteAdapter.trace.findMany({
         where: {},
         includeRootSpan: true,
         includeSpans: true,
       });
 
       expect(traces).toHaveLength(1);
-      expect(traces[0].id).toEqual(createdTrace.id);
+      expect(traces[0].id).toEqual(createdTrace?.trace?.id);
       expect(traces[0].spans).toHaveLength(1);
       expect(traces[0].rootSpan).toBeDefined();
       expect(traces[0].rootSpan?.id).toEqual(traces[0].spans[0].id);
     });
 
     test("should only take 20 traces", async () => {
-      const traceId = faker.datatype.uuid();
+      const traceId = faker.string.uuid();
 
       for (let i = 0; i < 30; i++) {
-        const createdTrace = await prisma.traceGroup.create({
-          data: {
+        const createdTrace = await localAdapter.trace.createOne({
+          input: {
             traceId: traceId + i,
           },
         });
 
         await createFakeSpan({
-          traceGroupId: createdTrace.id,
+          traceGroupId: createdTrace?.trace?.id,
           traceId: traceId + i,
           isRoot: true,
         });
       }
 
-      const traces = await adapter.trace.findMany({
+      const traces = await remoteAdapter.trace.findMany({
         where: {},
       });
 
@@ -285,52 +283,52 @@ describe("Trace", () => {
     });
 
     test("should order by createdAt DESC", async () => {
-      const traceId = faker.datatype.uuid();
+      const traceId = faker.string.uuid();
 
-      const createdTrace1 = await prisma.traceGroup.create({
-        data: {
+      const createdTrace1 = await localAdapter.trace.createOne({
+        input: {
           traceId: traceId + 1,
         },
       });
 
-      const createdTrace2 = await prisma.traceGroup.create({
-        data: {
+      const createdTrace2 = await localAdapter.trace.createOne({
+        input: {
           traceId: traceId + 2,
         },
       });
 
-      const createdTrace3 = await prisma.traceGroup.create({
-        data: {
+      const createdTrace3 = await localAdapter.trace.createOne({
+        input: {
           traceId: traceId + 3,
         },
       });
 
       await createFakeSpan({
-        traceGroupId: createdTrace1.id,
+        traceGroupId: createdTrace1?.trace?.id,
         traceId: traceId + 1,
         isRoot: true,
       });
 
       await createFakeSpan({
-        traceGroupId: createdTrace2.id,
+        traceGroupId: createdTrace2?.trace?.id,
         traceId: traceId + 2,
         isRoot: true,
       });
 
       await createFakeSpan({
-        traceGroupId: createdTrace3.id,
+        traceGroupId: createdTrace3?.trace?.id,
         traceId: traceId + 3,
         isRoot: true,
       });
 
-      const traces = await adapter.trace.findMany({
+      const traces = await remoteAdapter.trace.findMany({
         where: {},
       });
 
       expect(traces).toHaveLength(3);
-      expect(traces[0].id).toEqual(createdTrace3.id);
-      expect(traces[1].id).toEqual(createdTrace2.id);
-      expect(traces[2].id).toEqual(createdTrace1.id);
+      expect(traces[0].id).toEqual(createdTrace3?.trace?.id);
+      expect(traces[1].id).toEqual(createdTrace2?.trace?.id);
+      expect(traces[2].id).toEqual(createdTrace1?.trace?.id);
     });
   });
 });
