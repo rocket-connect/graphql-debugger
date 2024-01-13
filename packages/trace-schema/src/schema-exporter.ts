@@ -1,39 +1,28 @@
-import { ProxyAdapter } from "@graphql-debugger/adapter-proxy";
 import { DebuggerClient } from "@graphql-debugger/client";
-import { SetupOtelInput } from "@graphql-debugger/opentelemetry";
 import { PostSchema } from "@graphql-debugger/types";
+import { hashSchema } from "@graphql-debugger/utils";
 
 import { GraphQLSchema, lexicographicSortSchema, printSchema } from "graphql";
 
 import { debug } from "./debug";
 
-const DEFAULT_API_URL = "http://localhost:16686";
-const DEFAULT_COLLECTOR_URL = "http://localhost:4318";
-
 export class SchemaExporer {
   private schema: GraphQLSchema;
-  private url: string;
   private schemaString: string;
+  private schemaHash: string;
   private client: DebuggerClient;
 
-  constructor(
-    schema: GraphQLSchema,
-    exporterConfig?: SetupOtelInput["exporterConfig"],
-  ) {
-    this.schema = schema;
-    this.url = exporterConfig?.url ?? DEFAULT_COLLECTOR_URL;
-
-    const sortedSchema = lexicographicSortSchema(this.schema);
-    this.schemaString = printSchema(sortedSchema);
-
-    const adapter = new ProxyAdapter({
-      apiURL: DEFAULT_API_URL,
-      collectorURL: DEFAULT_COLLECTOR_URL,
-    });
-
-    this.client = new DebuggerClient({
-      adapter,
-    });
+  constructor({
+    schema,
+    client,
+  }: {
+    schema: GraphQLSchema;
+    client: DebuggerClient;
+  }) {
+    this.schema = lexicographicSortSchema(schema);
+    this.schemaString = printSchema(this.schema);
+    this.schemaHash = hashSchema(this.schema);
+    this.client = client;
   }
 
   public start() {
@@ -51,6 +40,7 @@ export class SchemaExporer {
           const response = await this.client.schema.createOne({
             data: {
               schema: body.schema,
+              hash: this.schemaHash,
             },
           });
 

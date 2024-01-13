@@ -100,6 +100,7 @@ export async function createTestSchema({
   });
 
   const schema = traceSchema({
+    client,
     schema: executableSchema,
   });
 

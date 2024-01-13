@@ -65,6 +65,7 @@ export async function createTestSchema({
 
   const schema = traceSchema({
     schema: executableSchema,
+    client,
   });
 
   const hash = hashSchema(schema);

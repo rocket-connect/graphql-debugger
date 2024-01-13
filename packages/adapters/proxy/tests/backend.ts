@@ -1,10 +1,10 @@
-import * as backend from "@graphql-debugger/backend";
 import * as collector from "@graphql-debugger/collector-proxy";
+import { createServer } from "@graphql-debugger/graphql-schema";
 
+import express, { Express } from "express";
 import http from "http";
 
-import { client } from "../../src/client";
-import { debug } from "../../src/debug";
+import { localClient } from "./clients";
 
 let backendServer: http.Server;
 let collectorServer: http.Server;
@@ -12,33 +12,34 @@ let collectorServer: http.Server;
 let isListening = false;
 
 export async function listen() {
-  debug("Starting Collector Proxy");
-
   if (!isListening) {
-    backendServer = await backend.start({ port: backend.BACKEND_PORT, client });
+    const backend: Express = express();
+    backend.use(express.json());
+    backend.use(
+      "/graphql",
+      createServer({
+        client: localClient,
+      }),
+    );
+
+    backendServer = await backend.listen(BACKEND_PORT);
     const collectorInstance = await collector.start({
       port: collector.COLLECTOR_PORT,
-      client,
+      client: localClient,
     });
     collectorServer = collectorInstance.server as http.Server;
 
     isListening = true;
   }
-
-  debug("Collector Proxy started");
 }
 
 export async function close() {
-  debug("Closing Collector Proxy");
-
   if (isListening) {
-    await backend.stop({ server: backendServer });
+    await backendServer.close();
     await collector.stop({ server: collectorServer });
     isListening = false;
   }
-
-  debug("Collector Proxy closed");
 }
 
-export const BACKEND_PORT = backend.BACKEND_PORT;
+export const BACKEND_PORT = 16686;
 export const COLLECTOR_PORT = collector.COLLECTOR_PORT;
