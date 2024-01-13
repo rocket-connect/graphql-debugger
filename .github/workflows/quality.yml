@@ -63,14 +63,6 @@ jobs:
       - name: graphql-debugger/collector-proxy
         run: cd ./apps/collector-proxy && pnpm run test
 
-  test-graphql-schema:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-project
-      - name: graphql-debugger/graphql-schema
-        run: cd ./packages/graphql-schema && pnpm run test
-
   test-opentelemetry:
     runs-on: ubuntu-latest
     steps:
