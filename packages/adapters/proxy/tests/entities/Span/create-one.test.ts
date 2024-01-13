@@ -3,7 +3,7 @@ import { faker } from "@faker-js/faker";
 import { localAdapter, remoteAdapter } from "../../adapters";
 import { createFakeSchema } from "../../utils";
 
-describe("shabba", () => {
+describe("Span", () => {
   describe("createOne", () => {
     test("should create one span", async () => {
       const traceId = faker.string.uuid();

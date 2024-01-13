@@ -30,7 +30,9 @@ export class ProxySpan extends BaseSpan {
     const query = /* GraphQL */ `
       query ($where: ListSpansWhere!) {
         listSpans(where: $where) {
-          ...SpanFragment
+          spans {
+            ...SpanFragment
+          }
         }
       }
 

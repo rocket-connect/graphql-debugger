@@ -1,13 +1,12 @@
 import { faker } from "@faker-js/faker";
 
-import { prisma } from "../../../src/prisma";
-import { adapter } from "../../adapter";
+import { localAdapter, remoteAdapter } from "../../adapters";
 import { createFakeSchema, createFakeSpan } from "../../utils";
 
 describe("Span", () => {
   describe("findMany", () => {
     test("should list no spans on empty DB", async () => {
-      const foundSpans = await adapter.span.findMany({
+      const foundSpans = await remoteAdapter.span.findMany({
         where: {},
       });
 
@@ -15,38 +14,38 @@ describe("Span", () => {
     });
 
     test("should list spans by spanIds", async () => {
-      const traceId = faker.datatype.uuid();
+      const traceId = faker.string.uuid();
 
       const schema = await createFakeSchema({
-        hash: faker.datatype.uuid(),
-        schema: faker.datatype.uuid(),
+        hash: faker.string.uuid(),
+        schema: faker.string.uuid(),
       });
 
-      const createdTrace = await prisma.traceGroup.create({
-        data: {
+      const createdTrace = await localAdapter.trace.createOne({
+        input: {
           traceId,
-          schemaId: schema.id,
+          schemaId: schema?.id,
         },
       });
 
       const span1 = await createFakeSpan({
-        traceGroupId: createdTrace.id,
+        traceGroupId: createdTrace?.trace?.id,
         traceId,
         isRoot: true,
       });
 
       const span2 = await createFakeSpan({
-        traceGroupId: createdTrace.id,
+        traceGroupId: createdTrace?.trace?.id,
         traceId,
         isRoot: false,
       });
       await createFakeSpan({
-        traceGroupId: createdTrace.id,
+        traceGroupId: createdTrace?.trace?.id,
         traceId,
         isRoot: false,
       });
 
-      const foundSpans = await adapter.span.findMany({
+      const foundSpans = await remoteAdapter.span.findMany({
         where: {
           spanIds: [span1.spanId, span2.spanId],
         },
@@ -56,55 +55,55 @@ describe("Span", () => {
     });
 
     test("should list spans by traceIds", async () => {
-      const traceId1 = faker.datatype.uuid();
-      const traceId2 = faker.datatype.uuid();
-      const traceId3 = faker.datatype.uuid();
+      const traceId1 = faker.string.uuid();
+      const traceId2 = faker.string.uuid();
+      const traceId3 = faker.string.uuid();
 
       const schema = await createFakeSchema({
-        hash: faker.datatype.uuid(),
-        schema: faker.datatype.uuid(),
+        hash: faker.string.uuid(),
+        schema: faker.string.uuid(),
       });
 
-      const trace1 = await prisma.traceGroup.create({
-        data: {
+      const trace1 = await localAdapter.trace.createOne({
+        input: {
           traceId: traceId1,
-          schemaId: schema.id,
+          schemaId: schema?.id,
         },
       });
 
-      const trace2 = await prisma.traceGroup.create({
-        data: {
+      const trace2 = await localAdapter.trace.createOne({
+        input: {
           traceId: traceId2,
-          schemaId: schema.id,
+          schemaId: schema?.id,
         },
       });
 
-      const trace3 = await prisma.traceGroup.create({
-        data: {
+      const trace3 = await localAdapter.trace.createOne({
+        input: {
           traceId: traceId3,
-          schemaId: schema.id,
+          schemaId: schema?.id,
         },
       });
 
       await createFakeSpan({
-        traceGroupId: trace1.id,
+        traceGroupId: trace1?.trace?.id,
         traceId: traceId1,
         isRoot: true,
       });
 
       await createFakeSpan({
-        traceGroupId: trace2.id,
+        traceGroupId: trace2?.trace?.id,
         traceId: traceId2,
         isRoot: false,
       });
 
       await createFakeSpan({
-        traceGroupId: trace3.id,
+        traceGroupId: trace3?.trace?.id,
         traceId: traceId3,
         isRoot: false,
       });
 
-      const foundSpans = await adapter.span.findMany({
+      const foundSpans = await remoteAdapter.span.findMany({
         where: {
           traceIds: [traceId1, traceId2],
         },
@@ -114,39 +113,39 @@ describe("Span", () => {
     });
 
     test("should list spans by isGraphQLRootSpan", async () => {
-      const traceId = faker.datatype.uuid();
+      const traceId = faker.string.uuid();
 
       const schema = await createFakeSchema({
-        hash: faker.datatype.uuid(),
-        schema: faker.datatype.uuid(),
+        hash: faker.string.uuid(),
+        schema: faker.string.uuid(),
       });
 
-      const trace = await prisma.traceGroup.create({
-        data: {
+      const trace = await localAdapter.trace.createOne({
+        input: {
           traceId,
-          schemaId: schema.id,
+          schemaId: schema?.id,
         },
       });
 
       await createFakeSpan({
-        traceGroupId: trace.id,
+        traceGroupId: trace?.trace?.id,
         traceId,
         isRoot: true,
       });
 
       await createFakeSpan({
-        traceGroupId: trace.id,
+        traceGroupId: trace?.trace?.id,
         traceId,
         isRoot: true,
       });
 
       await createFakeSpan({
-        traceGroupId: trace.id,
+        traceGroupId: trace?.trace.id,
         traceId,
         isRoot: false,
       });
 
-      const foundSpans = await adapter.span.findMany({
+      const foundSpans = await remoteAdapter.span.findMany({
         where: {
           isGraphQLRootSpan: true,
         },

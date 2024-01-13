@@ -11,7 +11,12 @@ const ListSpansWhereInput: InputRef<ListSpansWhere> = builder.inputType(
     fields: (t) => ({
       spanIds: t.stringList({
         required: false,
-        defaultValue: [],
+      }),
+      traceIds: t.stringList({
+        required: false,
+      }),
+      isGraphQLRootSpan: t.boolean({
+        required: false,
       }),
     }),
   },
@@ -20,14 +25,14 @@ const ListSpansWhereInput: InputRef<ListSpansWhere> = builder.inputType(
 const ListSpansResponseObject: ObjectRef<ListSpansResponse> =
   builder.objectType("ListSpansResponse", {
     fields: (t) => ({
-      schemas: t.field({
+      spans: t.field({
         type: [SpanObject],
         resolve: (root) => root.spans,
       }),
     }),
   });
 
-builder.queryField("ListSpans", (t) =>
+builder.queryField("listSpans", (t) =>
   t.field({
     type: ListSpansResponseObject,
     args: {
@@ -40,6 +45,10 @@ builder.queryField("ListSpans", (t) =>
       const { spans } = await context.client.span.findMany({
         where: {
           ...(args.where?.spanIds ? { spanIds: args.where.spanIds } : {}),
+          ...(args.where?.traceIds ? { traceIds: args.where.traceIds } : {}),
+          ...(args.where?.isGraphQLRootSpan
+            ? { isGraphQLRootSpan: args.where.isGraphQLRootSpan }
+            : {}),
         },
       });
 
