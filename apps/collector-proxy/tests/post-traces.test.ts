@@ -342,6 +342,7 @@ describe("POST /v1/traces", () => {
     });
 
     expect(traceGroup).toBeDefined();
+
     expect(traceGroup?.spans.length).toEqual(8);
     traceGroup?.spans.forEach((span) => {
       expect(span.isForeign).toEqual(false);
