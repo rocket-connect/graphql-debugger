@@ -1,16 +1,15 @@
 import { faker } from "@faker-js/faker";
 
-import { prisma } from "../../../src/prisma";
-import { adapter } from "../../adapter";
+import { localAdapter, remoteAdapter } from "../../adapters";
 import { createFakeSchema } from "../../utils";
 
 describe("Schema", () => {
   describe("upsert", () => {
     test("should create and return schema when it does not exist", async () => {
-      const hash = faker.datatype.uuid();
-      const schema = faker.datatype.uuid();
+      const hash = faker.string.uuid();
+      const schema = faker.string.uuid();
 
-      const result = await adapter.schema.upsert({
+      const result = await remoteAdapter.schema.upsert({
         where: {
           hash,
         },
@@ -20,7 +19,7 @@ describe("Schema", () => {
         },
       });
 
-      const foundSchema = await prisma.schema.findFirst({
+      const foundSchema = await localAdapter.schema.findFirst({
         where: {
           hash,
         },
@@ -33,30 +32,31 @@ describe("Schema", () => {
 
     test("should update and return schema when it exists", async () => {
       const schema = await createFakeSchema({
-        hash: faker.datatype.uuid(),
-        schema: faker.datatype.uuid(),
+        hash: faker.string.uuid(),
+        schema: faker.string.uuid(),
       });
+      const hash = schema?.hash as string;
 
-      const newSchema = faker.datatype.uuid();
+      const newSchema = faker.string.uuid();
 
-      const result = await adapter.schema.upsert({
+      const result = await remoteAdapter.schema.upsert({
         where: {
-          hash: schema.hash,
+          hash,
         },
         input: {
-          hash: schema.hash,
+          hash,
           typeDefs: newSchema,
         },
       });
+      expect(result.hash).toEqual(hash);
 
-      const foundSchema = await prisma.schema.findFirst({
+      const foundSchema = await localAdapter.schema.findFirst({
         where: {
-          hash: schema.hash,
+          hash,
         },
       });
 
-      expect(result.hash).toEqual(schema.hash);
-      expect(foundSchema?.hash).toEqual(schema.hash);
+      expect(foundSchema?.hash).toEqual(hash);
       expect(foundSchema?.typeDefs).toEqual(newSchema);
     });
   });

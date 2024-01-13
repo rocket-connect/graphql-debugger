@@ -124,7 +124,10 @@ export class SQLiteSchema extends BaseSchema {
         hash: input.hash,
         typeDefs: input.typeDefs,
       },
-      update: {},
+      update: {
+        hash: input.hash,
+        typeDefs: input.typeDefs,
+      },
     });
 
     const response = {
