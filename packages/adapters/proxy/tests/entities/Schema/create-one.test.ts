@@ -4,8 +4,8 @@ import { parse, print } from "graphql";
 import { hashSchema } from "../../../../../utils/build";
 import { localAdapter, remoteAdapter } from "../../adapters";
 
-describe("sheone", () => {
-  describe("sheone", () => {
+describe("Schema", () => {
+  describe("createOne", () => {
     test("should return true and do nothing if schema already exists", async () => {
       const typeDefs = `
         type Query {

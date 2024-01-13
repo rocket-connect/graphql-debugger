@@ -1,12 +1,13 @@
+import { createFakeSchema } from "@graphql-debugger/adapter-sqlite/tests/utils";
+
 import { faker } from "@faker-js/faker";
 
-import { adapter } from "../../adapter";
-import { createFakeSchema } from "../../utils";
+import { remoteAdapter } from "../../adapters";
 
 describe("Schema", () => {
   describe("findMany", () => {
     test("should return no schemas on empty database", async () => {
-      const schemas = await adapter.schema.findMany();
+      const schemas = await remoteAdapter.schema.findMany();
 
       expect(schemas).toEqual([]);
     });
@@ -14,30 +15,30 @@ describe("Schema", () => {
     test("should return all schemas", async () => {
       await Promise.all([
         createFakeSchema({
-          hash: faker.datatype.uuid(),
-          schema: faker.datatype.uuid(),
+          hash: faker.string.uuid(),
+          schema: faker.string.uuid(),
         }),
         createFakeSchema({
-          hash: faker.datatype.uuid(),
-          schema: faker.datatype.uuid(),
+          hash: faker.string.uuid(),
+          schema: faker.string.uuid(),
         }),
         createFakeSchema({
-          hash: faker.datatype.uuid(),
-          schema: faker.datatype.uuid(),
+          hash: faker.string.uuid(),
+          schema: faker.string.uuid(),
         }),
       ]);
 
-      const foundSchemas = await adapter.schema.findMany();
+      const foundSchemas = await remoteAdapter.schema.findMany();
       expect(foundSchemas).toHaveLength(3);
     });
 
     test("should find schema by id", async () => {
       const schema = await createFakeSchema({
-        hash: faker.datatype.uuid(),
-        schema: faker.datatype.uuid(),
+        hash: faker.string.uuid(),
+        schema: faker.string.uuid(),
       });
 
-      const foundSchema = await adapter.schema.findMany({
+      const foundSchema = await remoteAdapter.schema.findMany({
         where: {
           id: schema.id,
         },
@@ -49,11 +50,11 @@ describe("Schema", () => {
 
     test("should find schema by schemaHashes", async () => {
       const schema = await createFakeSchema({
-        hash: faker.datatype.uuid(),
-        schema: faker.datatype.uuid(),
+        hash: faker.string.uuid(),
+        schema: faker.string.uuid(),
       });
 
-      const foundSchema = await adapter.schema.findMany({
+      const foundSchema = await remoteAdapter.schema.findMany({
         where: {
           schemaHashes: [schema.hash],
         },
