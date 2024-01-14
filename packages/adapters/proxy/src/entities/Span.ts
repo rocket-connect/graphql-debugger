@@ -11,15 +11,14 @@ import {
   ListSpansWhere,
 } from "@graphql-debugger/types";
 
-import { ProxyAdapterOptions } from "..";
 import { executeGraphQLRequest } from "../utils";
 
 export class ProxySpan extends BaseSpan {
-  public options: ProxyAdapterOptions;
+  private apiURL: string;
 
-  constructor(options: ProxyAdapterOptions) {
+  constructor({ apiURL }: { apiURL: string }) {
     super();
-    this.options = options;
+    this.apiURL = apiURL;
   }
 
   public async findMany({
@@ -46,7 +45,7 @@ export class ProxySpan extends BaseSpan {
       variables: {
         where,
       },
-      url: this.options.apiURL,
+      url: this.apiURL,
     });
 
     if (errors && errors?.length > 0) {
@@ -79,7 +78,7 @@ export class ProxySpan extends BaseSpan {
       variables: {
         where,
       },
-      url: this.options.apiURL,
+      url: this.apiURL,
     });
 
     if (errors && errors?.length > 0) {
@@ -113,7 +112,7 @@ export class ProxySpan extends BaseSpan {
       variables: {
         input,
       },
-      url: this.options.apiURL,
+      url: this.apiURL,
     });
 
     if (errors && errors?.length > 0) {
@@ -143,7 +142,7 @@ export class ProxySpan extends BaseSpan {
       variables: {
         where,
       },
-      url: this.options.apiURL,
+      url: this.apiURL,
     });
 
     if (errors && errors?.length > 0) {

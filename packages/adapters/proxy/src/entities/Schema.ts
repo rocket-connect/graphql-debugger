@@ -19,21 +19,28 @@ import {
 import axios from "axios";
 import { AxiosError } from "axios";
 
-import { ProxyAdapterOptions } from "..";
 import { executeGraphQLRequest } from "../utils";
 
 export class ProxySchema extends BaseSchema {
-  public options: ProxyAdapterOptions;
+  public apiURL: string;
+  public collectorURL: string;
 
-  constructor(options: ProxyAdapterOptions) {
+  constructor({
+    apiURL,
+    collectorURL,
+  }: {
+    apiURL: string;
+    collectorURL: string;
+  }) {
     super();
-    this.options = options;
+    this.apiURL = apiURL;
+    this.collectorURL = collectorURL;
   }
 
   public async createOne({ data }: { data: PostSchema["body"] }) {
     try {
       const repsonse = await axios.post(
-        `${this.options.collectorURL}/v1/schema`,
+        `${this.collectorURL}/v1/schema`,
         data,
         {
           headers: { "Content-Type": "application/json" },
@@ -76,7 +83,7 @@ export class ProxySchema extends BaseSchema {
       variables: {
         where,
       },
-      url: this.options.apiURL,
+      url: this.apiURL,
     });
 
     if (errors && errors?.length > 0) {
@@ -122,7 +129,7 @@ export class ProxySchema extends BaseSchema {
       variables: {
         where,
       },
-      url: this.options.apiURL,
+      url: this.apiURL,
     });
 
     if (errors && errors?.length > 0) {
@@ -162,7 +169,7 @@ export class ProxySchema extends BaseSchema {
         where,
         input,
       },
-      url: this.options.apiURL,
+      url: this.apiURL,
     });
 
     if (errors && errors?.length > 0) {

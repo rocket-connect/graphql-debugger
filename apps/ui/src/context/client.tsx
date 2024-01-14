@@ -57,7 +57,7 @@ export function ClientProvider({
   const [client, setClient] = useState(
     new DebuggerClient({
       adapter: new ProxyAdapter({
-        apiURL: configContext?.apiURL as unknown as string,
+        apiURL: configContext?.apiURL,
       }),
     }),
   );
@@ -111,7 +111,7 @@ export function ClientProvider({
     setClient(
       new DebuggerClient({
         adapter: new ProxyAdapter({
-          apiURL: configContext?.apiURL as unknown as string,
+          apiURL: configContext?.apiURL,
         }),
       }),
     );

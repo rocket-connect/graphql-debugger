@@ -9,20 +9,33 @@ import { executeGraphQLRequest } from "./utils";
 export const adapterType = "proxy";
 
 export interface ProxyAdapterOptions {
-  apiURL: string;
-  collectorURL: string;
+  apiURL?: string;
+  collectorURL?: string;
 }
 
 export class ProxyAdapter extends BaseAdapter {
   public schema: ProxySchema;
   public span: ProxySpan;
   public trace: ProxyTrace;
-  public options: ProxyAdapterOptions;
+  public apiURL: string;
+  public collectorURL: string;
 
-  constructor(options: ProxyAdapterOptions) {
-    const schema = new ProxySchema(options);
-    const span = new ProxySpan(options);
-    const trace = new ProxyTrace(options);
+  constructor(options: ProxyAdapterOptions = {}) {
+    const apiURL = options.apiURL || "http://localhost:16686";
+    const collectorURL = options.collectorURL || "http://localhost:4318";
+
+    const schema = new ProxySchema({
+      apiURL,
+      collectorURL,
+    });
+
+    const span = new ProxySpan({
+      apiURL,
+    });
+
+    const trace = new ProxyTrace({
+      apiURL,
+    });
 
     super({
       adapterType,
@@ -31,7 +44,8 @@ export class ProxyAdapter extends BaseAdapter {
       trace,
     });
 
-    this.options = options;
+    this.apiURL = apiURL;
+    this.collectorURL = collectorURL;
     this.schema = schema;
     this.span = span;
     this.trace = trace;
@@ -50,7 +64,7 @@ export class ProxyAdapter extends BaseAdapter {
       clearDB: ClearDBResponse;
     }>({
       query,
-      url: this.options.apiURL,
+      url: this.apiURL,
     });
 
     if (errors && errors?.length > 0) {

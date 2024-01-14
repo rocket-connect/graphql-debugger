@@ -17,15 +17,14 @@ import {
   UpdateTraceWhere,
 } from "@graphql-debugger/types";
 
-import { ProxyAdapterOptions } from "..";
 import { executeGraphQLRequest } from "../utils";
 
 export class ProxyTrace extends BaseTrace {
-  public options: ProxyAdapterOptions;
+  public apiURL: string;
 
-  constructor(options: ProxyAdapterOptions) {
+  constructor({ apiURL }: { apiURL: string }) {
     super();
-    this.options = options;
+    this.apiURL = apiURL;
   }
 
   public async findFirst({
@@ -72,7 +71,7 @@ export class ProxyTrace extends BaseTrace {
       variables: {
         where,
       },
-      url: this.options.apiURL,
+      url: this.apiURL,
     });
 
     if (errors && errors?.length > 0) {
@@ -136,7 +135,7 @@ export class ProxyTrace extends BaseTrace {
         includeSpans,
         includeRootSpan,
       },
-      url: this.options.apiURL,
+      url: this.apiURL,
     });
 
     if (errors && errors?.length > 0) {
@@ -175,7 +174,7 @@ export class ProxyTrace extends BaseTrace {
       variables: {
         input,
       },
-      url: this.options.apiURL,
+      url: this.apiURL,
     });
 
     if (errors && errors?.length > 0) {
@@ -218,7 +217,7 @@ export class ProxyTrace extends BaseTrace {
         where,
         input,
       },
-      url: this.options.apiURL,
+      url: this.apiURL,
     });
 
     if (errors && errors?.length > 0) {
