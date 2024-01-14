@@ -33,6 +33,7 @@ export function SchemasProvider({
   const getSchemas = useQuery({
     queryKey: ["schemas"],
     queryFn: async () => await client.schema.findMany({}),
+    refetchInterval: 5000,
   });
 
   const setSelectedSchema = useCallback(
