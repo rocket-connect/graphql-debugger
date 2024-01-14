@@ -6,6 +6,8 @@ import {
   CreateSpanResponse,
   CreateTraceInput,
   CreateTraceResponse,
+  DeleteSpanResponse,
+  DeleteSpanWhere,
   FindFirstSchemaResponse,
   FindFirstSchemaWhere,
   FindFirstTraceResponse,
@@ -54,4 +56,6 @@ export interface Objects {
   UpsertSchemaResponse: UpsertSchemaResponse;
   UpsertSchemaWhere: UpsertSchemaWhere;
   ClearDBResponse: ClearDBResponse;
+  DeleteSpanResponse: DeleteSpanResponse;
+  DeleteSpanWhere: DeleteSpanWhere;
 }

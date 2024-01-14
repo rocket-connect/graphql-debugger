@@ -1,41 +1,42 @@
 import { faker } from "@faker-js/faker";
 
-import { prisma } from "../../../src/prisma";
-import { adapter } from "../../adapter";
+import { localAdapter, remoteAdapter } from "../../adapters";
 import { createFakeSchema, createFakeSpan } from "../../utils";
 
 describe("Span", () => {
   describe("deleteOne", () => {
     test("should delete a span", async () => {
-      const traceId = faker.datatype.uuid();
+      const traceId = faker.string.uuid();
 
       const schema = await createFakeSchema({
-        hash: faker.datatype.uuid(),
-        schema: faker.datatype.uuid(),
+        hash: faker.string.uuid(),
+        schema: faker.string.uuid(),
       });
 
-      const createdTrace = await prisma.traceGroup.create({
-        data: {
+      const createdTrace = await localAdapter.trace.createOne({
+        input: {
           traceId,
-          schemaId: schema.id,
+          schemaId: schema?.id,
         },
       });
 
       const span = await createFakeSpan({
-        traceGroupId: createdTrace.id,
+        traceGroupId: createdTrace?.trace?.id,
         traceId,
         isRoot: true,
       });
 
-      await adapter.span.deleteOne({
+      const { success } = await remoteAdapter.span.deleteOne({
         where: {
           id: span.id,
         },
       });
 
-      const spans = await prisma.span.findMany({
+      expect(success).toBe(true);
+
+      const { spans } = await localAdapter.span.findMany({
         where: {
-          id: span.id,
+          spanIds: [span.id],
         },
       });
 

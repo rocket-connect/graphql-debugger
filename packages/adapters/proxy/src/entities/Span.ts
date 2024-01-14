@@ -124,14 +124,32 @@ export class ProxySpan extends BaseSpan {
   }
 
   public async deleteOne({
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     where,
   }: {
     where: DeleteSpanWhere;
   }): Promise<DeleteSpanResponse> {
-    // TODO: implement
-    return {
-      success: false,
-    };
+    const query = /* GraphQL */ `
+      mutation ($where: DeleteSpanWhere!) {
+        deleteSpan(where: $where) {
+          success
+        }
+      }
+    `;
+
+    const { data, errors } = await executeGraphQLRequest<{
+      deleteSpan: DeleteSpanResponse;
+    }>({
+      query,
+      variables: {
+        where,
+      },
+      url: this.options.apiURL,
+    });
+
+    if (errors && errors?.length > 0) {
+      throw new Error(errors.map((e) => e.message).join("\n"));
+    }
+
+    return data.deleteSpan;
   }
 }
