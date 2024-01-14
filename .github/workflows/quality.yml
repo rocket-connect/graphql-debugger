@@ -29,7 +29,6 @@ jobs:
           cd ./e2e
           pnpm run test
         env:
-          SLOW_MO: "150"
           SKIP_MODAL: "true"
           ADAPTER_TYPE: ${{ env.ADAPTER_TYPE }}
 
@@ -51,7 +50,6 @@ jobs:
       - name: graphql-debugger/e2e
         run: cd ./e2e && pnpm run test
         env:
-          SLOW_MO: "150"
           SKIP_MODAL: "true"
           E2E_IN_DOCKER: "true"
 
