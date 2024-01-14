@@ -22,6 +22,7 @@ describe("schemas", () => {
       browser,
       page,
     });
+    await dashboardPage.assert();
 
     const sidebar = await dashboardPage.getSidebar();
     await sidebar.toggleView("schemas");
