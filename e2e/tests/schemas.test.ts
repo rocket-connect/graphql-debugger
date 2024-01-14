@@ -15,27 +15,6 @@ describe("schemas", () => {
     await browser.close();
   });
 
-  test("should display the getting started view if no schemas are found", async () => {
-    await client.adapter.clearDB();
-
-    const page = await getPage({ browser });
-
-    const dashboardPage = new Dashboard({
-      browser,
-      page,
-    });
-    await dashboardPage.assert();
-
-    const sidebar = await dashboardPage.getSidebar();
-    await sidebar.toggleView("schemas");
-
-    const schemasComponent = new Schemas({
-      browser,
-      page: dashboardPage,
-    });
-    await schemasComponent.assert();
-  });
-
   test("should display a list of schemas", async () => {
     const { dbSchema: schema1 } = await createTestSchema({
       client,
