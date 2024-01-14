@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        adapter: ["sqlite"]
+        adapter: ["sqlite", "proxy"]
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-project
