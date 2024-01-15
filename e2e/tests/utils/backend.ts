@@ -3,7 +3,7 @@ import * as collector from "@graphql-debugger/collector-proxy";
 
 import http from "http";
 
-import { client } from "../../src/client";
+import { localClient } from "../../src/client";
 import { debug } from "../../src/debug";
 
 let backendServer: http.Server;
@@ -15,10 +15,13 @@ export async function listen() {
   debug("Starting Collector Proxy");
 
   if (!isListening) {
-    backendServer = await backend.start({ port: backend.BACKEND_PORT, client });
+    backendServer = await backend.start({
+      port: backend.BACKEND_PORT,
+      client: localClient,
+    });
     const collectorInstance = await collector.start({
       port: collector.COLLECTOR_PORT,
-      client,
+      client: localClient,
     });
     collectorServer = collectorInstance.server as http.Server;
 

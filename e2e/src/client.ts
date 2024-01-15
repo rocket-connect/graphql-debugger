@@ -25,3 +25,7 @@ switch (ADAPTER_TYPE) {
 export const client = new DebuggerClient({
   adapter,
 });
+
+export const localClient = new DebuggerClient({
+  adapter: new SQLiteAdapter(),
+});
