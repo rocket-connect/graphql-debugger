@@ -417,8 +417,8 @@ importers:
   packages/data-access:
     dependencies:
       '@prisma/client':
-        specifier: 5.7.0
-        version: 5.7.0(prisma@5.7.0)
+        specifier: 5.8.1
+        version: 5.8.1(prisma@5.7.0)
       '@prisma/instrumentation':
         specifier: 5.7.0
         version: 5.7.0
@@ -2839,8 +2839,8 @@ packages:
       graphql: 16.0.0
     dev: false
 
-  /@prisma/client@5.7.0(prisma@5.7.0):
-    resolution: {integrity: sha512-cZmglCrfNbYpzUtz7HscVHl38e9CrUs31nrVoGUK1nIPXGgt8hT4jj2s657UXcNdQ/jBUxDgGmHyu2Nyrq1txg==}
+  /@prisma/client@5.8.1(prisma@5.7.0):
+    resolution: {integrity: sha512-xQtMPfbIwLlbm0VVIVQY2yqQVOxPwRQhvIp7Z3m2900g1bu/zRHKhYZJQWELqmjl6d8YwBy0K2NvMqh47v1ubw==}
     engines: {node: '>=16.13'}
     requiresBuild: true
     peerDependencies:
