@@ -32,5 +32,6 @@ export const SpanObject: ObjectRef<Span> = builder.objectType("Span", {
     errorStack: t.exposeString("errorStack", { nullable: true }),
     createdAt: t.exposeString("createdAt"),
     updatedAt: t.exposeString("updatedAt"),
+    isGraphQLRootSpan: t.exposeBoolean("isGraphQLRootSpan", { nullable: true }),
   }),
 });

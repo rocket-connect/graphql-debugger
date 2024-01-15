@@ -89,6 +89,7 @@ describe("traces", () => {
           schemaId: dbSchema.id,
         },
         includeSpans: true,
+        includeRootSpan: true,
       });
 
       const tracesComponent = new Traces({
@@ -103,6 +104,10 @@ describe("traces", () => {
       traces.forEach((trace) => {
         const isError = isTraceError(trace);
         const rootSpan = trace.spans.find((span) => span.isGraphQLRootSpan);
+
+        if (!rootSpan) {
+          throw new Error("Failed to find root span");
+        }
 
         const uiTrace = uiTraces.find((t) => t.id === trace.id);
         expect(uiTrace).toBeDefined();
