@@ -1,0 +1,29 @@
+{
+  "name": "@graphql-debugger/docs",
+  "version": "0.0.0-alpha.79",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build",
+    ".next"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rocket-connect/graphql-debugger.git"
+  },
+  "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "14.0.4",
+    "nextra": "2.13.2",
+    "nextra-theme-blog": "2.13.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
+}
