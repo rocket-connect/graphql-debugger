@@ -3,6 +3,7 @@ import { Schemas } from "./components/schemas";
 import { Dashboard } from "./pages/dashboard";
 import { createTestSchema } from "./utils/create-test-schema";
 import { Browser, getBrowser, getPage } from "./utils/puppeteer";
+import { sleep } from "./utils/sleep";
 
 describe("schemas", () => {
   let browser: Browser;
@@ -26,6 +27,7 @@ describe("schemas", () => {
 
     const sidebar = await dashboardPage.getSidebar();
     await sidebar.toggleView("schemas");
+    await sleep(200);
 
     const schemasComponent = new Schemas({
       browser,
