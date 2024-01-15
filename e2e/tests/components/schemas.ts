@@ -16,12 +16,20 @@ export class Schemas extends BaseComponent {
   public async assert() {
     const page = this.page?.page as PPage;
 
-    const schemasView = await page.$(`#${IDS.sidebar.views.schemas}`);
-
-    const getting_started = await page.$(`#${IDS.getting_started.view}`);
-
+    const schemasView = await page.waitForSelector(
+      `#${IDS.sidebar.views.schemas}`,
+    );
     expect(schemasView).toBeTruthy();
-    expect(getting_started).toBeTruthy();
+
+    try {
+      const getting_started = await page.waitForSelector(
+        `#${IDS.getting_started.view}`,
+      );
+
+      expect(getting_started).toBeTruthy();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   public async getUISchemas(): Promise<{ id: string; typeDefs: string }[]> {

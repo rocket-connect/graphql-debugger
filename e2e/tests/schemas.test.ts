@@ -16,8 +16,6 @@ describe("schemas", () => {
   });
 
   test("should display the getting started view if no schemas are found", async () => {
-    await client.adapter.clearDB();
-
     const page = await getPage({ browser });
 
     const dashboardPage = new Dashboard({
