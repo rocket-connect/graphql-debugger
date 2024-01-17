@@ -8,7 +8,7 @@
     "release": "cross-env DEBUG=\"@graphql-debugger:*\" node ./packages/utils/build/release.js",
     "test:sequential": "pnpm recursive exec -- sh -c 'pnpm run test || (echo \"Tests failed!\" && exit 1)'",
     "test": "turbo test",
-    "clean": "find . -type d \\( -name \"node_modules\" -o -name \"build\" -o -name \".turbo\" \\) -exec rm -rf {} +",
+    "clean": "find . -type d \\( -name \"node_modules\" -o -name \"build\" -o -name \".turbo\" -o -name \".next\" \\) -exec rm -rf {} +",
     "lint": "eslint .",
     "format": "prettier --write .",
     "reset-db": "cd ./packages/data-access && npx prisma migrate reset --force"
