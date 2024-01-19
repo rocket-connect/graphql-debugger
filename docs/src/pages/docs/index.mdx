@@ -1,0 +1,102 @@
+---
+layout: docs
+category: Documentation
+permalink: /docs/
+next: /docs/
+---
+
+# Quick start
+
+GraphQL Debugger is a platform for debugging your GraphQL Server. You can use debugger locally as described below or you can build your own [adapter](/docs/components/adapters) to host your own GraphQL Debugger.
+
+To learn why you need a specific GraphQL debugging tool, see [Why GraphQL Debugging ?](/docs/why).
+
+
+## Debugger Components
+
+There are few components that make up GraphQL Debugger:
+
+- Open Telemetry Collector
+- GraphQL Debugger UI
+- GraphQL Debugger Client SDK's
+
+For the most part you will only need to interact with GraphQL Debugger UI and Client SDK's. The Open Telemetry Collector is a component that collects data from your GraphQL Server and sends it to GraphQL Debugger UI. You can read more about Open Telemetry Collector in TODO.
+
+## Running debugger locally
+
+GraphQL Debugger cli is a tool that allows you to run GraphQL Debugger locally. It will start the Open Telemetry Collector and GraphQL Debugger UI for you. You can install and run it with:
+
+```sh
+npx graphql-debugger
+
+# Collector Online, send traces to http://localhost:4318/v1/traces.
+
+# Debugger Online, visit http://localhost:16686 to view traces.
+```
+
+Now you will be able to access GraphQL Debugger UI at http://localhost:16686
+
+## Connecting your server
+
+Once debugger is running you can use our open source packages to connect your GraphQL Server to GraphQL Debugger. 
+
+
+### GraphQL JS
+TODO VERIFY
+
+```ts
+import { DebuggerClient } from "@graphql-debugger/client";
+import { AdapterProxy } from "@graphql-debugger/adapter-proxy";
+import { traceSchema } from "@graphql-debugger/trace-schema";
+import { GraphQLSchema } from "graphql";
+
+const schema: GraphQLSchema = __YOUR_SCHEMA__;
+
+const adapter = new AdapterProxy();
+
+const client = new DebuggerClient({
+  adapter,
+});
+
+const tracedSchema = traceSchema({
+    schema,
+    client,
+});
+```
+
+### GraphQL Yoga
+
+TODO VERIFY
+
+```ts
+import { DebuggerClient } from "@graphql-debugger/client";
+import { AdapterProxy } from "@graphql-debugger/adapter-proxy";
+import { traceSchema, GraphQLDebuggerContext } from "@graphql-debugger/trace-schema";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { createYoga } from "graphql-yoga";
+
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers,
+});
+
+const adapter = new AdapterProxy();
+
+const client = new DebuggerClient({
+  adapter,
+});
+
+const tracedSchema = traceSchema({
+  schema,
+  client,
+});
+
+const yoga = createYoga({
+  schema: tracedSchema,
+  context: (req) => {
+    return {
+      GraphQLDebuggerContext: new GraphQLDebuggerContext(),
+    };
+  },
+});
+```
