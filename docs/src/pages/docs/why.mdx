@@ -4,14 +4,15 @@ category: Documentation
 permalink: /docs/why
 next: /docs/why
 ---
+import { Tabs } from 'nextra/components'
 
 # Why GraphQL Debugger ?
 
-GraphQL servers are built and interacted with differently to that of other API servers. We found a bunch of pitfalls when using off the shelf tools to debug our GraphQL servers, and so we built GraphQL Debugger to solve these problems.
+GraphQL servers are built and interacted with differently to that of other API servers. We found a bunch of pitfalls when using off the shelf tools to observe and debug our GraphQL servers, so we built GraphQL Debugger to solve these problems.
 
 ## HTTP Post Body
 
-Most GraphQL implentations use `HTTP` `POST` requests to send queries to the server. The query is sent in the body of the request, for example querying the SpaceX API in the browser: 
+Most GraphQL implementations use `HTTP` `POST` requests to send queries to the server. The query is sent in the body of the request, for example querying the SpaceX API in the browser: 
 
 ```ts
 const body = JSON.stringify({
@@ -42,28 +43,179 @@ HTTP POST /graphql 8 seconds ago
 ...
 ```
 
-For example, if you were using a REST API, you would expect to see a variety of `HTTP` methods such as `GET`, `POST`, `PUT`, `DELETE` etc, making it easier to debug and distinguish between requests.
+For example, if you were using a REST API, you would expect to see a variety of `HTTP` methods such as `GET`, `POST`, `PUT`, `DELETE` etc, making it easier to debug and distinguish between requests and entity.
 
 ```sh
 # Logs from a REST server
-HTTP GET /users 1 second ago
-HTTP POST /users 2 seconds ago
+HTTP GET /posts 1 second ago
+HTTP POST /post 2 seconds ago
 HTTP PUT /users 3 seconds ago
 HTTP DELETE /users 4 seconds ago
-HTTP GET /users 5 seconds ago
+HTTP GET /posts 5 seconds ago
 HTTP POST /users 6 seconds ago
-HTTP PUT /users 7 seconds ago
-HTTP DELETE /users 8 seconds ago
+HTTP PUT /post 7 seconds ago
+HTTP DELETE /post 8 seconds ago
 ```
 
 ## Resolver Fan Out
 
-One given GraphQL query can result in many resolver functions being called and subsequently many database queries being executed. This is because GraphQL queries are hierarchical and the data is nested.
+One GraphQL query can result in many resolver functions being called and subsequently many database queries being executed. This is because GraphQL queries are hierarchical and the data is nested.
+
+
+See the examples of how each query can cause many resolver functions and database queries to be called.
+
+ 
+<Tabs items={['1 database call', '2 database calls', '3 database calls']}>
+  <Tabs.Tab>
+    <pre>
+      ```graphql
+query {
+        user { ## <----- SELECT * FROM users
+          name
+          email
+        }
+}
+```
+    </pre>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <pre>
+      ```graphql
+query {
+        user { ## <----- SELECT * FROM users
+          name
+          email
+          posts { ## <----- SELECT * FROM posts
+            title
+            body
+          }
+        }
+}
+```
+    </pre>
+  </Tabs.Tab>  
+    <Tabs.Tab>
+    <pre>
+      ```graphql
+query {
+        user { ## <----- SELECT * FROM users
+          name
+          email
+          posts { ## <----- SELECT * FROM posts
+            title
+            body
+            comments { ## <----- SELECT * FROM comments
+              body
+            }
+          }
+        }
+}
+```
+    </pre>
+  </Tabs.Tab>
+</Tabs>
+
+The thought process behind this is that the client can request exactly what data it needs, and the server will only return that data. This is great for the client, but it can be difficult to debug and understand what data is being returned and why. Most observability tools will only show the http request, not digging into the query and the resolvers that were called.
 
 ## HTTP Response 200
 
-The HTTP response code is usually 200, and any errors are either a typed response or placed in the body errors list. 
+In the majority of GraphQL server implementations the HTTP response code is usually always 200, and any errors are either a typed response or placed in the body errors list. This is demonstrated below in a query that hits a resolver that throws an error: 
+
+
+<Tabs items={['query.gql', 'resolver.js','HTTP 200', 'response.json']}>
+  <Tabs.Tab>
+    <pre>
+      ```graphql
+query {
+        user {
+          name
+          email
+        }
+}
+```
+    </pre>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <pre>
+      ```javascript
+const resolvers = {
+        Query: {
+          user: () => {
+            throw new Error("Uh oh!");
+          },
+        },
+};
+```
+    </pre>
+  </Tabs.Tab>  
+  <Tabs.Tab>
+    <pre>
+      ```sh
+HTTP POST /graphql 7 seconds ago - 200 OK body <json>
+```
+    </pre>
+  </Tabs.Tab>  
+    <Tabs.Tab>
+    <pre>
+      ```json
+{
+       "data:": null,
+       "errors": [
+         {
+           "message": "Uh oh!"
+         }
+       ]    
+}
+```
+    </pre>
+  </Tabs.Tab>
+</Tabs>
+
+
+By stepping through the tabs above, you can see that the HTTP response code is 200, and the error is placed in the body of the response. This is not ideal for debugging as it is not immediately obvious that there is an error.
+
+Given for example if you were to look through a list of logs from a GraphQL server, you would see a list of HTTP 200 responses, and you would have to dig into the body of the response to see if there were any errors. 
+
+```sh
+# Logs from a GraphQL server
+HTTP POST /graphql 1 second ago - 200 OK body <json>
+HTTP POST /graphql 2 seconds ago - 200 OK body <json>
+HTTP POST /graphql 3 seconds ago - 200 OK body <json>
+HTTP POST /graphql 4 seconds ago - 200 OK body <json>
+HTTP POST /graphql 5 seconds ago - 200 OK body <json>
+HTTP POST /graphql 6 seconds ago - 200 OK body <json>
+HTTP POST /graphql 7 seconds ago - 200 OK body <json>
+HTTP POST /graphql 8 seconds ago - 200 OK body <json>
+...
+```
 
 ## Schema Leverage
 
-Given the fact that GraphQL is strongly typed, we can leverage the schema to provide a better debugging experience.
+Given the fact that GraphQL is strongly typed, we can leverage the schema to provide a better debugging experience. Our goal with debugger is to continue to leverage the schema alongside telemetry to provide a better debugging experience.
+
+```graphql
+type Query {
+  # Resolve Count: 134
+  # Error Count: 3
+  posts: [Post]
+  # Resolve Count: 300
+  # Error Count: 0
+  user: User
+}
+
+type User {
+  # Last used: 1 second ago
+  name: String
+  # Last used: 1 second ago
+  email: String
+  # Last used: never 🔴
+  secondaryEmail: String
+}
+
+type Post {
+  # Last used: 1 second ago
+  title: String
+  # Last used: 1 second ago
+  body: String
+}
+```
