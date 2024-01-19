@@ -11,20 +11,22 @@ GraphQL Debugger is a platform for debugging your GraphQL Server. You can use de
 
 To learn why you need a specific GraphQL debugging tool, see [Why GraphQL Debugging ?](/docs/why).
 
+Curious how GraphQL Debugger works? See [How it works](/docs/how).
 
 ## Debugger Components
 
 There are few components that make up GraphQL Debugger:
 
-- Open Telemetry Collector
-- GraphQL Debugger UI
-- GraphQL Debugger Client SDK's
+- [Open Telemetry Collector](/docs/components/collector).
+- [GraphQL Debugger UI](/docs/components/ui).
+- [GraphQL Debugger Backend](/docs/components/backend).
+- [GraphQL Debugger Client SDK's](/docs/packages/trace-schema).
 
-For the most part you will only need to interact with GraphQL Debugger UI and Client SDK's. The Open Telemetry Collector is a component that collects data from your GraphQL Server and sends it to GraphQL Debugger UI. You can read more about Open Telemetry Collector in TODO.
+For the most part you will mostly interact with GraphQL Debugger UI and Client SDK's. [The Open Telemetry Collector](/docs/components/collector) is a component that collects data from your GraphQL Server and sends it to the GraphQL Debugger Backend.
 
 ## Running debugger locally
 
-GraphQL Debugger cli is a tool that allows you to run GraphQL Debugger locally. It will start the Open Telemetry Collector and GraphQL Debugger UI for you. You can install and run it with:
+To get started run the [GraphQL Debugger CLI](/docs/packages/cli). This will start the Collector, Backend and UI for you. You can install and run it with:
 
 ```sh
 npx graphql-debugger
