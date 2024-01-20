@@ -119,13 +119,72 @@ const schema = makeExecutableSchema({
     }
 });
 
-// Schema will tracing applied to all fields
+// Schema with tracing applied to all fields
 const tracedSchema = traceSchema({
     schema,
     client: DebuggerClient // <-- See Client and Adapters
 });
 ```
 
+
+<Tabs items={['Before traceSchema', 'With traceSchema']}>
+  <Tabs.Tab>
+    <pre>
+      ```gql
+    type Query {
+        users: [User!]!
+    }
+
+    type User {
+        name: String!
+        email: String!
+        balance: String!
+    }
+```
+    </pre>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <pre>
+      ```gql
+    directive @trace on FIELD_DEFINITION
+
+    type Query {
+        users: [User!]! @trace
+    }
+
+    type User {
+        name: String! @trace
+        email: String! @trace
+        balance: String! @trace
+    }
+```
+    </pre>
+  </Tabs.Tab>  
+</Tabs>
+
+### Schema Exporter
+
+When using Trace Schema, in the background, the schema will be hashed and exported to the Collector. This is done so that the Collector can identify the schema and provide a way to visualize the traces, you can disable it by passing `shouldExportSchema: false` to the `traceSchema` function.
+
+```ts
+const tracedSchema = traceSchema({
+    schema,
+    shouldExportSchema: false // <-- Disable schema export
+});
+```
+
 ## Collector
+
+The collector is a service that listens for the traces proporgated from the GraphQL API and stores them in a database. It contains endpoints that ingest the schema, traces and spans. 
+
+
+### Schema Endpoint
+*  `/v1/schema`
+
+
+### Traces Endpoint
+* `/v1/traces`
+
+
 
 ## UI
