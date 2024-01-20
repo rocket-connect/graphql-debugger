@@ -9,7 +9,7 @@ export default {
   },
   opensource: {
     type: "page",
-    title: "Github ↗",
+    title: "GitHub ↗",
     href: "https://github.com/rocket-connect/graphql-debugger",
     newWindow: true,
   },
