@@ -22,7 +22,7 @@ jobs:
             source ~/.nvm/nvm.sh
             cd ./preview/graphql-debugger
             git reset --hard
-            git pull origin main
+            git pull origin feat/next-docs
             pnpm i
             pnpm build
             cd ./docs/
