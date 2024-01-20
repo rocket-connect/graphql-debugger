@@ -1,4 +1,4 @@
-name: Deploy Documentation
+name: preview.graphql-debugger.com
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - feat/next-docs
 
 jobs:
-  deploy-playground:
+  deploy-docs:
     runs-on: ubuntu-latest
 
     steps:
