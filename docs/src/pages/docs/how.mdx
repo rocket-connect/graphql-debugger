@@ -5,6 +5,134 @@ permalink: /docs/how
 next: /docs/how
 ---
 
+import { Tabs } from 'nextra/components'
+
 # How GraphQL Debugger Works ?
 
-TODO
+GraphQL Debugger is a collection of integratable components when composed together provides a complete debugging solution for GraphQL.
+
+Leverging Open Telemetry and Open Source standards, GraphQL Debugger provides a way to instrument GraphQL servers and clients to collect and visualize the traces.
+
+
+## Trace Directive
+
+When debugging a GraphQL API you have to ask yourself, what do you want to trace ? Do you want all of the fields to be traced or just a few of them ? GraphQL Debugger provides a way to trace only the fields you want to trace and this directive sits at the heart of GraphQL Debugger.
+
+```graphql
+directive @trace on FIELD_DEFINITION
+```
+
+You can apply the directive on either a GraphQL **Query** or **Mutation**.
+
+<Tabs items={['query', 'mutation']}>
+  <Tabs.Tab>
+    <pre>
+      ```graphql
+type Query {
+        users: [User!]! @trace
+}
+```
+    </pre>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <pre>
+      ```graphql
+type Mutation {
+        createPost: Post! @trace
+}
+```
+    </pre>
+  </Tabs.Tab>  
+</Tabs>
+
+Or on a GraphQL Field: 
+
+
+```graphql
+type User {
+    name: String! 
+    email: String! 
+    balance: String! @trace # <--- Trace this field because its complex
+}
+```
+
+Once applied, __and picked up by your graphql runtime__, the trace directive will essentally wrap that resolver and collect instrumentation data.
+
+
+
+<Tabs items={['Before @trace', 'With @trace']}>
+  <Tabs.Tab>
+    <pre>
+      ```ts
+async function resolver() {
+        const user = await getUserFromDb();
+        return user;
+}
+```
+    </pre>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <pre>
+      ```ts
+async function trace() { // <-- trace wrapper function is added by the directive
+        async function resolver() {
+            const user = await getUserFromDb();
+            return user;
+        }
+
+        const span = tracer.startSpan('query user');
+
+        const result = await span.trace(resolver);
+
+        span.end();
+
+        return result;
+} 
+```
+    </pre>
+  </Tabs.Tab>  
+</Tabs>
+
+
+The pitfall with using the trace directive approch is that you have to manually add the directive to each field you want to trace plus there is some boilerplate code you have to add to enable the directive at runtime. You can learn more about the directive [here](/docs/packages/trace-directive).
+
+## Trace Schema
+
+Using the trace schema lib you can automatically add the trace directive to your schema and enable tracing for all fields. This is a great way to get started with tracing your GraphQL API.
+
+```ts
+import { traceSchema } from '@graphql-debugger/trace-schema';
+import { DebuggerClient } from '@graphql-debugger/client';
+import { makeExecutableSchema } from 'graphql-tools';
+
+const typeDefs = `
+    type Query {
+        users: [User!]!
+    }
+
+    type User {
+        name: String!
+        email: String!
+        balance: String!
+    }
+`;
+
+const schema = makeExecutableSchema({
+    typeDefs,
+    resolvers: {
+        Query: {
+            users: () => [{...}]
+        }
+    }
+});
+
+// Schema will tracing applied to all fields
+const tracedSchema = traceSchema({
+    schema,
+    client: DebuggerClient // <-- See Client and Adapters
+});
+```
+
+## Collector
+
+## UI
