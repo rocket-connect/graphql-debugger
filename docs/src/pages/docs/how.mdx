@@ -15,7 +15,7 @@ When debugging a GraphQL API you have to ask yourself, what do you want to trace
 directive @trace on FIELD_DEFINITION
 ```
 
-You can apply the directive on either a GraphQL **Query** or **Mutation**.
+You can apply the directive on a GraphQL Query or Mutation:
 
 <Tabs items={['query', 'mutation']}>
   <Tabs.Tab>
@@ -173,6 +173,53 @@ const tracedSchema = traceSchema({
 });
 ```
 
+### OTEL Setup
+
+Alongside the Schema Exporter mechanism, Trace Schema will also setup the nessary OTEL exporters and propagators using the standard OTEL API. Using the options for Trace Schema you can configure what endpoint the traces should be sent to.
+
+
+<Tabs items={['New Relic', 'Datadog', "Debugger - (Default)"]}>
+  <Tabs.Tab>
+```ts
+const tracedSchema = traceSchema({
+    schema,
+    exporterConfig: {
+        url: 'https://trace-api.newrelic.com/trace/v1',
+    }
+});
+```
+  </Tabs.Tab>
+  <Tabs.Tab>
+```ts
+const tracedSchema = traceSchema({
+    schema,
+    exporterConfig: {
+        url: 'https://trace.agent.datadoghq.com/v0.4/traces',
+    }
+});
+```
+  </Tabs.Tab>  
+  <Tabs.Tab>
+```ts
+const tracedSchema = traceSchema({
+    schema,
+    exporterConfig: {
+        url: 'http://localhost:4318/v1/traces',
+    }
+});
+
+// or 
+const tracedSchema = traceSchema({
+    schema,
+});
+```
+  </Tabs.Tab>  
+</Tabs>
+
+
+Given that GraphQL Debugger Collector is a Open Telemetry Collector, you can also point your GraphQL traces to any Open Telemetry compatible collector as showin in the example above.
+
+
 ## Collector
 
 The collector is a service that listens for the traces proporgated from the GraphQL API and stores them in a database. It contains endpoints that ingest the schema, traces and spans. 
@@ -180,6 +227,8 @@ The collector is a service that listens for the traces proporgated from the Grap
 
 ### Schema Endpoint
 *  `/v1/schema`
+
+Trace Schema will hash and send the schema on startup to the collector. You can also send the schema manually using the endpoint, or the [Client](/docs/packages/client). Without a schema, debugger cannot visualize the traces and any exported traces wont be shown in the UI.
 
 
 ### Traces Endpoint
