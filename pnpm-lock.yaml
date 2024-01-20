@@ -81,7 +81,7 @@ importers:
         specifier: 2.29.1
         version: 2.29.1(@typescript-eslint/parser@6.19.0)(eslint@8.56.0)
       eslint-plugin-mdx:
-        specifier: ^3.1.5
+        specifier: 3.1.5
         version: 3.1.5(eslint@8.56.0)
       eslint-plugin-n:
         specifier: 16.4.0
@@ -318,10 +318,10 @@ importers:
   docs:
     dependencies:
       next:
-        specifier: ^14.0.4
+        specifier: 14.0.4
         version: 14.0.4(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)
       nextra:
-        specifier: ^3.0.0-alpha.10
+        specifier: 3.0.0-alpha.10
         version: 3.0.0-alpha.10(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: 18.2.0
