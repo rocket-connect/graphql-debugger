@@ -67,7 +67,6 @@ See the examples of how each query can cause many resolver functions and databas
  
 <Tabs items={['1 database call', '2 database calls', '3 database calls']}>
   <Tabs.Tab>
-    <pre>
       ```graphql
 query {
         user { ## <----- SELECT * FROM users
@@ -76,10 +75,8 @@ query {
         }
 }
 ```
-    </pre>
   </Tabs.Tab>
   <Tabs.Tab>
-    <pre>
       ```graphql
 query {
         user { ## <----- SELECT * FROM users
@@ -92,10 +89,8 @@ query {
         }
 }
 ```
-    </pre>
   </Tabs.Tab>  
     <Tabs.Tab>
-    <pre>
       ```graphql
 query {
         user { ## <----- SELECT * FROM users
@@ -111,7 +106,6 @@ query {
         }
 }
 ```
-    </pre>
   </Tabs.Tab>
 </Tabs>
 
@@ -124,7 +118,6 @@ In the majority of GraphQL server implementations the HTTP response code is usua
 
 <Tabs items={['query.gql', 'resolver.js','HTTP 200', 'response.json']}>
   <Tabs.Tab>
-    <pre>
       ```graphql
 query {
         user {
@@ -133,10 +126,8 @@ query {
         }
 }
 ```
-    </pre>
   </Tabs.Tab>
   <Tabs.Tab>
-    <pre>
       ```javascript
 const resolvers = {
         Query: {
@@ -146,17 +137,13 @@ const resolvers = {
         },
 };
 ```
-    </pre>
   </Tabs.Tab>  
   <Tabs.Tab>
-    <pre>
       ```sh
 HTTP POST /graphql 7 seconds ago - 200 OK body <json>
 ```
-    </pre>
   </Tabs.Tab>  
     <Tabs.Tab>
-    <pre>
       ```json
 {
        "data:": null,
@@ -167,7 +154,6 @@ HTTP POST /graphql 7 seconds ago - 200 OK body <json>
        ]    
 }
 ```
-    </pre>
   </Tabs.Tab>
 </Tabs>
 
@@ -191,7 +177,7 @@ HTTP POST /graphql 8 seconds ago - 200 OK body <json>
 
 ## Schema Leverage
 
-Given the fact that GraphQL is strongly typed, we can leverage the schema to provide a better debugging experience. Our goal with debugger is to continue to leverage the schema alongside telemetry to provide a better debugging experience.
+Given the fact that GraphQL is strongly typed, we can leverage the schema to provide a better debugging experience. Our goal with debugger is to continue to leverage the schema to provide a better debugging experience.
 
 ```graphql
 type Query {
