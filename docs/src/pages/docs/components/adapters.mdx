@@ -1,3 +1,56 @@
 # GraphQL Debugger Adapters
 
-TODO
+GraphQL Debugger's storage layer is pluggable. This means that you can use any storage you want to store your GraphQL Debugger data. We provide a few adapters out of the box, but you can also write your own.
+
+## Base Adapter
+
+The Base Adapter is the interface that all adapters must implement. It contains entities such as: Spans, Traces and Schemas and exposes extendable methods to interact with them. To learn more about The Base Adapter check out the `@graphql-debugger/adapter-base` lib.
+
+## Proxy Adapter
+
+The Proxy Adapter will forward all read and writes over the [GraphQL Schema](/docs/packages/graphql-schema) and to the [Collector](/docs/components/collector). This is what most will use when they want to use GraphQL Debugger, if it may be that you are pointing to your local or remote instance of GraphQL Debugger.
+
+### Getting Started
+
+#### Install
+
+```bash
+npm install @graphql-debugger/adapter-proxy
+```
+
+#### Usage
+
+```ts
+import { ProxyAdapter } from '@graphql-debugger/adapter-proxy'
+
+const adapter = new ProxyAdapter({
+  apiURL: 'http://localhost:16686',
+  collectorURL: 'http://localhost:4318'
+});
+
+// or if you want to use the default values
+const adapter = new ProxyAdapter();
+```
+
+## SQLite Adapter
+
+This is used inside the free dev tooling GraphQL Debugger provides. It is a simple SQLite database that stores all the data locally. This is not recommended for production use.
+
+### Getting Started
+
+#### Install
+
+```bash
+npm install @graphql-debugger/adapter-sqlite
+```
+
+#### Usage
+
+```ts
+import { SQLiteAdapter } from '@graphql-debugger/adapter-sqlite'
+
+const adapter = new SQLiteAdapter();
+```
+
+
+> Note that SQLite Adapter will use [Prisma](https://prisma.io) thru to SQLite. The database will be created in the `node_modules/@graphql-debugger/data-access/prisma/dev.db`.

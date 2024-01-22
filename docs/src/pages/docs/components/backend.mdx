@@ -1,3 +1,10 @@
 # GraphQL Debugger Backend
 
-TODO
+The Backend hosts a `/graphql` endpoint over the [GraphQL Schema](/docs/packages/graphql-schema) and serves the static files for the [GraphQL Debugger UI](/docs/components/ui).
+
+Default port: `16686`
+
+When using the [Debugger CLI](/docs/packages/cli), the backend is started automatically using a SQLite [Adapter](/docs/components/adapters).
+
+
+> Its not reccomended to use the backend directly, instead compose the components of debugger to create a custom debugger. This backend is only used for the [Debugger CLI](/docs/packages/cli) and [GraphQL Debugger UI](/docs/components/ui).
