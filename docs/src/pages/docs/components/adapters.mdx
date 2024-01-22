@@ -2,6 +2,8 @@
 
 GraphQL Debugger's storage layer is pluggable, GraphQL Debugger contains a few adapters out of the box, but you can also write your own.
 
+Adapters should be used alongside [The Client](/docs/packages/client).
+
 ## Base Adapter
 
 The Base Adapter is the interface that all adapters must implement. It contains entities such as: Spans, Traces and Schemas and exposes extendable methods to interact with them. To learn more about The Base Adapter check out the `@graphql-debugger/adapter-base` lib.
