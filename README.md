@@ -6,6 +6,8 @@
 
 <p>GraphQL Debugger is a platform for debugging your GraphQL Server.</p>
 
+<a href="https://www.graphql-debugger.com/" target="_blank">https://www.graphql-debugger.com/</a>
+
 [![npm version](https://badge.fury.io/js/graphql-debugger.svg)](https://badge.fury.io/js/graphql-debugger) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 [![](./docs/public/img/screenshot.png)](https://www.graphql-debugger.com/)
