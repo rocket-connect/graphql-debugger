@@ -31,6 +31,12 @@ export default {
         property="og:image"
         content="https://preview.graphql-debugger.com/img/banner.png"
       />
+
+      <link
+        rel="shortcut icon"
+        href="https://preview.graphql-debugger.com/favicon.svg"
+        type="image/svg"
+      />
     </>
   ),
   logo: (
