@@ -1,0 +1,48 @@
+# @graphql-debugger/client
+
+GraphQL Debugger Client is the 'ORM' for all data related things. Its used internally by The Collector, CLI, Tests and UI. If you want to extend or integrate GraphQL Debugger with your own tools, this is the place to start.
+
+
+## Installation
+
+> Note you need to supply a [Adapter](/docs/components/adapters) to the client. 
+
+```bash
+npm install @graphql-debugger/client @graphql-debugger/adapter-__YOUR_ADAPTER__
+```
+
+## Usage
+
+```js
+import { Client } from '@graphql-debugger/client';
+import { Adapter } from "@graphql-debugger/adapter-__YOUR_ADAPTER__"
+
+const adapter = new Adapter();
+
+const client = new Client({
+    adapter
+});
+
+const spans = await client.span.findMany({ where: {} });
+```
+
+### API
+
+##### Schema
+
+* `createOne`
+* `findMany`
+* `findFirst`
+* `upsert`
+
+##### Trace
+* `findFirst`
+* `findMany`
+* `createOne`
+* `updateOne`
+
+##### Span
+* `findMany`
+* `aggregate`
+* `createOne`
+* `deleteOne`

@@ -1,0 +1,53 @@
+# graphql-debugger CLI
+
+The GraphQL Debugger CLI spawns [The Backend](/docs/components/backend) and [The Collector](/docs/components/collector) using a SQLite [Adapter](/docs/components/adapters). Its really easy to get started, by running the command below:
+
+```sh
+npx graphql-debugger
+
+# Collector Online, send traces to http://localhost:4318/v1/traces.
+
+# Debugger Online, visit http://localhost:16686 to view traces.
+```
+
+## Configure Ports
+
+Use the environment variables below to configure the ports used by the CLI:
+
+```sh
+COLLECTOR_PORT=4318 BACKEND_PORT=16686 npx graphql-debugger
+```
+
+## Pin a Version
+
+To pin a version of the CLI, you should install GraphQL Debugger as a dependency and then run debugger from a script
+
+
+Install from NPM:
+
+```
+npm install graphql-debugger@VERSION
+```
+
+Add script to `package.json`:
+
+```json
+{
+  "scripts": {
+    "gql-debugger": "graphql-debugger"
+  },
+  "dependencies": {
+    "graphql-debugger": "@VERSION"
+   }
+}
+```
+
+Run the script:
+
+```sh
+npm run gql-debugger
+
+# Collector Online, send traces to http://localhost:4318/v1/traces.
+
+# Debugger Online, visit http://localhost:16686 to view traces.
+```
