@@ -9,7 +9,7 @@ import {
   UpsertSchemaWhere,
 } from "@graphql-debugger/types";
 
-import { SchemaSchema } from "../../../../schemas/build";
+import { SchemaSchema } from "@graphql-debugger/schemas";
 import { prisma } from "../prisma";
 
 export class SQLiteSchema extends BaseSchema {

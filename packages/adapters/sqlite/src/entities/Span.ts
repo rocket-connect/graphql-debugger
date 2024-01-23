@@ -17,7 +17,7 @@ import {
   CreateSpanResponseSchema,
   DeleteSpanResponseSchema,
   ListSpansResponseSchema,
-} from "../../../../schemas/build";
+} from "@graphql-debugger/schemas";
 import { prisma } from "../prisma";
 
 export class SQLiteSpan extends BaseSpan {

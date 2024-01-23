@@ -20,6 +20,7 @@
   "dependencies": {
     "@graphql-debugger/adapter-base": "workspace:^",
     "@graphql-debugger/data-access": "workspace:^",
+    "@graphql-debugger/schemas": "workspace:^",
     "@graphql-debugger/time": "workspace:^",
     "@graphql-debugger/utils": "workspace:^"
   },

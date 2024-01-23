@@ -1,5 +1,10 @@
 import { BaseTrace } from "@graphql-debugger/adapter-base";
 import {
+  CreateTraceResponseSchema,
+  TraceSchema,
+  UpdateTraceResponseSchema,
+} from "@graphql-debugger/schemas";
+import {
   CreateTraceInput,
   CreateTraceResponse,
   FindFirstTraceOptions,
@@ -13,11 +18,6 @@ import {
 } from "@graphql-debugger/types";
 import { dbSpanToNetwork } from "@graphql-debugger/utils";
 
-import {
-  CreateTraceResponseSchema,
-  TraceSchema,
-  UpdateTraceResponseSchema,
-} from "../../../../schemas/build";
 import { prisma } from "../prisma";
 
 export class SQLiteTrace extends BaseTrace {
