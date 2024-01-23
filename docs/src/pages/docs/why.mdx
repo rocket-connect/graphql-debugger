@@ -2,11 +2,10 @@ import { Tabs } from 'nextra/components'
 
 # Why GraphQL Debugger ?
 
-GraphQL servers are built and interacted with differently to that of other API servers. We found a bunch of pitfalls when using off the shelf tools to observe and debug our GraphQL servers, so we built GraphQL Debugger to solve these problems.
-
+GraphQL servers are constructed and interacted with in a manner distinct from other API servers. We encountered numerous challenges while employing standard tools to monitor and troubleshoot our GraphQL servers, leading us to develop GraphQL Debugger as a solution to these issues.
 ## HTTP Post Body
 
-Most GraphQL implementations use `HTTP` `POST` requests to send queries to the server. The query is sent in the body of the request, for example querying the SpaceX API in the browser: 
+The majority of GraphQL implementations utilize `HTTP` `POST` requests to dispatch queries to the server. These queries are transmitted within the request's body. For instance, this is how one would query the SpaceX API using a browser:
 
 ```ts
 const body = JSON.stringify({
@@ -22,7 +21,7 @@ const response = await fetch("https://api.spacex.land/graphql/", {
 const { data, errors } = await response.json();
 ```
 
-What this means for us debuggers and observers is that each request to our server will always be displayed as a `HTTP` `POST` request making it difficult to distinguish or filter between requests.
+This implies that, for us as debuggers and observers, each request sent to our server will consistently appear as an `HTTP` `POST` request. This uniformity makes it challenging to differentiate or filter among various requests.
 
 ```sh
 # Logs from a GraphQL server
@@ -37,7 +36,7 @@ HTTP POST /graphql 8 seconds ago
 ...
 ```
 
-For example, if you were using a REST API, you would expect to see a variety of `HTTP` methods such as `GET`, `POST`, `PUT`, `DELETE` etc, making it easier to debug and distinguish between requests and entity.
+For instance, when utilizing a REST API, you would anticipate encountering a range of HTTP methods like `GET`, `POST`, `PUT`, `DELETE`, etc. This variety facilitates easier debugging and clearer differentiation between requests and entities.
 
 ```sh
 # Logs from a REST server
@@ -54,12 +53,10 @@ HTTP DELETE /post 8 seconds ago
 
 ## Resolver Fan Out
 
-One GraphQL query can result in many resolver functions being called and subsequently many database queries being executed. This is because GraphQL queries are hierarchical and the data is nested.
+A single GraphQL query can trigger numerous resolver functions, leading to multiple database queries. This occurs because GraphQL queries are structured hierarchically, with the data embedded within these structures.
 
+Refer to the provided examples to understand how each query can initiate several resolver functions and database queries.
 
-See the examples of how each query can cause many resolver functions and database queries to be called.
-
- 
 <Tabs items={['1 database call', '2 database calls', '3 database calls']}>
   <Tabs.Tab>
       ```graphql
@@ -104,12 +101,11 @@ query {
   </Tabs.Tab>
 </Tabs>
 
-The thought process behind this is that the client can request exactly what data it needs, and the server will only return that data. This is great for the client, but it can be difficult to debug and understand what data is being returned and why. Most observability tools will only show the http request, not digging into the query and the resolvers that were called.
+The rationale for this approach is that it allows the client to precisely specify the data it requires, and the server responds by delivering only that data. While this is advantageous for the client, it can make debugging and comprehending the returned data and its reasoning challenging. Most observability tools merely display the HTTP request and do not delve into the specifics of the query and the invoked resolvers.
 
 ## HTTP Response 200
 
-In the majority of GraphQL server implementations the HTTP response code is usually always 200, and any errors are either a typed response or placed in the body errors list. This is demonstrated below in a query that hits a resolver that throws an error: 
-
+In most GraphQL server implementations, the HTTP response code is typically always 200, with errors either categorized as a typed response or included in the body's errors list. This behavior is illustrated below with a query that encounters a resolver and triggers an error:
 
 <Tabs items={['query.gql', 'resolver.js','HTTP 200', 'response.json']}>
   <Tabs.Tab>
@@ -153,9 +149,10 @@ HTTP POST /graphql 7 seconds ago - 200 OK body <json>
 </Tabs>
 
 
-By stepping through the tabs above, you can see that the HTTP response code is 200, and the error is placed in the body of the response. This is not ideal for debugging as it is not immediately obvious that there is an error.
 
-Given for example if you were to look through a list of logs from a GraphQL server, you would see a list of HTTP 200 responses, and you would have to dig into the body of the response to see if there were any errors. 
+Navigating through the tabs above reveals that the HTTP response code is 200, and the error is embedded in the response body. This setup is not optimal for debugging, as the presence of an error is not immediately apparent.
+
+For instance, if you were reviewing a log list from a GraphQL server, you would encounter a series of HTTP 200 responses. To determine if there were any errors, you would need to delve into the body of each response.
 
 ```sh
 # Logs from a GraphQL server
@@ -172,7 +169,8 @@ HTTP POST /graphql 8 seconds ago - 200 OK body <json>
 
 ## Schema Leverage
 
-Given the fact that GraphQL is strongly typed, we can leverage the schema to provide a better debugging experience. Our goal with debugger is to continue to leverage the schema to provide a better debugging experience.
+
+Considering that GraphQL is strongly typed, we can utilize the schema to enhance the debugging experience. Our aim with the debugger is to further capitalize on the schema to deliver an improved debugging experience.
 
 ```graphql
 type Query {
