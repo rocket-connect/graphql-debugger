@@ -30,7 +30,7 @@
     "@opentelemetry/otlp-exporter-base": "0.45.1",
     "@opentelemetry/resources": "1.19.0",
     "@opentelemetry/sdk-trace-base": "1.19.0",
-    "@opentelemetry/semantic-conventions": "1.19.0"
+    "@opentelemetry/semantic-conventions": "1.20.0"
   },
   "devDependencies": {
     "@faker-js/faker": "8.3.1",
