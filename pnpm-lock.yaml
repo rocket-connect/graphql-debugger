@@ -318,7 +318,7 @@ importers:
   docs:
     dependencies:
       '@next/third-parties':
-        specifier: ^14.1.0
+        specifier: 14.1.0
         version: 14.1.0(next@14.0.4)(react@18.2.0)
       next:
         specifier: 14.0.4
