@@ -7,6 +7,10 @@ export default {
     type: "page",
     title: "Documentation",
   },
+  contributing: {
+    type: "page",
+    title: "Contributing",
+  },
   opensource: {
     type: "page",
     title: "GitHub ↗",

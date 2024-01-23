@@ -6,4 +6,5 @@ export default {
   packages: "Packages",
   plugins: "Plugins",
   integrations: "Integrations",
+  docker: "Docker",
 };

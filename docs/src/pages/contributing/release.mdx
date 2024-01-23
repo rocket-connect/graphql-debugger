@@ -1,6 +1,6 @@
 # Releasing GraphQL Debugger
 
-This monorepo contains several packages and apps and most of them are deployed to npm. This document describes the process of releasing a new version of Debugger.
+The GraphQL Debugger monorepo contains several packages and apps and most of them are deployed to npm, this page describes the process of releasing a new version of Debugger.
 
 ## Rules
 
@@ -13,15 +13,13 @@ This monorepo contains several packages and apps and most of them are deployed t
 
 ## Releasing a new version
 
-To release a new version of the packages make sure that you are on the `main` branch and that you have the latest changes.
-
-Then, you can bump all the packages to the new version:
+To release a new version of the packages make sure that you are on the `main` branch and that you have the latest changes. Then, you can bump all the packages to the new version:
 
 ```bash
-$ VERSION=0.0.0-alpha.53 START_PATH=. pnpm run release
+$ VERSION=__VERSION__ START_PATH=. pnpm run release
 ```
 
-This will change all the packages to the new version and will create a commit and tag with the changes.
+This will change all the packages to the given version and will create a commit and tag with the changes.
 
 > Note that the release command will not modify the monorepo `^workspace` version in the `package.json` files. It will only change the version of the packages. **Changes to the workspace settings are done in the pipelines and are not part of this release.**
 
@@ -83,6 +81,4 @@ Finally, push the changes to GitHub:
 $ git push && git push --tags
 ```
 
-This will trigger a release pipeline on GitHub Actions that will publish the packages to npm. You can find the pipeline that will be triggered here:
-
-- https://github.com/rocket-connect/graphql-debugger/blob/main/.github/workflows/release.yml
+This will trigger a release pipeline on GitHub Actions that will publish the packages to npm.

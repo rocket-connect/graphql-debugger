@@ -1,0 +1,20 @@
+import { Callout } from 'nextra/components'
+ 
+
+# Dockerizing GraphQL Debugger
+
+<Callout emoji="🏗️">
+ We have not published the docker images to Docker Hub yet see progress [here](https://github.com/rocket-connect/graphql-debugger/pull/196)
+</Callout>
+
+Clone the repo and then run the following command to build the docker image:
+
+```bash
+docker build . -t graphql-debugger -f docker/Dockerfile
+```
+
+To run the docker image, run the following command:
+
+```bash
+docker run --name graphql-debugger -p 16686:16686 -p 4318:4318 graphql-debugger
+```
