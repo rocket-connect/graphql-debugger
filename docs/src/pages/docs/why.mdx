@@ -1,8 +1,9 @@
-import { Tabs } from 'nextra/components'
+import { Tabs } from "nextra/components";
 
 # Why GraphQL Debugger ?
 
 GraphQL servers are constructed and interacted with in a manner distinct from other API servers. We encountered numerous challenges while employing standard tools to monitor and troubleshoot our GraphQL servers, leading us to develop GraphQL Debugger as a solution to these issues.
+
 ## HTTP Post Body
 
 The majority of GraphQL implementations utilize `HTTP` `POST` requests to dispatch queries to the server. These queries are transmitted within the request's body. For instance, this is how one would query the SpaceX API using a browser:
@@ -148,8 +149,6 @@ HTTP POST /graphql 7 seconds ago - 200 OK body <json>
   </Tabs.Tab>
 </Tabs>
 
-
-
 Navigating through the tabs above reveals that the HTTP response code is 200, and the error is embedded in the response body. This setup is not optimal for debugging, as the presence of an error is not immediately apparent.
 
 For instance, if you were reviewing a log list from a GraphQL server, you would encounter a series of HTTP 200 responses. To determine if there were any errors, you would need to delve into the body of each response.
@@ -168,7 +167,6 @@ HTTP POST /graphql 8 seconds ago - 200 OK body <json>
 ```
 
 ## Schema Leverage
-
 
 Considering that GraphQL is strongly typed, we can utilize the schema to enhance the debugging experience. Our aim with the debugger is to further capitalize on the schema to deliver an improved debugging experience.
 

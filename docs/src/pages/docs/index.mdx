@@ -1,19 +1,17 @@
 import Image from "next/image";
 
-
 # Quick start
 
-<br/>
+<br />
 
 <Image
-    src="/img/screenshot.png"
-    alt="GraphQL Debugger Screenshot"
-    className="mx-auto"
-    width={1200}
-    height={1200}
-    priority
+  src="/img/screenshot.png"
+  alt="GraphQL Debugger Screenshot"
+  className="mx-auto"
+  width={1200}
+  height={1200}
+  priority
 />
-
 
 GraphQL Debugger is a platform for debugging your GraphQL Server. You can use debugger locally as described below or you can build your own [adapter](/docs/components/adapters) to host your own GraphQL Debugger.
 
@@ -48,15 +46,15 @@ Now you will be able to access [GraphQL Debugger UI](/docs/components/ui) at htt
 
 ## Connecting your server
 
-Once debugger is running you can use our open source packages to connect your GraphQL Server to GraphQL Debugger. 
-
+Once debugger is running you can use our open source packages to connect your GraphQL Server to GraphQL Debugger.
 
 ### GraphQL JS
 
 ```ts
-import { DebuggerClient } from "@graphql-debugger/client";
 import { AdapterProxy } from "@graphql-debugger/adapter-proxy";
+import { DebuggerClient } from "@graphql-debugger/client";
 import { traceSchema } from "@graphql-debugger/trace-schema";
+
 import { GraphQLSchema } from "graphql";
 
 const schema: GraphQLSchema = __YOUR_SCHEMA__;
@@ -68,17 +66,21 @@ const client = new DebuggerClient({
 });
 
 const tracedSchema = traceSchema({
-    schema,
-    client,
+  schema,
+  client,
 });
 ```
 
 ### GraphQL Yoga
 
 ```ts
-import { DebuggerClient } from "@graphql-debugger/client";
 import { AdapterProxy } from "@graphql-debugger/adapter-proxy";
-import { traceSchema, GraphQLDebuggerContext } from "@graphql-debugger/trace-schema";
+import { DebuggerClient } from "@graphql-debugger/client";
+import {
+  GraphQLDebuggerContext,
+  traceSchema,
+} from "@graphql-debugger/trace-schema";
+
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { createYoga } from "graphql-yoga";
 

@@ -16,17 +16,13 @@
 </div>
 </div>
 
-
 ## Documentation
 
 https://www.graphql-debugger.com/docs
 
-
-
 ## Contributing
 
 https://www.graphql-debugger.com/contributing
-
 
 ## License
 

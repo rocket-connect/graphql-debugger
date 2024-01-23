@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/graphql-fragments",
-  "version": "0.0.0-alpha.78",
+  "version": "0.0.0-alpha.81",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
