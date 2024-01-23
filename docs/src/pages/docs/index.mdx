@@ -74,12 +74,13 @@ const tracedSchema = traceSchema({
 ### GraphQL Yoga
 
 ```ts
-import { DebuggerClient } from "@graphql-debugger/client";
 import { ProxyAdapter } from "@graphql-debugger/adapter-proxy";
+import { DebuggerClient } from "@graphql-debugger/client";
 import {
-  traceSchema,
   GraphQLDebuggerContext,
+  traceSchema,
 } from "@graphql-debugger/trace-schema";
+
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { createYoga } from "graphql-yoga";
 
