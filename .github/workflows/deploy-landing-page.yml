@@ -1,12 +1,12 @@
-name: Deploy Landing Page
+name: preview.graphql-debugger.com
 
 on:
   push:
     branches:
-      - main
+      - feat/next-docs
 
 jobs:
-  deploy-playground:
+  deploy-docs:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,10 +20,10 @@ jobs:
           script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
-            cd ./graphql-debugger
+            cd ./preview/graphql-debugger
             git reset --hard
-            git pull origin main
+            git pull origin feat/next-docs
             pnpm i
             pnpm build
-            cd ./apps/landing-page/server
-            pm2 restart graphql-debugger.com
+            cd ./docs/
+            pm2 restart preview

@@ -1,6 +1,4 @@
-import { prisma } from "@graphql-debugger/data-access";
 import {
-  dbSpanToNetwork,
   getTraceStart,
   isTraceError,
   sumTraceTime,
@@ -8,6 +6,7 @@ import {
 
 import { faker } from "@faker-js/faker";
 
+import { client } from "../src/client";
 import { Schemas } from "./components/schemas";
 import { Traces } from "./components/traces";
 import { Dashboard } from "./pages/dashboard";
@@ -35,17 +34,20 @@ describe("traces", () => {
       name: "should load and display a list of success traces",
       shouldError: false,
       randomFieldName,
+      client,
     },
     {
       name: "should load and display a list of error traces",
       shouldError: true,
       randomFieldName,
+      client,
     },
     {
       name: "should load and display a list of named query traces",
       shouldError: false,
       randomFieldName,
       shouldNameQuery: true,
+      client,
     },
   ];
 
@@ -82,13 +84,12 @@ describe("traces", () => {
       await page.reload();
       await sleep(500);
 
-      const traces = await prisma.traceGroup.findMany({
+      const traces = await client.trace.findMany({
         where: {
           schemaId: dbSchema.id,
         },
-        include: {
-          spans: true,
-        },
+        includeSpans: true,
+        includeRootSpan: true,
       });
 
       const tracesComponent = new Traces({
@@ -104,6 +105,10 @@ describe("traces", () => {
         const isError = isTraceError(trace);
         const rootSpan = trace.spans.find((span) => span.isGraphQLRootSpan);
 
+        if (!rootSpan) {
+          throw new Error("Failed to find root span");
+        }
+
         const uiTrace = uiTraces.find((t) => t.id === trace.id);
         expect(uiTrace).toBeDefined();
         if (rootSpan?.graphqlOperationName) {
@@ -117,7 +122,7 @@ describe("traces", () => {
         const duration = sumTraceTime({
           id: trace.id,
           traceId: trace.traceId,
-          spans: trace.spans.map((span) => dbSpanToNetwork(span)),
+          spans: trace.spans,
         });
 
         const traceDurationSIUnits = duration?.toSIUnits();
@@ -127,7 +132,7 @@ describe("traces", () => {
         const startTimeUnixNano = getTraceStart({
           id: trace.id,
           traceId: trace.traceId,
-          spans: trace.spans.map((span) => dbSpanToNetwork(span)),
+          spans: trace.spans,
         });
         expect(uiTrace?.start).toEqual(
           startTimeUnixNano.formatUnixNanoTimestamp(),

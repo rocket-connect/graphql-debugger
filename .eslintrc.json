@@ -5,9 +5,14 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:mdx/recommended"
   ],
-  "ignorePatterns": ["build", ".eslintrc.cjs"],
+  "settings": {
+    "mdx/code-blocks": false,
+    "mdx/language-mapper": {}
+  },
+  "ignorePatterns": ["build", ".eslintrc.cjs", "README.md"],
   "rules": {
     "react/display-name": "off",
     "react/no-unescaped-entities": "off",

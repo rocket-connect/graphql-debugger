@@ -1,0 +1,43 @@
+# GraphQL Debugger Collector
+
+The Collector is an [Express App](https://expressjs.com/) that listens for the traces propagated from the GraphQL API and stores them in a database. It contains endpoints that ingest the schema, traces and spans.
+
+## Installation
+
+```
+npm install @graphql-debugger/collector-proxy
+```
+
+## Usage
+
+```ts
+import { start } from "@graphql-debugger/collector-proxy";
+import { Adapter } from "@graphql-debugger/adapter-__YOUR_ADAPTER__";
+import { DebuggerClient } from "@graphql-debugger/client";
+
+const adapter = new Adapter(); // Your adapter
+const client = new DebuggerClient({ adapter });
+
+const { server } = await start({
+    port: 4318,
+    client
+});
+```
+
+## Endpoints
+
+### Schema Endpoint
+*  `/v1/schema`
+
+Trace Schema will hash and send the schema on startup to the collector. You can also send the schema manually using the endpoint, or the [Client](/docs/packages/client). Without a schema, debugger cannot visualize the traces and any exported traces wont be shown in the UI.
+
+
+### Traces Endpoint
+* `/v1/traces`
+
+This is a Open Telemetry compatible endpoint that accepts traces in the [OTLP HTTP format](https://opentelemetry.io/docs/specs/otlp/#otlphttp). This means you can send any traces from any Open Telemetry compatible client to the collector and it will be stored in the database, however, if the traces dont come from GraphQL Debugger, they wont be visualized in the UI.
+
+> Each GraphQL Debugger trace attaches a `schemaHash` attribute that reconciles the trace with the schema. That `schemaHash` is picked up in the traces endpoint and used to associate the trace with the schema.
+
+
+

@@ -1,0 +1,24 @@
+{
+  "name": "@graphql-debugger/adapter-base",
+  "version": "0.0.0-alpha.77",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rocket-connect/graphql-debugger.git"
+  },
+  "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/index.js",
+    "test": "jest --runInBand --forceExit"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@graphql-debugger/types": "workspace:^"
+  }
+}

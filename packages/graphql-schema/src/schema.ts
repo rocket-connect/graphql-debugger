@@ -1,3 +1,4 @@
+import { DebuggerClient } from "@graphql-debugger/client";
 import { tracing } from "@graphql-debugger/data-access";
 import { traceSchema } from "@graphql-debugger/trace-schema";
 import { hashSchema } from "@graphql-debugger/utils";
@@ -14,18 +15,25 @@ export const builder = new SchemaBuilder<{
 }>({});
 
 builder.queryType({});
+builder.mutationType({});
 
 require("./queries");
+require("./mutations");
 
 const build = builder.toSchema();
 
-export const schema = TRACE_SCHEMA
-  ? traceSchema({
-      schema: build,
-      ...(TRACE_PRISMA && {
-        instrumentations: [tracing],
-      }),
-    })
-  : build;
+export function createSchema({ client }: { client: DebuggerClient }) {
+  const schema = TRACE_SCHEMA
+    ? traceSchema({
+        client,
+        schema: build,
+        ...(TRACE_PRISMA && {
+          instrumentations: [tracing],
+        }),
+      })
+    : build;
 
-export const hash = hashSchema(schema);
+  const hash = hashSchema(schema);
+
+  return { schema, hash };
+}

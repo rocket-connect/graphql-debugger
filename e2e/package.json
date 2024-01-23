@@ -20,8 +20,11 @@
   },
   "dependencies": {
     "@graphql-debugger/backend": "workspace:^",
+    "@graphql-debugger/client": "workspace:^",
+    "@graphql-debugger/adapter-base": "workspace:^",
+    "@graphql-debugger/adapter-sqlite": "workspace:^",
+    "@graphql-debugger/adapter-proxy": "workspace:^",
     "@graphql-debugger/collector-proxy": "workspace:^",
-    "@graphql-debugger/data-access": "workspace:^",
     "@graphql-debugger/trace-schema": "workspace:^",
     "@graphql-debugger/ui": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
@@ -30,6 +33,7 @@
     "puppeteer": "21.6.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "8.3.1"
+    "@faker-js/faker": "8.3.1",
+    "@graphql-debugger/types": "workspace:^"
   }
 }

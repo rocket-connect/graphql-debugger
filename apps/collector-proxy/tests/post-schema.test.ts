@@ -1,4 +1,3 @@
-import { prisma } from "@graphql-debugger/data-access";
 import { hashSchema } from "@graphql-debugger/utils";
 
 import { faker } from "@faker-js/faker";
@@ -6,6 +5,7 @@ import { makeExecutableSchema } from "@graphql-tools/schema";
 import { describe, expect, test } from "@jest/globals";
 import { parse, print } from "graphql";
 
+import { client } from "../src/client";
 import { request } from "./utils";
 
 describe("POST /v1/schema", () => {
@@ -22,6 +22,7 @@ describe("POST /v1/schema", () => {
   test("should throw an error when parsing the schema", async () => {
     const response = await request().post("/v1/schema").send({
       schema: "invalid schema",
+      hash: faker.string.uuid(),
     });
 
     expect(response.status).toBe(400);
@@ -45,15 +46,16 @@ describe("POST /v1/schema", () => {
 
     const hash = hashSchema(executableSchema);
 
-    await prisma.schema.create({
+    await client.schema.createOne({
       data: {
         hash,
-        typeDefs: print(parse(schema)),
+        schema: print(parse(schema)),
       },
     });
 
     const response = await request().post("/v1/schema").send({
       schema,
+      hash,
     });
 
     expect(response.status).toBe(200);
@@ -66,20 +68,21 @@ describe("POST /v1/schema", () => {
       }
     `;
 
+    const executableSchema = makeExecutableSchema({
+      typeDefs: schema,
+      noLocation: true,
+    });
+
+    const hash = hashSchema(executableSchema);
+
     const response = await request().post("/v1/schema").send({
       schema,
+      hash,
     });
 
     expect(response.status).toBe(200);
 
-    const hash = hashSchema(
-      makeExecutableSchema({
-        typeDefs: schema,
-        noLocation: true,
-      }),
-    );
-
-    const foundSchema = await prisma.schema.findFirst({
+    const foundSchema = await client.schema.findFirst({
       where: {
         hash,
       },

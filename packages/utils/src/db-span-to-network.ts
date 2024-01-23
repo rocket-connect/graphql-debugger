@@ -23,9 +23,12 @@ export function dbSpanToNetwork(dbSpan: DBSpan): NetworkSpan {
     graphqlOperationType: dbSpan.graphqlOperationType,
     createdAt: new TimeStamp(dbSpan.createdAt).toString(),
     updatedAt: new TimeStamp(dbSpan.updatedAt).toString(),
+    traceGroupId: dbSpan.traceGroupId,
     errorMessage: dbSpan.errorMessage,
     errorStack: dbSpan.errorStack,
     isForeign: dbSpan.isForeign,
     attributes: dbSpan.attributes as string,
+    isGraphQLRootSpan: dbSpan.isGraphQLRootSpan,
+    graphqlSchemaHash: dbSpan.graphqlSchemaHash,
   };
 }

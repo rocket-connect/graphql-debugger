@@ -3,12 +3,12 @@
   "version": "0.0.0-alpha.80",
   "private": true,
   "scripts": {
-    "dev": "cross-env turbo dev --filter '!graphql-debugger' --filter '!@graphql-debugger/landing-page-app' --filter '!@graphql-debugger/landing-page-server' --concurrency=18",
+    "dev": "cross-env turbo dev --filter '!graphql-debugger' --filter '!@graphql-debugger/landing-page-app' --filter '!@graphql-debugger/landing-page-server' --concurrency=30",
     "build": "turbo build",
     "release": "cross-env DEBUG=\"@graphql-debugger:*\" node ./packages/utils/build/release.js",
     "test:sequential": "pnpm recursive exec -- sh -c 'pnpm run test || (echo \"Tests failed!\" && exit 1)'",
     "test": "turbo test",
-    "clean": "find . -type d \\( -name \"node_modules\" -o -name \"build\" -o -name \".turbo\" \\) -exec rm -rf {} +",
+    "clean": "find . -type d \\( -name \"node_modules\" -o -name \"build\" -o -name \".turbo\" -o -name \".next\" \\) -exec rm -rf {} +",
     "lint": "eslint .",
     "format": "prettier --write .",
     "reset-db": "cd ./packages/data-access && npx prisma migrate reset --force"
@@ -38,6 +38,7 @@
     "eslint-config-prettier": "9.1.0",
     "eslint-config-standard-with-typescript": "42.0.0",
     "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-mdx": "3.1.5",
     "eslint-plugin-n": "16.4.0",
     "eslint-plugin-prettier": "5.1.3",
     "eslint-plugin-promise": "6.1.1",

@@ -1,9 +1,9 @@
-import { prisma } from "@graphql-debugger/data-access";
 import { isSpanError, isTraceError } from "@graphql-debugger/utils";
 
 import { faker } from "@faker-js/faker";
 
 import { UnixNanoTimeStamp } from "../../packages/time/build";
+import { client } from "../src/client";
 import { Schemas } from "./components/schemas";
 import { TraceViewer } from "./components/trace-viewer";
 import { Traces } from "./components/traces";
@@ -32,17 +32,20 @@ describe("trace-viewer", () => {
       name: "should load a success trace viewer correctly",
       shouldError: false,
       randomFieldName,
+      client,
     },
     {
       name: "should load a error trace viewer correctly",
       shouldError: true,
       randomFieldName,
+      client,
     },
     {
       name: "should load a named query in the trace viewer correctly",
       shouldError: false,
       randomFieldName,
       shouldNameQuery: true,
+      client,
     },
   ];
 
@@ -75,13 +78,11 @@ describe("trace-viewer", () => {
       }
       await sleep(200);
 
-      const traces = await prisma.traceGroup.findMany({
+      const traces = await client.trace.findMany({
         where: {
           schemaId: dbSchema.id,
         },
-        include: {
-          spans: true,
-        },
+        includeSpans: true,
       });
 
       const trace = variant.shouldError
@@ -149,7 +150,7 @@ describe("trace-viewer", () => {
             expect(uiSpan?.color).toBe(colors.green_text);
           }
 
-          const durationNano = new UnixNanoTimeStamp(span.durationNano);
+          const durationNano = UnixNanoTimeStamp.fromString(span.durationNano);
           const { value, unit } = durationNano.toSIUnits();
           expect(uiSpan?.time).toBe(`${value.toFixed(2)} ${unit}`);
         }

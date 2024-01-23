@@ -1,4 +1,3 @@
-import { prisma } from "@graphql-debugger/data-access";
 import {
   ListTraceGroupsResponse,
   ListTraceGroupsWhere,
@@ -19,6 +18,9 @@ const ListTraceGroupsWhereInput: InputRef<ListTraceGroupsWhere> =
         required: false,
       }),
       rootSpanName: t.string({
+        required: false,
+      }),
+      traceIds: t.stringList({
         required: false,
       }),
     }),
@@ -42,55 +44,20 @@ builder.queryField("listTraceGroups", (t) =>
         required: false,
       }),
     },
-    resolve: async (root, args) => {
-      const whereConditions: any = [
-        {
-          spans: {
-            some: {
-              isGraphQLRootSpan: true,
-            },
-          },
+    resolve: async (root, args, context) => {
+      const traces = await context.client.trace.findMany({
+        where: {
+          id: args.where?.id,
+          schemaId: args.where?.schemaId,
+          rootSpanName: args.where?.rootSpanName,
+          traceIds: args.where?.traceIds,
         },
-      ];
-
-      if (args.where?.id) {
-        whereConditions.push({ id: args.where.id });
-      }
-
-      if (args.where?.schemaId) {
-        whereConditions.push({ schemaId: args.where.schemaId });
-      }
-
-      if (args.where?.rootSpanName) {
-        whereConditions.push({
-          spans: {
-            some: {
-              name: {
-                equals: args.where.rootSpanName,
-              },
-            },
-          },
-        });
-      }
-
-      const where = {
-        AND: whereConditions,
-      };
-
-      const traces = await prisma.traceGroup.findMany({
-        orderBy: { createdAt: "desc" },
-        where,
-        take: 20,
+        includeRootSpan: true, // TODO: should not need to do this
+        includeSpans: true, // TODO: should not need to do this
       });
 
       return {
-        traces: traces.map((trace) => {
-          return {
-            id: trace.id,
-            traceId: trace.traceId,
-            spans: [],
-          };
-        }),
+        traces,
       };
     },
   }),

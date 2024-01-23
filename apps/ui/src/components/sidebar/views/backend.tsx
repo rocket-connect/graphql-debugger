@@ -6,7 +6,7 @@ export function Backend() {
   const configContext = useContext(ConfigContext);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    configContext?.setBackendURL(event.target.value);
+    configContext?.setapiURL(event.target.value);
   };
 
   return (
@@ -21,7 +21,7 @@ export function Backend() {
           id="username"
           className="border bg-primary-background  border-accent rounded-md w-full p-2 mt-3 font-bold tracking-widest text-xs outline-none"
           placeholder="http://localhost:16686"
-          value={configContext?.backendURL}
+          value={configContext?.apiURL}
           onChange={handleChange}
         />
       </div>

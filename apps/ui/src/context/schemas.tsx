@@ -32,7 +32,7 @@ export function SchemasProvider({
 
   const getSchemas = useQuery({
     queryKey: ["schemas"],
-    queryFn: async () => await client.schema.findMany(),
+    queryFn: async () => await client.schema.findMany({}),
     refetchInterval: 5000,
   });
 
