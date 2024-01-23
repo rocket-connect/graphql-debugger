@@ -9,7 +9,7 @@
     "plugin:mdx/recommended"
   ],
   "settings": {
-    "mdx/code-blocks": true,
+    "mdx/code-blocks": false,
     "mdx/language-mapper": {}
   },
   "ignorePatterns": ["build", ".eslintrc.cjs", "README.md"],
