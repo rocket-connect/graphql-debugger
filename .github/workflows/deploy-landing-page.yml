@@ -1,9 +1,9 @@
-name: preview.graphql-debugger.com
+name: graphql-debugger.com
 
 on:
   push:
     branches:
-      - feat/next-docs
+      - main
 
 jobs:
   deploy-docs:
@@ -20,10 +20,10 @@ jobs:
           script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
-            cd ./preview/graphql-debugger
+            cd ./graphql-debugger
             git reset --hard
-            git pull origin feat/next-docs
+            git pull origin main
             pnpm i
             pnpm build
             cd ./docs/
-            pm2 restart preview
+            pm2 restart graphql-debugger.com

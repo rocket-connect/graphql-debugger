@@ -20,7 +20,7 @@ export default {
       <meta name="twitter:description" content="Debug your GraphQL server." />
       <meta
         name="twitter:image"
-        content="https://preview.graphql-debugger.com/img/banner.png"
+        content="https://graphql-debugger.com/img/banner.png"
       />
 
       <meta property="og:type" content="article" />
@@ -29,12 +29,12 @@ export default {
       <meta property="og:url" content="https://graphql-debugger.com/" />
       <meta
         property="og:image"
-        content="https://preview.graphql-debugger.com/img/banner.png"
+        content="https://graphql-debugger.com/img/banner.png"
       />
 
       <link
         rel="shortcut icon"
-        href="https://preview.graphql-debugger.com/favicon.svg"
+        href="https://graphql-debugger.com/favicon.svg"
         type="image/svg"
       />
     </>
