@@ -16,10 +16,10 @@ import {
 
 interface DebuggerYogaOptions<TServerContext, TUserContext>
   extends YogaServerOptions<TServerContext, TUserContext> {
-  debugger?: Omit<TraceSchemaInput, "schema"> & {
+  debugger?: Omit<TraceSchemaInput, "schema" | "adapter"> & {
     shouldDisable?: boolean;
     otelContextOptions?: GraphQLDebuggerContextOptions;
-    traceSchemaOptions?: Omit<TraceSchemaInput, "schema">;
+    traceSchemaOptions?: Omit<TraceSchemaInput, "schema" | "adapter">;
     adapter?: BaseAdapter;
   };
   schema: GraphQLSchema;
@@ -29,7 +29,7 @@ interface DebuggerYogaOptions<TServerContext, TUserContext>
 export function createYoga<
   TServerContext extends Record<string, any> = {},
   TUserContext extends Record<string, any> & {
-    GraphQLOTELContext?: GraphQLDebuggerContext;
+    GraphQLDebuggerContext?: GraphQLDebuggerContext;
   } = {},
 >(
   options: DebuggerYogaOptions<TServerContext, TUserContext>,
@@ -41,7 +41,7 @@ export function createYoga<
   if (!options.context) {
     const contextOverride = async (): Promise<TUserContext> => {
       return {
-        GraphQLOTELContext: new GraphQLDebuggerContext(
+        GraphQLDebuggerContext: new GraphQLDebuggerContext(
           options?.debugger?.otelContextOptions,
         ),
       } as unknown as TUserContext;
@@ -52,10 +52,10 @@ export function createYoga<
 
   if (typeof options.context === "function") {
     const originalContextFunction = options.context;
-    options.context = async (...args) => {
+    options.context = async function newContextFunction(...args) {
       const contextObject = await originalContextFunction(...args);
 
-      contextObject.GraphQLOTELContext = new GraphQLDebuggerContext(
+      contextObject.GraphQLDebuggerContext = new GraphQLDebuggerContext(
         options?.debugger?.otelContextOptions,
       );
 
