@@ -68,34 +68,4 @@ const tracedSchema = traceSchema({
 
 ### GraphQL Yoga
 
-```ts
-import { ProxyAdapter } from "@graphql-debugger/adapter-proxy";
-import {
-  GraphQLDebuggerContext,
-  traceSchema,
-} from "@graphql-debugger/trace-schema";
-
-import { makeExecutableSchema } from "@graphql-tools/schema";
-import { createYoga } from "graphql-yoga";
-
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers,
-});
-
-const adapter = new ProxyAdapter();
-
-const tracedSchema = traceSchema({
-  schema,
-  adapter,
-});
-
-const yoga = createYoga({
-  schema: tracedSchema,
-  context: (req) => {
-    return {
-      GraphQLDebuggerContext: new GraphQLDebuggerContext(),
-    };
-  },
-});
-```
+GraphQL Debugger is compatible with [GraphQL Yoga](/docs/plugins/yoga).
