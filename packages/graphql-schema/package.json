@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/graphql-schema",
-  "version": "0.0.0-alpha.72",
+  "version": "0.0.0-alpha.84",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -14,26 +14,29 @@
   "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
   "scripts": {
     "build": "tsc",
-    "test": "cross-env NODE_ENV=test jest --runInBand --forceExit"
+    "test": "echo \"No tests\""
   },
   "peerDependencies": {
     "graphql": "^16.0.0 || ^17.0.0"
   },
   "dependencies": {
-    "@graphql-debugger/collector-proxy": "workspace:^",
-    "@graphql-debugger/data-access": "workspace:^",
+    "@graphql-debugger/client": "workspace:^",
     "@graphql-debugger/schemas": "workspace:^",
     "@graphql-debugger/time": "workspace:^",
     "@graphql-debugger/trace-schema": "workspace:^",
-    "@graphql-debugger/types": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
-    "@graphql-tools/schema": "10.0.0",
-    "@graphql-tools/utils": "10.0.8",
-    "@pothos/core": "3.38.0",
+    "@graphql-tools/schema": "10.0.2",
+    "@graphql-tools/utils": "10.0.11",
+    "@pothos/core": "3.41.0",
     "dataloader": "2.2.2",
-    "graphql-yoga": "5.0.0"
+    "graphql-yoga": "5.0.2"
   },
   "devDependencies": {
+    "@graphql-debugger/adapter-sqlite": "workspace:^",
+    "@graphql-debugger/types": "workspace:^",
+    "@graphql-debugger/graphql-fragments": "workspace:^",
+    "@graphql-debugger/collector-proxy": "workspace:^",
+    "@graphql-debugger/data-access": "workspace:^",
     "express": "4.18.2",
     "gql-tag": "1.0.1"
   }

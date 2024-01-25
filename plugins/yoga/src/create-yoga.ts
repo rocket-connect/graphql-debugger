@@ -1,6 +1,8 @@
+import { BaseAdapter } from "@graphql-debugger/adapter-base";
+import { ProxyAdapter } from "@graphql-debugger/adapter-proxy";
 import {
-  GraphQLOTELContext,
-  GraphQLOTELContextOptions,
+  GraphQLDebuggerContext,
+  GraphQLDebuggerContextOptions,
   TraceSchemaInput,
   traceSchema,
 } from "@graphql-debugger/trace-schema";
@@ -16,8 +18,9 @@ interface DebuggerYogaOptions<TServerContext, TUserContext>
   extends YogaServerOptions<TServerContext, TUserContext> {
   debugger?: Omit<TraceSchemaInput, "schema"> & {
     shouldDisable?: boolean;
-    otelContextOptions?: GraphQLOTELContextOptions;
+    otelContextOptions?: GraphQLDebuggerContextOptions;
     traceSchemaOptions?: Omit<TraceSchemaInput, "schema">;
+    adapter?: BaseAdapter;
   };
   schema: GraphQLSchema;
   context?: (req: any) => Promise<TUserContext>;
@@ -26,19 +29,19 @@ interface DebuggerYogaOptions<TServerContext, TUserContext>
 export function createYoga<
   TServerContext extends Record<string, any> = {},
   TUserContext extends Record<string, any> & {
-    GraphQLOTELContext?: GraphQLOTELContext;
+    GraphQLOTELContext?: GraphQLDebuggerContext;
   } = {},
 >(
   options: DebuggerYogaOptions<TServerContext, TUserContext>,
 ): YogaServerInstance<TServerContext, TUserContext> {
   if (!options.schema) {
-    throw new Error("Schema is required");
+    throw new Error("Schema is required when using GraphQL Debugger");
   }
 
   if (!options.context) {
     const contextOverride = async (): Promise<TUserContext> => {
       return {
-        GraphQLOTELContext: new GraphQLOTELContext(
+        GraphQLOTELContext: new GraphQLDebuggerContext(
           options?.debugger?.otelContextOptions,
         ),
       } as unknown as TUserContext;
@@ -52,7 +55,7 @@ export function createYoga<
     options.context = async (...args) => {
       const contextObject = await originalContextFunction(...args);
 
-      contextObject.GraphQLOTELContext = new GraphQLOTELContext(
+      contextObject.GraphQLOTELContext = new GraphQLDebuggerContext(
         options?.debugger?.otelContextOptions,
       );
 
@@ -60,10 +63,16 @@ export function createYoga<
     };
   }
 
+  let adapter = options?.debugger?.adapter;
+  if (!adapter) {
+    adapter = new ProxyAdapter();
+  }
+
   const schema = options.debugger?.shouldDisable
     ? options.schema
     : traceSchema({
         schema: options.schema,
+        adapter: adapter as BaseAdapter,
         ...options.debugger?.traceSchemaOptions,
       });
 

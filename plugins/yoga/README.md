@@ -8,38 +8,6 @@
 
 GraphQL Yoga integration for GraphQL Debugger.
 
-## Installation
-
-```bash
-npm install @graphql-debugger/graphql-yoga
-```
-
-## Usage
-
-### Running GraphQL Debugger
-
-Run in a seperate terminal window:
-
-```sh
-npx graphql-debugger
-```
-
-### Tracing GraphQL Yoga
-
-```ts
-import { schema } from "@graphql-tools/schema";
-import { createYoga } from "@graphql-debugger/graphql-yoga";
-
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers,
-});
-
-const yoga = createYoga({
-  schema,
-});
-```
-
 ## License
 
 MIT - Rocket Connect - https://github.com/rocket-connect

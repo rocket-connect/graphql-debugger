@@ -1,0 +1,31 @@
+{
+  "name": "@graphql-debugger/adapter-sqlite",
+  "version": "0.0.0-alpha.84",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rocket-connect/graphql-debugger.git"
+  },
+  "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/index.js",
+    "test": "jest --runInBand --forceExit"
+  },
+  "dependencies": {
+    "@graphql-debugger/adapter-base": "workspace:^",
+    "@graphql-debugger/data-access": "workspace:^",
+    "@graphql-debugger/schemas": "workspace:^",
+    "@graphql-debugger/time": "workspace:^",
+    "@graphql-debugger/utils": "workspace:^"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "7.6.0",
+    "@graphql-debugger/types": "workspace:^"
+  }
+}

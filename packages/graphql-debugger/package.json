@@ -1,6 +1,6 @@
 {
   "name": "graphql-debugger",
-  "version": "0.0.0-alpha.72",
+  "version": "0.0.0-alpha.84",
   "bin": {
     "graphql-debugger": "./build/index.js"
   },
@@ -23,6 +23,6 @@
     "@graphql-debugger/backend": "workspace:^",
     "@graphql-debugger/collector-proxy": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
-    "axios": "1.6.0"
+    "axios": "1.6.2"
   }
 }

@@ -12,7 +12,7 @@ import { isGraphQLInfoRoot, safeJson } from "@graphql-debugger/utils";
 import { MapperKind, getDirective, mapSchema } from "@graphql-tools/utils";
 import { GraphQLSchema, defaultFieldResolver } from "graphql";
 
-import { GraphQLOTELContext } from "./context";
+import { GraphQLDebuggerContext } from "./context";
 
 export function traceDirective(directiveName = "trace") {
   return {
@@ -36,10 +36,10 @@ export function traceDirective(directiveName = "trace") {
             ...fieldConfig,
             resolve: async function (source, args, context, info) {
               const internalCtx =
-                context.GraphQLOTELContext as GraphQLOTELContext;
+                context.GraphQLDebuggerContext as GraphQLDebuggerContext;
 
               if (!internalCtx) {
-                throw new Error("contextValue.GraphQLOTELContext missing");
+                throw new Error("contextValue.GraphQLDebuggerContext missing");
               }
 
               if (!internalCtx.schema) {
@@ -57,7 +57,7 @@ export function traceDirective(directiveName = "trace") {
 
               const _context = {
                 ...context,
-                GraphQLOTELContext: undefined,
+                GraphQLDebuggerContext: undefined,
               };
 
               if (internalCtx?.excludeKeysFromContext?.length) {

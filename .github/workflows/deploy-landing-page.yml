@@ -1,4 +1,4 @@
-name: Deploy Landing Page
+name: graphql-debugger.com
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy-playground:
+  deploy-docs:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,6 +24,6 @@ jobs:
             git reset --hard
             git pull origin main
             pnpm i
+            cd ./docs/
             pnpm build
-            cd ./apps/landing-page/server
             pm2 restart graphql-debugger.com

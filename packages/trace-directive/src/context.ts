@@ -10,7 +10,7 @@ import { hashSchema } from "@graphql-debugger/utils";
 
 import { GraphQLSchema } from "graphql";
 
-export interface GraphQLOTELContextOptions {
+export interface GraphQLDebuggerContextOptions {
   /* If true will add the context in the span attributes */
   includeContext?: boolean;
   /* If true will add the variables in the span attributes */
@@ -21,7 +21,7 @@ export interface GraphQLOTELContextOptions {
   excludeKeysFromContext?: string[];
 }
 
-export class GraphQLOTELContext {
+export class GraphQLDebuggerContext {
   private context?: Context;
   public tracer: Tracer;
   private rootSpan?: Span;
@@ -32,7 +32,7 @@ export class GraphQLOTELContext {
   public schema?: GraphQLSchema;
   public schemaHash?: string;
 
-  constructor(options: GraphQLOTELContextOptions = {}) {
+  constructor(options: GraphQLDebuggerContextOptions = {}) {
     this.includeContext = options.includeContext;
     this.includeVariables = options.includeVariables;
     this.excludeKeysFromContext = options.excludeKeysFromContext;
@@ -69,10 +69,10 @@ export class GraphQLOTELContext {
     graphqlContext: any;
   }): unknown {
     const internalCtx = input.graphqlContext
-      .GraphQLOTELContext as GraphQLOTELContext;
+      .GraphQLDebuggerContext as GraphQLDebuggerContext;
 
     if (!internalCtx) {
-      throw new Error("contextValue.GraphQLOTELContext missing");
+      throw new Error("contextValue.GraphQLDebuggerContext missing");
     }
 
     const parentContext = internalCtx ? internalCtx.getContext() : undefined;

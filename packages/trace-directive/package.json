@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/trace-directive",
-  "version": "0.0.0-alpha.72",
+  "version": "0.0.0-alpha.84",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -23,7 +23,7 @@
     "@graphql-debugger/opentelemetry": "workspace:^",
     "@graphql-debugger/types": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
-    "@graphql-tools/schema": "10.0.0",
-    "@graphql-tools/utils": "10.0.8"
+    "@graphql-tools/schema": "10.0.2",
+    "@graphql-tools/utils": "10.0.11"
   }
 }

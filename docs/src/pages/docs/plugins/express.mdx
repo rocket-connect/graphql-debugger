@@ -1,0 +1,23 @@
+# @graphql-debugger/plugin-express
+
+GraphQL Debugger supports [Express.js](https://expressjs.com/) framework out of the box. This plugin provides a middleware that can be used to intercept GraphQL requests and send them to the GraphQL Debugger.
+
+## Installation
+
+```bash
+npm install @graphql-debugger/plugin-express
+```
+
+## Usage
+
+```ts
+import { graphqlDebugger } from "@graphql-debugger/plugin-express";
+
+import express, { Express } from "express";
+import { yoga } from "graphql-yoga";
+
+export const app = express();
+app.use(express.json());
+app.use(graphqlDebugger()); // <--- Add plugin
+app.use("/graphql", yoga);
+```

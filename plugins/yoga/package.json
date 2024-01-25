@@ -21,6 +21,8 @@
   },
   "dependencies": {
     "@graphql-debugger/trace-schema": "workspace:^",
+    "@graphql-debugger/adapter-base": "workspace:^",
+    "@graphql-debugger/adapter-proxy": "workspace:^",
     "@graphql-tools/schema": "10.0.0",
     "@graphql-tools/utils": "10.0.8",
     "graphql-yoga": "5.0.0"

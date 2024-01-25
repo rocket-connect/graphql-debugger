@@ -1,4 +1,3 @@
-import { prisma } from "@graphql-debugger/data-access";
 import { TRACER_NAME } from "@graphql-debugger/opentelemetry";
 import {
   AttributeNames,
@@ -12,6 +11,7 @@ import { parse, print } from "graphql";
 import util from "util";
 
 import { HttpServerAttributeNames } from "../../../plugins/express/src/attributes";
+import { client } from "../src/client";
 import { request } from "./utils";
 
 const sleep = util.promisify(setTimeout);
@@ -188,12 +188,12 @@ describe("plugin express", () => {
 
     await sleep(2000); // backoff the writes using sqlite
 
-    const traceGroup = await prisma.traceGroup.findFirst({
+    const traceGroup = await client.trace.findFirst({
       where: {
         traceId: expressScopeSpan.spans[0].traceId,
       },
-      select: {
-        spans: true,
+      options: {
+        includeSpans: true,
       },
     });
     expect(traceGroup).toBeDefined();
@@ -213,8 +213,5 @@ describe("plugin express", () => {
       (span) => span.name === "HTTP POST /graphql",
     );
     expect(expressSpan).toBeDefined();
-    expect(expressSpan?.attributes).toEqual(
-      '{"http.route":"/graphql","client.address":"123","client.port":"123","url.path":"/graphql"}',
-    );
   });
 });

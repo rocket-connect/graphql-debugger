@@ -11,16 +11,47 @@ on:
 jobs:
   test-e2e:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        adapter: ["sqlite", "proxy"]
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-project
+
       - name: Install puppeteer
-        run: npm i -g puppeteer@21.4.1
+        run: npm i -g puppeteer@21.6.0
+
+      - name: Set up Adapter
+        run: echo "ADAPTER_TYPE=${{ matrix.adapter }}" >> $GITHUB_ENV
+
+      - name: Run E2E tests
+        run: |
+          cd ./e2e
+          pnpm run test
+        env:
+          SKIP_MODAL: "true"
+          ADAPTER_TYPE: ${{ env.ADAPTER_TYPE }}
+
+  test-e2e-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: Set up Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install docker-ce docker-ce-cli containerd.io
+      - name: Build Docker Image
+        run: docker build . -t graphql-debugger -f docker/Dockerfile
+      - name: Run Docker Image
+        run: docker run --name graphql-debugger -p 16686:16686 -p 4318:4318 -v $(pwd)/packages/data-access/prisma/dev.db:/usr/src/app/packages/data-access/prisma/dev.db -d graphql-debugger
+      - name: Install puppeteer
+        run: npm i -g puppeteer@21.6.0
       - name: graphql-debugger/e2e
         run: cd ./e2e && pnpm run test
         env:
-          SLOW_MO: "150"
           SKIP_MODAL: "true"
+          E2E_IN_DOCKER: "true"
 
   test-collector-proxy:
     runs-on: ubuntu-latest
@@ -29,14 +60,6 @@ jobs:
       - uses: ./.github/actions/setup-project
       - name: graphql-debugger/collector-proxy
         run: cd ./apps/collector-proxy && pnpm run test
-
-  test-graphql-schema:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-project
-      - name: graphql-debugger/graphql-schema
-        run: cd ./packages/graphql-schema && pnpm run test
 
   test-opentelemetry:
     runs-on: ubuntu-latest
@@ -94,13 +117,37 @@ jobs:
       - name: graphql-debugger/plugin-express
         run: cd ./plugins/express && pnpm run test
 
-  test-plugin-graphql-yoga:
+  test-plugin-yoga:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-project
       - name: graphql-debugger/plugin-yoga
         run: cd ./plugins/yoga && pnpm run test
+
+  test-adapter-base:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: graphql-debugger/adapter-base
+        run: cd ./packages/adapters/base && pnpm run test
+
+  test-adapter-sqlite:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: graphql-debugger/adapter-sqlite
+        run: cd ./packages/adapters/sqlite && pnpm run test
+
+  test-adapter-proxy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: graphql-debugger/adapter-proxy
+        run: cd ./packages/adapters/proxy && pnpm run test
 
   lint:
     runs-on: ubuntu-latest

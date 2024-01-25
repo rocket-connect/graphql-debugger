@@ -10,10 +10,18 @@ export const TraceObject: ObjectRef<Trace> = builder.objectType("Trace", {
   fields: (t) => ({
     id: t.exposeString("id"),
     traceId: t.exposeString("traceId"),
+    schemaId: t.exposeString("schemaId", {
+      nullable: true,
+    }),
     rootSpan: t.field({
       type: SpanObject,
       nullable: true,
       resolve: async (root, args, context) => {
+        // TODO: should not need to do this
+        if (root.rootSpan) {
+          return root.rootSpan;
+        }
+
         const span = await context.loaders.rootSpanLoader.load(root.id);
 
         return span;
@@ -40,6 +48,11 @@ export const TraceObject: ObjectRef<Trace> = builder.objectType("Trace", {
     spans: t.field({
       type: [SpanObject],
       resolve: async (root, args, context) => {
+        // TODO: should not need to do this
+        if (root.spans?.length) {
+          return root.spans;
+        }
+
         const spans = await context.loaders.spanLoader.load(root.id);
 
         return spans.reduce<Span[]>((list, span) => {

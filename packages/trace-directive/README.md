@@ -84,7 +84,7 @@ index.ts:
 
 ```ts
 import {
-  GraphQLOTELContext,
+  GraphQLDebuggerContext,
   setupOtel,
   traceDirective,
 } from "@graphql-debugger/trace-directive";
@@ -160,7 +160,7 @@ const server = createServer({
   schema,
   port: 5000,
   context: {
-    GraphQLOTELContext: new GraphQLOTELContext(),
+    GraphQLDebuggerContext: new GraphQLDebuggerContext(),
   },
 });
 
@@ -172,15 +172,15 @@ server
 
 ### Context Value
 
-Inject the `GraphQLOTELContext` instance inside your GraphQL request context.
+Inject the `GraphQLDebuggerContext` instance inside your GraphQL request context.
 
 ```js
-import { GraphQLOTELContext } from "@graphql-debugger/trace-directive";
+import { GraphQLDebuggerContext } from "@graphql-debugger/trace-directive";
 
 const myServer = new GraphQLServerFooBar({
   schema,
   context: {
-    GraphQLOTELContext: new GraphQLOTELContext(),
+    GraphQLDebuggerContext: new GraphQLDebuggerContext(),
   },
 });
 ```

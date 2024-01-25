@@ -1,0 +1,26 @@
+import Image from "next/image";
+
+# GraphQL Debugger UI
+
+The UI is a React application that visualizes the traces stored in the database. It contains a dashboard that shows the traces and spans, and a trace viewer that shows the trace details. It communicates with [The Backend](/docs/components/backend) via [The GraphQL Schema](/docs/packages/graphql-schema) using the [The Client](/docs/packages/client).
+
+## Getting Started
+
+The best way to get started with the UI is to run the [The CLI](/docs/packages/cli) and follow the instructions. The CLI will guide you through the process of setting up the UI and the backend.
+
+```bash
+npx graphql-debugger
+```
+
+Then visiting [http://localhost:16686](http://localhost:16686) will show the UI.
+
+<br />
+
+<Image
+  src="/img/screenshot.png"
+  alt="GraphQL Debugger Screenshot"
+  className="mx-auto"
+  width={800}
+  height={800}
+  priority
+/>

@@ -11,7 +11,8 @@ export const SpanSchema = z.object({
   startTimeUnixNano: z.string(),
   endTimeUnixNano: z.string(),
   isForeign: z.boolean(),
-  attributes: z.string().optional(),
+  attributes: z.string().optional().nullable(),
+  traceGroupId: z.string().optional().nullable(),
   errorMessage: z.string().optional().nullable(),
   errorStack: z.string().optional().nullable(),
   graphqlDocument: z.string().optional().nullable(),
@@ -20,6 +21,8 @@ export const SpanSchema = z.object({
   graphqlContext: z.string().optional().nullable(),
   graphqlOperationName: z.string().optional().nullable(),
   graphqlOperationType: z.string().optional().nullable(),
+  isGraphQLRootSpan: z.boolean().optional().nullable(),
+  graphqlSchemaHash: z.string().optional().nullable(),
   createdAt: z.string(),
   updatedAt: z.string(),
 });

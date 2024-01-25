@@ -1,0 +1,40 @@
+{
+  "name": "@graphql-debugger/adapter-proxy",
+  "version": "0.0.0-alpha.84",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rocket-connect/graphql-debugger.git"
+  },
+  "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/index.js",
+    "test": "jest --runInBand --forceExit"
+  },
+  "peerDependencies": {
+    "graphql": "^16.0.0 || ^17.0.0"
+  },
+  "dependencies": {
+    "@graphql-debugger/adapter-base": "workspace:^",
+    "@graphql-debugger/schemas": "workspace:^",
+    "@graphql-debugger/graphql-fragments": "workspace:^",
+    "axios": "1.6.2"
+  },
+  "devDependencies": {
+    "@graphql-debugger/adapter-sqlite": "workspace:^",
+    "@graphql-debugger/client": "workspace:^",
+    "@graphql-debugger/utils": "workspace:^",
+    "@graphql-debugger/collector-proxy": "workspace:^",
+    "@graphql-debugger/graphql-schema": "workspace:^",
+    "@graphql-debugger/types": "workspace:^",
+    "@graphql-tools/schema": "10.0.2",
+    "cors": "2.8.5",
+    "express": "4.18.2"
+  }
+}

@@ -1,15 +1,20 @@
-import { clearDB } from "@graphql-debugger/data-access";
-
+import { client } from "../../src/client";
 import * as backend from "./backend";
 
+const shouldSpawnBackend = process.env.E2E_IN_DOCKER !== "true";
+
 beforeAll(async () => {
-  await backend.listen();
+  if (shouldSpawnBackend) {
+    await backend.listen();
+  }
 });
 
 beforeEach(async () => {
-  await clearDB();
+  await client.adapter.clearDB();
 });
 
 afterAll(async () => {
-  await backend.close();
+  if (shouldSpawnBackend) {
+    await backend.close();
+  }
 });
