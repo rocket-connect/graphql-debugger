@@ -52,7 +52,6 @@ Once debugger is running you can use our open source packages to connect your Gr
 
 ```ts
 import { ProxyAdapter } from "@graphql-debugger/adapter-proxy";
-import { DebuggerClient } from "@graphql-debugger/client";
 import { traceSchema } from "@graphql-debugger/trace-schema";
 
 import { GraphQLSchema } from "graphql";
@@ -61,13 +60,9 @@ const schema: GraphQLSchema = __YOUR_SCHEMA__;
 
 const adapter = new ProxyAdapter();
 
-const client = new DebuggerClient({
-  adapter,
-});
-
 const tracedSchema = traceSchema({
   schema,
-  client,
+  adapter,
 });
 ```
 
@@ -75,7 +70,6 @@ const tracedSchema = traceSchema({
 
 ```ts
 import { ProxyAdapter } from "@graphql-debugger/adapter-proxy";
-import { DebuggerClient } from "@graphql-debugger/client";
 import {
   GraphQLDebuggerContext,
   traceSchema,
@@ -91,13 +85,9 @@ const schema = makeExecutableSchema({
 
 const adapter = new ProxyAdapter();
 
-const client = new DebuggerClient({
-  adapter,
-});
-
 const tracedSchema = traceSchema({
   schema,
-  client,
+  adapter,
 });
 
 const yoga = createYoga({

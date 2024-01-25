@@ -89,7 +89,6 @@ Using Trace Schema you can automatically add the Trace Directive to your schema 
 
 ```ts
 import { traceSchema } from '@graphql-debugger/trace-schema';
-import { DebuggerClient } from '@graphql-debugger/client';
 import { makeExecutableSchema } from 'graphql-tools';
 
 const typeDefs = `
@@ -116,7 +115,7 @@ const schema = makeExecutableSchema({
 // Schema with tracing applied to all fields
 const tracedSchema = traceSchema({
     schema,
-    client: DebuggerClient // <-- See Client and Adapters
+    adapter: // <-- See Adapters
 });
 ````
 
@@ -207,7 +206,7 @@ const tracedSchema = traceSchema({
 
 // or
 const tracedSchema = traceSchema({
-schema,
+  schema,
 });
 
 ```

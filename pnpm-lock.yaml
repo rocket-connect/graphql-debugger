@@ -687,9 +687,9 @@ importers:
 
   packages/trace-schema:
     dependencies:
-      '@graphql-debugger/adapter-sqlite':
+      '@graphql-debugger/adapter-base':
         specifier: workspace:^
-        version: link:../adapters/sqlite
+        version: link:../adapters/base
       '@graphql-debugger/client':
         specifier: workspace:^
         version: link:../client
@@ -699,9 +699,6 @@ importers:
       '@graphql-debugger/trace-directive':
         specifier: workspace:^
         version: link:../trace-directive
-      '@graphql-debugger/types':
-        specifier: workspace:^
-        version: link:../types
       '@graphql-debugger/utils':
         specifier: workspace:^
         version: link:../utils
@@ -714,6 +711,13 @@ importers:
       graphql:
         specifier: ^16.0.0 || ^17.0.0
         version: 16.0.0
+    devDependencies:
+      '@graphql-debugger/adapter-sqlite':
+        specifier: workspace:^
+        version: link:../adapters/sqlite
+      '@graphql-debugger/types':
+        specifier: workspace:^
+        version: link:../types
 
   packages/types:
     dependencies:

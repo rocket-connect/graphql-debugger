@@ -1,3 +1,4 @@
+import { BaseAdapter } from "@graphql-debugger/adapter-base";
 import { DebuggerClient } from "@graphql-debugger/client";
 import { SetupOtelInput, setupOtel } from "@graphql-debugger/opentelemetry";
 import { traceDirective } from "@graphql-debugger/trace-directive";
@@ -19,7 +20,7 @@ import { SchemaExporer } from "./schema-exporter";
 
 export interface TraceSchemaInput {
   schema: GraphQLSchema;
-  client: DebuggerClient;
+  adapter: BaseAdapter;
   exporterConfig?: SetupOtelInput["exporterConfig"];
   instrumentations?: SetupOtelInput["instrumentations"];
   shouldExportSchema?: boolean;
@@ -28,7 +29,7 @@ export interface TraceSchemaInput {
 export function traceSchema({
   schema,
   exporterConfig,
-  client,
+  adapter,
   instrumentations,
   shouldExportSchema = true,
 }: TraceSchemaInput): GraphQLSchema {
@@ -78,6 +79,9 @@ export function traceSchema({
   );
 
   if (shouldExportSchema) {
+    const client = new DebuggerClient({
+      adapter,
+    });
     const schemaExporer = new SchemaExporer({
       schema: tracedSchema,
       client,
