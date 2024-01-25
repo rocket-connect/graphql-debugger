@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "next": "14.0.4",
+    "nextjs-google-analytics": "^2.3.3",
     "nextra": "3.0.0-alpha.10",
     "react": "18.2.0",
     "react-dom": "18.2.0"

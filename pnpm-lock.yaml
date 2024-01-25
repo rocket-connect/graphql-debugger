@@ -320,6 +320,9 @@ importers:
       next:
         specifier: 14.0.4
         version: 14.0.4(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)
+      nextjs-google-analytics:
+        specifier: ^2.3.3
+        version: 2.3.3(next@14.0.4)(react@18.2.0)
       nextra:
         specifier: 3.0.0-alpha.10
         version: 3.0.0-alpha.10(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
@@ -10214,6 +10217,18 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
+
+  /nextjs-google-analytics@2.3.3(next@14.0.4)(react@18.2.0):
+    resolution: {integrity: sha512-Y6sI6A7wt5dji8hYBnVkOh9LTyImSLFZXx3FpyQgVW7W4b4qEFHjH2u3fhDJsrRZeLlUGM8/RuHD/mhHc2Axfg==}
+    peerDependencies:
+      next: '>=11.0.0'
+      react: '>=17.0.0'
+    dependencies:
+      next: 14.0.4(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+    optionalDependencies:
+      fsevents: 2.3.3
+    dev: false
 
   /nextra-theme-docs@3.0.0-alpha.12(next@14.0.4)(nextra@3.0.0-alpha.10)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-ProciwBXpe8vmQ3QNCnMCWs8v+S3BpGkCJ7XSUlcwHglC5hwD67vaoNfZDkh4fbNDH5ZTWcjDs6Sk2uixuvLbA==}
