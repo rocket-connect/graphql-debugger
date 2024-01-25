@@ -321,7 +321,7 @@ importers:
         specifier: 14.0.4
         version: 14.0.4(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)
       nextjs-google-analytics:
-        specifier: ^2.3.3
+        specifier: 2.3.3
         version: 2.3.3(next@14.0.4)(react@18.2.0)
       nextra:
         specifier: 3.0.0-alpha.10
