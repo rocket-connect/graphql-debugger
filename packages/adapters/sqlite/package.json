@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/adapter-sqlite",
-  "version": "0.0.0-alpha.85",
+  "version": "0.0.0-alpha.86",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
