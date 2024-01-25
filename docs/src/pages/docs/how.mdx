@@ -89,7 +89,6 @@ Using Trace Schema you can automatically add the Trace Directive to your schema 
 
 ```ts
 import { traceSchema } from '@graphql-debugger/trace-schema';
-import { DebuggerClient } from '@graphql-debugger/client';
 import { makeExecutableSchema } from 'graphql-tools';
 
 const typeDefs = `
@@ -116,7 +115,7 @@ const schema = makeExecutableSchema({
 // Schema with tracing applied to all fields
 const tracedSchema = traceSchema({
     schema,
-    client: DebuggerClient // <-- See Client and Adapters
+    adapter: // <-- See Adapters
 });
 ````
 
@@ -167,6 +166,7 @@ When using Trace Schema, in the background, the schema will be hashed and export
 ```ts
 const tracedSchema = traceSchema({
   schema,
+  adapter,
   shouldExportSchema: false, // <-- Disable schema export
 });
 ```
@@ -180,6 +180,7 @@ Alongside the Schema Exporter mechanism, Trace Schema will also setup the nessar
 ```ts
 const tracedSchema = traceSchema({
     schema,
+    adapter,
     exporterConfig: {
         url: 'https://trace-api.newrelic.com/trace/v1',
     }
@@ -190,6 +191,7 @@ const tracedSchema = traceSchema({
 ```ts
 const tracedSchema = traceSchema({
     schema,
+    adapter,
     exporterConfig: {
         url: 'https://trace.agent.datadoghq.com/v0.4/traces',
     }
@@ -200,6 +202,7 @@ const tracedSchema = traceSchema({
 ```ts
 const tracedSchema = traceSchema({
     schema,
+    adapter,
     exporterConfig: {
         url: 'http://localhost:4318/v1/traces',
     }
@@ -207,7 +210,8 @@ const tracedSchema = traceSchema({
 
 // or
 const tracedSchema = traceSchema({
-schema,
+  schema,
+  adapter,
 });
 
 ```

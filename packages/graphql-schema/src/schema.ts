@@ -25,7 +25,7 @@ const build = builder.toSchema();
 export function createSchema({ client }: { client: DebuggerClient }) {
   const schema = TRACE_SCHEMA
     ? traceSchema({
-        client,
+        adapter: client.adapter,
         schema: build,
         ...(TRACE_PRISMA && {
           instrumentations: [tracing],

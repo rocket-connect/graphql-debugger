@@ -21,12 +21,15 @@
   },
   "dependencies": {
     "@graphql-debugger/client": "workspace:^",
-    "@graphql-debugger/adapter-sqlite": "workspace:^",
+    "@graphql-debugger/adapter-base": "workspace:^",
     "@graphql-debugger/opentelemetry": "workspace:^",
     "@graphql-debugger/trace-directive": "workspace:^",
-    "@graphql-debugger/types": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
     "@graphql-tools/schema": "10.0.2",
     "@graphql-tools/utils": "10.0.11"
+  },
+  "devDependencies": {
+    "@graphql-debugger/adapter-sqlite": "workspace:^",
+    "@graphql-debugger/types": "workspace:^"
   }
 }
