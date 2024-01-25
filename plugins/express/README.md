@@ -10,19 +10,6 @@ Express middleware for GraphQL Debugger.
 
 The express middleware will add a span at the root of the trace for each http request to your GraphQL server.
 
-```ts
-import { graphqlDebugger } from "@graphql-debugger/plugin-express";
-
-import express, { Express } from "express";
-import { yoga } from "graphql-yoga";
-import path from "path";
-
-export const app: Express = express();
-app.use(express.json());
-app.use(graphqlDebugger()); // <--- Add plugin
-app.use("/graphql", yoga);
-```
-
 ## License
 
 MIT - Rocket Connect - https://github.com/rocket-connect
