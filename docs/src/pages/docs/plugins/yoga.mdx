@@ -14,8 +14,8 @@ The Plugin is a wrapper around [GraphQL Yoga](https://github.com/dotansimha/grap
 
 ```diff
 import { makeExecutableSchema } from "@graphql-tools/schema";
-- import { createYoga } from "graphql-yoga"; 
-+ import { createYoga } from "@graphql-debugger/graphql-yoga"; 
+- import { createYoga } from "graphql-yoga";
++ import { createYoga } from "@graphql-debugger/graphql-yoga";
 
 const schema = makeExecutableSchema({
   typeDefs,
@@ -27,14 +27,13 @@ const yoga = createYoga({
 });
 ```
 
-
 ## Options
 
 The options are passed thru to Yoga, so you can use all the options from there. In addition you can pass the `debugger` entry to configure GraphQL Debugger.
 
 ```ts
 import { makeExecutableSchema } from "@graphql-tools/schema";
-import { createYoga } from "@graphql-debugger/graphql-yoga"; 
+import { createYoga } from "@graphql-debugger/graphql-yoga";
 
 const schema = makeExecutableSchema({
   typeDefs,
@@ -51,9 +50,9 @@ const yoga = createYoga({
 });
 ```
 
-import { Callout } from 'nextra/components'
- 
-<Callout emoji="⚠️">
-    If you do not pass thru an adapter, the default Proxy Adapter will be used, see the [Adapters Section](/docs/components/adapters) for more information.
-</Callout>
+import { Callout } from "nextra/components";
 
+<Callout emoji="⚠️">
+  If you do not pass thru an adapter, the default Proxy Adapter will be used,
+  see the [Adapters Section](/docs/components/adapters) for more information.
+</Callout>;
