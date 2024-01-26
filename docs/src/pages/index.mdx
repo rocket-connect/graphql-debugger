@@ -1,7 +1,96 @@
-import { Callout } from 'nextra/components'
- 
-<Callout emoji="🏗️">
- We are building our new website, click [here to vist the docs](/docs)
-</Callout
+import Image from "next/image";
 
->
+import { Icons } from "../components/icons";
+
+<div className="text-center flex items-center justify-center font-extrabold md:text-5xl mt-8">
+  <Image
+    src="../img/logo.svg"
+    alt="GraphQL Debugger Logo"
+    width={120}
+    height={120}
+    priority
+  />
+</div>
+{/* wrapped with {} to mark it as javascript so mdx will not put it under a p tag */}
+{
+  <h1
+    className="text-center font-extrabold md:text-5xl mt-8 mb-20"
+    style={{
+      color: "#008844",
+    }}
+  >
+    GraphQL Debugger
+  </h1>
+}
+
+<Icons />
+
+GraphQL Debugger is a platform for debugging your GraphQL Server, it helps you identify errors, slow queries, and inconsistencies without having to rely on outdated methods like logging.
+
+GraphQL Debugger is free to use, open source, and you can find the source code on GitHub.
+You can get started by simply installing our plugin and then running our CLI to initiate the user interface.
+
+<div className="mb-20 mt-16 text-center">
+  [Get Started](/docs) · [GitHub
+  Repository](https://github.com/rocket-connect/graphql-debugger)
+</div>
+
+# Getting started
+
+### Running debugger locally
+
+To get started run the [GraphQL Debugger CLI](/docs/packages/cli). This will start the [Collector](/docs/components/collector), [Backend](/docs/components/backend) and [UI](/docs/components/ui) for you. You can install and run it with one command:
+
+```sh
+npx graphql-debugger
+
+# Collector Online, send traces to http://localhost:4318/v1/traces.
+
+# Debugger Online, visit http://localhost:16686 to view traces.
+```
+
+Now you will be able to access [GraphQL Debugger UI](/docs/components/ui) at http://localhost:16686
+
+### Connecting your server
+
+Once debugger is running you can use our open source packages to connect your GraphQL Server to GraphQL Debugger.
+
+```ts
+import { ProxyAdapter } from "@graphql-debugger/adapter-proxy";
+import { traceSchema } from "@graphql-debugger/trace-schema";
+
+import { GraphQLSchema } from "graphql";
+
+const schema: GraphQLSchema = __YOUR_SCHEMA__;
+
+const adapter = new ProxyAdapter();
+
+const tracedSchema = traceSchema({
+  schema,
+  adapter,
+});
+```
+
+## Community
+
+<p className="mt-6 flex h-6 gap-2">
+  <a
+    href="https://github.com/rocket-connect/graphql-debugger/stargazers"
+    target="_blank"
+  >
+    <img
+      alt="stars"
+      src="https://badgen.net/github/stars/rocket-connect/graphql-debugger"
+    />
+  </a>
+  <a href="https://npmjs.com/package/graphql-debugger" target="_blank">
+    <img alt="downloads" src="https://badgen.net/npm/dt/graphql-debugger" />
+  </a>
+  <a href="https://github.com/rocket-connect" target="_blank">
+    <img alt="license" src="https://badgen.net/npm/license/graphql-debugger" />
+  </a>
+</p>
+
+GraphQL Debugger is a community project and it is maintained by core members of [@rocket-connect](https://github.com/rocket-connect).
+
+Feel free to contribute by [opening an issue](https://github.com/rocket-connect/graphql-debugger/issues/new) or submitting a pull request.
