@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/data-access",
-  "version": "0.0.0-alpha.77",
+  "version": "0.0.0-alpha.86",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -19,7 +19,7 @@
     "test": "echo \"No tests\""
   },
   "dependencies": {
-    "@prisma/client": "5.7.0",
+    "@prisma/client": "5.8.1",
     "@prisma/instrumentation": "5.7.0",
     "prisma": "5.7.0"
   }

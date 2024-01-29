@@ -11,6 +11,16 @@ exports[`POST /v1/schema should throw when no body is sent 1`] = `
       "schema"
     ],
     "message": "Required"
+  },
+  {
+    "code": "invalid_type",
+    "expected": "string",
+    "received": "undefined",
+    "path": [
+      "body",
+      "hash"
+    ],
+    "message": "Required"
   }
 ]"
 `;

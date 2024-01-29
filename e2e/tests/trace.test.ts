@@ -1,6 +1,4 @@
-import { prisma } from "@graphql-debugger/data-access";
 import {
-  dbSpanToNetwork,
   makeValidJSON,
   printTraceErrors,
   sumTraceTime,
@@ -10,6 +8,7 @@ import { faker } from "@faker-js/faker";
 import { parse, print } from "graphql";
 
 import { UnixNanoTimeStamp } from "../../packages/time/build";
+import { client } from "../src/client";
 import { Schemas } from "./components/schemas";
 import { Trace } from "./components/trace";
 import { Traces } from "./components/traces";
@@ -38,17 +37,20 @@ describe("trace", () => {
       name: "should load a success trace correctly",
       shouldError: false,
       randomFieldName,
+      client,
     },
     {
       name: "should load an error trace correctly",
       shouldError: true,
       randomFieldName,
+      client,
     },
     {
       name: "should load a named query correctly",
       shouldError: false,
       randomFieldName,
       shouldNameQuery: true,
+      client,
     },
   ];
 
@@ -66,13 +68,11 @@ describe("trace", () => {
       await sleep(200);
       await page.reload();
 
-      const [trace] = await prisma.traceGroup.findMany({
+      const [trace] = await client.trace.findMany({
         where: {
           schemaId: dbSchema.id,
         },
-        include: {
-          spans: true,
-        },
+        includeSpans: true,
       });
 
       const dashboardPage = new Dashboard({ browser, page });
@@ -96,7 +96,7 @@ describe("trace", () => {
       const traceDurationUnixNano = sumTraceTime({
         id: trace.id,
         traceId: trace.traceId,
-        spans: trace.spans.map((span) => dbSpanToNetwork(span)),
+        spans: trace.spans,
       });
       const traceDurationSIUnits = traceDurationUnixNano?.toSIUnits();
 
@@ -143,7 +143,7 @@ describe("trace", () => {
             printTraceErrors({
               id: trace.id,
               traceId: trace.traceId,
-              spans: trace.spans.map((span) => dbSpanToNetwork(span)),
+              spans: trace.spans,
             }),
           ),
         );

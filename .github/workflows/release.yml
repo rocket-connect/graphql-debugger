@@ -18,7 +18,7 @@ jobs:
       - run: pnpm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
         env:
           NPM_TOKEN: ${{secrets.npm_token}}
-      - run: pnpm publish -r --filter '!@graphql-debugger/landing-page-app' --filter '!@graphql-debugger/landing-page-server' --no-git-checks
+      - run: pnpm publish -r --filter '!@graphql-debugger/docs' --filter '!@graphql-debugger/e2e' --no-git-checks
 
   docker_publish:
     name: Push Docker image to Docker Hub

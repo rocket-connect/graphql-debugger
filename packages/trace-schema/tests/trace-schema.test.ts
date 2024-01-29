@@ -1,6 +1,7 @@
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { printSchemaWithDirectives } from "@graphql-tools/utils";
 
+import { SQLiteAdapter } from "../../adapters/sqlite/build";
 import { traceSchema } from "../src";
 
 describe("tracedSchema", () => {
@@ -26,7 +27,13 @@ describe("tracedSchema", () => {
       resolvers,
     });
 
-    const tracedSchema = traceSchema({ schema, shouldExportSchema: false });
+    const adapter = new SQLiteAdapter();
+
+    const tracedSchema = traceSchema({
+      schema,
+      adapter,
+      shouldExportSchema: false,
+    });
 
     const outputTypedefs = printSchemaWithDirectives(tracedSchema);
 

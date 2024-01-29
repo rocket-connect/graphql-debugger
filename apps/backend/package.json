@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/backend",
-  "version": "0.0.0-alpha.77",
+  "version": "0.0.0-alpha.86",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -18,7 +18,8 @@
     "dev": "cross-env TRACE_SCHEMA=true TRACE_PRISMA=true TRACE_EXPRESS=true ts-node ./src/main.ts"
   },
   "dependencies": {
-    "@graphql-debugger/data-access": "workspace:^",
+    "@graphql-debugger/client": "workspace:^",
+    "@graphql-debugger/adapter-sqlite": "workspace:^",
     "@graphql-debugger/graphql-schema": "workspace:^",
     "@graphql-debugger/plugin-express": "workspace:^",
     "@graphql-debugger/ui": "workspace:^",

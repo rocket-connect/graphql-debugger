@@ -1,5 +1,4 @@
-import { clearDB } from "@graphql-debugger/data-access";
-
+import { client } from "../../src/client";
 import * as backend from "./backend";
 
 const shouldSpawnBackend = process.env.E2E_IN_DOCKER !== "true";
@@ -11,8 +10,7 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
-  // TODO - for docker we might have to add an api to clear the db as this will point to the host machine
-  await clearDB();
+  await client.adapter.clearDB();
 });
 
 afterAll(async () => {

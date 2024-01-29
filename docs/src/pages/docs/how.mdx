@@ -1,0 +1,247 @@
+import { Tabs } from "nextra/components";
+
+# How GraphQL Debugger Works ?
+
+GraphQL Debugger is a collection of integratable components when composed together provides a complete debugging solution for GraphQL. Leverging [Open Telemetry](https://opentelemetry.io/) and Open Source standards, GraphQL Debugger provides a way to instrument GraphQL servers and clients to collect and visualize the traces.
+
+## Trace Directive
+
+The Trace [GraphQL Directive](https://the-guild.dev/graphql/tools/docs/schema-directives) wraps a resolver and collects instrumentation data. It is the most flexible way to trace your GraphQL API because you can apply it to any field you want to trace, however, it requires you to manually add the directive to your schema and add some boilerplate code to enable the directive at runtime.
+
+```graphql
+directive @trace on FIELD_DEFINITION
+```
+
+You can apply the directive on a GraphQL Query or Mutation:
+
+<Tabs items={['query', 'mutation']}>
+  <Tabs.Tab>
+    <pre>
+      ```graphql
+type Query {
+        users: [User!]! @trace
+}
+```
+    </pre>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <pre>
+      ```graphql
+type Mutation {
+        createPost: Post! @trace
+}
+```
+    </pre>
+  </Tabs.Tab>  
+</Tabs>
+
+Or on a GraphQL Field:
+
+```graphql
+type User {
+  name: String!
+  email: String!
+  balance: String! @trace # <--- Trace this field because its complex
+}
+```
+
+Once applied, **and picked up by your graphql runtime**, the trace directive will essentally wrap that resolver and collect instrumentation data.
+
+<Tabs items={['Before @trace', 'With @trace']}>
+  <Tabs.Tab>
+    <pre>
+      ```ts
+async function resolver() {
+        const user = await getUserFromDb();
+        return user;
+}
+```
+    </pre>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <pre>
+      ```ts
+async function trace() { // <-- trace wrapper function is added by the directive
+        async function resolver() {
+            const user = await getUserFromDb();
+            return user;
+        }
+
+        const span = tracer.startSpan('query user');
+
+        const result = await span.trace(resolver);
+
+        span.end();
+
+        return result;
+
+}
+
+````
+    </pre>
+  </Tabs.Tab>
+</Tabs>
+
+
+## Trace Schema
+
+Using Trace Schema you can automatically add the Trace Directive to your schema and enable tracing for all fields. This is a great way to get started with tracing your GraphQL API as it requires no changes to your schema or resolvers plus it sets up Open Telemetry and Schema Exporters for you.
+
+```ts
+import { traceSchema } from '@graphql-debugger/trace-schema';
+import { makeExecutableSchema } from 'graphql-tools';
+
+const typeDefs = `
+    type Query {
+        users: [User!]!
+    }
+
+    type User {
+        name: String!
+        email: String!
+        balance: String!
+    }
+`;
+
+const schema = makeExecutableSchema({
+    typeDefs,
+    resolvers: {
+        Query: {
+            users: () => [{...}]
+        }
+    }
+});
+
+// Schema with tracing applied to all fields
+const tracedSchema = traceSchema({
+    schema,
+    adapter: // <-- See Adapters
+});
+````
+
+<Tabs items={['Before traceSchema', 'With traceSchema']}>
+  <Tabs.Tab>
+    <pre>
+      ```gql
+    type Query {
+        users: [User!]!
+    }
+
+    type User {
+        name: String!
+        email: String!
+        balance: String!
+    }
+
+````
+    </pre>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <pre>
+      ```gql
+    directive @trace on FIELD_DEFINITION
+
+    type Query {
+        users: [User!]! @trace
+    }
+
+    type User {
+        name: String! @trace
+        email: String! @trace
+        balance: String! @trace
+    }
+````
+
+    </pre>
+
+  </Tabs.Tab>  
+</Tabs>
+
+### Schema Exporter
+
+When using Trace Schema, in the background, the schema will be hashed and exported to [The Collector](/docs/components/collector), this is done so that the Collector can identify the schema for each received trace.
+
+> You can disable Schema Export by passing shouldExportSchema: false to the traceSchema function.
+
+```ts
+const tracedSchema = traceSchema({
+  schema,
+  adapter,
+  shouldExportSchema: false, // <-- Disable schema export
+});
+```
+
+### OTEL Setup
+
+Alongside the Schema Exporter mechanism, Trace Schema will also setup the nessary Open Telemetry exporters and propagators using the standard API's. Using the options for Trace Schema you can configure what endpoint the traces should be sent to.
+
+<Tabs items={['New Relic', 'Datadog', "Debugger - (Default)"]}>
+  <Tabs.Tab>
+```ts
+const tracedSchema = traceSchema({
+    schema,
+    adapter,
+    exporterConfig: {
+        url: 'https://trace-api.newrelic.com/trace/v1',
+    }
+});
+```
+  </Tabs.Tab>
+  <Tabs.Tab>
+```ts
+const tracedSchema = traceSchema({
+    schema,
+    adapter,
+    exporterConfig: {
+        url: 'https://trace.agent.datadoghq.com/v0.4/traces',
+    }
+});
+```
+  </Tabs.Tab>  
+  <Tabs.Tab>
+```ts
+const tracedSchema = traceSchema({
+    schema,
+    adapter,
+    exporterConfig: {
+        url: 'http://localhost:4318/v1/traces',
+    }
+});
+
+// or
+const tracedSchema = traceSchema({
+schema,
+adapter,
+});
+
+```
+  </Tabs.Tab>
+</Tabs>
+
+
+Given that GraphQL Debugger Collector is a proxy over a Open Telemetry Collector, you can also point your GraphQL traces to any Open Telemetry compatible collector as showin in the example above.
+
+
+## Collector
+
+The [Collector](/docs/components/collector) is a service that listens for the traces propagated from the GraphQL API and stores them in a database. It contains endpoints that ingest the schema, traces and spans.
+
+
+### Schema Endpoint
+*  `/v1/schema`
+
+Trace Schema will hash and send the schema on startup to the collector. You can also send the schema manually using the endpoint, or the [Client](/docs/packages/client). Without a schema, debugger cannot visualize the traces and any exported traces wont be shown in the UI.
+
+
+### Traces Endpoint
+* `/v1/traces`
+
+This is a Open Telemetry compatible endpoint that accepts traces in the [OTLP HTTP format](https://opentelemetry.io/docs/specs/otlp/#otlphttp). This means you can send any traces from any Open Telemetry compatible client to the collector and it will be stored in the database, however, if the traces dont come from GraphQL Debugger, they wont be visualized in the UI.
+
+> Each GraphQL Debugger trace attaches a `schemaHash` attribute that reconciles the trace with the schema. That `schemaHash` is picked up in the traces endpoint and used to associate the trace with the schema.
+
+## UI
+
+The UI is a React application that visualizes the traces stored in the database. It contains a dashboard that shows the traces and spans, and a trace viewer that shows the trace details. It communicates with [The Backend](/docs/components/backend) via [The GraphQL Schema](/docs/packages/graphql-schema) using the [The Client](/docs/packages/client).
+
+Learn more about the UI and how to get stated [here](/docs/components/ui).

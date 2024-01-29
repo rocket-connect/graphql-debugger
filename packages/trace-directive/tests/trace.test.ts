@@ -17,7 +17,7 @@ import {
   printSchema,
 } from "graphql";
 
-import { GraphQLOTELContext, traceDirective } from "../src";
+import { GraphQLDebuggerContext, traceDirective } from "../src";
 
 const inMemorySpanExporter = setupOtel({
   inMemory: true,
@@ -71,13 +71,13 @@ describe("@trace directive", () => {
       schema,
       source: query,
       contextValue: {
-        // GraphQLOTELContext: new GraphQLOTELContext(),
+        // GraphQLDebuggerContext: new GraphQLDebuggerContext(),
       },
     });
 
     const error = ((errors || [])[0] as unknown as Error).message;
 
-    expect(error).toContain("contextValue.GraphQLOTELContext missing");
+    expect(error).toContain("contextValue.GraphQLDebuggerContext missing");
   });
 
   test("should trace a query", async () => {
@@ -129,7 +129,7 @@ describe("@trace directive", () => {
         comments: async (
           source,
           args,
-          context: { GraphQLOTELContext: GraphQLOTELContext },
+          context: { GraphQLDebuggerContext: GraphQLDebuggerContext },
         ) => {
           const childSpanInput = {
             name: "test-child-span",
@@ -139,7 +139,7 @@ describe("@trace directive", () => {
             graphqlContext: context,
           };
 
-          await context.GraphQLOTELContext.runInChildSpan(childSpanInput);
+          await context.GraphQLDebuggerContext.runInChildSpan(childSpanInput);
 
           // Simulate a join
           await sleep(300);
@@ -182,7 +182,7 @@ describe("@trace directive", () => {
       schema,
       source: query,
       contextValue: {
-        GraphQLOTELContext: new GraphQLOTELContext(),
+        GraphQLDebuggerContext: new GraphQLDebuggerContext(),
       },
     });
 
@@ -292,7 +292,7 @@ describe("@trace directive", () => {
       schema,
       source: query,
       contextValue: {
-        GraphQLOTELContext: new GraphQLOTELContext({
+        GraphQLDebuggerContext: new GraphQLDebuggerContext({
           includeVariables: true,
         }),
       },
@@ -369,7 +369,7 @@ describe("@trace directive", () => {
       schema,
       source: query,
       contextValue: {
-        GraphQLOTELContext: new GraphQLOTELContext(),
+        GraphQLDebuggerContext: new GraphQLDebuggerContext(),
       },
     });
 
@@ -448,7 +448,7 @@ describe("@trace directive", () => {
       contextValue: {
         name: randomName,
         [excludeContext]: excludeContext,
-        GraphQLOTELContext: new GraphQLOTELContext({
+        GraphQLDebuggerContext: new GraphQLDebuggerContext({
           includeContext: true,
           includeVariables: true,
           excludeKeysFromContext: [excludeContext],
@@ -555,7 +555,7 @@ describe("@trace directive", () => {
       schema,
       source: query,
       contextValue: {
-        GraphQLOTELContext: new GraphQLOTELContext({
+        GraphQLDebuggerContext: new GraphQLDebuggerContext({
           includeResult: true,
         }),
       },
@@ -627,7 +627,7 @@ describe("@trace directive", () => {
       schema,
       source: query,
       contextValue: {
-        GraphQLOTELContext: new GraphQLOTELContext({
+        GraphQLDebuggerContext: new GraphQLDebuggerContext({
           includeResult: true,
         }),
       },
@@ -688,7 +688,7 @@ describe("@trace directive", () => {
       schema,
       source: query,
       contextValue: {
-        GraphQLOTELContext: new GraphQLOTELContext({
+        GraphQLDebuggerContext: new GraphQLDebuggerContext({
           includeVariables: true,
           includeResult: true,
           includeContext: true,

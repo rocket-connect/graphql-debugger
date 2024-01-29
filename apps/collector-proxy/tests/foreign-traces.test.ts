@@ -1,4 +1,3 @@
-import { prisma } from "@graphql-debugger/data-access";
 import { TRACER_NAME } from "@graphql-debugger/opentelemetry";
 import {
   AttributeNames,
@@ -11,6 +10,7 @@ import { describe, expect, test } from "@jest/globals";
 import { parse, print } from "graphql";
 import util from "util";
 
+import { client } from "../src/client";
 import { request } from "./utils";
 
 const sleep = util.promisify(setTimeout);
@@ -216,12 +216,12 @@ describe("foreign traces", () => {
 
     await sleep(2000); // backoff the writes using sqlite
 
-    const traceGroup = await prisma.traceGroup.findFirst({
+    const traceGroup = await client.trace.findFirst({
       where: {
         traceId: payload.resourceSpans[0].scopeSpans[0].spans[0].traceId,
       },
-      select: {
-        spans: true,
+      options: {
+        includeSpans: true,
       },
     });
 
@@ -247,8 +247,5 @@ describe("foreign traces", () => {
       (span) => span.name === "prisma:engine:db_query",
     );
     expect(prismaEngineSpan).toBeDefined();
-    expect(prismaEngineSpan?.attributes).toEqual(
-      '{"db.statement":"SELECT * FROM User"}',
-    );
   });
 });

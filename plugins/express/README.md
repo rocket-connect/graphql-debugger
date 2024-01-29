@@ -8,6 +8,8 @@
 
 Express middleware for GraphQL Debugger.
 
+The express middleware will add a span at the root of the trace for each http request to your GraphQL server.
+
 ## License
 
 MIT - Rocket Connect - https://github.com/rocket-connect

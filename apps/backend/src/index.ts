@@ -1,10 +1,38 @@
-import http from "http";
+import { DebuggerClient } from "@graphql-debugger/client";
+import { createServer } from "@graphql-debugger/graphql-schema";
+import { graphqlDebugger } from "@graphql-debugger/plugin-express";
 
-import { app } from "./app";
+import cors from "cors";
+import express, { Express } from "express";
+import http from "http";
+import path from "path";
+
+import { TRACE_EXPRESS } from "./config";
 import { debug } from "./debug";
 
-export async function start({ port }: { port: string }) {
+export async function start({
+  port,
+  client,
+}: {
+  port: string;
+  client: DebuggerClient;
+}) {
   try {
+    const app: Express = express();
+    app.use(cors());
+    app.use(express.json());
+    if (TRACE_EXPRESS) {
+      app.use(graphqlDebugger());
+    }
+    app.use(
+      "/graphql",
+      createServer({
+        client,
+      }),
+    );
+    app.use(express.static(path.join(__dirname, "../../ui/build")));
+    app.use(express.static("public"));
+
     const server = await app.listen(port);
 
     debug("Application started");
@@ -20,5 +48,4 @@ export async function stop({ server }: { server: http.Server }) {
   await server.close();
 }
 
-export * from "./app";
 export * from "./config";

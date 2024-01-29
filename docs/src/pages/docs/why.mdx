@@ -1,0 +1,198 @@
+import { Tabs } from "nextra/components";
+
+# Why GraphQL Debugger ?
+
+GraphQL servers are constructed and interacted with in a manner distinct from other API servers. We encountered numerous challenges while employing standard tools to monitor and troubleshoot our GraphQL servers, leading us to develop GraphQL Debugger as a solution to these issues.
+
+## HTTP Post Body
+
+The majority of GraphQL implementations utilize `HTTP` `POST` requests to dispatch queries to the server. These queries are transmitted within the request's body. For instance, this is how one would query the SpaceX API using a browser:
+
+```ts
+const body = JSON.stringify({
+  query: "{ missions { description payloads { payload_type }}}",
+});
+
+const response = await fetch("https://api.spacex.land/graphql/", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body, // <-- Notice the body
+});
+
+const { data, errors } = await response.json();
+```
+
+This implies that, for us as debuggers and observers, each request sent to our server will consistently appear as an `HTTP` `POST` request. This uniformity makes it challenging to differentiate or filter among various requests.
+
+```sh
+# Logs from a GraphQL server
+HTTP POST /graphql 1 second ago
+HTTP POST /graphql 2 seconds ago
+HTTP POST /graphql 3 seconds ago
+HTTP POST /graphql 4 seconds ago
+HTTP POST /graphql 5 seconds ago
+HTTP POST /graphql 6 seconds ago
+HTTP POST /graphql 7 seconds ago
+HTTP POST /graphql 8 seconds ago
+...
+```
+
+For instance, when utilizing a REST API, you would anticipate encountering a range of HTTP methods like `GET`, `POST`, `PUT`, `DELETE`, etc. This variety facilitates easier debugging and clearer differentiation between requests and entities.
+
+```sh
+# Logs from a REST server
+HTTP GET /posts 1 second ago
+HTTP POST /post 2 seconds ago
+HTTP PUT /users 3 seconds ago
+HTTP DELETE /users 4 seconds ago
+HTTP GET /posts 5 seconds ago
+HTTP POST /users 6 seconds ago
+HTTP PUT /post 7 seconds ago
+HTTP DELETE /post 8 seconds ago
+...
+```
+
+## Resolver Fan Out
+
+A single GraphQL query can trigger numerous resolver functions, leading to multiple database queries. This occurs because GraphQL queries are structured hierarchically, with the data embedded within these structures.
+
+Refer to the provided examples to understand how each query can initiate several resolver functions and database queries.
+
+<Tabs items={['1 database call', '2 database calls', '3 database calls']}>
+  <Tabs.Tab>
+      ```graphql
+query {
+        user { ## <----- SELECT * FROM users
+          name
+          email
+        }
+}
+```
+  </Tabs.Tab>
+  <Tabs.Tab>
+      ```graphql
+query {
+        user { ## <----- SELECT * FROM users
+          name
+          email
+          posts { ## <----- SELECT * FROM posts
+            title
+            body
+          }
+        }
+}
+```
+  </Tabs.Tab>  
+    <Tabs.Tab>
+      ```graphql
+query {
+        user { ## <----- SELECT * FROM users
+          name
+          email
+          posts { ## <----- SELECT * FROM posts
+            title
+            body
+            comments { ## <----- SELECT * FROM comments
+              body
+            }
+          }
+        }
+}
+```
+  </Tabs.Tab>
+</Tabs>
+
+The rationale for this approach is that it allows the client to precisely specify the data it requires, and the server responds by delivering only that data. While this is advantageous for the client, it can make debugging and comprehending the returned data and its reasoning challenging. Most observability tools merely display the HTTP request and do not delve into the specifics of the query and the invoked resolvers.
+
+## HTTP Response 200
+
+In most GraphQL server implementations, the HTTP response code is typically always 200, with errors either categorized as a typed response or included in the body's errors list. This behavior is illustrated below with a query that encounters a resolver and triggers an error:
+
+<Tabs items={['query.gql', 'resolver.js','HTTP 200', 'response.json']}>
+  <Tabs.Tab>
+      ```graphql
+query {
+        user {
+          name
+          email
+        }
+}
+```
+  </Tabs.Tab>
+  <Tabs.Tab>
+      ```javascript
+const resolvers = {
+        Query: {
+          user: () => {
+            throw new Error("Uh oh!");
+          },
+        },
+};
+```
+  </Tabs.Tab>  
+  <Tabs.Tab>
+      ```sh
+HTTP POST /graphql 7 seconds ago - 200 OK body <json>
+```
+  </Tabs.Tab>  
+    <Tabs.Tab>
+      ```json
+{
+       "data:": null,
+       "errors": [
+         {
+           "message": "Uh oh!"
+         }
+       ]    
+}
+```
+  </Tabs.Tab>
+</Tabs>
+
+Navigating through the tabs above reveals that the HTTP response code is 200, and the error is embedded in the response body. This setup is not optimal for debugging, as the presence of an error is not immediately apparent.
+
+For instance, if you were reviewing a log list from a GraphQL server, you would encounter a series of HTTP 200 responses. To determine if there were any errors, you would need to delve into the body of each response.
+
+```sh
+# Logs from a GraphQL server
+HTTP POST /graphql 1 second ago - 200 OK body <json>
+HTTP POST /graphql 2 seconds ago - 200 OK body <json>
+HTTP POST /graphql 3 seconds ago - 200 OK body <json>
+HTTP POST /graphql 4 seconds ago - 200 OK body <json>
+HTTP POST /graphql 5 seconds ago - 200 OK body <json>
+HTTP POST /graphql 6 seconds ago - 200 OK body <json>
+HTTP POST /graphql 7 seconds ago - 200 OK body <json>
+HTTP POST /graphql 8 seconds ago - 200 OK body <json>
+...
+```
+
+## Schema Leverage
+
+Considering that GraphQL is strongly typed, we can utilize the schema to enhance the debugging experience. Our aim with the debugger is to further capitalize on the schema to deliver an improved debugging experience.
+
+```graphql
+type Query {
+  # Resolve Count: 134
+  # Error Count: 3
+  posts: [Post]
+  # Resolve Count: 300
+  # Error Count: 0
+  user: User
+}
+
+type User {
+  # Last used: 1 second ago
+  name: String
+  # Last used: 1 second ago
+  email: String
+  # Last used: never 🔴
+  secondaryEmail: String
+}
+
+type Post {
+  # Last used: 1 second ago
+  title: String
+  # Last used: 1 second ago
+  body: String
+}
+```

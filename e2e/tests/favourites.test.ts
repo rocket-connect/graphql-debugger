@@ -1,7 +1,6 @@
-import { prisma } from "@graphql-debugger/data-access";
-
 import { faker } from "@faker-js/faker";
 
+import { client } from "../src/client";
 import { Favourites } from "./components/favourites";
 import { Schemas } from "./components/schemas";
 import { Traces } from "./components/traces";
@@ -29,17 +28,20 @@ describe("favourites", () => {
       name: "should add a successful trace to favourites and remove it",
       shouldError: false,
       randomFieldName,
+      client,
     },
     {
       name: "should add an error trace to favourites and remove it",
       shouldError: true,
       randomFieldName,
+      client,
     },
     {
       name: "should add a named query trace to favourites and remove it",
       shouldError: false,
       shouldNameQuery: true,
       randomFieldName,
+      client,
     },
   ];
 
@@ -66,13 +68,11 @@ describe("favourites", () => {
       await page.reload();
       await sleep(200);
 
-      const traces = await prisma.traceGroup.findMany({
+      const traces = await client.trace.findMany({
         where: {
           schemaId: dbSchema.id,
         },
-        include: {
-          spans: true,
-        },
+        includeSpans: true,
       });
 
       const tracesComponent = new Traces({ browser, page: dashboardPage });
