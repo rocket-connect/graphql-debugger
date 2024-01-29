@@ -6,7 +6,7 @@ on:
       - "*"
 
 jobs:
-  publish:
+  npm_publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -19,3 +19,41 @@ jobs:
         env:
           NPM_TOKEN: ${{secrets.npm_token}}
       - run: pnpm publish -r --filter '!@graphql-debugger/docs' --filter '!@graphql-debugger/e2e' --no-git-checks
+
+  docker_publish:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_LOGIN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          tags: |
+            type=semver,pattern={{version}}
+            type=ref,event=pr
+          images: graphqldebugger/graphqldebugger
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@4a13e500e55cf31b7a5d59a38ab2040ab0f42f56 #v5.1.0
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          file: ./docker/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
