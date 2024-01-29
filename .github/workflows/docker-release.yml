@@ -32,6 +32,8 @@ jobs:
           tags: |
             type=semver,pattern={{version}}
             type=ref,event=tag
+          flavor: |
+            latest=auto
           images: graphqldebugger/graphqldebugger
 
       - name: Build and push Docker image
