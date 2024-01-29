@@ -36,6 +36,7 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=sha
+            latest=true
           flavor: |
             latest=auto
           images: graphqldebugger/graphqldebugger
