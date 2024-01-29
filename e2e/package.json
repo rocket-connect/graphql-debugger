@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/e2e",
-  "version": "0.0.0-alpha.92",
+  "version": "0.0.0-alpha.93",
   "private": true,
   "publishConfig": {
     "publish": false
