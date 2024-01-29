@@ -19,9 +19,6 @@ jobs:
         env:
           NPM_TOKEN: ${{secrets.npm_token}}
       - run: pnpm publish -r --filter '!@graphql-debugger/landing-page-app' --filter '!@graphql-debugger/landing-page-server' --no-git-checks
-  #TODO
-  #Since we're already building the image in the quality testing, we should try to reuse that.
-  #
   push_to_registry:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
