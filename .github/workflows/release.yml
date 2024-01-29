@@ -36,9 +36,6 @@ jobs:
         uses: docker/setup-buildx-action@v3
       
       - name: Log in to Docker Hub
-        # Needs discussing, does every push require all the actions?
-        # Using this we can run these only when we release.
-        #if: github.event_name != 'pull_request' 
         uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
