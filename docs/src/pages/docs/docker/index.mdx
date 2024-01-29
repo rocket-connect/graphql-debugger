@@ -1,17 +1,15 @@
 # GraphQL Debugger In Docker
 
-- https://www.graphql-debugger.com/
-
 To pull the docker image, run the following command:
 
 ```bash
-docker pull graphqldebugger/graphqldebugger
+docker pull graphqldebugger/graphqldebugger:__TAG__
 ```
 
 To run the docker image, run the following command:
 
 ```bash
-docker run --name graphql-debugger -p 16686:16686 -p 4318:4318 graphqldebugger/graphqldebugger
+docker run --name graphql-debugger -p 16686:16686 -p 4318:4318 graphqldebugger/graphqldebugger:__TAG__
 ```
 
 ## Docker Compose

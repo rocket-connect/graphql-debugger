@@ -30,9 +30,8 @@ jobs:
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
           tags: |
-            type=ref,event=tag
             type=semver,pattern={{version}}
-            type=raw,value=latest,enable=${{ endsWith(github.ref, 'main') }}
+            type=ref,event=pr
           images: graphqldebugger/graphqldebugger
 
       - name: Build and push Docker image
