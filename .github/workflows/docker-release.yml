@@ -1,4 +1,4 @@
-name: Release
+name: Docker Release
 
 on:
   push:
@@ -6,20 +6,6 @@ on:
       - "*"
 
 jobs:
-  npm_publish:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-project
-      - run: cd ./packages/graphql-debugger && chmod +x ./build/index.js
-      - run: START_PATH="." node ./packages/utils/build/bump-versions.js
-        env:
-          VERSION: ${{github.ref_name}}
-      - run: pnpm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
-        env:
-          NPM_TOKEN: ${{secrets.npm_token}}
-      - run: pnpm publish -r --filter '!@graphql-debugger/docs' --filter '!@graphql-debugger/e2e' --no-git-checks
-
   docker_publish:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
