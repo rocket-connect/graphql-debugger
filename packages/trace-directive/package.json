@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/trace-directive",
-  "version": "0.0.0-alpha.87",
+  "version": "0.0.0-alpha.88",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
