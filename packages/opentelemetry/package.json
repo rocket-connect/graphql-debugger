@@ -33,7 +33,7 @@
     "@opentelemetry/semantic-conventions": "1.20.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "8.3.1",
+    "@faker-js/faker": "8.4.0",
     "@graphql-debugger/types": "workspace:^"
   }
 }

@@ -25,7 +25,7 @@
     "@graphql-debugger/utils": "workspace:^"
   },
   "devDependencies": {
-    "@faker-js/faker": "7.6.0",
+    "@faker-js/faker": "8.4.0",
     "@graphql-debugger/types": "workspace:^"
   }
 }
