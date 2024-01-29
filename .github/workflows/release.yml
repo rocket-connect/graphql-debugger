@@ -51,7 +51,7 @@ jobs:
           tags: |
             type=semver,pattern={{version}}
             type=ref,event=pr
-          images: mediocredevops/graphql-debugger
+          images: graphqldebugger/graphqldebugger
 
       #TODO
       #Re-use artifacts from existing jobs
