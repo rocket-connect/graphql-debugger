@@ -29,7 +29,7 @@
     "@opentelemetry/instrumentation": "0.45.1",
     "@opentelemetry/otlp-exporter-base": "0.47.0",
     "@opentelemetry/resources": "1.19.0",
-    "@opentelemetry/sdk-trace-base": "1.19.0",
+    "@opentelemetry/sdk-trace-base": "1.21.0",
     "@opentelemetry/semantic-conventions": "1.20.0"
   },
   "devDependencies": {
