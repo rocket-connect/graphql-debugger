@@ -30,8 +30,12 @@ jobs:
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
           tags: |
-            type=semver,pattern={{version}}
+            type=ref,event=branch
+            type=ref,event=pr
             type=ref,event=tag
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha
           flavor: |
             latest=auto
           images: graphqldebugger/graphqldebugger
