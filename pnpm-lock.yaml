@@ -413,8 +413,8 @@ importers:
         specifier: workspace:^
         version: link:../../schemas
       axios:
-        specifier: 1.6.2
-        version: 1.6.2
+        specifier: 1.6.7
+        version: 1.6.7
       graphql:
         specifier: ^16.0.0 || ^17.0.0
         version: 16.0.0
@@ -484,8 +484,8 @@ importers:
         specifier: workspace:^
         version: link:../utils
       axios:
-        specifier: 1.6.2
-        version: 1.6.2
+        specifier: 1.6.7
+        version: 1.6.7
       graphql:
         specifier: ^16.0.0 || ^17.0.0
         version: 16.0.0
@@ -524,8 +524,8 @@ importers:
         specifier: workspace:^
         version: link:../utils
       axios:
-        specifier: 1.6.2
-        version: 1.6.2
+        specifier: 1.6.7
+        version: 1.6.7
 
   packages/graphql-fragments:
     dependencies:
@@ -4697,8 +4697,8 @@ packages:
     resolution: {integrity: sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==}
     engines: {node: '>= 0.4'}
 
-  /axios@1.6.2:
-    resolution: {integrity: sha512-7i24Ri4pmDRfJTR7LDBhsOTtcm+9kjX5WiY1X3wIisx6G9So3pfMkEiU7emUBe46oceVImccTEM3k6C5dbVW8A==}
+  /axios@1.6.7:
+    resolution: {integrity: sha512-/hDJGff6/c7u0hDkvkGxR/oy6CbCs8ziCsC7SqmhjfozqiJGc8Z11wrv9z9lYfY4K8l+H9TpjcMDX0xOZmx+RA==}
     dependencies:
       follow-redirects: 1.15.5
       form-data: 4.0.0
