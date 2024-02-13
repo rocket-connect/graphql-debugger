@@ -830,6 +830,9 @@ importers:
       '@graphql-debugger/ui':
         specifier: workspace:^
         version: link:../../../apps/ui
+      '@graphql-debugger/utils':
+        specifier: workspace:^
+        version: link:../../../packages/utils
       '@tanstack/react-query':
         specifier: 5.13.4
         version: 5.13.4(react@18.2.0)

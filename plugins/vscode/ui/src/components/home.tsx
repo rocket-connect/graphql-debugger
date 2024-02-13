@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 
 import { SchemasContext } from "../context/schemas";
+import { Trace } from "./trace";
 
 export function Home() {
   const schemaId = localStorage.getItem("SCHEMA_ID");
@@ -22,9 +23,13 @@ export function Home() {
   }, [schemaContext, schemaId]);
 
   return (
-    <div>
-      <p>{schemaId}</p>
-      <p>{schemaContext?.schemas[0]?.id}</p>
+    <div
+      role="main"
+      className="h-screen w-full flex items-center gap-8 py-4 overflow-hidden text-neutral bg-primary-background"
+    >
+      <div className="flex flex-col gap-4 bg-secondary-background p-5 rounded-2xl w-full h-full mx-4 shadow">
+        <Trace schemaId={schemaId as string} />
+      </div>
     </div>
   );
 }
