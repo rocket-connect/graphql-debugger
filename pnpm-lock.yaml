@@ -821,6 +821,12 @@ importers:
       '@fontsource/roboto':
         specifier: 5.0.8
         version: 5.0.8
+      '@graphql-debugger/adapter-proxy':
+        specifier: workspace:^
+        version: link:../../../packages/adapters/proxy
+      '@graphql-debugger/client':
+        specifier: workspace:^
+        version: link:../../../packages/client
       '@graphql-debugger/ui':
         specifier: workspace:^
         version: link:../../../apps/ui

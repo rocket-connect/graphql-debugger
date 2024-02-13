@@ -1,16 +1,34 @@
-import { useState } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import { SCHEMA_ID } from "./config";
+import { Home } from "./components/home";
+import { ClientProvider } from "./context/client";
+import { ConfigProvider } from "./context/config";
+import { SchemasProvider } from "./context/schemas";
+import { useTheme } from "./hooks/useTheme";
 
 export function App() {
-  const [counter, setCounter] = useState(0);
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        staleTime: 100_000,
+        networkMode: "offlineFirst",
+      },
+    },
+  });
+  useTheme();
+
   return (
     <div>
-      <h1>Hello World</h1>
-      {counter}
-      <button onClick={() => setCounter(counter + 1)}>Increment</button>
-
-      {SCHEMA_ID}
+      <ConfigProvider>
+        <ClientProvider>
+          <QueryClientProvider client={queryClient}>
+            <SchemasProvider>
+              <Home />
+            </SchemasProvider>
+          </QueryClientProvider>
+        </ClientProvider>
+      </ConfigProvider>
     </div>
   );
 }
