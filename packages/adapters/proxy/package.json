@@ -24,7 +24,7 @@
     "@graphql-debugger/adapter-base": "workspace:^",
     "@graphql-debugger/schemas": "workspace:^",
     "@graphql-debugger/graphql-fragments": "workspace:^",
-    "axios": "1.6.2"
+    "axios": "1.6.7"
   },
   "devDependencies": {
     "@graphql-debugger/adapter-sqlite": "workspace:^",
