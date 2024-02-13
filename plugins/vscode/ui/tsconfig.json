@@ -1,0 +1,21 @@
+{
+  "extends": "@tsconfig/node18/tsconfig.json",
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "target": "ES2015",
+    "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "declarationMap": true,
+    "declaration": true,
+    "sourceMap": false,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "rootDir": "src",
+    "baseUrl": ".",
+    "outDir": "build",
+    "noEmit": false,
+  },
+  "include": ["src/**/*", "src/**/*.spec.ts", "src/**/*.spec.tsx"],
+}

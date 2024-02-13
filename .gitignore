@@ -136,3 +136,4 @@ schema.graphql
 *.cookie
 dev.db-journal
 .DS_Store
+out
