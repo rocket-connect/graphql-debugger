@@ -23,6 +23,7 @@
     "graphql": "^16.0.0 || ^17.0.0"
   },
   "dependencies": {
+    "@graphql-debugger/ui": "workspace:^",
     "@fontsource/roboto": "5.0.8",
     "@tanstack/react-query": "5.13.4",
     "clsx": "2.0.0",

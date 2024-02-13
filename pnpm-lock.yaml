@@ -821,6 +821,9 @@ importers:
       '@fontsource/roboto':
         specifier: 5.0.8
         version: 5.0.8
+      '@graphql-debugger/ui':
+        specifier: workspace:^
+        version: link:../../../apps/ui
       '@tanstack/react-query':
         specifier: 5.13.4
         version: 5.13.4(react@18.2.0)

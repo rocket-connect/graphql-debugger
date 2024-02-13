@@ -89,7 +89,6 @@ function getWebviewContent(
   );
   let html = fs.readFileSync(indexPath.fsPath, "utf8");
 
-  // Modify asset paths in the HTML content
   html = html.replace(/(href|src)="([^"]*)"/g, (match, p1, p2) => {
     const assetPath = vscode.Uri.joinPath(
       context.extensionUri,
@@ -104,17 +103,14 @@ function getWebviewContent(
   });
 
   const nonce = getNonce();
-  // Inject a script to set the schemaId in local storage
-  // Ensure this is done before loading your React app's main.js
+
   const scriptToSetSchemaId = `<script nonce="${nonce}">localStorage.setItem("SCHEMA_ID", "${schemaId}");</script>`;
 
-  // Set Content Security Policy
   html = html.replace(
     /<meta http-equiv="Content-Security-Policy".*?>/,
     `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src ${webview.cspSource} https:; style-src ${webview.cspSource} 'unsafe-inline'; script-src 'nonce-${nonce}';">`,
   );
 
-  // Insert the script to set the schemaId in local storage before the closing head tag
   html = html.replace("</head>", `${scriptToSetSchemaId}</head>`);
 
   return html;
