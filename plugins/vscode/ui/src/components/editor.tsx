@@ -1,10 +1,10 @@
+import { Query } from "@graphql-debugger/ui/src/components/trace/editor/query";
+import { Variables } from "@graphql-debugger/ui/src/components/trace/editor/variables";
+
 import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 
-import { ClientContext } from "../../../context/client";
-import { IDS } from "../../../testing";
-import { Query } from "./query";
-import { Variables } from "./variables";
+import { ClientContext } from "../context/client";
 
 export function Editor(props: React.PropsWithChildren<{ traceId?: string }>) {
   const { client } = useContext(ClientContext);
@@ -30,10 +30,7 @@ export function Editor(props: React.PropsWithChildren<{ traceId?: string }>) {
   });
 
   return (
-    <div
-      id={IDS.trace.editor}
-      className="flex flex-col h-full justify-between basis-5/12 bg-primary-background divide-y-2 divide-accent w-5/12 rounded-2xl"
-    >
+    <div className="flex flex-col h-full justify-between basis-5/12 bg-primary-background divide-y-2 divide-accent w-5/12 rounded-2xl">
       <Query trace={trace} />
       <Variables trace={trace} />
     </div>
