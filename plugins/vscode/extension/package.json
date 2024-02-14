@@ -1,0 +1,68 @@
+{
+  "name": "@graphql-debugger/vscode-extension",
+  "displayName": "GraphQL Debugger",
+  "description": "Debug your GraphQL server",
+  "engines": {
+    "vscode": "^1.86.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "version": "0.0.0-alpha.97",
+  "main": "./out/extension.js",
+  "files": [
+    "out"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rocket-connect/graphql-debugger.git"
+  },
+  "homepage": "https://github.com/rocket-connect/graphql-debugger#readme",
+  "contributes": {
+    "commands": [
+      {
+        "command": "graphql-debugger.openPanel",
+        "title": "Open GraphQL Debugger"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "when": "resourceLangId == graphql",
+          "command": "graphql-debugger.openPanel",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "build": "tsc -p ./ && npx ts-node ./src/print-schema-for-debugging.ts",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "peerDependencies": {
+    "graphql": "^16.0.0 || ^17.0.0"
+  },
+  "dependencies": {
+    "@graphql-debugger/vscode-ui": "workspace:^",
+    "@graphql-debugger/adapter-proxy": "workspace:^",
+    "@graphql-debugger/client": "workspace:^",
+    "@graphql-debugger/trace-schema": "workspace:^",
+    "@graphql-debugger/utils": "workspace:^",
+    "@graphql-debugger/graphql-schema": "workspace:^",
+    "@graphql-tools/schema": "10.0.2",
+    "@graphql-tools/utils": "10.0.13"
+  },
+  "devDependencies": {
+    "@types/vscode": "1.86.0",
+    "@vscode/test-cli": "0.0.4",
+    "@vscode/test-electron": "2.3.9",
+    "typescript": "5.3.3",
+    "ts-node": "10.9.2"
+  }
+}

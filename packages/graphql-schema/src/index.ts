@@ -13,3 +13,5 @@ export function createServer({ client }: { client: DebuggerClient }) {
     context: context({ client }),
   });
 }
+
+export { createSchema };

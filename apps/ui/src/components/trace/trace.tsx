@@ -42,7 +42,7 @@ export function Trace() {
     >
       <TraceHeader trace={trace} />
       <div className="flex flex-grow gap-4 h-96 items-center ">
-        <Editor />
+        <Editor traceId={params.traceId} />
         <div className="flex flex-col flex-1 basis-8/12 w-full gap-4 h-full">
           <TraceViewer trace={trace} />
           <SchemaTraces />
