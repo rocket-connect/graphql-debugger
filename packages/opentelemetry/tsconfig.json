@@ -9,8 +9,8 @@
     "outDir": "build",
     "declarationMap": true,
     "declaration": true,
-    "rootDir": "./src/",
+    "rootDir": "./src/"
   },
   "exclude": ["tests/"],
-  "include": ["src/**/*"],
+  "include": ["src/**/*"]
 }
