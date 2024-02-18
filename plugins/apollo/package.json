@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/apollo-server",
-  "version": "0.0.0-alpha.97",
+  "version": "0.0.0-alpha.99",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [

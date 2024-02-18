@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/docs",
-  "version": "0.0.0-alpha.98",
+  "version": "0.0.0-alpha.99",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "type": "module",
