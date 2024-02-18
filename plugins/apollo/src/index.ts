@@ -1,7 +1,6 @@
 import { BaseAdapter } from "@graphql-debugger/adapter-base";
 import { ProxyAdapter } from "@graphql-debugger/adapter-proxy";
 import {
-  Context as OTELContext,
   Span,
   SpanStatusCode,
   createLegacySpan,
@@ -18,12 +17,26 @@ import { AttributeNames } from "@graphql-debugger/types";
 import { isGraphQLInfoRoot, safeJson } from "@graphql-debugger/utils";
 
 import { ApolloServerPlugin } from "@apollo/server";
+import { Path } from "graphql/jsutils/Path";
 
 type GraphQLContext = {
   GraphQLDebuggerContext?: GraphQLDebuggerContext;
   parentSpan?: Span | undefined;
   currentSpan?: Span | undefined;
 };
+
+function generatePathString(path: Path | undefined): string {
+  let currentPath: Path | undefined = path;
+
+  const pathSegments: Array<string> = [];
+  while (currentPath && currentPath.prev) {
+    if (isNaN(Number(currentPath.key))) {
+      pathSegments.unshift(currentPath.key.toString());
+    }
+    currentPath = currentPath.prev;
+  }
+  return pathSegments.join(".");
+}
 
 export const graphqlDebuggerPlugin = ({
   adapter = new ProxyAdapter(),
@@ -45,25 +58,28 @@ export const graphqlDebuggerPlugin = ({
 
       setupOtel({});
     },
-    requestDidStart: async (requestContext) => {
-      const internalCtx = new GraphQLDebuggerContext();
-      internalCtx.setSchema(requestContext.schema);
+    requestDidStart: async () => {
+      const spanMap = new Map<string, Span>();
 
       return {
         async executionDidStart(requestContext) {
+          const internalCtx = new GraphQLDebuggerContext();
+          internalCtx.setSchema(requestContext.schema);
+
           return {
             willResolveField(fieldCtx) {
-              const parentContext = internalCtx
-                ? internalCtx.getContext()
+              const parentPathString = generatePathString(
+                fieldCtx.info.path.prev,
+              );
+
+              const parentPath =
+                parentPathString === "" ? "root" : parentPathString;
+
+              const parentSpan = parentPath
+                ? spanMap.get(parentPath)
                 : undefined;
 
-              const traceCTX: OTELContext =
-                parentContext || otelContext.active();
-              internalCtx.setContext(traceCTX);
-
-              const parentSpan = fieldCtx.contextValue.parentSpan as
-                | Span
-                | undefined;
+              const traceCTX = otelContext.active();
 
               const attributes = infoToAttributes({
                 info: fieldCtx.info,
@@ -76,29 +92,26 @@ export const graphqlDebuggerPlugin = ({
                 info: fieldCtx.info,
               });
 
-              let span: Span | undefined;
+              const span = createLegacySpan({
+                options: {
+                  name: spanName,
+                  context: traceCTX,
+                  tracer: internalCtx.tracer,
+                  attributes,
+                },
+                ...(parentSpan
+                  ? {
+                      parentContext: parentSpan?.spanContext(),
+                    }
+                  : {}),
+              });
 
-              if (parentSpan) {
-                span = createLegacySpan({
-                  options: {
-                    name: spanName,
-                    context: traceCTX,
-                    tracer: internalCtx.tracer,
-                    parentSpan,
-                    attributes,
-                  },
-                  parentContext: parentSpan?.spanContext(),
-                });
-              } else {
-                span = createLegacySpan({
-                  options: {
-                    name: spanName,
-                    context: traceCTX,
-                    tracer: internalCtx.tracer,
-                    attributes,
-                  },
-                });
-              }
+              const currentPathString = generatePathString(fieldCtx.info.path);
+
+              const currentPath =
+                currentPathString === "" ? "root" : currentPathString;
+
+              spanMap.set(currentPath, span);
 
               const callback = (error: Error | null, result: any) => {
                 if (!span) {
@@ -113,10 +126,6 @@ export const graphqlDebuggerPlugin = ({
                   });
                   span.recordException(e);
                 } else {
-                  if (!internalCtx.getRootSpan()) {
-                    internalCtx.setRootSpan(span);
-                  }
-
                   if (isGraphQLInfoRoot({ info: fieldCtx.info })) {
                     if (internalCtx.includeResult && result) {
                       span.setAttribute(
@@ -125,8 +134,6 @@ export const graphqlDebuggerPlugin = ({
                       );
                     }
                   }
-
-                  requestContext.contextValue.parentSpan = span;
                 }
 
                 span.end();

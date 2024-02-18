@@ -5,6 +5,7 @@ import {
 
 import { ApolloServer } from "@apollo/server";
 import { makeExecutableSchema } from "@graphql-tools/schema";
+import util from "util";
 
 import { graphqlDebuggerPlugin } from "../src";
 
@@ -12,15 +13,46 @@ const exporter = setupOtel({
   inMemory: true,
 }) as InMemorySpanExporter;
 
+const sleep = util.promisify(setTimeout);
+
+const posts = [
+  {
+    title: "Hello world",
+    author: {
+      name: "John Doe",
+    },
+  },
+];
+
 const typeDefs = /* GraphQL */ `
   type Query {
-    hello: String!
+    posts: [Post]!
+  }
+
+  type Post {
+    title: String!
+    author: User!
+  }
+
+  type User {
+    name: String!
   }
 `;
 
 const resolvers = {
   Query: {
-    hello: () => "Hello world!",
+    posts: async () => {
+      await sleep(1000);
+
+      return posts;
+    },
+  },
+  User: {
+    name: async (root: any) => {
+      await sleep(1000);
+
+      return root.name;
+    },
   },
 };
 
@@ -42,26 +74,61 @@ describe("Apollo Server tracing", () => {
 
   it("should trace GraphQL queries", async () => {
     const query = /* GraphQL */ `
-      query {
-        hello
+      query Query {
+        posts {
+          title
+          author {
+            name
+          }
+        }
       }
     `;
 
-    const { errors, data } = (await apolloServer.executeOperation({
+    const {
+      body: {
+        singleResult: { data, errors },
+      },
+    } = (await apolloServer.executeOperation({
       query,
     })) as unknown as {
-      errors: any;
-      data: any;
+      body: {
+        singleResult: {
+          errors: any;
+          data: any;
+        };
+      };
     };
 
     expect(errors).toBeUndefined();
     expect(data).toBeDefined();
-    expect(data?.hello).toBe("Hello world!");
+    expect(data?.posts).toEqual(posts);
 
     const spans = exporter.getFinishedSpans();
+    expect(spans.length).toBe(4);
 
-    expect(spans.length).toBeGreaterThan(0);
-    const span = spans.find((s) => s.name.includes("hello"));
-    expect(span).toBeDefined();
+    const rootSpan = spans.find((span) => !span.parentSpanId);
+    expect(rootSpan).toBeDefined();
+    expect(rootSpan?.name).toBe("query posts");
+
+    const postTitleSpan = spans.find(
+      (span) =>
+        span.name === "Post title" &&
+        span.parentSpanId === rootSpan?.spanContext().spanId,
+    );
+    expect(postTitleSpan).toBeDefined();
+
+    const authorSpan = spans.find(
+      (span) =>
+        span.name === "Post author" &&
+        span.parentSpanId === rootSpan?.spanContext().spanId,
+    );
+    expect(authorSpan).toBeDefined();
+
+    const authorNameSpan = spans.find(
+      (span) =>
+        span.name === "User name" &&
+        span.parentSpanId === authorSpan?.spanContext().spanId,
+    );
+    expect(authorNameSpan).toBeDefined();
   });
 });
