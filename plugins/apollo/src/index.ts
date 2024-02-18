@@ -2,44 +2,63 @@ import { BaseAdapter } from "@graphql-debugger/adapter-base";
 import { ProxyAdapter } from "@graphql-debugger/adapter-proxy";
 import {
   GraphQLDebuggerContext,
-  traceSchema,
+  SchemaExporer,
 } from "@graphql-debugger/trace-schema";
 
 import { ApolloServerPlugin } from "@apollo/server";
+import { GraphQLRequestExecutionListener } from "@apollo/server";
 
-export const graphqlDebuggerPlugin = ({
-  adapter = new ProxyAdapter(),
-}: {
-  adapter?: BaseAdapter;
-} = {}): ApolloServerPlugin<{
+type Context = {
   contextValue?: {
     GraphQLDebuggerContext?: GraphQLDebuggerContext;
   };
-}> => {
-  return {
-    serverWillStart: async (context) => {
-      return {
-        async schemaDidLoadOrUpdate() {
-          context.schema = traceSchema({ schema: context.schema, adapter });
-        },
-      };
-    },
+};
 
+export const graphqlDebuggerPlugin = ({
+  adapter = new ProxyAdapter(),
+  shouldExportSchema = true,
+}: {
+  adapter?: BaseAdapter;
+  shouldExportSchema?: boolean;
+} = {}): ApolloServerPlugin<Context> => {
+  return {
+    serverWillStart: async (service) => {
+      const schema = service.schema;
+      if (shouldExportSchema) {
+        const schemaExporter = new SchemaExporer({
+          adapter,
+          schema,
+        });
+        schemaExporter.start();
+      }
+    },
     requestDidStart: async () => {
       return {
-        async didResolveOperation(requestContext) {
-          const key = "GraphQLDebuggerContext";
+        async didResolveOperation(requestContext): Promise<void> {
+          console.log(requestContext.operation?.name?.value);
+        },
+        async didEncounterErrors(requestContext) {
+          console.log(requestContext.errors);
+        },
+        async executionDidStart(
+          ctx,
+        ): Promise<void | GraphQLRequestExecutionListener<Context>> {
+          console.log("executionDidStart", ctx.operationName);
 
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          const originalContext = requestContext.contextValue?.[key] as
-            | GraphQLDebuggerContext
-            | undefined;
+          return {
+            willResolveField(fieldCtx) {
+              console.log(fieldCtx.info.fieldName);
 
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          requestContext.contextValue[key] =
-            originalContext || new GraphQLDebuggerContext();
+              return (error) => {
+                if (error) {
+                  console.log(error);
+                }
+              };
+            },
+          };
+        },
+        async willSendResponse(requestContext) {
+          console.log(requestContext.response);
         },
       };
     },

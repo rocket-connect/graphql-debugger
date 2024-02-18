@@ -1,4 +1,4 @@
-import { DebuggerClient } from "@graphql-debugger/client";
+import { BaseAdapter } from "@graphql-debugger/adapter-base";
 import { PostSchema } from "@graphql-debugger/types";
 import { hashSchema } from "@graphql-debugger/utils";
 
@@ -10,19 +10,19 @@ export class SchemaExporer {
   private schema: GraphQLSchema;
   private schemaString: string;
   private schemaHash: string;
-  private client: DebuggerClient;
+  private adapter: BaseAdapter;
 
   constructor({
     schema,
-    client,
+    adapter,
   }: {
     schema: GraphQLSchema;
-    client: DebuggerClient;
+    adapter: BaseAdapter;
   }) {
     this.schema = lexicographicSortSchema(schema);
     this.schemaString = printSchema(this.schema);
     this.schemaHash = hashSchema(this.schema);
-    this.client = client;
+    this.adapter = adapter;
   }
 
   public start() {
@@ -38,7 +38,7 @@ export class SchemaExporer {
             hash: this.schemaHash,
           };
 
-          const response = await this.client.schema.createOne({
+          const response = await this.adapter.schema.createOne({
             data: {
               schema: body.schema,
               hash: body.hash,
