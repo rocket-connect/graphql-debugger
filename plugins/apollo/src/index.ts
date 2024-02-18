@@ -1,17 +1,27 @@
 import { BaseAdapter } from "@graphql-debugger/adapter-base";
 import { ProxyAdapter } from "@graphql-debugger/adapter-proxy";
 import {
+  Context as OTELContext,
+  Span,
+  infoToAttributes,
+  infoToSpanName,
+  context as otelContext,
+  runInSpan,
+  setupOtel,
+} from "@graphql-debugger/opentelemetry";
+import {
   GraphQLDebuggerContext,
   SchemaExporer,
 } from "@graphql-debugger/trace-schema";
+import { AttributeNames } from "@graphql-debugger/types";
+import { isGraphQLInfoRoot, safeJson } from "@graphql-debugger/utils";
 
 import { ApolloServerPlugin } from "@apollo/server";
-import { GraphQLRequestExecutionListener } from "@apollo/server";
 
-type Context = {
-  contextValue?: {
-    GraphQLDebuggerContext?: GraphQLDebuggerContext;
-  };
+type GraphQLContext = {
+  GraphQLDebuggerContext?: GraphQLDebuggerContext;
+  parentSpan?: Span | undefined;
+  currentSpan?: Span | undefined;
 };
 
 export const graphqlDebuggerPlugin = ({
@@ -20,7 +30,7 @@ export const graphqlDebuggerPlugin = ({
 }: {
   adapter?: BaseAdapter;
   shouldExportSchema?: boolean;
-} = {}): ApolloServerPlugin<Context> => {
+} = {}): ApolloServerPlugin<GraphQLContext> => {
   return {
     serverWillStart: async (service) => {
       const schema = service.schema;
@@ -31,34 +41,82 @@ export const graphqlDebuggerPlugin = ({
         });
         schemaExporter.start();
       }
-    },
-    requestDidStart: async () => {
-      return {
-        async didResolveOperation(requestContext): Promise<void> {
-          console.log(requestContext.operation?.name?.value);
-        },
-        async didEncounterErrors(requestContext) {
-          console.log(requestContext.errors);
-        },
-        async executionDidStart(
-          ctx,
-        ): Promise<void | GraphQLRequestExecutionListener<Context>> {
-          console.log("executionDidStart", ctx.operationName);
 
+      setupOtel({});
+    },
+    requestDidStart: async (requestContext) => {
+      const internalCtx = new GraphQLDebuggerContext();
+      internalCtx.setSchema(requestContext.schema);
+
+      return {
+        async executionDidStart(requestContext) {
           return {
             willResolveField(fieldCtx) {
-              console.log(fieldCtx.info.fieldName);
+              const parentContext = internalCtx
+                ? internalCtx.getContext()
+                : undefined;
 
-              return (error) => {
+              const traceCTX: OTELContext =
+                parentContext || otelContext.active();
+              internalCtx.setContext(traceCTX);
+
+              const parentSpan = fieldCtx.contextValue.parentSpan as
+                | Span
+                | undefined;
+
+              const attributes = infoToAttributes({
+                info: fieldCtx.info,
+                args: fieldCtx.args,
+                context: fieldCtx.contextValue,
+                schemaHash: internalCtx.schemaHash,
+              });
+
+              const { spanName } = infoToSpanName({
+                info: fieldCtx.info,
+              });
+
+              let span: Span | undefined;
+
+              runInSpan(
+                {
+                  name: spanName,
+                  context: traceCTX,
+                  tracer: internalCtx.tracer,
+                  parentSpan,
+                  attributes,
+                },
+                (_s) => {
+                  span = _s;
+                  requestContext.contextValue.currentSpan = _s;
+                },
+              );
+
+              const callback = (error: Error | null, result: any) => {
                 if (error) {
                   console.log(error);
                 }
+
+                if (span) {
+                  if (!internalCtx.getRootSpan()) {
+                    internalCtx.setRootSpan(span);
+                  }
+
+                  if (isGraphQLInfoRoot({ info: fieldCtx.info })) {
+                    if (internalCtx.includeResult && result) {
+                      span.setAttribute(
+                        AttributeNames.OPERATION_RESULT,
+                        safeJson({ result }),
+                      );
+                    }
+                  }
+
+                  requestContext.contextValue.parentSpan = span;
+                }
               };
+
+              return callback;
             },
           };
-        },
-        async willSendResponse(requestContext) {
-          console.log(requestContext.response);
         },
       };
     },

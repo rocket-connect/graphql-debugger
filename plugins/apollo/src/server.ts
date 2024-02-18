@@ -1,17 +1,49 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
+import util from "util";
 
 import { graphqlDebuggerPlugin } from ".";
 
+const sleep = util.promisify(setTimeout);
+
+const posts = [
+  {
+    title: "Hello world",
+    author: {
+      name: "John Doe",
+    },
+  },
+];
+
 const typeDefs = /* GraphQL */ `
   type Query {
-    hello: String!
+    posts: [Post]!
+  }
+
+  type Post {
+    title: String!
+    author: User!
+  }
+
+  type User {
+    name: String!
   }
 `;
 
 const resolvers = {
   Query: {
-    hello: () => "Hello world!",
+    posts: async () => {
+      await sleep(1000);
+
+      return posts;
+    },
+  },
+  User: {
+    name: async (root: any) => {
+      await sleep(1000);
+
+      return root.name;
+    },
   },
 };
 
