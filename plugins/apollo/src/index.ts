@@ -3,10 +3,11 @@ import { ProxyAdapter } from "@graphql-debugger/adapter-proxy";
 import {
   Context as OTELContext,
   Span,
+  SpanStatusCode,
+  createLegacySpan,
   infoToAttributes,
   infoToSpanName,
   context as otelContext,
-  runInSpan,
   setupOtel,
 } from "@graphql-debugger/opentelemetry";
 import {
@@ -77,26 +78,42 @@ export const graphqlDebuggerPlugin = ({
 
               let span: Span | undefined;
 
-              runInSpan(
-                {
-                  name: spanName,
-                  context: traceCTX,
-                  tracer: internalCtx.tracer,
-                  parentSpan,
-                  attributes,
-                },
-                (_s) => {
-                  span = _s;
-                  requestContext.contextValue.currentSpan = _s;
-                },
-              );
+              if (parentSpan) {
+                span = createLegacySpan({
+                  options: {
+                    name: spanName,
+                    context: traceCTX,
+                    tracer: internalCtx.tracer,
+                    parentSpan,
+                    attributes,
+                  },
+                  parentContext: parentSpan?.spanContext(),
+                });
+              } else {
+                span = createLegacySpan({
+                  options: {
+                    name: spanName,
+                    context: traceCTX,
+                    tracer: internalCtx.tracer,
+                    attributes,
+                  },
+                });
+              }
 
               const callback = (error: Error | null, result: any) => {
-                if (error) {
-                  console.log(error);
+                if (!span) {
+                  return;
                 }
 
-                if (span) {
+                if (error) {
+                  const e = error as Error;
+                  span.setStatus({
+                    code: SpanStatusCode.ERROR,
+                    message: e.message,
+                  });
+                  span.recordException(e);
+                  console.log(error);
+                } else {
                   if (!internalCtx.getRootSpan()) {
                     internalCtx.setRootSpan(span);
                   }
@@ -112,6 +129,8 @@ export const graphqlDebuggerPlugin = ({
 
                   requestContext.contextValue.parentSpan = span;
                 }
+
+                span.end();
               };
 
               return callback;
