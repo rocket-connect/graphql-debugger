@@ -112,7 +112,6 @@ export const graphqlDebuggerPlugin = ({
                     message: e.message,
                   });
                   span.recordException(e);
-                  console.log(error);
                 } else {
                   if (!internalCtx.getRootSpan()) {
                     internalCtx.setRootSpan(span);
