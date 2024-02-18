@@ -1,0 +1,54 @@
+# @graphql-debugger/apollo-server
+
+GraphQL Debugger Plugin for [Apollo Server](https://www.apollographql.com/docs/).
+
+## Installation
+
+```bash
+npm install @graphql-debugger/apollo-server
+```
+
+## Usage
+
+Apply the plugin to your [Apollo Server](https://www.apollographql.com/docs/).
+
+```diff
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { ApolloServer } from "@apollo/server";
++ import { graphqlDebuggerPlugin } from "@graphql-debugger/apollo-server";
+
+const apolloServer = new ApolloServer({
+  schema,
++  plugins: [graphqlDebuggerPlugin()],
+});
+```
+
+## Options
+
+Configure the Debugger Plugin with the options in the plugin function:
+
+```ts
+import { graphqlDebuggerPlugin } from "@graphql-debugger/apollo-server";
+
+import { ApolloServer } from "@apollo/server";
+
+const apolloServer = new ApolloServer({
+  schema,
+  plugins: [
+    graphqlDebuggerPlugin({
+      adapter?: Adapter,
+      exporterConfig: {...} // your options for exporter
+      instrumentations: {...} // your options for instrumentations
+    }),
+  ],
+});
+
+```
+
+
+import { Callout } from "nextra/components";
+
+<Callout emoji="⚠️">
+  If you do not pass thru an adapter, the default Proxy Adapter will be used,
+  see the [Adapters Section](/docs/components/adapters) for more information.
+</Callout>
