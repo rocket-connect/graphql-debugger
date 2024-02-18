@@ -125,6 +125,14 @@ jobs:
       - name: graphql-debugger/plugin-yoga
         run: cd ./plugins/yoga && pnpm run test
 
+  test-plugin-apollo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
+      - name: graphql-debugger/plugin-apollo
+        run: cd ./plugins/apollo && pnpm run test
+
   test-adapter-base:
     runs-on: ubuntu-latest
     steps:

@@ -1,6 +1,7 @@
 import {
   Attributes,
   Context,
+  SpanContext,
   SpanKind,
   SpanStatusCode,
   Tracer,
@@ -15,16 +16,15 @@ export type RunInChildSpanOptions = {
   attributes?: Attributes;
 };
 
-export async function runInSpan<R>(
-  options: RunInChildSpanOptions,
-  cb: (span: Span) => R | Promise<R>,
-) {
-  if (options.parentSpan) {
-    const parentContext = options.parentSpan.spanContext();
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const span = new Span(
+export function createLegacySpan({
+  options,
+  parentContext,
+}: {
+  options: RunInChildSpanOptions;
+  parentContext?: SpanContext;
+}) {
+  if (parentContext) {
+    return new Span(
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       options.tracer,
@@ -38,12 +38,38 @@ export async function runInSpan<R>(
       SpanKind.INTERNAL,
       parentContext.spanId,
     );
+  } else {
+    return options.tracer.startActiveSpan(
+      options.name,
+      { attributes: options.attributes },
+      options.context,
+      (span): Span => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        return span;
+      },
+    );
+  }
+}
+
+export async function runInSpan<R>(
+  options: RunInChildSpanOptions,
+  cb: (span: Span) => R | Promise<R>,
+) {
+  if (options.parentSpan) {
+    const parentContext = options.parentSpan.spanContext();
+
+    const span = createLegacySpan({ options, parentContext });
 
     Object.entries(options.attributes || {}).forEach(([key, value]) => {
-      span.setAttribute(key, value);
+      if (value) {
+        span.setAttribute(key, value);
+      }
     });
 
     try {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       return await cb(span);
     } catch (error) {
       const e = error as Error;
