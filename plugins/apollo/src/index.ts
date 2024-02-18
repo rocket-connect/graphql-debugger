@@ -1,6 +1,7 @@
 import { BaseAdapter } from "@graphql-debugger/adapter-base";
 import { ProxyAdapter } from "@graphql-debugger/adapter-proxy";
 import {
+  SetupOtelInput,
   Span,
   SpanStatusCode,
   createLegacySpan,
@@ -41,9 +42,13 @@ function generatePathString(path: Path | undefined): string {
 export const graphqlDebuggerPlugin = ({
   adapter = new ProxyAdapter(),
   shouldExportSchema = true,
+  exporterConfig,
+  instrumentations,
 }: {
   adapter?: BaseAdapter;
   shouldExportSchema?: boolean;
+  exporterConfig?: SetupOtelInput["exporterConfig"];
+  instrumentations?: SetupOtelInput["instrumentations"];
 } = {}): ApolloServerPlugin<GraphQLContext> => {
   return {
     serverWillStart: async (service) => {
@@ -56,7 +61,7 @@ export const graphqlDebuggerPlugin = ({
         schemaExporter.start();
       }
 
-      setupOtel({});
+      setupOtel({ exporterConfig, instrumentations });
     },
     requestDidStart: async () => {
       const spanMap = new Map<string, Span>();

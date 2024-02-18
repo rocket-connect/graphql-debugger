@@ -60,7 +60,7 @@ const schema = makeExecutableSchema({ typeDefs, resolvers });
 
 const apolloServer = new ApolloServer({
   schema,
-  plugins: [graphqlDebuggerPlugin({})],
+  plugins: [graphqlDebuggerPlugin()],
 });
 
 beforeAll(async () => {
