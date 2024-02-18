@@ -25,12 +25,9 @@
     "@graphql-debugger/opentelemetry": "workspace:^",
     "@graphql-debugger/adapter-proxy": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
-    "apollo-server-express": "3.13.0",
     "@apollo/server": "4.10.0"
   },
   "devDependencies": {
-    "@graphql-debugger/types": "workspace:^",
-    "express": "4.18.2",
-    "supertest": "6.3.4"
+    "@graphql-debugger/types": "workspace:^"
   }
 }
