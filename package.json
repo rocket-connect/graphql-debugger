@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/monorepo",
-  "version": "0.0.0-alpha.97",
+  "version": "0.0.0-alpha.98",
   "private": true,
   "scripts": {
     "dev": "cross-env turbo dev --filter '!graphql-debugger' --filter '!@graphql-debugger/landing-page-app' --filter '!@graphql-debugger/landing-page-server' --concurrency=30",
@@ -33,7 +33,7 @@
     "clean-webpack-plugin": "4.0.0",
     "copy-webpack-plugin": "11.0.0",
     "cross-env": "7.0.3",
-    "css-loader": "6.9.0",
+    "css-loader": "6.10.0",
     "eslint": "8.56.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-config-standard-with-typescript": "42.0.0",
