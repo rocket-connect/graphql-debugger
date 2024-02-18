@@ -66,8 +66,8 @@ importers:
         specifier: 7.0.3
         version: 7.0.3
       css-loader:
-        specifier: 6.9.0
-        version: 6.9.0(webpack@5.89.0)
+        specifier: 6.10.0
+        version: 6.10.0(webpack@5.89.0)
       eslint:
         specifier: 8.56.0
         version: 8.56.0
@@ -5555,11 +5555,17 @@ packages:
       randomfill: 1.0.4
     dev: true
 
-  /css-loader@6.9.0(webpack@5.89.0):
-    resolution: {integrity: sha512-3I5Nu4ytWlHvOP6zItjiHlefBNtrH+oehq8tnQa2kO305qpVyx9XNIT1CXIj5bgCJs7qICBCkgCYxQLKPANoLA==}
+  /css-loader@6.10.0(webpack@5.89.0):
+    resolution: {integrity: sha512-LTSA/jWbwdMlk+rhmElbDR2vbtQoTBPr7fkJE+mxrHj+7ru0hUmHafDRzWIjIHTwpitWVaqY2/UWGRca3yUgRw==}
     engines: {node: '>= 12.13.0'}
     peerDependencies:
+      '@rspack/core': 0.x || 1.x
       webpack: ^5.0.0
+    peerDependenciesMeta:
+      '@rspack/core':
+        optional: true
+      webpack:
+        optional: true
     dependencies:
       icss-utils: 5.1.0(postcss@8.4.33)
       postcss: 8.4.33
