@@ -29,6 +29,6 @@
   "devDependencies": {
     "@graphql-debugger/types": "workspace:^",
     "@graphql-tools/schema": "10.0.2",
-    "@graphql-tools/utils": "10.0.11"
+    "@graphql-tools/utils": "10.1.2"
   }
 }
