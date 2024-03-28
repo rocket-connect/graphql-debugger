@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@graphql-debugger/opentelemetry": "workspace:^",
-    "express": "4.18.2",
+    "express": "4.19.2",
     "supertest": "6.3.4"
   }
 }
