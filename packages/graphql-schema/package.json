@@ -37,7 +37,7 @@
     "@graphql-debugger/graphql-fragments": "workspace:^",
     "@graphql-debugger/collector-proxy": "workspace:^",
     "@graphql-debugger/data-access": "workspace:^",
-    "express": "4.18.2",
+    "express": "4.19.2",
     "gql-tag": "1.0.1"
   }
 }
