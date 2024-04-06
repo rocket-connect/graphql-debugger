@@ -24,12 +24,12 @@
     "@graphql-debugger/adapter-base": "workspace:^",
     "@graphql-debugger/adapter-proxy": "workspace:^",
     "@graphql-tools/schema": "10.0.0",
-    "@graphql-tools/utils": "10.0.8",
+    "@graphql-tools/utils": "10.1.2",
     "graphql-yoga": "5.1.1"
   },
   "devDependencies": {
     "@graphql-debugger/opentelemetry": "workspace:^",
-    "express": "4.18.2",
+    "express": "4.19.2",
     "supertest": "6.3.4"
   }
 }

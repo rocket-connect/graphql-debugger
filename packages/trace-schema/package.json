@@ -26,7 +26,7 @@
     "@graphql-debugger/trace-directive": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
     "@graphql-tools/schema": "10.0.2",
-    "@graphql-tools/utils": "10.0.11"
+    "@graphql-tools/utils": "10.1.2"
   },
   "devDependencies": {
     "@graphql-debugger/adapter-sqlite": "workspace:^",

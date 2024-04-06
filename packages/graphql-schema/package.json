@@ -26,7 +26,7 @@
     "@graphql-debugger/trace-schema": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
     "@graphql-tools/schema": "10.0.2",
-    "@graphql-tools/utils": "10.0.11",
+    "@graphql-tools/utils": "10.1.2",
     "@pothos/core": "3.41.0",
     "dataloader": "2.2.2",
     "graphql-yoga": "5.1.1"
@@ -37,7 +37,7 @@
     "@graphql-debugger/graphql-fragments": "workspace:^",
     "@graphql-debugger/collector-proxy": "workspace:^",
     "@graphql-debugger/data-access": "workspace:^",
-    "express": "4.18.2",
+    "express": "4.19.2",
     "gql-tag": "1.0.1"
   }
 }
