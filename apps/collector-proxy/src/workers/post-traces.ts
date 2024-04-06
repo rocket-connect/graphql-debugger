@@ -136,6 +136,11 @@ export function postTracesWorker({
               isGraphQLRootSpan: Boolean(
                 span.attributes?.[AttributeNames.OPERATION_ROOT],
               ),
+              ...(span.attributes
+                ? {
+                    attributes: JSON.stringify(span.attributes),
+                  }
+                : {}),
             },
           });
         }),

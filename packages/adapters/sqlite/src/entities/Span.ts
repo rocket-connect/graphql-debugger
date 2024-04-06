@@ -145,7 +145,7 @@ export class SQLiteSpan extends BaseSpan {
         graphqlOperationType: input.graphqlOperationType,
         isForeign: input.isForeign || false,
         isGraphQLRootSpan: input.isGraphQLRootSpan || false,
-        attributes: JSON.stringify(input.attributes),
+        attributes: input.attributes,
       },
     });
 
