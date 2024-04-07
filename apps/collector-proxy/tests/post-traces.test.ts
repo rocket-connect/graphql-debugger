@@ -347,6 +347,21 @@ describe("POST /v1/traces", () => {
     traceGroup?.spans.forEach((span) => {
       expect(span.isForeign).toEqual(false);
       expect(span.graphqlSchemaHash).toEqual(schemaHash);
+
+      if (span.isGraphQLRootSpan) {
+        expect(span.attributes).toBeTruthy();
+        expect(span.graphqlDocument).toBeTruthy();
+
+        const stringAttributes = span.attributes as string;
+        const parsedAttributes = JSON.parse(stringAttributes);
+
+        expect(parsedAttributes).toMatchObject({
+          [AttributeNames.OPERATION_NAME]: "users",
+          [AttributeNames.OPERATION_TYPE]: "query",
+          [AttributeNames.OPERATION_RETURN_TYPE]: "[User]",
+          [AttributeNames.OPERATION_ROOT]: true,
+        });
+      }
     });
 
     const rootSpan = traceGroup?.spans.find((span) => span.isGraphQLRootSpan);
