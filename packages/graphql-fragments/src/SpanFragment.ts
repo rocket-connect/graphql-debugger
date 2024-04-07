@@ -23,5 +23,6 @@ export const SpanFragment = gql`
     updatedAt
     isForeign
     isGraphQLRootSpan
+    attributes
   }
 `;
