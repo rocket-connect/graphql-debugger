@@ -23,7 +23,7 @@
     "graphql": "^16.0.0 || ^17.0.0"
   },
   "dependencies": {
-    "@fontsource/roboto": "5.0.8",
+    "@fontsource/roboto": "5.0.12",
     "@graphql-debugger/adapter-proxy": "workspace:^",
     "@graphql-debugger/client": "workspace:^",
     "@graphql-debugger/time": "workspace:^",
