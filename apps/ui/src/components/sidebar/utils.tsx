@@ -77,10 +77,4 @@ export const configs = [
     description: "Toggle between light and dark mode",
     enabled: true,
   },
-  {
-    name: "Cookies",
-    description: "We collect data to improve your experience",
-    enabled: true,
-    alwaysEnabled: true,
-  },
 ];
