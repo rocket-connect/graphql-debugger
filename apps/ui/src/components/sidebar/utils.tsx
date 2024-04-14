@@ -6,7 +6,6 @@ import { SchemaViewer } from "../schema/viewer";
 import { Config } from "./views/config";
 import { Favourites } from "./views/favourites";
 import { History as HistoryView } from "./views/history";
-import { Info } from "./views/info/info";
 
 interface SideBar {
   description: string;
@@ -57,10 +56,6 @@ export const sideBarComponentMapper = (
       ? "Your GraphQL Schema, with analytics and traces"
       : "Select a GraphQL Schema to start exploring your traces",
     component: <SchemaViewer />,
-  },
-  info: {
-    description: "",
-    component: <Info />,
   },
   config: {
     description: "Configure GraphQL debugger settings, stored in your browser",

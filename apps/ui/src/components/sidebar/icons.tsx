@@ -2,7 +2,6 @@ import { useContext } from "react";
 
 import { SideBarContext, type SideBarViewTypes } from "../../context/sidebar";
 import { GithubIcon } from "../../icons";
-import { Info, InfoFilled } from "../../icons/info";
 import { IDS } from "../../testing";
 import { iconsMapper } from "./utils";
 
@@ -55,14 +54,6 @@ export function SideBarIcons() {
           >
             <GithubIcon />
           </a>
-
-          <button
-            id={IDS.sidebar.icons.info}
-            className="w-8"
-            onClick={() => handleRouteChange("info")}
-          >
-            {activeRoute("info") ? <InfoFilled /> : <Info />}
-          </button>
         </div>
       </div>
     </div>

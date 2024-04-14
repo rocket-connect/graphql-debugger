@@ -50,8 +50,8 @@ export class Sidebar extends BaseComponent {
 
     const id = IDS.sidebar.icons[key];
 
-    const infoIcon = await page.$(`#${id}`);
-    await infoIcon?.click();
+    const icon = await page.$(`#${id}`);
+    await icon?.click();
 
     const view = await this.getView(key);
 

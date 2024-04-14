@@ -47,14 +47,12 @@ export const IDS = {
       history: "sidebar-history",
       favourites: "sidebar-favourites",
       github: "sidebar-github",
-      info: "sidebar-info",
     },
     views: {
       schemas: "sidebar-schemas-view",
       config: "sidebar-config-view",
       history: "sidebar-history-view",
       favourites: "sidebar-favourites-view",
-      info: "sidebar-info-view",
     },
   },
   modal: {
