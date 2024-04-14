@@ -12,10 +12,6 @@ export { default as configFilled } from "../public/config-filled.svg";
 // @ts-ignore
 export { default as configStroke } from "../public/config-stroke.svg";
 // @ts-ignore
-export { default as loginFilled } from "../public/login-filled.svg";
-// @ts-ignore
-export { default as loginStroke } from "../public/login-stroke.svg";
-// @ts-ignore
 export { default as folderFilled } from "../public/folder-filled.svg";
 // @ts-ignore
 export { default as folderStroke } from "../public/folder-stroke.svg";

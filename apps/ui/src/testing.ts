@@ -44,7 +44,6 @@ export const IDS = {
       view: "sidebar-icons-view",
       schemas: "sidebar-schemas",
       config: "sidebar-config",
-      login: "sidebar-login",
       history: "sidebar-history",
       favourites: "sidebar-favourites",
       github: "sidebar-github",
@@ -53,7 +52,6 @@ export const IDS = {
     views: {
       schemas: "sidebar-schemas-view",
       config: "sidebar-config-view",
-      login: "sidebar-login-view",
       history: "sidebar-history-view",
       favourites: "sidebar-favourites-view",
       info: "sidebar-info-view",

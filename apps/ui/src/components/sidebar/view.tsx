@@ -25,7 +25,7 @@ export function SideBarView() {
     return <></>;
   }
 
-  const shouldDisplayLogo = ["login", "info"].includes(viewType);
+  const shouldDisplayLogo = ["info"].includes(viewType);
   const shouldDisplayHeader = !["info"].includes(viewType);
 
   return (

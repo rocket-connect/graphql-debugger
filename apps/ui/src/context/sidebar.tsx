@@ -8,7 +8,6 @@ export type SideBarViewTypes =
   | "schema"
   | "info"
   | "config"
-  | "login"
   | "history"
   | "favourites";
 
@@ -31,10 +30,6 @@ export type SideBarConfigView = {
   type: "config";
 };
 
-export type SideBarLoginView = {
-  type: "login";
-};
-
 export type SideBarHistoryView = {
   type: "history";
 };
@@ -43,7 +38,6 @@ export type SideBarView = (
   | SideBarSchemaView
   | SideBarInfoView
   | SideBarConfigView
-  | SideBarLoginView
   | SideBarHistoryView
   | SideBarFavouritesView
 ) & {

@@ -1,11 +1,4 @@
-import {
-  Docs,
-  DocsFilled,
-  Settings,
-  SettingsFilled,
-  User,
-  UserFilled,
-} from "../../icons";
+import { Docs, DocsFilled, Settings, SettingsFilled } from "../../icons";
 import { History, HistoryActive as HistoryFilled } from "../../icons/history";
 import { Star, StarFilled } from "../../icons/star";
 import { IDS } from "../../testing";
@@ -14,7 +7,6 @@ import { Config } from "./views/config";
 import { Favourites } from "./views/favourites";
 import { History as HistoryView } from "./views/history";
 import { Info } from "./views/info/info";
-import { Login } from "./views/login";
 
 interface SideBar {
   description: string;
@@ -42,12 +34,6 @@ export const iconsMapper: Record<
     type: "config",
     active: <SettingsFilled height={35} width={35} />,
     inactive: <Settings height={35} width={35} />,
-  },
-  login: {
-    id: IDS.sidebar.icons.login,
-    type: "login",
-    active: <UserFilled />,
-    inactive: <User />,
   },
   history: {
     id: IDS.sidebar.icons.history,
@@ -79,11 +65,6 @@ export const sideBarComponentMapper = (
   config: {
     description: "Configure GraphQL debugger settings, stored in your browser",
     component: <Config />,
-  },
-  login: {
-    description:
-      "Access GraphQL Debugger Cloud to view your projects and collaborate with your team",
-    component: <Login />,
   },
   history: {
     description: "View your most recent traces",
