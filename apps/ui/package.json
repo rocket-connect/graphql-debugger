@@ -29,7 +29,7 @@
     "@graphql-debugger/time": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
     "@tanstack/react-query": "5.20.2",
-    "@testing-library/jest-dom": "6.1.5",
+    "@testing-library/jest-dom": "6.4.2",
     "@testing-library/react": "14.1.2",
     "@testing-library/user-event": "14.5.2",
     "clsx": "2.1.0",
