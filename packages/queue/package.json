@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@graphql-debugger/utils": "workspace:^",
-    "fastq": "1.15.0"
+    "fastq": "1.17.1"
   },
   "devDependencies": {}
 }
