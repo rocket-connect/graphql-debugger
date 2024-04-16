@@ -45,7 +45,7 @@
     "zustand": "4.5.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "8.4.0",
+    "@faker-js/faker": "8.4.1",
     "@graphql-debugger/types": "workspace:^"
   },
   "engines": {
