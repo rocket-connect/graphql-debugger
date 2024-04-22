@@ -37,6 +37,9 @@ export const IDS = {
     page: "dashboard-page",
     logo: "dashboard-logo",
   },
+  demo: {
+    page: "demo-page",
+  },
   sidebar: {
     logo: "sidebar-logo",
     view: "sidebar-view",

@@ -28,6 +28,7 @@
     "@graphql-debugger/client": "workspace:^",
     "@graphql-debugger/time": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
+    "@graphql-tools/schema": "10.0.2",
     "@tanstack/react-query": "5.20.2",
     "@testing-library/jest-dom": "6.4.2",
     "@testing-library/react": "14.1.2",

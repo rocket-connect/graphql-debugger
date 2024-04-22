@@ -15,6 +15,7 @@ import { v4 as uuidv4 } from "uuid";
 import { ClientContext } from "../../context/client";
 import { RefreshIcon } from "../../icons/refresh";
 import { Star, StarFilled } from "../../icons/star";
+import { demoTraces } from "../../pages/demo/traces";
 import { IDS } from "../../testing";
 import { cn } from "../../utils/cn";
 import { traceNameIncludes } from "../../utils/find-traces";
@@ -39,6 +40,10 @@ export function SchemaTraces() {
   const { data: traces, isLoading } = useQuery({
     queryKey: ["traces", params.schemaId, searchParams.get("rootSpanName")],
     queryFn: async () => {
+      if (params.schemaId === "demo") {
+        return demoTraces;
+      }
+
       const traces = await client.trace.findMany({
         where: {
           schemaId: params.schemaId,
