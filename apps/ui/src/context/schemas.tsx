@@ -9,6 +9,7 @@ import {
   useRef,
 } from "react";
 
+import { demoSchema } from "../pages/demo/schema";
 import { ClientContext } from "./client";
 
 export interface SchemasContextProps {
@@ -29,10 +30,13 @@ export function SchemasProvider({
 }): JSX.Element {
   const schemaRef = useRef<Schema>();
   const { client } = useContext(ClientContext);
+  const queryFn = useRef<() => Promise<Schema[]>>(() =>
+    client.schema.findMany({}),
+  );
 
   const getSchemas = useQuery({
     queryKey: ["schemas"],
-    queryFn: async () => await client.schema.findMany({}),
+    queryFn: () => queryFn.current(),
     refetchInterval: 5000,
   });
 
@@ -40,7 +44,10 @@ export function SchemasProvider({
     (schema: Schema | undefined) => {
       schemaRef.current = schema;
 
-      // This will trigger a re-render
+      if (schema?.id === "demo") {
+        queryFn.current = async () => [demoSchema];
+      }
+
       getSchemas.refetch();
     },
     [getSchemas],

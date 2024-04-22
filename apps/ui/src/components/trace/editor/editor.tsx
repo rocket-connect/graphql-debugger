@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { useParams } from "react-router-dom";
 
 import { ClientContext } from "../../../context/client";
+import { demoTraces } from "../../../pages/demo/traces";
 import { IDS } from "../../../testing";
 import { Query } from "./query";
 import { Variables } from "./variables";
@@ -16,6 +17,10 @@ export function Editor() {
     queryFn: async () => {
       if (!params.traceId) {
         return [];
+      }
+
+      if (params.schemaId === "demo") {
+        return [demoTraces.find((trace) => trace.id === params.traceId)];
       }
 
       const trace = await client.trace.findMany({

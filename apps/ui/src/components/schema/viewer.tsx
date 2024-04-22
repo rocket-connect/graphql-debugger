@@ -3,10 +3,11 @@ import {
   type ObjectTypeDefinitionNode,
   parse,
 } from "graphql";
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { SchemasContext } from "../../context/schemas";
+import { demoSchema } from "../../pages/demo/schema";
 import { IDS } from "../../testing";
 import { GettingStarted } from "../sidebar/views/info/getting-started";
 import { Type } from "./type";
@@ -72,8 +73,15 @@ function RenderSchema() {
 
 export function SchemaViewer() {
   const navigate = useNavigate();
+  const params = useParams();
   const schemasContext = useContext(SchemasContext);
   const currentSchema = schemasContext?.schemaRef.current;
+
+  useEffect(() => {
+    if (params?.schemaId === "demo") {
+      schemasContext?.setSelectedSchema(demoSchema);
+    }
+  }, [params.schemaId, schemasContext]);
 
   return (
     <div
