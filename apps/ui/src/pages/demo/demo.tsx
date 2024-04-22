@@ -1,5 +1,4 @@
 import { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { InfoLogo } from "../../components/sidebar/views/info/info-logo";
 import { Page } from "../../components/utils/page";
@@ -9,16 +8,13 @@ import { demoSchema } from "./schema";
 
 export function Demo() {
   const schemaContext = useContext(SchemasContext);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (!schemaContext) {
       return;
     }
     schemaContext.setSelectedSchema(demoSchema);
-
-    // navigate(`/schema/${demoSchema.id}`);
-  }, []);
+  });
 
   return (
     <Page id={IDS.demo.page}>
