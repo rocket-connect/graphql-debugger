@@ -28,4 +28,5 @@ jobs:
             cd ./docs/
             pm2 restart graphql-debugger.com
             cd ../apps/ui
+            DEMO_MODE=true pnpm build
             pm2 restart demo

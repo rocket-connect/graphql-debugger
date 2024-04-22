@@ -65,6 +65,7 @@ module.exports = {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         WEBPACK_DEV_PORT: JSON.stringify(process.env.WEBPACK_DEV_PORT),
         API_URL: JSON.stringify(process.env.API_URL),
+        DEMO_MODE: JSON.stringify(process.env.DEMO_MODE),
       },
     }),
     new HtmlWebpackPlugin({

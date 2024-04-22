@@ -12,6 +12,7 @@ import {
 } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
+import { DEMO_MODE } from "../../config";
 import { ClientContext } from "../../context/client";
 import { RefreshIcon } from "../../icons/refresh";
 import { Star, StarFilled } from "../../icons/star";
@@ -40,7 +41,7 @@ export function SchemaTraces() {
   const { data: traces, isLoading } = useQuery({
     queryKey: ["traces", params.schemaId, searchParams.get("rootSpanName")],
     queryFn: async () => {
-      if (params.schemaId === "demo") {
+      if (DEMO_MODE) {
         return demoTraces;
       }
 
