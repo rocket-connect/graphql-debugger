@@ -12,10 +12,11 @@ import {
 } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
+import { DEMO_MODE } from "../../config";
 import { ClientContext } from "../../context/client";
+import { demoTraces } from "../../demo/traces";
 import { RefreshIcon } from "../../icons/refresh";
 import { Star, StarFilled } from "../../icons/star";
-import { demoTraces } from "../../pages/demo/traces";
 import { IDS } from "../../testing";
 import { cn } from "../../utils/cn";
 import { traceNameIncludes } from "../../utils/find-traces";
@@ -40,7 +41,7 @@ export function SchemaTraces() {
   const { data: traces, isLoading } = useQuery({
     queryKey: ["traces", params.schemaId, searchParams.get("rootSpanName")],
     queryFn: async () => {
-      if (params.schemaId === "demo") {
+      if (DEMO_MODE) {
         return demoTraces;
       }
 

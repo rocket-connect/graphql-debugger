@@ -2,8 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
 
+import { DEMO_MODE } from "../../config";
 import { ClientContext } from "../../context/client";
-import { demoTraces } from "../../pages/demo/traces";
+import { demoTraces } from "../../demo/traces";
 import { IDS } from "../../testing";
 import { Editor } from "./editor/editor";
 import { TraceHeader } from "./header";
@@ -21,7 +22,7 @@ export function Trace() {
         return [];
       }
 
-      if (params.schemaId === "demo") {
+      if (DEMO_MODE) {
         const trace = demoTraces.find((trace) => trace.id === params.traceId);
 
         return trace ? [trace] : [];

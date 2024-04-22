@@ -1,5 +1,6 @@
 import toast from "react-hot-toast";
 
+import { DEMO_MODE } from "../../../config";
 import { useThemeStore } from "../../../store/useThemeStore";
 import { IDS } from "../../../testing";
 import { THEME_TYPE } from "../../../utils/constants";
@@ -49,7 +50,7 @@ export function Config() {
         })}
       </div>
 
-      <Backend />
+      {!DEMO_MODE && <Backend />}
     </div>
   );
 }
