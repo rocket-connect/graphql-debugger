@@ -27,3 +27,6 @@ jobs:
             cd ./docs/
             pnpm build
             pm2 restart graphql-debugger.com
+            cd ../apps/ui
+            pnpm build
+            pm2 restart demo
