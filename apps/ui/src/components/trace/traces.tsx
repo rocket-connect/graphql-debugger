@@ -14,9 +14,9 @@ import { v4 as uuidv4 } from "uuid";
 
 import { DEMO_MODE } from "../../config";
 import { ClientContext } from "../../context/client";
+import { demoTraces } from "../../demo/traces";
 import { RefreshIcon } from "../../icons/refresh";
 import { Star, StarFilled } from "../../icons/star";
-import { demoTraces } from "../../pages/demo/traces";
 import { IDS } from "../../testing";
 import { cn } from "../../utils/cn";
 import { traceNameIncludes } from "../../utils/find-traces";

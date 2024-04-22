@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 
 import { DEMO_MODE } from "../../../config";
 import { ClientContext } from "../../../context/client";
-import { demoTraces } from "../../../pages/demo/traces";
+import { demoTraces } from "../../../demo/traces";
 import { IDS } from "../../../testing";
 import { Query } from "./query";
 import { Variables } from "./variables";

@@ -10,7 +10,7 @@ import {
 } from "react";
 
 import { DEMO_MODE } from "../config";
-import { demoSchema } from "../pages/demo/schema";
+import { demoSchema } from "../demo/schema";
 import { ClientContext } from "./client";
 
 export interface SchemasContextProps {
