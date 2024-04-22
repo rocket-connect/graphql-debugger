@@ -3,7 +3,6 @@ import { Trace } from "@graphql-debugger/types";
 import { QueryViewer } from "./query/viewer";
 
 export function Query({ trace }: { trace?: Trace }) {
-  console.log(trace);
   return (
     <div className="p-4 text-neutral">
       <h2 className="font-bold">Query</h2>
