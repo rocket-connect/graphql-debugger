@@ -24,6 +24,8 @@ jobs:
             git reset --hard
             git pull origin main
             pnpm i
-            cd ./docs/
             pnpm build
+            cd ./docs/
             pm2 restart graphql-debugger.com
+            cd ../apps/ui
+            pm2 restart demo
