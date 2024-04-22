@@ -5,13 +5,13 @@ import { makeExecutableSchema } from "@graphql-tools/schema";
 
 export const typeDefs = /* GraphQL */ `
   type User {
-    ID: ID!
+    id: ID!
     username: String!
     posts: [Post!]!
   }
 
   type Post {
-    ID: ID!
+    id: ID!
     title: String!
     content: String!
   }

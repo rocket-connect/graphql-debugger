@@ -91,6 +91,25 @@ successfullLogin.spans.push({
   }),
 });
 
+successfullLogin.spans.push({
+  id: uuid(),
+  spanId: uuid(),
+  traceId: successfullLoginTraceId,
+  parentSpanId: loginSpanId,
+  traceGroupId: successfullLoginTraceGroupId,
+  name: "Token Service",
+  kind: "0",
+  durationNano: "500000",
+  startTimeUnixNano: "1632825750200000000",
+  endTimeUnixNano: "1632825750700000000",
+  isForeign: true,
+  createdAt: "2023-10-01T12:00:02Z",
+  updatedAt: "2023-10-01T12:00:02.5Z",
+  attributes: JSON.stringify({
+    username: "john-doe",
+  }),
+});
+
 const failedLoginTraceId = uuid();
 const failedLoginSqlTraceGroupId = uuid();
 const failedLoginSpanId = uuid();
