@@ -9,7 +9,8 @@ import {
   useRef,
 } from "react";
 
-import { demoSchema } from "../pages/demo/schema";
+import { DEMO_MODE } from "../config";
+import { demoSchema } from "../demo/schema";
 import { ClientContext } from "./client";
 
 export interface SchemasContextProps {
@@ -30,9 +31,13 @@ export function SchemasProvider({
 }): JSX.Element {
   const schemaRef = useRef<Schema>();
   const { client } = useContext(ClientContext);
-  const queryFn = useRef<() => Promise<Schema[]>>(() =>
-    client.schema.findMany({}),
-  );
+  const queryFn = useRef<() => Promise<Schema[]>>(async () => {
+    if (DEMO_MODE) {
+      return [demoSchema];
+    } else {
+      return client.schema.findMany({});
+    }
+  });
 
   const getSchemas = useQuery({
     queryKey: ["schemas"],
@@ -43,11 +48,7 @@ export function SchemasProvider({
   const setSelectedSchema = useCallback(
     (schema: Schema | undefined) => {
       schemaRef.current = schema;
-
-      if (schema?.id === "demo") {
-        queryFn.current = async () => [demoSchema];
-      }
-
+      // This will trigger a re-render
       getSchemas.refetch();
     },
     [getSchemas],
