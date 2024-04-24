@@ -5,6 +5,7 @@ import { FieldDefinitionNode } from "graphql";
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
 
+import { DEMO_MODE } from "../../config";
 import { ClientContext } from "../../context/client";
 import { StatsDetails } from "./stat-details";
 
@@ -20,13 +21,25 @@ export function Stats({ field, parentName }: StatsProps) {
 
   const { data: aggregate } = useQuery({
     queryKey: ["aggregateSpans", name, params.schemaId, parentName],
-    queryFn: async () =>
-      await client.span.aggregate({
+    queryFn: async () => {
+      if (DEMO_MODE) {
+        return {
+          resolveCount: 20,
+          errorCount: 5,
+          averageDuration: "1000000",
+          lastResolved: "1632825751000000000",
+        };
+      }
+
+      const response = await client.span.aggregate({
         where: {
           name: `${parentName} ${name}`,
           schemaId: params.schemaId as string,
         },
-      }),
+      });
+
+      return response;
+    },
   });
 
   const lastResolveUnixNano = UnixNanoTimeStamp.fromString(

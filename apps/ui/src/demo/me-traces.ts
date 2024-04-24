@@ -57,6 +57,30 @@ meQueryTrace.spans.push({
     [AttributeNames.DOCUMENT]: meQuery,
   }),
   graphqlDocument: meQuery,
+  graphqlContext: JSON.stringify({
+    "X-Forwarded-For": "http://localhost:3000",
+    "secret-token-123": "Bearer token",
+  }),
+  graphqlResult: JSON.stringify({
+    data: {
+      me: {
+        id: "user_id",
+        username: "test",
+        posts: [
+          {
+            id: "1",
+            title: "First post",
+            content: "This is the first post",
+          },
+          {
+            id: "2",
+            title: "Second post",
+            content: "This is the second post",
+          },
+        ],
+      },
+    },
+  }),
 });
 
 meQueryTrace.spans.push({
@@ -112,7 +136,6 @@ meQueryTrace.spans.push({
   isForeign: false,
   createdAt: "2023-10-01T12:00:02Z",
   updatedAt: "2023-10-01T12:00:02.5Z",
-  attributes: JSON.stringify({}),
 });
 
 meQueryTrace.spans.push({
@@ -130,7 +153,6 @@ meQueryTrace.spans.push({
   isForeign: false,
   createdAt: "2023-10-01T12:00:02Z",
   updatedAt: "2023-10-01T12:00:02.5Z",
-  attributes: JSON.stringify({}),
 });
 
 meQueryTrace.spans.push({
@@ -148,7 +170,6 @@ meQueryTrace.spans.push({
   isForeign: false,
   createdAt: "2023-10-01T12:00:02Z",
   updatedAt: "2023-10-01T12:00:02.5Z",
-  attributes: JSON.stringify({}),
 });
 
 meQueryTrace.spans.push({
@@ -166,7 +187,6 @@ meQueryTrace.spans.push({
   isForeign: false,
   createdAt: "2023-10-01T12:00:02Z",
   updatedAt: "2023-10-01T12:00:02.5Z",
-  attributes: JSON.stringify({}),
 });
 
 meQueryTrace.spans.push({
@@ -223,7 +243,6 @@ meQueryTrace.spans.push({
   isForeign: false,
   createdAt: "2023-10-01T12:00:02Z",
   updatedAt: "2023-10-01T12:00:02.5Z",
-  attributes: JSON.stringify({}),
 });
 
 meQueryTrace.spans.push({
@@ -241,7 +260,6 @@ meQueryTrace.spans.push({
   isForeign: false,
   createdAt: "2023-10-01T12:00:02Z",
   updatedAt: "2023-10-01T12:00:02.5Z",
-  attributes: JSON.stringify({}),
 });
 
 meQueryTrace.spans.push({
@@ -259,7 +277,6 @@ meQueryTrace.spans.push({
   isForeign: false,
   createdAt: "2023-10-01T12:00:02Z",
   updatedAt: "2023-10-01T12:00:02.5Z",
-  attributes: JSON.stringify({}),
 });
 
 const failedLoginTraceId = uuid();
