@@ -20,11 +20,11 @@
     "graphql": "^16.0.0 || ^17.0.0"
   },
   "dependencies": {
-    "@graphql-debugger/trace-schema": "workspace:^",
     "@graphql-debugger/adapter-base": "workspace:^",
     "@graphql-debugger/adapter-proxy": "workspace:^",
-    "@graphql-tools/schema": "10.0.0",
-    "@graphql-tools/utils": "10.1.2",
+    "@graphql-debugger/trace-schema": "workspace:^",
+    "@graphql-tools/schema": "10.0.3",
+    "@graphql-tools/utils": "10.1.3",
     "graphql-yoga": "5.3.0"
   },
   "devDependencies": {
