@@ -41,7 +41,15 @@ export function SchemaTraces() {
   const { data: traces, isLoading } = useQuery({
     queryKey: ["traces", params.schemaId, searchParams.get("rootSpanName")],
     queryFn: async () => {
+      const rootSpanName = searchParams.get("rootSpanName");
+
       if (DEMO_MODE) {
+        if (rootSpanName) {
+          return demoTraces.filter((trace) => {
+            return trace?.rootSpan?.name.includes(rootSpanName);
+          });
+        }
+
         return demoTraces;
       }
 
