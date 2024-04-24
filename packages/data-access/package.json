@@ -21,6 +21,6 @@
   "dependencies": {
     "@prisma/client": "5.12.1",
     "@prisma/instrumentation": "5.7.0",
-    "prisma": "5.7.0"
+    "prisma": "5.12.1"
   }
 }
