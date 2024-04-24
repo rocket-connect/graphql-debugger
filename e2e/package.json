@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/e2e",
-  "version": "0.0.0-alpha.100",
+  "version": "0.0.0-alpha.102",
   "private": true,
   "publishConfig": {
     "publish": false
@@ -19,21 +19,21 @@
     "graphql": "^16.0.0 || ^17.0.0"
   },
   "dependencies": {
+    "@graphql-debugger/adapter-base": "workspace:^",
+    "@graphql-debugger/adapter-proxy": "workspace:^",
+    "@graphql-debugger/adapter-sqlite": "workspace:^",
     "@graphql-debugger/backend": "workspace:^",
     "@graphql-debugger/client": "workspace:^",
-    "@graphql-debugger/adapter-base": "workspace:^",
-    "@graphql-debugger/adapter-sqlite": "workspace:^",
-    "@graphql-debugger/adapter-proxy": "workspace:^",
     "@graphql-debugger/collector-proxy": "workspace:^",
     "@graphql-debugger/trace-schema": "workspace:^",
     "@graphql-debugger/ui": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
-    "@graphql-tools/schema": "10.0.2",
-    "@graphql-tools/utils": "10.0.11",
+    "@graphql-tools/schema": "10.0.3",
+    "@graphql-tools/utils": "10.1.3",
     "puppeteer": "21.6.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "8.3.1",
+    "@faker-js/faker": "8.4.1",
     "@graphql-debugger/types": "workspace:^"
   }
 }

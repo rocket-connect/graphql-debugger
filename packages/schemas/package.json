@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/schemas",
-  "version": "0.0.0-alpha.100",
+  "version": "0.0.0-alpha.102",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -16,10 +16,8 @@
     "build": "tsc",
     "test": "echo \"No tests\""
   },
-  "peerDependencies": {},
   "dependencies": {
     "@graphql-debugger/time": "workspace:^",
-    "zod": "3.22.4"
-  },
-  "devDependencies": {}
+    "zod": "3.23.4"
+  }
 }

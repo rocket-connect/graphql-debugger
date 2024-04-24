@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/client",
-  "version": "0.0.0-alpha.100",
+  "version": "0.0.0-alpha.102",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -24,11 +24,11 @@
     "@graphql-debugger/adapter-base": "workspace:^",
     "@graphql-debugger/adapter-sqlite": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
-    "axios": "1.6.7"
+    "axios": "1.6.8"
   },
   "devDependencies": {
     "@graphql-debugger/types": "workspace:^",
-    "@graphql-tools/schema": "10.0.2",
-    "@graphql-tools/utils": "10.1.2"
+    "@graphql-tools/schema": "10.0.3",
+    "@graphql-tools/utils": "10.1.3"
   }
 }

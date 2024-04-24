@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/adapter-proxy",
-  "version": "0.0.0-alpha.100",
+  "version": "0.0.0-alpha.102",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -22,18 +22,18 @@
   },
   "dependencies": {
     "@graphql-debugger/adapter-base": "workspace:^",
-    "@graphql-debugger/schemas": "workspace:^",
     "@graphql-debugger/graphql-fragments": "workspace:^",
-    "axios": "1.6.7"
+    "@graphql-debugger/schemas": "workspace:^",
+    "axios": "1.6.8"
   },
   "devDependencies": {
     "@graphql-debugger/adapter-sqlite": "workspace:^",
     "@graphql-debugger/client": "workspace:^",
-    "@graphql-debugger/utils": "workspace:^",
     "@graphql-debugger/collector-proxy": "workspace:^",
     "@graphql-debugger/graphql-schema": "workspace:^",
     "@graphql-debugger/types": "workspace:^",
-    "@graphql-tools/schema": "10.0.2",
+    "@graphql-debugger/utils": "workspace:^",
+    "@graphql-tools/schema": "10.0.3",
     "cors": "2.8.5",
     "express": "4.19.2"
   }

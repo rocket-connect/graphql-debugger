@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/apollo-server",
-  "version": "0.0.0-alpha.100",
+  "version": "0.0.0-alpha.102",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -20,12 +20,12 @@
     "graphql": "^16.0.0 || ^17.0.0"
   },
   "dependencies": {
-    "@graphql-debugger/trace-schema": "workspace:^",
+    "@apollo/server": "4.10.4",
     "@graphql-debugger/adapter-base": "workspace:^",
-    "@graphql-debugger/opentelemetry": "workspace:^",
     "@graphql-debugger/adapter-proxy": "workspace:^",
-    "@graphql-debugger/utils": "workspace:^",
-    "@apollo/server": "4.10.0"
+    "@graphql-debugger/opentelemetry": "workspace:^",
+    "@graphql-debugger/trace-schema": "workspace:^",
+    "@graphql-debugger/utils": "workspace:^"
   },
   "devDependencies": {
     "@graphql-debugger/types": "workspace:^"
