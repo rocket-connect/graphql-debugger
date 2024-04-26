@@ -53,4 +53,80 @@ type Query {
 }"
 `);
   });
+
+  test("should add trace directive to all queries and mutations but not fields", () => {
+    const typeDefs = `
+        type User {
+            name: String!
+            email: String!
+        }
+
+        type Post {
+            title: String!
+            content: String!
+        }
+
+        type Query {
+            user: User!
+            posts: [Post]!
+        }
+
+        type Mutation {
+          createUser(name: String!): User!
+        }
+      `;
+
+    const resolvers = {
+      Query: {
+        user: () => ({ name: "John" }),
+      },
+      Mutation: {
+        createUser: (_, { name }) => ({ name }),
+      },
+    };
+
+    const schema = makeExecutableSchema({
+      typeDefs,
+      resolvers,
+    });
+
+    const adapter = new SQLiteAdapter();
+
+    const tracedSchema = traceSchema({
+      schema,
+      adapter,
+      shouldExportSchema: false,
+      shouldExcludeTypeFields: true,
+    });
+
+    const outputTypedefs = printSchemaWithDirectives(tracedSchema);
+
+    expect(outputTypedefs).toMatchInlineSnapshot(`
+"schema {
+  query: Query
+  mutation: Mutation
+}
+
+directive @trace on FIELD_DEFINITION
+
+type User {
+  name: String!
+  email: String!
+}
+
+type Post {
+  title: String!
+  content: String!
+}
+
+type Query {
+  user: User! @trace
+  posts: [Post]! @trace
+}
+
+type Mutation {
+  createUser(name: String!): User! @trace
+}"
+`);
+  });
 });

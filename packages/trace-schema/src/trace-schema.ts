@@ -1,18 +1,11 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { BaseAdapter } from "@graphql-debugger/adapter-base";
 import { SetupOtelInput, setupOtel } from "@graphql-debugger/opentelemetry";
 import { traceDirective } from "@graphql-debugger/trace-directive";
 
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { getResolversFromSchema } from "@graphql-tools/utils";
-import {
-  FieldDefinitionNode,
-  GraphQLSchema,
-  Kind,
-  parse,
-  print,
-  printSchema,
-  visit,
-} from "graphql";
+import { GraphQLSchema, Kind, parse, print, printSchema, visit } from "graphql";
 
 import { debug } from "./debug";
 import { SchemaExporer } from "./schema-exporter";
@@ -23,6 +16,8 @@ export interface TraceSchemaInput {
   exporterConfig?: SetupOtelInput["exporterConfig"];
   instrumentations?: SetupOtelInput["instrumentations"];
   shouldExportSchema?: boolean;
+  // If you have large schema, enable this so you still get traces, but not one for each field on each type.
+  shouldExcludeTypeFields?: boolean;
 }
 
 export function traceSchema({
@@ -31,6 +26,7 @@ export function traceSchema({
   adapter,
   instrumentations,
   shouldExportSchema = true,
+  shouldExcludeTypeFields = false,
 }: TraceSchemaInput): GraphQLSchema {
   debug("Tracing schema");
 
@@ -39,14 +35,28 @@ export function traceSchema({
   const directive = traceDirective();
 
   const ast = visit(parse(printSchema(schema)), {
+    ObjectTypeDefinition: {
+      enter(node) {
+        // @ts-ignore
+        this.currentType = node.name.value;
+      },
+    },
     FieldDefinition: {
-      enter(node: FieldDefinitionNode) {
+      enter(node) {
         const existingTraceDirective = node.directives?.find(
           (directive) => directive.name.value === "trace",
         );
 
         if (existingTraceDirective) {
-          return;
+          return undefined;
+        }
+
+        if (
+          shouldExcludeTypeFields &&
+          // @ts-ignore
+          !["Query", "Mutation", "Subscription"].includes(this.currentType)
+        ) {
+          return undefined;
         }
 
         const newDirectives = [
