@@ -6,8 +6,6 @@ import {
   context as otelContext,
   runInSpan,
 } from "@graphql-debugger/opentelemetry";
-import { AttributeNames } from "@graphql-debugger/types";
-import { isGraphQLInfoRoot, safeJson } from "@graphql-debugger/utils";
 
 import { MapperKind, getDirective, mapSchema } from "@graphql-tools/utils";
 import { GraphQLSchema, defaultFieldResolver } from "graphql";
