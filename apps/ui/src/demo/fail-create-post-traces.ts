@@ -53,13 +53,6 @@ failCreatePost.spans.push({
     [AttributeNames.DOCUMENT]: postsdQueryStr,
   }),
   graphqlDocument: postsdQueryStr,
-  graphqlContext: JSON.stringify({
-    "X-Forwarded-For": "http://localhost:3000",
-  }),
-  graphqlVariables: JSON.stringify({
-    title: "First post",
-    content: "This is the first post",
-  }),
   errorMessage: "Token Missing",
   errorStack: "Error: Token Missing\n    at login (index.js:1:1)",
 });

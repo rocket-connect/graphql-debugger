@@ -39,9 +39,6 @@ export function extractSpans({
         ] as string | undefined;
 
         let graphqlDocument: string | undefined;
-        let graphqlVariables: string | undefined;
-        let graphqlResult: string | undefined;
-        let graphqlContext: string | undefined;
         let errorMessage: string | undefined;
         let errorStack: string | undefined;
 
@@ -54,33 +51,6 @@ export function extractSpans({
               graphqlDocument = printed;
             } catch (error) {
               debug("Error parsing document", error);
-            }
-          }
-
-          const variables = attributes[AttributeNames.OPERATION_ARGS];
-          if (variables) {
-            try {
-              graphqlVariables = JSON.stringify(JSON.parse(variables));
-            } catch (error) {
-              debug("Error parsing variables", error);
-            }
-          }
-
-          const result = attributes[AttributeNames.OPERATION_RESULT];
-          if (result) {
-            try {
-              graphqlResult = JSON.stringify(JSON.parse(result));
-            } catch (error) {
-              debug("Error parsing result", error);
-            }
-          }
-
-          const context = attributes[AttributeNames.OPERATION_CONTEXT];
-          if (context) {
-            try {
-              graphqlContext = JSON.stringify(JSON.parse(context));
-            } catch (error) {
-              debug("Error parsing context", error);
             }
           }
         }
@@ -132,9 +102,6 @@ export function extractSpans({
           graphqlDocument,
           graphqlOperationName,
           graphqlOperationType,
-          graphqlVariables,
-          graphqlResult,
-          graphqlContext,
           errorMessage,
           errorStack,
         };

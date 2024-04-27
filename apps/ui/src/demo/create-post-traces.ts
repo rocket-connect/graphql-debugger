@@ -55,21 +55,6 @@ createPost.spans.push({
     [AttributeNames.DOCUMENT]: postsdQueryStr,
   }),
   graphqlDocument: postsdQueryStr,
-  graphqlContext: JSON.stringify({
-    "X-Forwarded-For": "http://localhost:3000",
-    "secret-token-123": "Bearer token",
-  }),
-  graphqlVariables: JSON.stringify({
-    title: "First post",
-    content: "This is the first post",
-  }),
-  graphqlResult: JSON.stringify({
-    data: {
-      id: "1",
-      title: "First post",
-      content: "This is the first post",
-    },
-  }),
 });
 
 // Child spans simulating ORM and SQL queries, and post attributes processing

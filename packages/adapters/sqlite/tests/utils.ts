@@ -43,9 +43,6 @@ export async function createFakeSpan({
   const errorMessage = shouldError ? faker.random.words() : undefined;
   const errorStack = shouldError ? faker.random.words() : undefined;
   const graphqlDocument = faker.random.words();
-  const graphqlVariables = faker.random.words();
-  const graphqlResult = faker.random.words();
-  const graphqlContext = faker.random.words();
   const graphqlSchemaHash = faker.random.words();
   const graphqlOperationName = faker.random.words();
   const graphqlOperationType = faker.random.words();
@@ -64,9 +61,6 @@ export async function createFakeSpan({
       errorMessage: errorMessage,
       errorStack: errorStack,
       graphqlDocument: graphqlDocument,
-      graphqlVariables: graphqlVariables,
-      graphqlResult: graphqlResult,
-      graphqlContext: graphqlContext,
       graphqlSchemaHash: graphqlSchemaHash,
       graphqlOperationName: graphqlOperationName,
       durationNano: endTimeUnixNano - startTimeUnixNano,

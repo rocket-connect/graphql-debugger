@@ -34,9 +34,6 @@ model Span {
   graphqlOperationName String?
   graphqlOperationType String?
   graphqlDocument      String?
-  graphqlVariables     String?
-  graphqlResult        String?
-  graphqlContext       String?
   graphqlSchemaHash    String?
   attributes           String?
   errorMessage         String?

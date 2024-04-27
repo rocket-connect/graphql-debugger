@@ -45,15 +45,6 @@ const CreateSpanInputObject: InputRef<CreateSpanInput> = builder.inputType(
       graphqlDocument: t.string({
         required: false,
       }),
-      graphqlVariables: t.string({
-        required: false,
-      }),
-      graphqlResult: t.string({
-        required: false,
-      }),
-      graphqlContext: t.string({
-        required: false,
-      }),
       graphqlSchemaHash: t.string({
         required: false,
       }),

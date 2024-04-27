@@ -18,9 +18,6 @@ export const SpanObject: ObjectRef<Span> = builder.objectType("Span", {
     startTimeUnixNano: t.exposeString("startTimeUnixNano"),
     endTimeUnixNano: t.exposeString("endTimeUnixNano"),
     graphqlDocument: t.exposeString("graphqlDocument", { nullable: true }),
-    graphqlVariables: t.exposeString("graphqlVariables", { nullable: true }),
-    graphqlResult: t.exposeString("graphqlResult", { nullable: true }),
-    graphqlContext: t.exposeString("graphqlContext", { nullable: true }),
     graphqlOperationName: t.exposeString("graphqlOperationName", {
       nullable: true,
     }),

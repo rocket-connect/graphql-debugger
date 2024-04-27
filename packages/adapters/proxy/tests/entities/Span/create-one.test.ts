@@ -21,9 +21,6 @@ describe("Span", () => {
       });
 
       const graphqlDocument = faker.lorem.words();
-      const graphqlVariables = faker.lorem.words();
-      const graphqlResult = faker.lorem.words();
-      const graphqlContext = faker.lorem.words();
       const graphqlOperationName = faker.lorem.words();
       const graphqlOperationType = faker.lorem.words();
 
@@ -42,9 +39,6 @@ describe("Span", () => {
           traceGroupId: createdTrace?.trace?.id,
           isGraphQLRootSpan: true,
           graphqlDocument,
-          graphqlVariables,
-          graphqlResult,
-          graphqlContext,
           graphqlOperationName,
           graphqlOperationType,
           isForeign: false,

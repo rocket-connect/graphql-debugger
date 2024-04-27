@@ -14,9 +14,6 @@ export const ExtractedSpanSchema = z.object({
   graphqlOperationName: z.string().optional(),
   graphqlOperationType: z.string().optional(),
   graphqlDocument: z.string().optional(),
-  graphqlVariables: z.string().optional(),
-  graphqlResult: z.string().optional(),
-  graphqlContext: z.string().optional(),
   errorMessage: z.string().optional(),
   errorStack: z.string().optional(),
 });
