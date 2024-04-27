@@ -60,9 +60,6 @@ export function extractSpans({
             if (
               key !== AttributeNames.SCHEMA_HASH &&
               key !== AttributeNames.DOCUMENT &&
-              key !== AttributeNames.OPERATION_ARGS &&
-              key !== AttributeNames.OPERATION_RESULT &&
-              key !== AttributeNames.OPERATION_CONTEXT &&
               key !== AttributeNames.OPERATION_ROOT_NAME
             ) {
               acc[key] = value;

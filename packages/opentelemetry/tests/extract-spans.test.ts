@@ -22,26 +22,6 @@ describe("extractSpans", () => {
       `),
     );
 
-    const variables = JSON.stringify({
-      where: {
-        name: "bob",
-      },
-    });
-
-    const context = JSON.stringify({
-      user: {
-        id: "1",
-      },
-    });
-
-    const result = JSON.stringify({
-      users: [
-        {
-          name: "bob",
-        },
-      ],
-    });
-
     const error = new Error("something went wrong");
 
     const knownScope: ResourceSpans["scopeSpans"][0]["scope"] = {
@@ -90,24 +70,6 @@ describe("extractSpans", () => {
                     key: AttributeNames.OPERATION_RETURN_TYPE,
                     value: {
                       stringValue: "[User]",
-                    },
-                  },
-                  {
-                    key: AttributeNames.OPERATION_ARGS,
-                    value: {
-                      stringValue: variables,
-                    },
-                  },
-                  {
-                    key: AttributeNames.OPERATION_CONTEXT,
-                    value: {
-                      stringValue: context,
-                    },
-                  },
-                  {
-                    key: AttributeNames.OPERATION_RESULT,
-                    value: {
-                      stringValue: result,
                     },
                   },
                   {

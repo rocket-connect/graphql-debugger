@@ -60,12 +60,6 @@ describe("infoToAttributes", () => {
       [AttributeNames.DOCUMENT]: expect.any(String),
       [AttributeNames.OPERATION_RETURN_TYPE]: "String",
       [AttributeNames.SCHEMA_HASH]: schemaHash,
-      [AttributeNames.OPERATION_ARGS]: JSON.stringify({
-        args: { value: randomArgValue },
-      }),
-      [AttributeNames.OPERATION_CONTEXT]: JSON.stringify({
-        context: { value: randomContextValue },
-      }),
       [AttributeNames.OPERATION_ROOT_NAME]: "QueryName",
     });
   });
