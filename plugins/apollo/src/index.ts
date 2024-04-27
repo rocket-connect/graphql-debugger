@@ -14,8 +14,6 @@ import {
   GraphQLDebuggerContext,
   SchemaExporer,
 } from "@graphql-debugger/trace-schema";
-import { AttributeNames } from "@graphql-debugger/types";
-import { isGraphQLInfoRoot, safeJson } from "@graphql-debugger/utils";
 
 import { ApolloServerPlugin } from "@apollo/server";
 import { Path } from "graphql/jsutils/Path";
@@ -118,7 +116,7 @@ export const graphqlDebuggerPlugin = ({
 
               spanMap.set(currentPath, span);
 
-              const callback = (error: Error | null, result: any) => {
+              const callback = (error: Error | null) => {
                 if (!span) {
                   return;
                 }
@@ -130,15 +128,6 @@ export const graphqlDebuggerPlugin = ({
                     message: e.message,
                   });
                   span.recordException(e);
-                } else {
-                  if (isGraphQLInfoRoot({ info: fieldCtx.info })) {
-                    if (internalCtx.includeResult && result) {
-                      span.setAttribute(
-                        AttributeNames.OPERATION_RESULT,
-                        safeJson({ result }),
-                      );
-                    }
-                  }
                 }
 
                 span.end();

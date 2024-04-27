@@ -49,19 +49,6 @@ successfullLogin.spans.push({
     [AttributeNames.DOCUMENT]: loginMutation,
   }),
   graphqlDocument: loginMutation,
-  graphqlVariables: JSON.stringify({
-    username: "test",
-    password: "test",
-  }),
-  graphqlContext: JSON.stringify({
-    "X-Forwarded-For": "http://localhost:3000",
-    "secret-token-123": "Bearer token",
-  }),
-  graphqlResult: JSON.stringify({
-    data: {
-      login: "Bearer token",
-    },
-  }),
 });
 
 // ORM CALL and SQL Query for successful login
@@ -168,14 +155,6 @@ failedLogin.spans.push({
   graphqlDocument: loginMutation,
   errorMessage: "Invalid credentials",
   errorStack: "Error: Invalid credentials\n    at login (index.js:1:1)",
-  graphqlVariables: JSON.stringify({
-    username: "test",
-    password: "test",
-  }),
-  graphqlContext: JSON.stringify({
-    "X-Forwarded-For": "http://localhost:3000",
-    "secret-token-123": "Bearer token",
-  }),
 });
 
 // ORM CALL and SQL Query for failed login

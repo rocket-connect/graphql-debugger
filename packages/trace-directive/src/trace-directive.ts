@@ -6,8 +6,6 @@ import {
   context as otelContext,
   runInSpan,
 } from "@graphql-debugger/opentelemetry";
-import { AttributeNames } from "@graphql-debugger/types";
-import { isGraphQLInfoRoot, safeJson } from "@graphql-debugger/utils";
 
 import { MapperKind, getDirective, mapSchema } from "@graphql-tools/utils";
 import { GraphQLSchema, defaultFieldResolver } from "graphql";
@@ -55,23 +53,8 @@ export function traceDirective(directiveName = "trace") {
 
               const parentSpan = context.parentSpan as Span | undefined;
 
-              const _context = {
-                ...context,
-                GraphQLDebuggerContext: undefined,
-              };
-
-              if (internalCtx?.excludeKeysFromContext?.length) {
-                Object.keys(_context).forEach((key) => {
-                  if (internalCtx?.excludeKeysFromContext?.includes(key)) {
-                    delete _context[key];
-                  }
-                });
-              }
-
               const attributes = infoToAttributes({
                 info,
-                args,
-                context: _context,
                 schemaHash: internalCtx.schemaHash,
               });
 
@@ -95,15 +78,6 @@ export function traceDirective(directiveName = "trace") {
                   context.currentSpan = span;
 
                   const result = await resolve(source, args, context, info);
-
-                  if (isGraphQLInfoRoot({ info })) {
-                    if (internalCtx.includeResult && result) {
-                      span.setAttribute(
-                        AttributeNames.OPERATION_RESULT,
-                        safeJson({ result }),
-                      );
-                    }
-                  }
 
                   context.parentSpan = span;
 

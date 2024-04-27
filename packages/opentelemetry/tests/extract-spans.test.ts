@@ -22,26 +22,6 @@ describe("extractSpans", () => {
       `),
     );
 
-    const variables = JSON.stringify({
-      where: {
-        name: "bob",
-      },
-    });
-
-    const context = JSON.stringify({
-      user: {
-        id: "1",
-      },
-    });
-
-    const result = JSON.stringify({
-      users: [
-        {
-          name: "bob",
-        },
-      ],
-    });
-
     const error = new Error("something went wrong");
 
     const knownScope: ResourceSpans["scopeSpans"][0]["scope"] = {
@@ -90,24 +70,6 @@ describe("extractSpans", () => {
                     key: AttributeNames.OPERATION_RETURN_TYPE,
                     value: {
                       stringValue: "[User]",
-                    },
-                  },
-                  {
-                    key: AttributeNames.OPERATION_ARGS,
-                    value: {
-                      stringValue: variables,
-                    },
-                  },
-                  {
-                    key: AttributeNames.OPERATION_CONTEXT,
-                    value: {
-                      stringValue: context,
-                    },
-                  },
-                  {
-                    key: AttributeNames.OPERATION_RESULT,
-                    value: {
-                      stringValue: result,
                     },
                   },
                   {
@@ -236,9 +198,6 @@ describe("extractSpans", () => {
         ).toString(),
         graphqlSchemaHash: schemaHash,
         graphqlDocument: document,
-        graphqlVariables: variables,
-        graphqlResult: result,
-        graphqlContext: context,
         errorMessage: undefined,
         errorStack: undefined,
         isForeign: false,
@@ -265,11 +224,8 @@ describe("extractSpans", () => {
         ).toString(),
         graphqlSchemaHash: schemaHash,
         graphqlDocument: undefined,
-        graphqlVariables: undefined,
-        graphqlResult: undefined,
         graphqlOperationName: undefined,
         graphqlOperationType: undefined,
-        graphqlContext: undefined,
         errorMessage: undefined,
         errorStack: undefined,
         isForeign: false,
@@ -289,9 +245,6 @@ describe("extractSpans", () => {
         ).toString(),
         graphqlSchemaHash: schemaHash,
         graphqlDocument: undefined,
-        graphqlVariables: undefined,
-        graphqlResult: undefined,
-        graphqlContext: undefined,
         graphqlOperationName: undefined,
         graphqlOperationType: undefined,
         errorMessage: error.message,
@@ -507,9 +460,6 @@ describe("extractSpans", () => {
         parentSpanId: undefined,
         errorMessage: undefined,
         errorStack: undefined,
-        graphqlContext: undefined,
-        graphqlResult: undefined,
-        graphqlVariables: undefined,
         graphqlOperationName: undefined,
         graphqlOperationType: "query",
         attributes: {
@@ -535,10 +485,7 @@ describe("extractSpans", () => {
         graphqlSchemaHash: schemaHash,
         errorMessage: undefined,
         errorStack: undefined,
-        graphqlContext: undefined,
         graphqlDocument: undefined,
-        graphqlResult: undefined,
-        graphqlVariables: undefined,
         graphqlOperationName: undefined,
         graphqlOperationType: undefined,
         attributes: {},
@@ -563,11 +510,8 @@ describe("extractSpans", () => {
         },
         errorMessage: undefined,
         errorStack: undefined,
-        graphqlContext: undefined,
         graphqlDocument: undefined,
-        graphqlResult: undefined,
         graphqlSchemaHash: undefined,
-        graphqlVariables: undefined,
         graphqlOperationName: undefined,
         graphqlOperationType: undefined,
       },
@@ -587,11 +531,8 @@ describe("extractSpans", () => {
         attributes: { "db.statement": "SELECT * FROM User" },
         errorMessage: undefined,
         errorStack: undefined,
-        graphqlContext: undefined,
         graphqlDocument: undefined,
-        graphqlResult: undefined,
         graphqlSchemaHash: undefined,
-        graphqlVariables: undefined,
         graphqlOperationName: undefined,
         graphqlOperationType: undefined,
       },

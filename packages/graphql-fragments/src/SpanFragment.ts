@@ -14,9 +14,6 @@ export const SpanFragment = gql`
     startTimeUnixNano
     durationNano
     graphqlDocument
-    graphqlVariables
-    graphqlResult
-    graphqlContext
     graphqlOperationName
     graphqlOperationType
     createdAt

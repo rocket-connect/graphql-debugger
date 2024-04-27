@@ -23,8 +23,7 @@
   "dependencies": {
     "@graphql-debugger/data-access": "workspace:^",
     "@graphql-debugger/time": "workspace:^",
-    "debug": "4.3.4",
-    "safe-json-stringify": "1.2.0"
+    "debug": "4.3.4"
   },
   "devDependencies": {
     "@graphql-debugger/types": "workspace:^",

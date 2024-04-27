@@ -308,16 +308,6 @@ describe("@trace directive", () => {
     expect(spanTree.span.attributes[AttributeNames.DOCUMENT]).toMatch(
       print(parse(query)),
     );
-    expect(
-      JSON.parse(
-        spanTree.span.attributes[AttributeNames.OPERATION_ARGS] as string,
-      ),
-    ).toMatchObject({
-      args: {
-        name: "Dan",
-        age: 23,
-      },
-    });
 
     const postsSpan = spanTree.children.find(
       (child) => child.span.name === "User posts",
@@ -494,23 +484,6 @@ describe("@trace directive", () => {
     expect(
       spanTree.span.attributes[AttributeNames.OPERATION_RETURN_TYPE],
     ).toMatch("[User]");
-
-    const variables = JSON.parse(
-      spanTree.span.attributes[AttributeNames.OPERATION_ARGS] as string,
-    );
-    expect(variables).toMatchObject({
-      args: { name: randomName },
-    });
-
-    const context = JSON.parse(
-      spanTree.span.attributes[AttributeNames.OPERATION_CONTEXT] as string,
-    );
-
-    expect(context).toEqual({
-      context: { name: randomName, someFunction: "Function" },
-    });
-
-    expect(context[excludeContext]).toBeUndefined();
   });
 
   test("should append graphql result to trace attribute", async () => {
@@ -572,19 +545,10 @@ describe("@trace directive", () => {
       print(parse(query)),
     );
 
-    const result = spanTree.span.attributes[AttributeNames.OPERATION_RESULT];
-    expect(result).toEqual(
-      JSON.stringify({ result: { name: randomString, age: "23" } }),
-    );
-
     const nameSpan = spanTree.children.find(
       (child) => child.span.name === "User name",
     );
     expect(nameSpan).toBeDefined();
-
-    const nameResult =
-      nameSpan!.span.attributes[AttributeNames.OPERATION_RESULT];
-    expect(nameResult).toEqual(undefined);
   });
 
   test("should append graphql schema hash to trace attribute", async () => {
@@ -705,13 +669,6 @@ describe("@trace directive", () => {
     expect(spanTree.span.name).toEqual("query hello");
     expect(spanTree.span.attributes[AttributeNames.DOCUMENT]).toMatch(
       print(parse(query)),
-    );
-
-    const result = spanTree.span.attributes[AttributeNames.OPERATION_RESULT];
-    expect(result).toEqual(
-      JSON.stringify({
-        result: "world",
-      }),
     );
   });
 });

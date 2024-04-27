@@ -130,9 +130,6 @@ describe("trace", () => {
       expect(print(parse(editorValues.query))).toEqual(
         rootSpan?.graphqlDocument,
       );
-      expect(JSON.parse(editorValues.variables as string)).toMatchObject(
-        JSON.parse(rootSpan?.graphqlVariables as string),
-      );
 
       if (variant.shouldError) {
         const sanitizedUIError = JSON.parse(
@@ -146,10 +143,6 @@ describe("trace", () => {
               spans: trace.spans,
             }),
           ),
-        );
-      } else {
-        expect(JSON.parse(editorValues.result as string)).toMatchObject(
-          JSON.parse(rootSpan?.graphqlResult as string),
         );
       }
     });

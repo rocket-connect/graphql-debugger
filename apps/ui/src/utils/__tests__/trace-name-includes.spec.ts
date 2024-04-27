@@ -25,11 +25,6 @@ const trace: Trace = {
     durationNano: "19395200",
     graphqlDocument:
       "query ($where: ListTraceGroupsWhere, $includeSpans: Boolean = false, $includeRootSpan: Boolean = false) {\n  listTraceGroups(where: $where) {\n    traces {\n      id\n      traceId\n      firstSpanErrorMessage\n      firstSpanErrorStack\n      spans @include(if: $includeSpans) {\n        ...SpanObject\n      }\n      rootSpan @include(if: $includeRootSpan) {\n        ...SpanObject\n      }\n    }\n  }\n}",
-    graphqlVariables:
-      '{"args":{"where":{"rootSpanName":null,"schemaId":"9c47e081-44ec-4256-8a40-79c162df3a57"}}}',
-    graphqlResult: null,
-    graphqlContext:
-      '{"context":{"waitUntil":"Function","loaders":{"rootSpanLoader":{"_batchLoadFn":"Function","_maxBatchSize":null,"_batchScheduleFn":"Function","_cacheKeyFn":"Function","_cacheMap":{},"_batch":null,"name":null},"spanLoader":{"_batchLoadFn":"Function","_maxBatchSize":null,"_batchScheduleFn":"Function","_cacheKeyFn":"Function","_cacheMap":{},"_batch":null,"name":null}}}}',
     graphqlOperationName: null,
     graphqlOperationType: "query",
   },
