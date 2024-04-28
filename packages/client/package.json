@@ -1,6 +1,6 @@
 {
   "name": "@graphql-debugger/client",
-  "version": "0.0.0-alpha.104",
+  "version": "0.0.0-alpha.105",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
