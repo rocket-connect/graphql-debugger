@@ -1,0 +1,65 @@
+# @graphql-debugger/trace-directive
+
+Utility to trace a GraphQL Field. You can apply it to a field in your schema to trace it.
+
+## Quickstart
+
+First you should apply the directive to your type definitions and then run the transformer on your schema.
+
+### Apply Directive to schema
+
+```gql
+type User {
+    name: String
+    age: Int
+    balance: Int @trace
+    posts: [Post] @trace
+}
+
+type Post {
+    title: String
+    comments: [Comment] @trace
+}
+
+type Comment {
+    content: String
+}
+
+type Query {
+    users: [User] @trace
+}
+```
+
+### Run transformer
+
+```ts
+import {
+  GraphQLDebuggerContext,
+  setupOtel,
+  traceDirective,
+} from "@graphql-debugger/trace-directive";
+
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { createServer } from "@graphql-yoga/node";
+
+setupOtel(); // Setup OpenTelemetry Propagators
+
+const trace = traceDirective();
+
+let schema = makeExecutableSchema({
+  typeDefs: [typeDefs, trace.typeDefs],
+  resolvers,
+});
+
+schema = trace.transformer(schema);
+
+const server = createServer({
+  schema,
+  port: 5000,
+  context: {
+    GraphQLDebuggerContext: new GraphQLDebuggerContext({
+      schema,
+    }),
+  },
+});
+```

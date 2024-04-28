@@ -7,4 +7,5 @@ export default {
   plugins: "Plugins",
   integrations: "Integrations",
   docker: "Docker",
+  faq: "FAQ",
 };

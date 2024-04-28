@@ -1,0 +1,18 @@
+# Missing Context
+
+> `contextValue.GraphQLDebuggerContext missing`
+
+Inject the `GraphQLDebuggerContext` instance inside your GraphQL request context.
+
+```js
+import { GraphQLDebuggerContext } from "@graphql-debugger/trace-schema";
+
+const myServer = new GraphQLServerFooBar({
+  schema,
+  context: {
+    GraphQLDebuggerContext: new GraphQLDebuggerContext({
+      schema,
+    }),
+  },
+});
+```

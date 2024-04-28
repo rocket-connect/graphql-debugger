@@ -41,9 +41,9 @@ export function createYoga<
   if (!options.context) {
     const contextOverride = async (): Promise<TUserContext> => {
       return {
-        GraphQLDebuggerContext: new GraphQLDebuggerContext(
-          options?.debugger?.otelContextOptions,
-        ),
+        GraphQLDebuggerContext: new GraphQLDebuggerContext({
+          schema: options.schema,
+        }),
       } as unknown as TUserContext;
     };
 
@@ -55,9 +55,9 @@ export function createYoga<
     options.context = async function newContextFunction(...args) {
       const contextObject = await originalContextFunction(...args);
 
-      contextObject.GraphQLDebuggerContext = new GraphQLDebuggerContext(
-        options?.debugger?.otelContextOptions,
-      );
+      contextObject.GraphQLDebuggerContext = new GraphQLDebuggerContext({
+        schema: options.schema,
+      });
 
       return contextObject;
     };

@@ -14,9 +14,7 @@ export async function querySchema({
     source: query,
     contextValue: {
       GraphQLDebuggerContext: new GraphQLDebuggerContext({
-        includeResult: true,
-        includeContext: true,
-        includeVariables: true,
+        schema,
       }),
     },
   });

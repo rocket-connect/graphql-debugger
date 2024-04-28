@@ -1,6 +1,8 @@
 import { DebuggerClient } from "@graphql-debugger/client";
 import { GraphQLDebuggerContext } from "@graphql-debugger/trace-schema";
 
+import { GraphQLSchema } from "graphql";
+
 import { rootSpanLoader, spanLoader } from "./loaders/span";
 
 export type Context = {
@@ -12,13 +14,17 @@ export type Context = {
   };
 };
 
-export function context({ client }: { client: DebuggerClient }): () => Context {
+export function context({
+  client,
+  schema,
+}: {
+  client: DebuggerClient;
+  schema: GraphQLSchema;
+}): () => Context {
   return (): Context => {
     return {
       GraphQLDebuggerContext: new GraphQLDebuggerContext({
-        includeVariables: true,
-        // includeResult: true, 08/10/2023 - disabled to avoid memory related issues
-        // includeContext: true, ditto
+        schema,
       }),
       client,
       loaders: {

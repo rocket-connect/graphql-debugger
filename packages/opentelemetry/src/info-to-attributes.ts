@@ -21,6 +21,7 @@ export function infoToAttributes({
     ...(isRoot
       ? {
           [AttributeNames.OPERATION_ROOT]: true,
+          // Note
           [AttributeNames.DOCUMENT]: print(info.operation),
           [AttributeNames.OPERATION_TYPE]:
             info.operation.operation.toLowerCase(),
