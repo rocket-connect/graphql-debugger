@@ -1,14 +1,14 @@
 import { BaseAdapter } from "@graphql-debugger/adapter-base";
 import { ProxyAdapter } from "@graphql-debugger/adapter-proxy";
 import {
+  ApiSpan,
   SetupOtelInput,
-  Span,
   SpanStatusCode,
-  createLegacySpan,
   infoToAttributes,
   infoToSpanName,
   context as otelContext,
   setupOtel,
+  trace,
 } from "@graphql-debugger/opentelemetry";
 import {
   GraphQLDebuggerContext,
@@ -20,8 +20,8 @@ import { Path } from "graphql/jsutils/Path";
 
 type GraphQLContext = {
   GraphQLDebuggerContext?: GraphQLDebuggerContext;
-  parentSpan?: Span | undefined;
-  currentSpan?: Span | undefined;
+  parentSpan?: ApiSpan | undefined;
+  currentSpan?: ApiSpan | undefined;
 };
 
 function generatePathString(path: Path | undefined): string {
@@ -62,7 +62,7 @@ export const graphqlDebuggerPlugin = ({
       setupOtel({ exporterConfig, instrumentations });
     },
     requestDidStart: async () => {
-      const spanMap = new Map<string, Span>();
+      const spanMap = new Map<string, ApiSpan>();
 
       return {
         async executionDidStart(requestContext) {
@@ -82,7 +82,11 @@ export const graphqlDebuggerPlugin = ({
                 ? spanMap.get(parentPath)
                 : undefined;
 
-              const traceCTX = otelContext.active();
+              const currentContext = otelContext.active();
+
+              const ctx = parentSpan
+                ? trace.setSpan(currentContext, parentSpan)
+                : currentContext;
 
               const attributes = infoToAttributes({
                 info: fieldCtx.info,
@@ -95,19 +99,13 @@ export const graphqlDebuggerPlugin = ({
                 info: fieldCtx.info,
               });
 
-              const span = createLegacySpan({
-                options: {
-                  name: spanName,
-                  context: traceCTX,
-                  tracer: internalCtx.tracer,
+              const span = internalCtx.tracer.startSpan(
+                spanName,
+                {
                   attributes,
                 },
-                ...(parentSpan
-                  ? {
-                      parentContext: parentSpan?.spanContext(),
-                    }
-                  : {}),
-              });
+                ctx,
+              );
 
               const currentPathString = generatePathString(fieldCtx.info.path);
 

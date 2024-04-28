@@ -25,3 +25,5 @@ export {
 } from "@opentelemetry/api";
 
 export { InstrumentationOption } from "@opentelemetry/instrumentation";
+
+export { Span as ApiSpan } from "@opentelemetry/api";
