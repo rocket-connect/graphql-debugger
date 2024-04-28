@@ -160,7 +160,9 @@ const server = createServer({
   schema,
   port: 5000,
   context: {
-    GraphQLDebuggerContext: new GraphQLDebuggerContext(),
+    GraphQLDebuggerContext: new GraphQLDebuggerContext({
+      schema,
+    }),
   },
 });
 
@@ -180,7 +182,9 @@ import { GraphQLDebuggerContext } from "@graphql-debugger/trace-directive";
 const myServer = new GraphQLServerFooBar({
   schema,
   context: {
-    GraphQLDebuggerContext: new GraphQLDebuggerContext(),
+    GraphQLDebuggerContext: new GraphQLDebuggerContext({
+      schema,
+    }),
   },
 });
 ```

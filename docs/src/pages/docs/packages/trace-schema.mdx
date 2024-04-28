@@ -1,0 +1,21 @@
+# @graphql-debugger/trace-schema
+
+Use the `traceSchema` method to automaticly apply the [`traceDirective`](/docs/packages/trace-directive) to all fields in your schema. 
+
+## Example
+
+```ts
+import { ProxyAdapter } from "@graphql-debugger/adapter-proxy";
+import { traceSchema } from "@graphql-debugger/trace-schema";
+
+import { GraphQLSchema } from "graphql";
+
+const schema: GraphQLSchema = __YOUR_SCHEMA__;
+
+const adapter = new ProxyAdapter();
+
+const tracedSchema = traceSchema({
+  schema,
+  adapter,
+});
+```

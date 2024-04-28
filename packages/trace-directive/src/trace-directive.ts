@@ -40,10 +40,6 @@ export function traceDirective(directiveName = "trace") {
                 throw new Error("contextValue.GraphQLDebuggerContext missing");
               }
 
-              if (!internalCtx.schema) {
-                internalCtx.setSchema(schema);
-              }
-
               const parentContext = internalCtx
                 ? internalCtx.getContext()
                 : undefined;

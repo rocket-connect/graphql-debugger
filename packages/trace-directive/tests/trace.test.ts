@@ -71,7 +71,7 @@ describe("@trace directive", () => {
       schema,
       source: query,
       contextValue: {
-        // GraphQLDebuggerContext: new GraphQLDebuggerContext(),
+        // GraphQLDebuggerContext: new GraphQLDebuggerContext({ schema s }),
       },
     });
 
@@ -182,7 +182,7 @@ describe("@trace directive", () => {
       schema,
       source: query,
       contextValue: {
-        GraphQLDebuggerContext: new GraphQLDebuggerContext(),
+        GraphQLDebuggerContext: new GraphQLDebuggerContext({ schema }),
       },
     });
 
@@ -293,7 +293,7 @@ describe("@trace directive", () => {
       source: query,
       contextValue: {
         GraphQLDebuggerContext: new GraphQLDebuggerContext({
-          includeVariables: true,
+          schema,
         }),
       },
     });
@@ -359,7 +359,9 @@ describe("@trace directive", () => {
       schema,
       source: query,
       contextValue: {
-        GraphQLDebuggerContext: new GraphQLDebuggerContext(),
+        GraphQLDebuggerContext: new GraphQLDebuggerContext({
+          schema,
+        }),
       },
     });
 
@@ -438,7 +440,9 @@ describe("@trace directive", () => {
       contextValue: {
         name: randomName,
         [excludeContext]: excludeContext,
-        GraphQLDebuggerContext: new GraphQLDebuggerContext(),
+        GraphQLDebuggerContext: new GraphQLDebuggerContext({
+          schema,
+        }),
         req: {
           url: "http://localhost:3000/graphql",
         },
@@ -525,7 +529,7 @@ describe("@trace directive", () => {
       source: query,
       contextValue: {
         GraphQLDebuggerContext: new GraphQLDebuggerContext({
-          includeResult: true,
+          schema,
         }),
       },
     });
@@ -588,7 +592,7 @@ describe("@trace directive", () => {
       source: query,
       contextValue: {
         GraphQLDebuggerContext: new GraphQLDebuggerContext({
-          includeResult: true,
+          schema,
         }),
       },
     });
@@ -649,9 +653,7 @@ describe("@trace directive", () => {
       source: query,
       contextValue: {
         GraphQLDebuggerContext: new GraphQLDebuggerContext({
-          includeVariables: true,
-          includeResult: true,
-          includeContext: true,
+          schema,
         }),
       },
     });

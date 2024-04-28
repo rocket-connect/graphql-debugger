@@ -10,6 +10,6 @@ export function createServer({ client }: { client: DebuggerClient }) {
 
   return createYoga({
     schema,
-    context: context({ client }),
+    context: context({ client, schema }),
   });
 }

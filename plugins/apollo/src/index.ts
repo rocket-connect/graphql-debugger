@@ -61,13 +61,14 @@ export const graphqlDebuggerPlugin = ({
 
       setupOtel({ exporterConfig, instrumentations });
     },
-    requestDidStart: async () => {
+    requestDidStart: async ({ schema }) => {
       const spanMap = new Map<string, ApiSpan>();
 
       return {
-        async executionDidStart(requestContext) {
-          const internalCtx = new GraphQLDebuggerContext();
-          internalCtx.setSchema(requestContext.schema);
+        async executionDidStart() {
+          const internalCtx = new GraphQLDebuggerContext({
+            schema,
+          });
 
           return {
             willResolveField(fieldCtx) {

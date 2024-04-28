@@ -11,32 +11,19 @@ import { hashSchema } from "@graphql-debugger/utils";
 import { GraphQLSchema } from "graphql";
 
 export interface GraphQLDebuggerContextOptions {
-  /* If true will add the context in the span attributes */
-  includeContext?: boolean;
-  /* If true will add the variables in the span attributes */
-  includeVariables?: boolean;
-  /* If true will add the result in the span attributes */
-  includeResult?: boolean;
-  /* List of strings to exclude from the context, for example auth */
-  excludeKeysFromContext?: string[];
+  schema: GraphQLSchema;
 }
 
 export class GraphQLDebuggerContext {
   private context?: Context;
   public tracer: Tracer;
   private rootSpan?: ApiSpan;
-  public includeContext?: boolean;
-  public includeVariables?: boolean;
-  public includeResult?: boolean;
-  public excludeKeysFromContext?: string[];
-  public schema?: GraphQLSchema;
-  public schemaHash?: string;
+  public schema: GraphQLSchema;
+  public schemaHash: string;
 
-  constructor(options: GraphQLDebuggerContextOptions = {}) {
-    this.includeContext = options.includeContext;
-    this.includeVariables = options.includeVariables;
-    this.excludeKeysFromContext = options.excludeKeysFromContext;
-    this.includeResult = options.includeResult;
+  constructor(options: GraphQLDebuggerContextOptions) {
+    this.schema = options.schema;
+    this.schemaHash = hashSchema(options.schema);
     this.tracer = getTracer();
   }
 
@@ -54,13 +41,6 @@ export class GraphQLDebuggerContext {
 
   getRootSpan(): ApiSpan | undefined {
     return this.rootSpan;
-  }
-
-  public setSchema(schema: GraphQLSchema) {
-    const hash = hashSchema(schema);
-
-    this.schemaHash = hash;
-    this.schema = schema;
   }
 
   runInChildSpan(input: {
