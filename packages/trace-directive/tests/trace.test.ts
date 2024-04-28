@@ -438,11 +438,7 @@ describe("@trace directive", () => {
       contextValue: {
         name: randomName,
         [excludeContext]: excludeContext,
-        GraphQLDebuggerContext: new GraphQLDebuggerContext({
-          includeContext: true,
-          includeVariables: true,
-          excludeKeysFromContext: [excludeContext],
-        }),
+        GraphQLDebuggerContext: new GraphQLDebuggerContext(),
         req: {
           url: "http://localhost:3000/graphql",
         },
