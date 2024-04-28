@@ -10,23 +10,23 @@ First you should apply the directive to your type definitions and then run the t
 
 ```gql
 type User {
-    name: String
-    age: Int
-    balance: Int @trace
-    posts: [Post] @trace
+  name: String
+  age: Int
+  balance: Int @trace
+  posts: [Post] @trace
 }
 
 type Post {
-    title: String
-    comments: [Comment] @trace
+  title: String
+  comments: [Comment] @trace
 }
 
 type Comment {
-    content: String
+  content: String
 }
 
 type Query {
-    users: [User] @trace
+  users: [User] @trace
 }
 ```
 
