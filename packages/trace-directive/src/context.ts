@@ -1,6 +1,6 @@
 import {
+  ApiSpan,
   Context,
-  Span,
   Tracer,
   context,
   getTracer,
@@ -24,7 +24,7 @@ export interface GraphQLDebuggerContextOptions {
 export class GraphQLDebuggerContext {
   private context?: Context;
   public tracer: Tracer;
-  private rootSpan?: Span;
+  private rootSpan?: ApiSpan;
   public includeContext?: boolean;
   public includeVariables?: boolean;
   public includeResult?: boolean;
@@ -48,11 +48,11 @@ export class GraphQLDebuggerContext {
     return this.context;
   }
 
-  setRootSpan(span: Span) {
+  setRootSpan(span: ApiSpan) {
     this.rootSpan = span;
   }
 
-  getRootSpan(): Span | undefined {
+  getRootSpan(): ApiSpan | undefined {
     return this.rootSpan;
   }
 
@@ -80,7 +80,7 @@ export class GraphQLDebuggerContext {
     const traceCTX: Context = parentContext || context.active();
     internalCtx.setContext(traceCTX);
 
-    const currentSpan = input.graphqlContext.currentSpan as Span | undefined;
+    const currentSpan = input.graphqlContext.currentSpan as ApiSpan | undefined;
 
     return runInSpan(
       {
