@@ -4,7 +4,7 @@ import {
   ResourceSpans,
 } from "@graphql-debugger/types";
 
-import { parse, print } from "graphql";
+import { print } from "graphql";
 
 import { attributesToObject } from "./attributes-to-object";
 import { debug } from "./debug";
@@ -46,8 +46,9 @@ export function extractSpans({
           const document = attributes[AttributeNames.DOCUMENT];
           if (document) {
             try {
-              const parsed = parse(document);
-              const printed = print(parsed);
+              const astString = document;
+              const ast = JSON.parse(astString);
+              const printed = print(ast);
               graphqlDocument = printed;
             } catch (error) {
               debug("Error parsing document", error);

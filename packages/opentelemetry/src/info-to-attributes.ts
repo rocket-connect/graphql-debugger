@@ -1,7 +1,7 @@
 import { AttributeNames } from "@graphql-debugger/types";
 import { isGraphQLInfoRoot } from "@graphql-debugger/utils";
 
-import { GraphQLResolveInfo, print } from "graphql";
+import { GraphQLResolveInfo } from "graphql";
 
 export function infoToAttributes({
   info,
@@ -21,8 +21,7 @@ export function infoToAttributes({
     ...(isRoot
       ? {
           [AttributeNames.OPERATION_ROOT]: true,
-          // Note
-          [AttributeNames.DOCUMENT]: print(info.operation),
+          [AttributeNames.DOCUMENT]: JSON.stringify(info.operation),
           [AttributeNames.OPERATION_TYPE]:
             info.operation.operation.toLowerCase(),
           ...(info.operation.name?.value
