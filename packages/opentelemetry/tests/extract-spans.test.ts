@@ -11,16 +11,18 @@ describe("extractSpans", () => {
   test("should extract data from spans", () => {
     const schemaHash = faker.string.alpha(6);
 
-    const document = print(
-      parse(/* GraphQL */ `
-        {
-          users(where: { name: "bob" }) {
-            name
-            errorField
-          }
+    const docAst = parse(/* GraphQL */ `
+      {
+        users(where: { name: "bob" }) {
+          name
+          errorField
         }
-      `),
-    );
+      }
+    `);
+
+    const printedDocument = print(docAst);
+
+    const jsonDocument = JSON.stringify(docAst);
 
     const error = new Error("something went wrong");
 
@@ -57,7 +59,7 @@ describe("extractSpans", () => {
                   {
                     key: AttributeNames.DOCUMENT,
                     value: {
-                      stringValue: document,
+                      stringValue: jsonDocument,
                     },
                   },
                   {
@@ -197,7 +199,7 @@ describe("extractSpans", () => {
           resourceSpans[0].scopeSpans[0].spans[0].endTimeUnixNano,
         ).toString(),
         graphqlSchemaHash: schemaHash,
-        graphqlDocument: document,
+        graphqlDocument: printedDocument,
         errorMessage: undefined,
         errorStack: undefined,
         isForeign: false,
@@ -258,15 +260,17 @@ describe("extractSpans", () => {
   test("should extract data from foreign spans", () => {
     const schemaHash = faker.string.alpha(6);
 
-    const document = print(
-      parse(/* GraphQL */ `
-        {
-          users {
-            name
-          }
+    const docAst = parse(/* GraphQL */ `
+      {
+        users {
+          name
         }
-      `),
-    );
+      }
+    `);
+
+    const printedDocument = print(docAst);
+
+    const jsonDocument = JSON.stringify(docAst);
 
     const knownScope: ResourceSpans["scopeSpans"][0]["scope"] = {
       name: TRACER_NAME,
@@ -305,7 +309,7 @@ describe("extractSpans", () => {
                   {
                     key: AttributeNames.DOCUMENT,
                     value: {
-                      stringValue: document,
+                      stringValue: jsonDocument,
                     },
                   },
                   {
@@ -456,7 +460,7 @@ describe("extractSpans", () => {
         ).toString(),
         isForeign: false,
         graphqlSchemaHash: schemaHash,
-        graphqlDocument: "{\n  users {\n    name\n  }\n}",
+        graphqlDocument: printedDocument,
         parentSpanId: undefined,
         errorMessage: undefined,
         errorStack: undefined,
