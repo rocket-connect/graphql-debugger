@@ -24,13 +24,17 @@ describe("plugin express", () => {
 
     const schemaHash = faker.string.alpha(6);
 
-    const document = /* GraphQL */ `
+    const documentAst = parse(/* GraphQL */ `
       query {
         users {
           name
         }
       }
-    `;
+    `);
+
+    const printedDocument = print(documentAst);
+
+    const jsonDocument = JSON.stringify(documentAst);
 
     const expressScopeSpan: ResourceSpans["scopeSpans"][0] = {
       scope: knownScope,
@@ -105,7 +109,7 @@ describe("plugin express", () => {
                     {
                       key: AttributeNames.DOCUMENT,
                       value: {
-                        stringValue: document,
+                        stringValue: jsonDocument,
                       },
                     },
                     {
@@ -202,7 +206,7 @@ describe("plugin express", () => {
     const rootSpan = traceGroup?.spans.find((span) => span.isGraphQLRootSpan);
     expect(rootSpan).toBeDefined();
     expect(rootSpan?.name).toEqual("query users");
-    expect(rootSpan?.graphqlDocument).toEqual(print(parse(document)));
+    expect(rootSpan?.graphqlDocument).toEqual(printedDocument);
 
     const nameSpan = traceGroup?.spans.find(
       (span) => span.name === "User name",

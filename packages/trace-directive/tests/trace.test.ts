@@ -193,9 +193,17 @@ describe("@trace directive", () => {
     const spanTree = buildSpanTree({ span: rootSpan, children: [] }, spans);
 
     expect(spanTree.span.name).toEqual("query users");
-    expect(spanTree.span.attributes[AttributeNames.DOCUMENT]).toMatch(
-      print(parse(query)),
-    );
+
+    const astString = spanTree.span.attributes[
+      AttributeNames.DOCUMENT
+    ] as string;
+    if (!astString) {
+      throw new Error("astString is undefined");
+    }
+
+    const ast = JSON.parse(astString);
+    expect(print(ast)).toMatch(print(parse(query)));
+
     expect(spanTree.span.attributes[AttributeNames.OPERATION_NAME]).toMatch(
       "users",
     );
@@ -305,9 +313,16 @@ describe("@trace directive", () => {
     const spanTree = buildSpanTree({ span: rootSpan, children: [] }, spans);
 
     expect(spanTree.span.name).toEqual("mutation createUser");
-    expect(spanTree.span.attributes[AttributeNames.DOCUMENT]).toMatch(
-      print(parse(query)),
-    );
+
+    const astString = spanTree.span.attributes[
+      AttributeNames.DOCUMENT
+    ] as string;
+    if (!astString) {
+      throw new Error("astString is undefined");
+    }
+
+    const ast = JSON.parse(astString);
+    expect(print(ast)).toMatch(print(parse(query)));
 
     const postsSpan = spanTree.children.find(
       (child) => child.span.name === "User posts",
@@ -372,9 +387,16 @@ describe("@trace directive", () => {
     const spanTree = buildSpanTree({ span: rootSpan, children: [] }, spans);
 
     expect(spanTree.span.name).toEqual("query users");
-    expect(spanTree.span.attributes[AttributeNames.DOCUMENT]).toMatch(
-      print(parse(query)),
-    );
+
+    const astString = spanTree.span.attributes[
+      AttributeNames.DOCUMENT
+    ] as string;
+    if (!astString) {
+      throw new Error("astString is undefined");
+    }
+
+    const ast = JSON.parse(astString);
+    expect(print(ast)).toMatch(print(parse(query)));
 
     const events = spanTree.span.events;
 
@@ -478,9 +500,17 @@ describe("@trace directive", () => {
     const spanTree = buildSpanTree({ span: rootSpan, children: [] }, spans);
 
     expect(spanTree.span.name).toEqual("query users");
-    expect(spanTree.span.attributes[AttributeNames.DOCUMENT]).toMatch(
-      print(parse(query)),
-    );
+
+    const astString = spanTree.span.attributes[
+      AttributeNames.DOCUMENT
+    ] as string;
+    if (!astString) {
+      throw new Error("astString is undefined");
+    }
+
+    const ast = JSON.parse(astString);
+    expect(print(ast)).toMatch(print(parse(query)));
+
     expect(
       spanTree.span.attributes[AttributeNames.OPERATION_RETURN_TYPE],
     ).toMatch("[User]");
@@ -541,9 +571,16 @@ describe("@trace directive", () => {
     const spanTree = buildSpanTree({ span: rootSpan, children: [] }, spans);
 
     expect(spanTree.span.name).toEqual("query user");
-    expect(spanTree.span.attributes[AttributeNames.DOCUMENT]).toMatch(
-      print(parse(query)),
-    );
+
+    const astString = spanTree.span.attributes[
+      AttributeNames.DOCUMENT
+    ] as string;
+    if (!astString) {
+      throw new Error("astString is undefined");
+    }
+
+    const ast = JSON.parse(astString);
+    expect(print(ast)).toMatch(print(parse(query)));
 
     const nameSpan = spanTree.children.find(
       (child) => child.span.name === "User name",
@@ -604,9 +641,16 @@ describe("@trace directive", () => {
     const spanTree = buildSpanTree({ span: rootSpan, children: [] }, spans);
 
     expect(spanTree.span.name).toEqual("query user");
-    expect(spanTree.span.attributes[AttributeNames.DOCUMENT]).toMatch(
-      print(parse(query)),
-    );
+
+    const astString = spanTree.span.attributes[
+      AttributeNames.DOCUMENT
+    ] as string;
+    if (!astString) {
+      throw new Error("astString is undefined");
+    }
+
+    const ast = JSON.parse(astString);
+    expect(print(ast)).toMatch(print(parse(query)));
 
     const result = spanTree.span.attributes[AttributeNames.SCHEMA_HASH];
 
@@ -665,8 +709,15 @@ describe("@trace directive", () => {
     const spanTree = buildSpanTree({ span: rootSpan, children: [] }, spans);
 
     expect(spanTree.span.name).toEqual("query hello");
-    expect(spanTree.span.attributes[AttributeNames.DOCUMENT]).toMatch(
-      print(parse(query)),
-    );
+
+    const astString = spanTree.span.attributes[
+      AttributeNames.DOCUMENT
+    ] as string;
+    if (!astString) {
+      throw new Error("astString is undefined");
+    }
+
+    const ast = JSON.parse(astString);
+    expect(print(ast)).toMatch(print(parse(query)));
   });
 });
