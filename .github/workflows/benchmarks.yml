@@ -42,7 +42,7 @@ jobs:
       - name: Run benchmarks
         working-directory: ./benchmarks
         run: nix-shell --quiet --run ./run.cr
-      - name: Push readme
+      - name: Write benchmark results
         if: ${{ github.event_name == 'push' }}
         run: |
           git add README.md
