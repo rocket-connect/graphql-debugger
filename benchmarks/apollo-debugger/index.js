@@ -13,10 +13,10 @@ if (cluster.isPrimary) {
 } else {
   const server = new ApolloServer({
     typeDefs: `
-        type Query {
-          hello: String!
-        }
-      `,
+      type Query {
+        hello: String!
+      }
+    `,
     resolvers: {
       Query: {
         hello: () => "world",

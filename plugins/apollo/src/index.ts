@@ -14,6 +14,7 @@ import {
   GraphQLDebuggerContext,
   SchemaExporer,
 } from "@graphql-debugger/trace-schema";
+import { hashSchema } from "@graphql-debugger/utils";
 
 import { ApolloServerPlugin } from "@apollo/server";
 import { Path } from "graphql/jsutils/Path";
@@ -48,6 +49,8 @@ export const graphqlDebuggerPlugin = ({
   exporterConfig?: SetupOtelInput["exporterConfig"];
   instrumentations?: SetupOtelInput["instrumentations"];
 } = {}): ApolloServerPlugin<GraphQLContext> => {
+  let schemaHash: string;
+
   return {
     serverWillStart: async (service) => {
       const schema = service.schema;
@@ -59,16 +62,20 @@ export const graphqlDebuggerPlugin = ({
         schemaExporter.start();
       }
 
+      schemaHash = hashSchema(schema);
       setupOtel({ exporterConfig, instrumentations });
     },
     requestDidStart: async ({ schema }) => {
       const spanMap = new Map<string, ApiSpan>();
 
       return {
-        async executionDidStart() {
-          const internalCtx = new GraphQLDebuggerContext({
-            schema,
-          });
+        async executionDidStart(context) {
+          const internalCtx =
+            context.contextValue.GraphQLDebuggerContext ||
+            new GraphQLDebuggerContext({
+              schema,
+              schemaHash,
+            });
 
           return {
             willResolveField(fieldCtx) {

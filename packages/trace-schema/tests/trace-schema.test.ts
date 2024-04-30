@@ -35,7 +35,7 @@ describe("tracedSchema", () => {
       shouldExportSchema: false,
     });
 
-    const outputTypedefs = printSchemaWithDirectives(tracedSchema);
+    const outputTypedefs = printSchemaWithDirectives(tracedSchema.schema);
 
     expect(outputTypedefs).toMatchInlineSnapshot(`
 "schema {
@@ -99,7 +99,7 @@ type Query {
       shouldExcludeTypeFields: true,
     });
 
-    const outputTypedefs = printSchemaWithDirectives(tracedSchema);
+    const outputTypedefs = printSchemaWithDirectives(tracedSchema.schema);
 
     expect(outputTypedefs).toMatchInlineSnapshot(`
 "schema {

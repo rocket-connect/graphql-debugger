@@ -1,7 +1,6 @@
 import { DebuggerClient } from "@graphql-debugger/client";
 import { traceSchema } from "@graphql-debugger/trace-schema";
 import { Schema } from "@graphql-debugger/types";
-import { hashSchema } from "@graphql-debugger/utils";
 
 import { faker } from "@faker-js/faker";
 import { makeExecutableSchema } from "@graphql-tools/schema";
@@ -63,19 +62,17 @@ export async function createTestSchema({
     resolvers,
   });
 
-  const schema = traceSchema({
+  const { schema, schemaHash } = traceSchema({
     schema: executableSchema,
     adapter: client.adapter,
   });
 
-  const hash = hashSchema(schema);
-
   const dbSchema = await client.schema.upsert({
     where: {
-      hash,
+      hash: schemaHash,
     },
     input: {
-      hash: hash,
+      hash: schemaHash,
       typeDefs: typeDefs,
     },
   });
@@ -83,7 +80,7 @@ export async function createTestSchema({
   return {
     schema,
     typeDefs,
-    hash,
+    hash: schemaHash,
     dbSchema,
     query: /* GraphQL */ `
       query ${shouldNameQuery ? random : ""} {

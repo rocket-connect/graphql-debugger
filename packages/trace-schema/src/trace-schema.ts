@@ -2,6 +2,7 @@
 import { BaseAdapter } from "@graphql-debugger/adapter-base";
 import { SetupOtelInput, setupOtel } from "@graphql-debugger/opentelemetry";
 import { traceDirective } from "@graphql-debugger/trace-directive";
+import { hashSchema } from "@graphql-debugger/utils";
 
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { getResolversFromSchema } from "@graphql-tools/utils";
@@ -27,7 +28,7 @@ export function traceSchema({
   instrumentations,
   shouldExportSchema = true,
   shouldExcludeTypeFields = false,
-}: TraceSchemaInput): GraphQLSchema {
+}: TraceSchemaInput): { schema: GraphQLSchema; schemaHash: string } {
   debug("Tracing schema");
 
   setupOtel({ exporterConfig, instrumentations });
@@ -97,5 +98,8 @@ export function traceSchema({
 
   debug("Traced schema");
 
-  return tracedSchema;
+  return {
+    schema: tracedSchema,
+    schemaHash: hashSchema(tracedSchema),
+  };
 }
