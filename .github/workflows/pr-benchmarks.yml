@@ -40,7 +40,8 @@ jobs:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
       - name: Run benchmarks
-        run: cd ./benchmarks && nix-shell --quiet --run ./run.cr
+        working-directory: ./benchmarks
+        run: nix-shell --quiet --run ./run.cr
       - name: Comment on PR
         if: github.event_name == 'pull_request'
         uses: thollander/actions-comment-pull-request@v1
