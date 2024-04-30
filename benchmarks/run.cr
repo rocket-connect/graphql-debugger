@@ -19,7 +19,7 @@ benchmarks.map do |b|
       end
     end
     run("crystal", ["build", "--release", "-D", "preview_mt", "main.cr"], dir, true) if File.exists? dir.join("shard.yml")
-    run("pnpm", ["i", "--silent"], dir, true) if File.exists? dir.join("package.json")
+    run("pnpm", ["i"], dir, true) if File.exists? dir.join("package.json")
     run("cargo", ["build", "--release", "--quiet"], dir, true) if File.exists? dir.join("Cargo.toml")
     run("go", ["build", "-o", "main", "main.go"], dir, true) if File.exists? dir.join("go.mod")
     run("pipenv", ["install"], dir, true) if File.exists? dir.join("Pipfile")
