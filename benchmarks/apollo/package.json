@@ -1,4 +1,7 @@
 {
+  "peerDependencies": {
+    "graphql": "^16.0.0 || ^17.0.0"
+  },
   "dependencies": {
     "apollo-server": "3.13.0"
   },

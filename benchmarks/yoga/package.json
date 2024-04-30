@@ -1,4 +1,7 @@
 {
+  "peerDependencies": {
+    "graphql": "^16.0.0 || ^17.0.0"
+  },
   "dependencies": {
     "graphql-yoga": "5.1.0"
   },

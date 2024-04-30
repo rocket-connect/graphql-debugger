@@ -1,4 +1,7 @@
 {
+  "peerDependencies": {
+    "graphql": "^16.0.0 || ^17.0.0"
+  },
   "dependencies": {
     "@opentelemetry/api": "1.8.0",
     "@opentelemetry/exporter-jaeger": "1.24.0",
