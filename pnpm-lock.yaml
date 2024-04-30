@@ -439,8 +439,8 @@ importers:
         specifier: 10.4.16
         version: 10.4.16(postcss@8.4.38)
       nextra-theme-docs:
-        specifier: 3.0.0-alpha.12
-        version: 3.0.0-alpha.12(next@14.1.0)(nextra@3.0.0-alpha.10)(react-dom@18.3.1)(react@18.3.1)
+        specifier: 3.0.0-alpha.23
+        version: 3.0.0-alpha.23(next@14.1.0)(nextra@3.0.0-alpha.10)(react-dom@18.3.1)(react@18.3.1)
       postcss:
         specifier: 8.4.38
         version: 8.4.38
@@ -8076,8 +8076,8 @@ packages:
     resolution: {integrity: sha512-X8cqMLLie7KsNUDSdzeN8FYK9rEt4Dt67OsG/DNGnYTSDBG4uFAJFBnUeiV+zCVAvwFy56IjM9sH51jVaEhNxw==}
     dev: true
 
-  /flexsearch@0.7.31:
-    resolution: {integrity: sha512-XGozTsMPYkm+6b5QL3Z9wQcJjNYxp0CYn3U1gO7dwD6PAqU1SVWZxI9CCg3z+ml3YfqdPnrBehaBrnH2AGKbNA==}
+  /flexsearch@0.7.43:
+    resolution: {integrity: sha512-c5o/+Um8aqCSOXGcZoqZOm+NqtVwNsvVpWv6lfmSclU954O3wvQKxxK8zj74fPaSJbXpSLTs4PRhh+wnoCXnKg==}
     dev: true
 
   /focus-visible@5.2.0:
@@ -11325,14 +11325,12 @@ packages:
     engines: {node: '>= 0.4.0'}
     dev: false
 
-  /next-themes@0.2.1(next@14.1.0)(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-B+AKNfYNIzh0vqQQKqQItTS8evEouKD7H5Hj3kmuPERwddR2TxvDSFZuTj6T7Jfn1oyeUyJMydPl1Bkxkh0W7A==}
+  /next-themes@0.3.0(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-/QHIrsYpd6Kfk7xakK4svpDI5mmXP0gfvCoJdGpZQ2TOrQZmsW0QxjaiLn8wbIKjtm4BTSqLoix4lxYYOnLJ/w==}
     peerDependencies:
-      next: '*'
-      react: '*'
-      react-dom: '*'
+      react: ^16.8 || ^17 || ^18
+      react-dom: ^16.8 || ^17 || ^18
     dependencies:
-      next: 14.1.0(@babel/core@7.24.4)(react-dom@18.3.1)(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
     dev: true
@@ -11387,11 +11385,11 @@ packages:
       fsevents: 2.3.3
     dev: false
 
-  /nextra-theme-docs@3.0.0-alpha.12(next@14.1.0)(nextra@3.0.0-alpha.10)(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-ProciwBXpe8vmQ3QNCnMCWs8v+S3BpGkCJ7XSUlcwHglC5hwD67vaoNfZDkh4fbNDH5ZTWcjDs6Sk2uixuvLbA==}
+  /nextra-theme-docs@3.0.0-alpha.23(next@14.1.0)(nextra@3.0.0-alpha.10)(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-Ra+ZHzGnpX4IIfhVniMbDlSdwx5fTfaw7GV7P2pPALy/5EcwVLWgrCpNlE55QgRqqgvS7DjKvNliZVHisWMZdw==}
     peerDependencies:
       next: '>=13'
-      nextra: 3.0.0-alpha.12
+      nextra: 3.0.0-alpha.23
       react: '>=16.13.1'
       react-dom: '>=16.13.1'
     dependencies:
@@ -11399,11 +11397,11 @@ packages:
       '@popperjs/core': 2.11.8
       clsx: 2.1.1
       escape-string-regexp: 5.0.0
-      flexsearch: 0.7.31
+      flexsearch: 0.7.43
       focus-visible: 5.2.0
       intersection-observer: 0.12.2
       next: 14.1.0(@babel/core@7.24.4)(react-dom@18.3.1)(react@18.3.1)
-      next-themes: 0.2.1(next@14.1.0)(react-dom@18.3.1)(react@18.3.1)
+      next-themes: 0.3.0(react-dom@18.3.1)(react@18.3.1)
       nextra: 3.0.0-alpha.10(next@14.1.0)(react-dom@18.3.1)(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
