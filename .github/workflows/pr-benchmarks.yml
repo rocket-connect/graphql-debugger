@@ -42,9 +42,9 @@ jobs:
       - name: Run benchmarks
         working-directory: ./benchmarks
         run: nix-shell --quiet --run ./run.cr
-      - name: Comment on PR
-        if: github.event_name == 'pull_request'
-        uses: thollander/actions-comment-pull-request@v1
-        with:
-          message: "Benchmark Results:\n```$(cat benchmark-results.txt)```"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push readme
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          git add README.md
+          git commit -m "update readme"
+          git push
