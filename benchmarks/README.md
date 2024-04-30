@@ -22,10 +22,10 @@ The API is served over HTTP using a common web server and load tested using [bom
 
 | Name                          | Language      | Server          | Latency avg      | Requests      |
 | ----------------------------  | ------------- | --------------- | ---------------- | ------------- |
-| [yoga](https://github.com/dotansimha/graphql-yoga) | Node.js | http | 15.48ms | 13kps |
-| [apollo](https://github.com/apollographql/apollo-server) | Node.js | Express | 33.15ms | 6.0kps |
-| [yoga-otel](https://github.com/open-telemetry/opentelemetry-js/) | Node.js | http | 34.25ms | 5.9kps |
-| [helix](https://github.com/contra/graphql-helix) | Node.js | http | 47.91ms | 4.2kps |
-| [yoga-debugger](https://graphql-debugger.com/docs/plugins/yoga) | Node.js | http | 87.01ms | 2.3kps |
-| [apollo-debugger](https://graphql-debugger.com/docs/plugins/apollo) | Node.js | Express | 96.14ms | 2.1kps |
-| [helix-debugger](https://github.com/rocket-connect/graphql-debugger) | Node.js | http | 105.82ms | 1.9kps |
+| [yoga](https://github.com/dotansimha/graphql-yoga) | Node.js | http | 18.35ms | 11kps |
+| [apollo](https://github.com/apollographql/apollo-server) | Node.js | Express | 39.67ms | 5.0kps |
+| [yoga-otel](https://github.com/open-telemetry/opentelemetry-js/) | Node.js | http | 43.67ms | 4.6kps |
+| [helix](https://github.com/contra/graphql-helix) | Node.js | http | 55.22ms | 3.6kps |
+| [apollo-debugger](https://graphql-debugger.com/docs/plugins/apollo) | Node.js | Express | 63.86ms | 3.1kps |
+| [yoga-debugger](https://graphql-debugger.com/docs/plugins/yoga) | Node.js | http | 67.72ms | 2.9kps |
+| [helix-debugger](https://github.com/rocket-connect/graphql-debugger) | Node.js | http | 105.80ms | 1.9kps |
