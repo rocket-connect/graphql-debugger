@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-project
       - uses: fregante/setup-git-user@v2
       - uses: cachix/install-nix-action@v24
         with:
