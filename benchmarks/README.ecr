@@ -1,0 +1,27 @@
+<!-- README.md is generated from README.ecr, do not edit -->
+
+# GraphQL Debugger Benchmarks
+
+https://www.graphql-debugger.com
+
+Graphql server benchmarks in many frameworks.
+
+All servers implement a simple schema:
+
+```graphql
+type Query {
+  hello: String!
+}
+```
+
+The returned string is always `world`.
+
+The API is served over HTTP using a common web server and load tested using [bombardier](https://github.com/codesenberg/bombardier).
+
+### Results
+
+| Name                          | Language      | Server          | Latency avg      | Requests      |
+| ----------------------------  | ------------- | --------------- | ---------------- | ------------- |
+<%- benchmarks.each do |b| -%>
+| [<%= b.name %>](<%= b.url %>) | <%= b.lang %> | <%= b.server %> | <%= b.latency %> | <%= b.reqs %> |
+<%- end -%>
