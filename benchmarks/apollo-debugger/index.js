@@ -1,6 +1,5 @@
 import { graphqlDebuggerPlugin } from "@graphql-debugger/apollo-server";
 
-import { makeExecutableSchema } from "@graphql-tools/schema";
 import { ApolloServer } from "apollo-server";
 import cluster from "cluster";
 import { cpus } from "os";
@@ -12,7 +11,7 @@ if (cluster.isPrimary) {
     cluster.fork();
   }
 } else {
-  const schema = makeExecutableSchema({
+  const server = new ApolloServer({
     typeDefs: `
       type Query {
         hello: String!
@@ -23,10 +22,6 @@ if (cluster.isPrimary) {
         hello: () => "world",
       },
     },
-  });
-
-  const server = new ApolloServer({
-    schema,
     plugins: [graphqlDebuggerPlugin()],
   });
 
