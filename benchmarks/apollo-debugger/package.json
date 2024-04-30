@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@graphql-debugger/apollo-server": "workspace:^",
+    "apollo-server": "3.13.0"
+  },
+  "type": "module"
+}

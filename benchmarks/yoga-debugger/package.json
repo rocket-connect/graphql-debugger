@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "graphql-yoga": "5.1.0",
+    "@graphql-debugger/graphql-yoga": "workspace:^"
+  },
+  "type": "module"
+}

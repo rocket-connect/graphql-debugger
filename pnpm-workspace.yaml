@@ -3,4 +3,5 @@ packages:
   - "apps/**"
   - "e2e/**"
   - "plugins/**"
+  - "benchmarks/**"
   - docs
