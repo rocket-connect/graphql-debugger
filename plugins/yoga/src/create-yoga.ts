@@ -38,12 +38,36 @@ export function createYoga<
     throw new Error("Schema is required when using GraphQL Debugger");
   }
 
+  let adapter = options?.debugger?.adapter;
+  if (!adapter) {
+    adapter = new ProxyAdapter();
+  }
+
+  let schema = options.schema;
+  let schemaHash = "";
+
+  if (options.debugger?.shouldDisable) {
+    schema = options.schema;
+  } else {
+    const tracedSchema = traceSchema({
+      schema,
+      adapter: adapter as BaseAdapter,
+      ...options.debugger?.traceSchemaOptions,
+    });
+
+    schema = tracedSchema.schema;
+    schemaHash = tracedSchema.schemaHash;
+  }
+
+  const preComputedContext = {
+    schema,
+    schemaHash,
+  };
+
   if (!options.context) {
     const contextOverride = async (): Promise<TUserContext> => {
       return {
-        GraphQLDebuggerContext: new GraphQLDebuggerContext({
-          schema: options.schema,
-        }),
+        GraphQLDebuggerContext: new GraphQLDebuggerContext(preComputedContext),
       } as unknown as TUserContext;
     };
 
@@ -55,26 +79,13 @@ export function createYoga<
     options.context = async function newContextFunction(...args) {
       const contextObject = await originalContextFunction(...args);
 
-      contextObject.GraphQLDebuggerContext = new GraphQLDebuggerContext({
-        schema: options.schema,
-      });
+      contextObject.GraphQLDebuggerContext = new GraphQLDebuggerContext(
+        preComputedContext,
+      );
 
       return contextObject;
     };
   }
-
-  let adapter = options?.debugger?.adapter;
-  if (!adapter) {
-    adapter = new ProxyAdapter();
-  }
-
-  const schema = options.debugger?.shouldDisable
-    ? options.schema
-    : traceSchema({
-        schema: options.schema,
-        adapter: adapter as BaseAdapter,
-        ...options.debugger?.traceSchemaOptions,
-      });
 
   const yoga = originalCreateYoga<TServerContext, TUserContext>({
     ...options,

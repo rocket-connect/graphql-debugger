@@ -7,12 +7,15 @@ Inject the `GraphQLDebuggerContext` instance inside your GraphQL request context
 ```js
 import { GraphQLDebuggerContext } from "@graphql-debugger/trace-schema";
 
+const tracedScema = traceSchema({
+  schema,
+  adapter: // <-- See Adapters
+});
+
 const myServer = new GraphQLServerFooBar({
   schema,
   context: {
-    GraphQLDebuggerContext: new GraphQLDebuggerContext({
-      schema,
-    }),
+    GraphQLDebuggerContext: new GraphQLDebuggerContext(tracedSchema),
   },
 });
 ```

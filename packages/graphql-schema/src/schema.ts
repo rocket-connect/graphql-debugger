@@ -4,6 +4,7 @@ import { traceSchema } from "@graphql-debugger/trace-schema";
 import { hashSchema } from "@graphql-debugger/utils";
 
 import SchemaBuilder from "@pothos/core";
+import { GraphQLSchema } from "graphql";
 
 import { TRACE_PRISMA, TRACE_SCHEMA } from "./config";
 import { Context } from "./context";
@@ -23,17 +24,24 @@ require("./mutations");
 const build = builder.toSchema();
 
 export function createSchema({ client }: { client: DebuggerClient }) {
-  const schema = TRACE_SCHEMA
-    ? traceSchema({
-        adapter: client.adapter,
-        schema: build,
-        ...(TRACE_PRISMA && {
-          instrumentations: [tracing],
-        }),
-      })
-    : build;
+  let schema: GraphQLSchema;
+  let schemaHash: string;
 
-  const hash = hashSchema(schema);
+  if (TRACE_SCHEMA) {
+    const tracedSchema = traceSchema({
+      schema: build,
+      adapter: client.adapter,
+      shouldExportSchema: false,
+      ...(TRACE_PRISMA && {
+        instrumentations: [tracing],
+      }),
+    });
+    schema = tracedSchema.schema;
+    schemaHash = tracedSchema.schemaHash;
+  } else {
+    schema = build;
+    schemaHash = hashSchema(build);
+  }
 
-  return { schema, hash };
+  return { schema, schemaHash };
 }

@@ -12,6 +12,7 @@ import { GraphQLSchema } from "graphql";
 
 export interface GraphQLDebuggerContextOptions {
   schema: GraphQLSchema;
+  schemaHash?: string;
 }
 
 export class GraphQLDebuggerContext {
@@ -23,7 +24,7 @@ export class GraphQLDebuggerContext {
 
   constructor(options: GraphQLDebuggerContextOptions) {
     this.schema = options.schema;
-    this.schemaHash = hashSchema(options.schema);
+    this.schemaHash = options.schemaHash || hashSchema(options.schema);
     this.tracer = getTracer();
   }
 
