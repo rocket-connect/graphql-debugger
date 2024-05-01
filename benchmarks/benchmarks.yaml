@@ -14,6 +14,14 @@
   run:
     cmd: node
     args: ["index.js"]
+- id: helix-otel
+  name: helix-otel
+  url: https://github.com/open-telemetry/opentelemetry-js/
+  lang: Node.js
+  server: http
+  run:
+    cmd: node
+    args: ["index.js"]
 - id: yoga
   name: yoga
   url: https://github.com/dotansimha/graphql-yoga
@@ -49,6 +57,14 @@
 - id: apollo-debugger
   name: apollo-debugger
   url: https://graphql-debugger.com/docs/plugins/apollo
+  lang: Node.js
+  server: Express
+  run:
+    cmd: node
+    args: ["--no-warnings", "index.js"]
+- id: apollo-otel
+  name: apollo-otel
+  url: https://github.com/open-telemetry/opentelemetry-js/
   lang: Node.js
   server: Express
   run:
