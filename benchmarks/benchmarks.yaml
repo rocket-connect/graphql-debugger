@@ -54,3 +54,11 @@
   run:
     cmd: node
     args: ["--no-warnings", "index.js"]
+- id: apollo-otel
+  name: apollo-otel
+  url: https://github.com/open-telemetry/opentelemetry-js/
+  lang: Node.js
+  server: Express
+  run:
+    cmd: node
+    args: ["--no-warnings", "index.js"]
