@@ -396,6 +396,36 @@ importers:
         specifier: 1.13.0
         version: 1.13.0(graphql@16.0.0)
 
+  benchmarks/helix-otel:
+    dependencies:
+      '@opentelemetry/api':
+        specifier: 1.8.0
+        version: 1.8.0
+      '@opentelemetry/exporter-jaeger':
+        specifier: 1.24.0
+        version: 1.24.0(@opentelemetry/api@1.8.0)
+      '@opentelemetry/exporter-trace-otlp-http':
+        specifier: 0.51.0
+        version: 0.51.0(@opentelemetry/api@1.8.0)
+      '@opentelemetry/resources':
+        specifier: 1.24.0
+        version: 1.24.0(@opentelemetry/api@1.8.0)
+      '@opentelemetry/sdk-trace-base':
+        specifier: 1.24.0
+        version: 1.24.0(@opentelemetry/api@1.8.0)
+      '@opentelemetry/semantic-conventions':
+        specifier: 1.24.0
+        version: 1.24.0
+      express:
+        specifier: 4.18.0
+        version: 4.18.0
+      graphql:
+        specifier: ^16.0.0 || ^17.0.0
+        version: 16.0.0
+      graphql-helix:
+        specifier: 1.13.0
+        version: 1.13.0(graphql@16.0.0)
+
   benchmarks/yoga:
     dependencies:
       graphql:
