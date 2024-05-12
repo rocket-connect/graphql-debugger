@@ -22,12 +22,12 @@ The API is served over HTTP using a common web server and load tested using [bom
 
 | Name                          | Language      | Server          | Latency avg      | Requests      |
 | ----------------------------  | ------------- | --------------- | ---------------- | ------------- |
-| [yoga](https://github.com/dotansimha/graphql-yoga) | Node.js | http | 14.42ms | 14kps |
-| [yoga-otel](https://github.com/open-telemetry/opentelemetry-js/) | Node.js | http | 32.61ms | 6.1kps |
-| [apollo](https://github.com/apollographql/apollo-server) | Node.js | Express | 32.85ms | 6.1kps |
-| [helix](https://github.com/contra/graphql-helix) | Node.js | http | 45.61ms | 4.4kps |
-| [yoga-debugger](https://graphql-debugger.com/docs/plugins/yoga) | Node.js | http | 51.05ms | 3.9kps |
-| [apollo-debugger](https://graphql-debugger.com/docs/plugins/apollo) | Node.js | Express | 52.67ms | 3.8kps |
-| [apollo-otel](https://github.com/open-telemetry/opentelemetry-js/) | Node.js | Express | 54.51ms | 3.7kps |
-| [helix-otel](https://github.com/open-telemetry/opentelemetry-js/) | Node.js | http | 70.93ms | 2.8kps |
-| [helix-debugger](https://github.com/rocket-connect/graphql-debugger) | Node.js | http | 82.95ms | 2.4kps |
+| [yoga](https://github.com/dotansimha/graphql-yoga) | Node.js | http | 14.61ms | 14kps |
+| [apollo](https://github.com/apollographql/apollo-server) | Node.js | Express | 32.40ms | 6.1kps |
+| [yoga-otel](https://github.com/open-telemetry/opentelemetry-js/) | Node.js | http | 33.44ms | 6.0kps |
+| [helix](https://github.com/contra/graphql-helix) | Node.js | http | 47.48ms | 4.2kps |
+| [yoga-debugger](https://graphql-debugger.com/docs/plugins/yoga) | Node.js | http | 52.95ms | 3.8kps |
+| [apollo-debugger](https://graphql-debugger.com/docs/plugins/apollo) | Node.js | Express | 53.76ms | 3.7kps |
+| [apollo-otel](https://github.com/open-telemetry/opentelemetry-js/) | Node.js | Express | 56.15ms | 3.6kps |
+| [helix-otel](https://github.com/open-telemetry/opentelemetry-js/) | Node.js | http | 67.46ms | 3.0kps |
+| [helix-debugger](https://github.com/rocket-connect/graphql-debugger) | Node.js | http | 81.36ms | 2.4kps |
