@@ -22,6 +22,6 @@
     "express": "4.19.2"
   },
   "devDependencies": {
-    "supertest": "6.3.4"
+    "supertest": "7.0.0"
   }
 }
