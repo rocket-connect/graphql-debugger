@@ -30,6 +30,6 @@
   "devDependencies": {
     "@graphql-debugger/opentelemetry": "workspace:^",
     "express": "4.19.2",
-    "supertest": "6.3.4"
+    "supertest": "7.0.0"
   }
 }
