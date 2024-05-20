@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = {
   mode: "none",
@@ -73,6 +74,13 @@ module.exports = {
       favicon: "./public/favicon.svg",
     }),
     new NodePolyfillPlugin(),
+    ...(process.env.NODE_ENV === "production"
+      ? [
+          new CompressionPlugin({
+            deleteOriginalAssets: true,
+          }),
+        ]
+      : []),
   ],
   devServer: {
     static: {

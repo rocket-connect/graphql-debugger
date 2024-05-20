@@ -4,6 +4,7 @@ import { graphqlDebugger } from "@graphql-debugger/plugin-express";
 
 import cors from "cors";
 import express, { Express } from "express";
+import expressStaticGzip from "express-static-gzip";
 import http from "http";
 import path from "path";
 
@@ -30,7 +31,12 @@ export async function start({
         client,
       }),
     );
-    app.use(express.static(path.join(__dirname, "../../ui/build")));
+    app.use(
+      "/",
+      expressStaticGzip(path.join(__dirname, "../../ui/build"), {
+        enableBrotli: true,
+      }),
+    );
     app.use(express.static("public"));
 
     const server = await app.listen(port);
