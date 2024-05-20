@@ -48,7 +48,7 @@
   "devDependencies": {
     "@faker-js/faker": "8.4.1",
     "@graphql-debugger/types": "workspace:^",
-    "compression-webpack-plugin": "^11.1.0"
+    "compression-webpack-plugin": "11.1.0"
   },
   "engines": {
     "node": ">=18",
