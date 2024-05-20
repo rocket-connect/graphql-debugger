@@ -11,5 +11,6 @@
     "@opentelemetry/semantic-conventions": "1.24.0",
     "apollo-server": "3.13.0"
   },
-  "type": "module"
+  "type": "module",
+  "version": "0.0.0-alpha.108"
 }

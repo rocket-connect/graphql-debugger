@@ -12,5 +12,6 @@
     "express": "4.19.2",
     "graphql-helix": "1.13.0"
   },
-  "type": "module"
+  "type": "module",
+  "version": "0.0.0-alpha.108"
 }
