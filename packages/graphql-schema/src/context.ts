@@ -17,14 +17,17 @@ export type Context = {
 export function context({
   client,
   schema,
+  schemaHash,
 }: {
   client: DebuggerClient;
   schema: GraphQLSchema;
+  schemaHash: string;
 }): () => Context {
   return (): Context => {
     return {
       GraphQLDebuggerContext: new GraphQLDebuggerContext({
         schema,
+        schemaHash,
       }),
       client,
       loaders: {

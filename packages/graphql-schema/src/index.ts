@@ -6,10 +6,10 @@ import { context } from "./context";
 import { createSchema } from "./schema";
 
 export function createServer({ client }: { client: DebuggerClient }) {
-  const { schema } = createSchema({ client });
+  const { schema, schemaHash } = createSchema({ client });
 
   return createYoga({
     schema,
-    context: context({ client, schema }),
+    context: context({ client, schema, schemaHash }),
   });
 }

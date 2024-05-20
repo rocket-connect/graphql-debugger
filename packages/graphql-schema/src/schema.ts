@@ -31,7 +31,7 @@ export function createSchema({ client }: { client: DebuggerClient }) {
     const tracedSchema = traceSchema({
       schema: build,
       adapter: client.adapter,
-      shouldExportSchema: false,
+      shouldExportSchema: true,
       ...(TRACE_PRISMA && {
         instrumentations: [tracing],
       }),
