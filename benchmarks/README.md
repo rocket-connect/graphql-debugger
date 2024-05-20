@@ -2,9 +2,7 @@
 
 # GraphQL Debugger Benchmarks
 
-https://www.graphql-debugger.com
-
-Graphql server benchmarks in many frameworks.
+Welcome to GraphQL Debugger Benchmarks! This repository contains benchmarks for various GraphQL servers.
 
 All servers implement a simple schema:
 
@@ -18,16 +16,36 @@ The returned string is always `world`.
 
 The API is served over HTTP using a common web server and load tested using [bombardier](https://github.com/codesenberg/bombardier).
 
+## Benchmarks
+
+These are the servers that are benchmarked:
+
+- yoga 
+- apollo 
+- yoga-otel 
+- helix 
+- yoga-debugger 
+- apollo-debugger 
+- apollo-otel 
+- helix-otel 
+- helix-debugger 
+
+The ones tagged `otel` create a span using standard OpenTelemetry instrumentation. 
+
+The ones with `debugger` use the GraphQL Debugger to create a span. We use the standard OTEL lib's in our implementation and we use our own benchmarks to ensure quality.
+
+Else, is a standard GraphQL server without usage of any OTEL libs. 
+
 ### Results
 
 | Name                          | Language      | Server          | Latency avg      | Requests      |
 | ----------------------------  | ------------- | --------------- | ---------------- | ------------- |
-| [yoga](https://github.com/dotansimha/graphql-yoga) | Node.js | http | 14.61ms | 14kps |
-| [apollo](https://github.com/apollographql/apollo-server) | Node.js | Express | 32.07ms | 6.2kps |
-| [yoga-otel](https://github.com/open-telemetry/opentelemetry-js/) | Node.js | http | 34.47ms | 5.8kps |
-| [helix](https://github.com/contra/graphql-helix) | Node.js | http | 47.55ms | 4.2kps |
-| [apollo-debugger](https://graphql-debugger.com/docs/plugins/apollo) | Node.js | Express | 53.71ms | 3.7kps |
-| [yoga-debugger](https://graphql-debugger.com/docs/plugins/yoga) | Node.js | http | 53.84ms | 3.7kps |
-| [apollo-otel](https://github.com/open-telemetry/opentelemetry-js/) | Node.js | Express | 55.78ms | 3.6kps |
-| [helix-otel](https://github.com/open-telemetry/opentelemetry-js/) | Node.js | http | 68.80ms | 2.9kps |
-| [helix-debugger](https://github.com/rocket-connect/graphql-debugger) | Node.js | http | 92.11ms | 2.2kps |
+| yoga | Node.js | http | 14.78ms | 14kps |
+| apollo | Node.js | Express | 33.34ms | 6.0kps |
+| yoga-otel | Node.js | http | 33.88ms | 5.9kps |
+| helix | Node.js | http | 49.39ms | 4.0kps |
+| yoga-debugger | Node.js | http | 52.72ms | 3.8kps |
+| apollo-debugger | Node.js | Express | 54.92ms | 3.6kps |
+| apollo-otel | Node.js | Express | 55.51ms | 3.6kps |
+| helix-otel | Node.js | http | 68.83ms | 2.9kps |
+| helix-debugger | Node.js | http | 81.92ms | 2.4kps |
