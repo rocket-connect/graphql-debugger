@@ -8,5 +8,6 @@
     "@graphql-debugger/trace-schema": "workspace:^",
     "@graphql-debugger/adapter-proxy": "workspace:^"
   },
-  "type": "module"
+  "type": "module",
+  "version": "0.0.0-alpha.108"
 }

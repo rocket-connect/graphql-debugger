@@ -11,5 +11,6 @@
     "@opentelemetry/semantic-conventions": "1.24.0",
     "graphql-yoga": "5.3.1"
   },
-  "type": "module"
+  "type": "module",
+  "version": "0.0.0-alpha.108"
 }

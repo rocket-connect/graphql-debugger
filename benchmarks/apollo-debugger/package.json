@@ -6,5 +6,6 @@
     "@graphql-debugger/apollo-server": "workspace:^",
     "apollo-server": "3.13.0"
   },
-  "type": "module"
+  "type": "module",
+  "version": "0.0.0-alpha.108"
 }
