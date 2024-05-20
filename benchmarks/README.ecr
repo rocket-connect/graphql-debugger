@@ -21,7 +21,7 @@ The API is served over HTTP using a common web server and load tested using [bom
 These are the servers that are benchmarked:
 
 <%- benchmarks.each do |b| -%>
-- <%= b.name %> - <%= b.desc %>
+- <%= b.name %> 
 <%- end -%>
 
 The ones tagged `otel` create a span using standard OpenTelemetry instrumentation. 
