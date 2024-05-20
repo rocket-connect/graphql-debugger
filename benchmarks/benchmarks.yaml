@@ -1,6 +1,5 @@
 - id: helix
   name: helix
-  url: https://github.com/contra/graphql-helix
   lang: Node.js
   server: http
   run:
@@ -8,7 +7,6 @@
     args: ["index.js"]
 - id: helix-debugger
   name: helix-debugger
-  url: https://github.com/rocket-connect/graphql-debugger
   lang: Node.js
   server: http
   run:
@@ -16,7 +14,6 @@
     args: ["index.js"]
 - id: helix-otel
   name: helix-otel
-  url: https://github.com/open-telemetry/opentelemetry-js/
   lang: Node.js
   server: http
   run:
@@ -24,7 +21,6 @@
     args: ["index.js"]
 - id: yoga
   name: yoga
-  url: https://github.com/dotansimha/graphql-yoga
   lang: Node.js
   server: http
   run:
@@ -32,7 +28,6 @@
     args: ["--no-warnings", "index.js"]
 - id: yoga-debugger
   name: yoga-debugger
-  url: https://graphql-debugger.com/docs/plugins/yoga
   lang: Node.js
   server: http
   run:
@@ -40,7 +35,6 @@
     args: ["--no-warnings", "index.js"]
 - id: yoga-otel
   name: yoga-otel
-  url: https://github.com/open-telemetry/opentelemetry-js/
   lang: Node.js
   server: http
   run:
@@ -48,7 +42,6 @@
     args: ["--no-warnings", "index.js"]
 - id: apollo
   name: apollo
-  url: https://github.com/apollographql/apollo-server
   lang: Node.js
   server: Express
   run:
@@ -56,7 +49,6 @@
     args: ["--no-warnings", "index.js"]
 - id: apollo-debugger
   name: apollo-debugger
-  url: https://graphql-debugger.com/docs/plugins/apollo
   lang: Node.js
   server: Express
   run:
@@ -64,7 +56,6 @@
     args: ["--no-warnings", "index.js"]
 - id: apollo-otel
   name: apollo-otel
-  url: https://github.com/open-telemetry/opentelemetry-js/
   lang: Node.js
   server: Express
   run:

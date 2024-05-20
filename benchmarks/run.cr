@@ -125,7 +125,6 @@ class Benchmark
 
   property id : String
   property name : String
-  property url : String
   property lang : String
   property server : String
   property run : Script

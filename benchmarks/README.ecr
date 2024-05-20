@@ -2,9 +2,7 @@
 
 # GraphQL Debugger Benchmarks
 
-https://www.graphql-debugger.com
-
-Graphql server benchmarks in many frameworks.
+Welcome to GraphQL Debugger Benchmarks! This repository contains benchmarks for various GraphQL servers.
 
 All servers implement a simple schema:
 
@@ -18,10 +16,24 @@ The returned string is always `world`.
 
 The API is served over HTTP using a common web server and load tested using [bombardier](https://github.com/codesenberg/bombardier).
 
+## Benchmarks
+
+These are the servers that are benchmarked:
+
+<%- benchmarks.each do |b| -%>
+- <%= b.name %> - <%= b.desc %>
+<%- end -%>
+
+The ones tagged `otel` create a span using standard OpenTelemetry instrumentation. 
+
+The ones with `debugger` use the GraphQL Debugger to create a span. We use the standard OTEL lib's in our implementation and we use our own benchmarks to ensure quality.
+
+Else, is a standard GraphQL server without usage of any OTEL libs. 
+
 ### Results
 
 | Name                          | Language      | Server          | Latency avg      | Requests      |
 | ----------------------------  | ------------- | --------------- | ---------------- | ------------- |
 <%- benchmarks.each do |b| -%>
-| [<%= b.name %>](<%= b.url %>) | <%= b.lang %> | <%= b.server %> | <%= b.latency %> | <%= b.reqs %> |
+| <%= b.name %> | <%= b.lang %> | <%= b.server %> | <%= b.latency %> | <%= b.reqs %> |
 <%- end -%>
