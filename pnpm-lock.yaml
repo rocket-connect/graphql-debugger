@@ -185,6 +185,9 @@ importers:
       express:
         specifier: 4.19.2
         version: 4.19.2
+      express-static-gzip:
+        specifier: 2.1.7
+        version: 2.1.7
     devDependencies:
       '@types/cors':
         specifier: 2.8.17
@@ -317,6 +320,9 @@ importers:
       '@graphql-debugger/types':
         specifier: workspace:^
         version: link:../../packages/types
+      compression-webpack-plugin:
+        specifier: ^11.1.0
+        version: 11.1.0(webpack@5.91.0)
 
   benchmarks/apollo:
     dependencies:
@@ -6151,6 +6157,17 @@ packages:
       mime-db: 1.52.0
     dev: true
 
+  /compression-webpack-plugin@11.1.0(webpack@5.91.0):
+    resolution: {integrity: sha512-zDOQYp10+upzLxW+VRSjEpRRwBXJdsb5lBMlRxx1g8hckIFBpe3DTI0en2w7h+beuq89576RVzfiXrkdPGrHhA==}
+    engines: {node: '>= 18.12.0'}
+    peerDependencies:
+      webpack: ^5.1.0
+    dependencies:
+      schema-utils: 4.2.0
+      serialize-javascript: 6.0.2
+      webpack: 5.91.0(webpack-cli@5.1.4)
+    dev: true
+
   /compression@1.7.4:
     resolution: {integrity: sha512-jaSIDzP9pZVS4ZfQ+TzvtiWhdpFhE2RDHz8QJkpX9SIpLq88VueF5jJw6t+6CUQcAoA6t+x89MLrWAqpfDE8iQ==}
     engines: {node: '>= 0.8.0'}
@@ -7843,6 +7860,14 @@ packages:
       jest-matcher-utils: 29.7.0
       jest-message-util: 29.7.0
       jest-util: 29.7.0
+
+  /express-static-gzip@2.1.7:
+    resolution: {integrity: sha512-QOCZUC+lhPPCjIJKpQGu1Oa61Axg9Mq09Qvit8Of7kzpMuwDeMSqjjQteQS3OVw/GkENBoSBheuQDWPlngImvw==}
+    dependencies:
+      serve-static: 1.15.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /express@4.19.2:
     resolution: {integrity: sha512-5T6nhjsT+EOMzuck8JjBHARTHfMht0POzlA60WV2pMD3gyXw2LZnZ+ueGdNxG+0calOJcWKbpFcuzLZ91YWq9Q==}
