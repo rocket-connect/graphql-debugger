@@ -9,5 +9,5 @@
     "@graphql-debugger/adapter-proxy": "workspace:^"
   },
   "type": "module",
-  "version": "0.0.0-alpha.108"
+  "version": "0.0.0-alpha.109"
 }
