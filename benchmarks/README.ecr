@@ -24,7 +24,7 @@ These are the servers that are benchmarked:
 - <%= b.name %> 
 <%- end -%>
 
-The ones tagged `otel` create a span using standard OpenTelemetry instrumentation. 
+The ones tagged `otel` create a span using standard OpenTelemetry instrumentation. The ones with `otel-batch` use the OpenTelemetry batch processor to create a span, related to https://github.com/open-telemetry/opentelemetry-js/issues/4741.
 
 The ones with `debugger` use the GraphQL Debugger to create a span. We use the standard OTEL lib's in our implementation and we use our own benchmarks to ensure quality.
 

@@ -19,6 +19,13 @@
   run:
     cmd: node
     args: ["index.js"]
+- id: helix-otel-batch
+  name: helix-otel-batch
+  lang: Node.js
+  server: http
+  run:
+    cmd: node
+    args: ["index.js"]
 - id: yoga
   name: yoga
   lang: Node.js
@@ -40,6 +47,13 @@
   run:
     cmd: node
     args: ["--no-warnings", "index.js"]
+- id: yoga-otel-batch
+  name: yoga-otel-batch
+  lang: Node.js
+  server: http
+  run:
+    cmd: node
+    args: ["--no-warnings", "index.js"]
 - id: apollo
   name: apollo
   lang: Node.js
@@ -56,6 +70,13 @@
     args: ["--no-warnings", "index.js"]
 - id: apollo-otel
   name: apollo-otel
+  lang: Node.js
+  server: Express
+  run:
+    cmd: node
+    args: ["--no-warnings", "index.js"]
+- id: apollo-otel-batch
+  name: apollo-otel-batch
   lang: Node.js
   server: Express
   run:
