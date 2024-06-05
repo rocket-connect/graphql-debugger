@@ -61,3 +61,10 @@
   run:
     cmd: node
     args: ["--no-warnings", "index.js"]
+- id: apollo-otel-batch
+  name: apollo-otel-batch
+  lang: Node.js
+  server: Express
+  run:
+    cmd: node
+    args: ["--no-warnings", "index.js"]
