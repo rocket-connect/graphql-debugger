@@ -537,6 +537,33 @@ importers:
         specifier: 5.3.1
         version: 5.3.1(graphql@16.0.0)
 
+  benchmarks/yoga-otel-batch:
+    dependencies:
+      '@opentelemetry/api':
+        specifier: 1.8.0
+        version: 1.8.0
+      '@opentelemetry/exporter-jaeger':
+        specifier: 1.24.1
+        version: 1.24.1(@opentelemetry/api@1.8.0)
+      '@opentelemetry/exporter-trace-otlp-http':
+        specifier: 0.51.1
+        version: 0.51.1(@opentelemetry/api@1.8.0)
+      '@opentelemetry/resources':
+        specifier: 1.24.0
+        version: 1.24.0(@opentelemetry/api@1.8.0)
+      '@opentelemetry/sdk-trace-base':
+        specifier: 1.24.0
+        version: 1.24.0(@opentelemetry/api@1.8.0)
+      '@opentelemetry/semantic-conventions':
+        specifier: 1.24.0
+        version: 1.24.0
+      graphql:
+        specifier: ^16.0.0 || ^17.0.0
+        version: 16.0.0
+      graphql-yoga:
+        specifier: 5.3.1
+        version: 5.3.1(graphql@16.0.0)
+
   docs:
     dependencies:
       next:

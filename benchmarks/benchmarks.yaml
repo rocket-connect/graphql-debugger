@@ -47,6 +47,13 @@
   run:
     cmd: node
     args: ["--no-warnings", "index.js"]
+- id: yoga-otel-batch
+  name: yoga-otel-batch
+  lang: Node.js
+  server: http
+  run:
+    cmd: node
+    args: ["--no-warnings", "index.js"]
 - id: apollo
   name: apollo
   lang: Node.js
