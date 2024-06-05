@@ -1,0 +1,17 @@
+{
+  "peerDependencies": {
+    "graphql": "^16.0.0 || ^17.0.0"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "1.8.0",
+    "@opentelemetry/exporter-jaeger": "1.24.1",
+    "@opentelemetry/exporter-trace-otlp-http": "0.51.1",
+    "@opentelemetry/resources": "1.24.0",
+    "@opentelemetry/sdk-trace-base": "1.24.0",
+    "@opentelemetry/semantic-conventions": "1.24.0",
+    "express": "4.19.2",
+    "graphql-helix": "1.13.0"
+  },
+  "type": "module",
+  "version": "0.0.0-alpha.109"
+}
