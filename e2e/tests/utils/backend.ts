@@ -1,6 +1,6 @@
 import * as backend from "@graphql-debugger/backend";
 import * as collector from "@graphql-debugger/collector-proxy";
-import { BatchSpanProcessor } from "@graphql-debugger/opentelemetry";
+import { SimpleSpanProcessor } from "@graphql-debugger/opentelemetry";
 
 import http from "http";
 
@@ -19,10 +19,7 @@ export async function listen() {
     backendServer = await backend.start({
       port: backend.BACKEND_PORT,
       client: localClient,
-      spanProcessorFactory: (exporter) =>
-        new BatchSpanProcessor(exporter, {
-          scheduledDelayMillis: 1,
-        }),
+      spanProcessorFactory: (exporter) => new SimpleSpanProcessor(exporter),
     });
     const collectorInstance = await collector.start({
       port: collector.COLLECTOR_PORT,
