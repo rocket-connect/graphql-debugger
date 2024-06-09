@@ -357,8 +357,8 @@ importers:
         specifier: 0.51.1
         version: 0.51.1(@opentelemetry/api@1.8.0)
       '@opentelemetry/resources':
-        specifier: 1.24.0
-        version: 1.24.0(@opentelemetry/api@1.8.0)
+        specifier: 1.24.1
+        version: 1.24.1(@opentelemetry/api@1.8.0)
       '@opentelemetry/sdk-trace-base':
         specifier: 1.24.0
         version: 1.24.0(@opentelemetry/api@1.8.0)
@@ -384,8 +384,8 @@ importers:
         specifier: 0.51.1
         version: 0.51.1(@opentelemetry/api@1.8.0)
       '@opentelemetry/resources':
-        specifier: 1.24.0
-        version: 1.24.0(@opentelemetry/api@1.8.0)
+        specifier: 1.24.1
+        version: 1.24.1(@opentelemetry/api@1.8.0)
       '@opentelemetry/sdk-trace-base':
         specifier: 1.24.0
         version: 1.24.0(@opentelemetry/api@1.8.0)
@@ -441,8 +441,8 @@ importers:
         specifier: 0.51.1
         version: 0.51.1(@opentelemetry/api@1.8.0)
       '@opentelemetry/resources':
-        specifier: 1.24.0
-        version: 1.24.0(@opentelemetry/api@1.8.0)
+        specifier: 1.24.1
+        version: 1.24.1(@opentelemetry/api@1.8.0)
       '@opentelemetry/sdk-trace-base':
         specifier: 1.24.0
         version: 1.24.0(@opentelemetry/api@1.8.0)
@@ -471,8 +471,8 @@ importers:
         specifier: 0.51.1
         version: 0.51.1(@opentelemetry/api@1.8.0)
       '@opentelemetry/resources':
-        specifier: 1.24.0
-        version: 1.24.0(@opentelemetry/api@1.8.0)
+        specifier: 1.24.1
+        version: 1.24.1(@opentelemetry/api@1.8.0)
       '@opentelemetry/sdk-trace-base':
         specifier: 1.24.0
         version: 1.24.0(@opentelemetry/api@1.8.0)
@@ -522,8 +522,8 @@ importers:
         specifier: 0.51.1
         version: 0.51.1(@opentelemetry/api@1.8.0)
       '@opentelemetry/resources':
-        specifier: 1.24.0
-        version: 1.24.0(@opentelemetry/api@1.8.0)
+        specifier: 1.24.1
+        version: 1.24.1(@opentelemetry/api@1.8.0)
       '@opentelemetry/sdk-trace-base':
         specifier: 1.24.0
         version: 1.24.0(@opentelemetry/api@1.8.0)
@@ -549,8 +549,8 @@ importers:
         specifier: 0.51.1
         version: 0.51.1(@opentelemetry/api@1.8.0)
       '@opentelemetry/resources':
-        specifier: 1.24.0
-        version: 1.24.0(@opentelemetry/api@1.8.0)
+        specifier: 1.24.1
+        version: 1.24.1(@opentelemetry/api@1.8.0)
       '@opentelemetry/sdk-trace-base':
         specifier: 1.24.0
         version: 1.24.0(@opentelemetry/api@1.8.0)
@@ -870,8 +870,8 @@ importers:
         specifier: 0.50.0
         version: 0.50.0(@opentelemetry/api@1.8.0)
       '@opentelemetry/resources':
-        specifier: 1.23.0
-        version: 1.23.0(@opentelemetry/api@1.8.0)
+        specifier: 1.24.1
+        version: 1.24.1(@opentelemetry/api@1.8.0)
       '@opentelemetry/sdk-trace-base':
         specifier: 1.23.0
         version: 1.23.0(@opentelemetry/api@1.8.0)
