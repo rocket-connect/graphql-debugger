@@ -1,4 +1,5 @@
 import { DebuggerClient } from "@graphql-debugger/client";
+import { BatchSpanProcessor } from "@graphql-debugger/opentelemetry";
 import { traceSchema } from "@graphql-debugger/trace-schema";
 import { Schema } from "@graphql-debugger/types";
 
@@ -65,6 +66,8 @@ export async function createTestSchema({
   const { schema, schemaHash } = traceSchema({
     schema: executableSchema,
     adapter: client.adapter,
+    spanProcessorFactory: (exporter) =>
+      new BatchSpanProcessor(exporter, { exportTimeoutMillis: 1 }),
   });
 
   const dbSchema = await client.schema.upsert({
