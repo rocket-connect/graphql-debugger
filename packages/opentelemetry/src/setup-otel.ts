@@ -7,8 +7,8 @@ import {
 } from "@opentelemetry/instrumentation";
 import { OTLPExporterNodeConfigBase } from "@opentelemetry/otlp-exporter-base";
 import {
+  BatchSpanProcessor,
   InMemorySpanExporter,
-  SimpleSpanProcessor,
 } from "@opentelemetry/sdk-trace-base";
 
 import { provider } from "./provider";
@@ -36,7 +36,7 @@ export function setupOtel({
 
   api.context.setGlobalContextManager(contextManager);
 
-  provider.addSpanProcessor(new SimpleSpanProcessor(exporter));
+  provider.addSpanProcessor(new BatchSpanProcessor(exporter));
 
   if (instrumentations) {
     registerInstrumentations({
