@@ -24,14 +24,14 @@ These are the servers that are benchmarked:
 - yoga-otel-batch 
 - apollo 
 - yoga-otel 
-- apollo-otel-batch 
-- helix 
-- helix-otel-batch 
-- apollo-debugger 
 - yoga-debugger 
+- apollo-otel-batch 
+- helix-otel-batch 
+- helix 
+- apollo-debugger 
 - apollo-otel 
-- helix-otel 
 - helix-debugger 
+- helix-otel 
 
 The ones tagged `otel` create a span using standard OpenTelemetry instrumentation. The ones with `otel-batch` use the OpenTelemetry batch processor to create a span, related to https://github.com/open-telemetry/opentelemetry-js/issues/4741.
 
@@ -43,15 +43,15 @@ Else, is a standard GraphQL server without usage of any OTEL libs.
 
 | Name                          | Language      | Server          | Latency avg      | Requests      |
 | ----------------------------  | ------------- | --------------- | ---------------- | ------------- |
-| yoga | Node.js | http | 15.20ms | 13kps |
-| yoga-otel-batch | Node.js | http | 20.64ms | 9.7kps |
-| apollo | Node.js | Express | 33.42ms | 6.0kps |
-| yoga-otel | Node.js | http | 34.94ms | 5.7kps |
-| apollo-otel-batch | Node.js | Express | 41.53ms | 4.8kps |
-| helix | Node.js | http | 48.05ms | 4.1kps |
-| helix-otel-batch | Node.js | http | 55.63ms | 3.6kps |
-| apollo-debugger | Node.js | Express | 55.41ms | 3.6kps |
-| yoga-debugger | Node.js | http | 56.27ms | 3.5kps |
-| apollo-otel | Node.js | Express | 59.68ms | 3.3kps |
-| helix-otel | Node.js | http | 74.17ms | 2.7kps |
-| helix-debugger | Node.js | http | 99.66ms | 2.0kps |
+| yoga | Node.js | http | 14.61ms | 14kps |
+| yoga-otel-batch | Node.js | http | 20.38ms | 9.9kps |
+| apollo | Node.js | Express | 32.80ms | 6.1kps |
+| yoga-otel | Node.js | http | 33.39ms | 6.0kps |
+| yoga-debugger | Node.js | http | 35.88ms | 5.6kps |
+| apollo-otel-batch | Node.js | Express | 39.53ms | 5.1kps |
+| helix-otel-batch | Node.js | http | 51.57ms | 3.9kps |
+| helix | Node.js | http | 51.73ms | 3.9kps |
+| apollo-debugger | Node.js | Express | 53.00ms | 3.8kps |
+| apollo-otel | Node.js | Express | 55.64ms | 3.6kps |
+| helix-debugger | Node.js | http | 62.34ms | 3.2kps |
+| helix-otel | Node.js | http | 68.11ms | 2.9kps |
