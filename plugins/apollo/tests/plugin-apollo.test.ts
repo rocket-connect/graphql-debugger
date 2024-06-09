@@ -1,5 +1,6 @@
 import {
   InMemorySpanExporter,
+  SimpleSpanProcessor,
   setupOtel,
 } from "@graphql-debugger/opentelemetry";
 
@@ -11,6 +12,7 @@ import { graphqlDebuggerPlugin } from "../src";
 
 const exporter = setupOtel({
   inMemory: true,
+  spanProcessorFactory: (exporter) => new SimpleSpanProcessor(exporter),
 }) as InMemorySpanExporter;
 
 const sleep = util.promisify(setTimeout);
