@@ -43,15 +43,15 @@ Else, is a standard GraphQL server without usage of any OTEL libs.
 
 | Name                          | Language      | Server          | Latency avg      | Requests      |
 | ----------------------------  | ------------- | --------------- | ---------------- | ------------- |
-| yoga | Node.js | http | 15.23ms | 13kps |
-| yoga-otel-batch | Node.js | http | 20.70ms | 9.7kps |
-| apollo | Node.js | Express | 34.08ms | 5.9kps |
-| yoga-otel | Node.js | http | 35.45ms | 5.6kps |
-| apollo-otel-batch | Node.js | Express | 40.40ms | 5.0kps |
-| helix | Node.js | http | 47.58ms | 4.2kps |
-| helix-otel-batch | Node.js | http | 54.29ms | 3.7kps |
-| apollo-debugger | Node.js | Express | 54.39ms | 3.7kps |
-| yoga-debugger | Node.js | http | 55.50ms | 3.6kps |
-| apollo-otel | Node.js | Express | 55.78ms | 3.6kps |
-| helix-otel | Node.js | http | 70.70ms | 2.8kps |
-| helix-debugger | Node.js | http | 94.40ms | 2.1kps |
+| yoga | Node.js | http | 15.20ms | 13kps |
+| yoga-otel-batch | Node.js | http | 20.64ms | 9.7kps |
+| apollo | Node.js | Express | 33.42ms | 6.0kps |
+| yoga-otel | Node.js | http | 34.94ms | 5.7kps |
+| apollo-otel-batch | Node.js | Express | 41.53ms | 4.8kps |
+| helix | Node.js | http | 48.05ms | 4.1kps |
+| helix-otel-batch | Node.js | http | 55.63ms | 3.6kps |
+| apollo-debugger | Node.js | Express | 55.41ms | 3.6kps |
+| yoga-debugger | Node.js | http | 56.27ms | 3.5kps |
+| apollo-otel | Node.js | Express | 59.68ms | 3.3kps |
+| helix-otel | Node.js | http | 74.17ms | 2.7kps |
+| helix-debugger | Node.js | http | 99.66ms | 2.0kps |
