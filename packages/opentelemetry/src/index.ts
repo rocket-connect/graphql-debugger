@@ -28,4 +28,7 @@ export { InstrumentationOption } from "@opentelemetry/instrumentation";
 
 export { Span as ApiSpan } from "@opentelemetry/api";
 
-export { SimpleSpanProcessor } from "@opentelemetry/sdk-trace-base";
+export {
+  SimpleSpanProcessor,
+  BatchSpanProcessor,
+} from "@opentelemetry/sdk-trace-base";

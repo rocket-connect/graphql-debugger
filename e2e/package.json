@@ -26,6 +26,7 @@
     "@graphql-debugger/client": "workspace:^",
     "@graphql-debugger/collector-proxy": "workspace:^",
     "@graphql-debugger/trace-schema": "workspace:^",
+    "@graphql-debugger/opentelemetry": "workspace:^",
     "@graphql-debugger/ui": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
     "@graphql-tools/schema": "10.0.3",

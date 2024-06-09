@@ -16,6 +16,7 @@ export interface TraceSchemaInput {
   adapter: BaseAdapter;
   exporterConfig?: SetupOtelInput["exporterConfig"];
   instrumentations?: SetupOtelInput["instrumentations"];
+  spanProcessorFactory?: SetupOtelInput["spanProcessorFactory"];
   shouldExportSchema?: boolean;
   // If you have large schema, enable this so you still get traces, but not one for each field on each type.
   shouldExcludeTypeFields?: boolean;
@@ -26,12 +27,13 @@ export function traceSchema({
   exporterConfig,
   adapter,
   instrumentations,
+  spanProcessorFactory,
   shouldExportSchema = true,
   shouldExcludeTypeFields = false,
 }: TraceSchemaInput): { schema: GraphQLSchema; schemaHash: string } {
   debug("Tracing schema");
 
-  setupOtel({ exporterConfig, instrumentations });
+  setupOtel({ exporterConfig, instrumentations, spanProcessorFactory });
 
   const directive = traceDirective();
 

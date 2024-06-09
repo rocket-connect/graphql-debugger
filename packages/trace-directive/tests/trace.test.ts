@@ -1,6 +1,7 @@
 import {
   InMemorySpanExporter,
   ReadableSpan,
+  SimpleSpanProcessor,
   SpanStatusCode,
   buildSpanTree,
   setupOtel,
@@ -21,6 +22,7 @@ import { GraphQLDebuggerContext, traceDirective } from "../src";
 
 const inMemorySpanExporter = setupOtel({
   inMemory: true,
+  spanProcessorFactory: (exporter) => new SimpleSpanProcessor(exporter),
 }) as InMemorySpanExporter;
 
 const util = require("util");

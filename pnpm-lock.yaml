@@ -615,6 +615,9 @@ importers:
       '@graphql-debugger/collector-proxy':
         specifier: workspace:^
         version: link:../apps/collector-proxy
+      '@graphql-debugger/opentelemetry':
+        specifier: workspace:^
+        version: link:../packages/opentelemetry
       '@graphql-debugger/trace-schema':
         specifier: workspace:^
         version: link:../packages/trace-schema
