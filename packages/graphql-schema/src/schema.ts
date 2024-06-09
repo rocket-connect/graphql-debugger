@@ -1,6 +1,6 @@
 import { DebuggerClient } from "@graphql-debugger/client";
 import { tracing } from "@graphql-debugger/data-access";
-import { traceSchema } from "@graphql-debugger/trace-schema";
+import { TraceSchemaInput, traceSchema } from "@graphql-debugger/trace-schema";
 import { hashSchema } from "@graphql-debugger/utils";
 
 import SchemaBuilder from "@pothos/core";
@@ -23,7 +23,13 @@ require("./mutations");
 
 const build = builder.toSchema();
 
-export function createSchema({ client }: { client: DebuggerClient }) {
+export function createSchema({
+  client,
+  spanProcessorFactory,
+}: {
+  client: DebuggerClient;
+  spanProcessorFactory?: TraceSchemaInput["spanProcessorFactory"];
+}) {
   let schema: GraphQLSchema;
   let schemaHash: string;
 
@@ -32,6 +38,7 @@ export function createSchema({ client }: { client: DebuggerClient }) {
       schema: build,
       adapter: client.adapter,
       shouldExportSchema: true,
+      spanProcessorFactory,
       ...(TRACE_PRISMA && {
         instrumentations: [tracing],
       }),

@@ -13,6 +13,8 @@ export {
   InMemorySpanExporter,
   ReadableSpan,
   RandomIdGenerator,
+  SpanExporter,
+  SpanProcessor,
 } from "@opentelemetry/sdk-trace-base";
 export {
   Context,
@@ -27,3 +29,8 @@ export {
 export { InstrumentationOption } from "@opentelemetry/instrumentation";
 
 export { Span as ApiSpan } from "@opentelemetry/api";
+
+export {
+  SimpleSpanProcessor,
+  BatchSpanProcessor,
+} from "@opentelemetry/sdk-trace-base";

@@ -7,8 +7,10 @@ import {
 } from "@opentelemetry/instrumentation";
 import { OTLPExporterNodeConfigBase } from "@opentelemetry/otlp-exporter-base";
 import {
+  BatchSpanProcessor,
   InMemorySpanExporter,
-  SimpleSpanProcessor,
+  SpanExporter,
+  SpanProcessor,
 } from "@opentelemetry/sdk-trace-base";
 
 import { provider } from "./provider";
@@ -17,15 +19,16 @@ export type SetupOtelInput = {
   inMemory?: boolean;
   exporterConfig?: OTLPExporterNodeConfigBase;
   instrumentations?: InstrumentationOption[];
+  spanProcessorFactory?: (exporter: SpanExporter) => SpanProcessor;
 };
 
 export function setupOtel({
   inMemory,
   exporterConfig,
   instrumentations,
-}: SetupOtelInput): OTLPTraceExporter | InMemorySpanExporter {
-  let exporter: OTLPTraceExporter | InMemorySpanExporter =
-    new OTLPTraceExporter();
+  spanProcessorFactory,
+}: SetupOtelInput): SpanExporter {
+  let exporter: SpanExporter = new OTLPTraceExporter();
   if (inMemory) {
     exporter = new InMemorySpanExporter();
   } else {
@@ -36,7 +39,11 @@ export function setupOtel({
 
   api.context.setGlobalContextManager(contextManager);
 
-  provider.addSpanProcessor(new SimpleSpanProcessor(exporter));
+  const processor = spanProcessorFactory
+    ? spanProcessorFactory(exporter)
+    : new BatchSpanProcessor(exporter);
+
+  provider.addSpanProcessor(processor);
 
   if (instrumentations) {
     registerInstrumentations({

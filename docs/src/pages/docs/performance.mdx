@@ -1,0 +1,21 @@
+# GraphQL Debugger Performance
+
+We use standard OpenTelemetry libraries in our implementation to ensure that our tool does not introduce any performance overhead. We accept there to be minor overhead from our implementation as we add additional instrumentation to the server. We work hard to ensure GraphQL Debuggers performance does not impact the performance of your server.
+
+## Benchmarks
+
+We have public benchmarks executed on each commit to ensure that we are not introduce any performance regressions. You can find the benchmarks in our monorepo under the `benchmarks` directory.
+
+1. https://github.com/rocket-connect/graphql-debugger/tree/main/benchmarks
+
+> We collaborate with the OpenTelemetry community to ensure that our implementation is as performant as possible see https://github.com/open-telemetry/opentelemetry-js/issues/4741
+
+## What does GraphQL Debugger instrument?
+
+GraphQL Debugger wraps each field resolver in your GraphQL schema with a span. It does this by visiting the AST at startup and adding the [`@trace` directive](/docs/packages/trace-directive) to each field. Each span is then generated using the OpenTelemetry API.
+
+On span creation we capture various attributes of the field resolver. This could include, the GraphQL query, the arguments passed to the field resolver, the result of the field resolver, and the time it took to execute the field resolver.
+
+## How can this impact performance?
+
+Adding more function calls to your stack is always going to have some impact on performance. We work hard to ensure that the impact is minimal. We have a number of optimizations in place to ensure that the impact is minimal. You can read more about these optimizations in our [Performance Issue](https://github.com/rocket-connect/graphql-debugger/issues/322).

@@ -1,5 +1,6 @@
 import { DebuggerClient } from "@graphql-debugger/client";
 import { createServer } from "@graphql-debugger/graphql-schema";
+import { SpanExporter, SpanProcessor } from "@graphql-debugger/opentelemetry";
 import { graphqlDebugger } from "@graphql-debugger/plugin-express";
 
 import cors from "cors";
@@ -14,9 +15,11 @@ import { debug } from "./debug";
 export async function start({
   port,
   client,
+  spanProcessorFactory,
 }: {
   port: string;
   client: DebuggerClient;
+  spanProcessorFactory?: (exporter: SpanExporter) => SpanProcessor;
 }) {
   try {
     const app: Express = express();
@@ -29,6 +32,7 @@ export async function start({
       "/graphql",
       createServer({
         client,
+        spanProcessorFactory,
       }),
     );
     app.use(

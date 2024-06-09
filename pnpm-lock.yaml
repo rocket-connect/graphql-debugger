@@ -170,6 +170,9 @@ importers:
       '@graphql-debugger/graphql-schema':
         specifier: workspace:^
         version: link:../../packages/graphql-schema
+      '@graphql-debugger/opentelemetry':
+        specifier: workspace:^
+        version: link:../../packages/opentelemetry
       '@graphql-debugger/plugin-express':
         specifier: workspace:^
         version: link:../../plugins/express
@@ -615,6 +618,9 @@ importers:
       '@graphql-debugger/collector-proxy':
         specifier: workspace:^
         version: link:../apps/collector-proxy
+      '@graphql-debugger/opentelemetry':
+        specifier: workspace:^
+        version: link:../packages/opentelemetry
       '@graphql-debugger/trace-schema':
         specifier: workspace:^
         version: link:../packages/trace-schema

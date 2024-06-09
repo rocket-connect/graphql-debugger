@@ -23,6 +23,7 @@
     "@graphql-debugger/graphql-schema": "workspace:^",
     "@graphql-debugger/plugin-express": "workspace:^",
     "@graphql-debugger/ui": "workspace:^",
+    "@graphql-debugger/opentelemetry": "workspace:^",
     "@graphql-debugger/utils": "workspace:^",
     "cors": "2.8.5",
     "express": "4.19.2",
