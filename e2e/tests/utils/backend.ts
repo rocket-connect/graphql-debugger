@@ -21,7 +21,7 @@ export async function listen() {
       client: localClient,
       spanProcessorFactory: (exporter) =>
         new BatchSpanProcessor(exporter, {
-          scheduledDelayMillis: 10,
+          scheduledDelayMillis: 1,
         }),
     });
     const collectorInstance = await collector.start({
