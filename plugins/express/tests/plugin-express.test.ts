@@ -1,5 +1,6 @@
 import {
   InMemorySpanExporter,
+  SimpleSpanProcessor,
   TRACER_NAME,
   setupOtel,
 } from "@graphql-debugger/opentelemetry";
@@ -12,6 +13,7 @@ import { HttpServerAttributeNames } from "../src/attributes";
 
 const exporter = setupOtel({
   inMemory: true,
+  spanProcessorFactory: (exporter) => new SimpleSpanProcessor(exporter),
 }) as unknown as InMemorySpanExporter;
 
 const app = express();
