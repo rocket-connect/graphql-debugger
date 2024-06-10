@@ -19,7 +19,7 @@ export function Type({ schemaId, type }: TypeProps) {
   }
 
   return (
-    <div className="flex flex-col text-sm">
+    <div className="flex flex-col text-sm  overflow-x-scroll custom-scrollbar p-2 bg-secondary-background rounded-2xl">
       <p className="flex gap-1">
         <span className="text-pink">{kindKeywordMapper[type.kind]}</span>
         <span className="text-purple">{type.name}</span>
